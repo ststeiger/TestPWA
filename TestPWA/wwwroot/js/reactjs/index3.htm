@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">  
+</head>
+
+<body>
+    <div id="like_button_container"></div>
+
+
+
+    <p>
+        This is the first comment.
+        <!-- We will put our React component inside this div. -->
+        <div class="like_button_container" data-commentid="1"></div>
+    </p>
+
+    <p>
+        This is the second comment.
+        <!-- We will put our React component inside this div. -->
+        <div class="like_button_container" data-commentid="2"></div>
+    </p>
+
+    <p>
+        This is the third comment.
+        <!-- We will put our React component inside this div. -->
+        <div class="like_button_container" data-commentid="3"></div>
+    </p>
+
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+
+
+
+    <script type="text/javascript">
+
+        const e = React.createElement;
+
+        class LikeButton extends React.Component
+        {
+            constructor(props)
+            {
+                super(props);
+                this.state = { liked: false };
+            }
+
+            render()
+            {
+                if (this.state.liked)
+                {
+                    return 'You liked this.';
+                }
+
+                return e(
+                    'button',
+                    { onClick: () => this.setState({ liked: true }) },
+                    'Like'
+                );
+            }
+        }
+
+
+        class SerialLikeButton extends React.Component
+        {
+            constructor(props)
+            {
+                super(props);
+                this.state = { liked: false };
+            }
+
+            render()
+            {
+                if (this.state.liked)
+                {
+                    return 'You liked comment number ' + this.props.commentID;
+                }
+
+                return e(
+                    'button',
+                    { onClick: () => this.setState({ liked: true }) },
+                    'Like'
+                );
+            }
+        }
+
+
+
+        const domContainer = document.querySelector('#like_button_container');
+        // ReactDOM.render(e(LikeButton), domContainer);
+        ReactDOM.render(React.createElement(LikeButton), domContainer);
+
+
+        // Find all DOM containers, and render Like buttons into them.
+        document.querySelectorAll('.like_button_container')
+            .forEach(domContainer =>
+            {
+                // Read the comment ID from a data-* attribute.
+                const commentID = parseInt(domContainer.dataset.commentid, 10);
+                ReactDOM.render(
+                    e(SerialLikeButton, { commentID: commentID }),
+                    domContainer
+                );
+            });
+
+    </script>
+
+    <!--
+        https://reactjs.org/docs/add-react-to-a-website.html
+        https://reactjs.org/docs/react-without-jsx.html
+        https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
+        https://dev.to/parnikagupta/one-way-data-binding-in-react-30ea
+        https://www.geeksforgeeks.org/reactjs-data-binding/
+        https://babeljs.io/repl#
+    -->
+
+</body>
+</html>

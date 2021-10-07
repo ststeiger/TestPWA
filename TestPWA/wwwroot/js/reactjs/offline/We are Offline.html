@@ -1,0 +1,29 @@
+
+<!-- saved from url=(0097)https://stackoverflow.com/questions/14224784/how-to-download-multiple-files-using-asp-and-c-sharp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>We are Offline</title>
+    <style type="text/css">
+        body { margin: 0; padding: 0; }
+        iframe { border: 0; }
+    </style>
+</head>
+<body>
+    <iframe width="100%" height="100%" id="pageFrame" src="./We are Offline_files/app_offline.html"></iframe>
+    <script>
+        setTimeout(function () { location.reload(true); }, 300000);
+        var hostName = window.location.hostname;
+        var directory = '';
+    </script>
+    <script src="./We are Offline_files/error-director.js.Download"></script>
+    <script>
+        if (top == self && directory) {
+            document.getElementById('pageFrame').src = 'https://cdn.sstatic.net/' + directory + '/app_offline.htm';
+        } else {
+            // if we get here, that means even the offline pages on sstatic are offline
+            document.getElementById('pageFrame').style.height = "0px";
+            document.write("<h2>Stack Exchange is currently offline, we'll be back shortly!<\/h2>");
+        }
+    </script>
+
+
+</body></html>

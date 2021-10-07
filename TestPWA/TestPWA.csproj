@@ -5,7 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Code\JS\ReplaceJS.cs" />
+    <Content Include="Code\XSLT\XsltTesting.cs" />
+    <Content Include="TypeScript\require\MyRequire.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\ts\" />
   </ItemGroup>
 
 </Project>
