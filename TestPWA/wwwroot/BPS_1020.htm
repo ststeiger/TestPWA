@@ -1,0 +1,1007 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+
+    <title>BPS 1020</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!--
+    http://htmlshell.com/
+    <meta name='viewport' content='width=device-width, initial-scale=0.90, minimum-scale=0.90, maximum-scale=0.90' />
+    -->
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+
+    <style type="text/css">
+
+
+        html, body
+        {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        @keyframes blinker
+        {
+            50%
+            {
+                opacity: 0;
+            }
+        }
+
+
+        @media only screen
+        {
+
+            .blink_me
+            {
+                #IE does not support nested queries, so move keyframe out;
+                animation: blinker 1.5s linear infinite;
+            }
+        }
+
+
+        td.slimBlackBorder
+        {
+            border-top: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+            border-left: 1px solid #000000;
+            border-right: 1px solid #000000;
+        }
+
+        td.verticalColumn
+        {
+            vertical-align: bottom;
+            #width: 40px;
+            #height: 100px;
+            #border: 1px solid white;
+            #background-color: black;
+            text-align: center;
+        }
+
+        .vert
+        {
+            display: inline-block;
+            text-align: left;
+            writing-mode: vertical-rl;
+            -ms-writing-mode: tb-rl;
+            transform-origin: center;
+            transform: rotate(180deg);
+            #padding-top: 0mm;
+            #padding-bottom: 2mm;
+            font-family: Arial;
+            #font-size: 11px;
+            #font-weight: 500;
+            line-height: 1.25em;
+            letter-spacing: 0.15mm;
+            height: 4.5cm;
+        }
+
+
+    </style>
+
+
+    <script src="lib/polyfills/Array.prototype.map.js?v=1"></script>
+    <script src="lib/polyfills/classList.js?v=1"></script>
+    <script src="lib/polyfills/object-setprototypeof-ie9.js?v=1"></script>
+    <script src="lib/polyfills/es6-promise-2.0.0.min.js?v=1"></script>
+    <script src="lib/polyfills/fetch.js?v=1"></script>
+
+
+    <!--
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
+        <script type="text/javascript" src="javascript.js"></script>
+
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
+        <link href="default.css" rel="stylesheet" media="all" type="text/css" title="Default Style" />
+    -->
+    <!--
+    <script type="text/javascript" src="Script.ashx?r=map" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+    -->
+
+</head>
+<body>
+    <img src="images/SNB-Logo-blau.svg" style="width: 6cm;" />
+
+    <h2 style="font-family: Arial; font-size: 14pt;">Wartungscheckliste MUVE</h2>
+
+    <table cellspacing="0" border="0" style="border-collapse: collapse;">
+        <colgroup span="2" width="88"></colgroup>
+        <colgroup width="50"></colgroup>
+        <colgroup width="103"></colgroup>
+        <colgroup width="88"></colgroup>
+        <colgroup width="55"></colgroup>
+        <colgroup width="29"></colgroup>
+        <colgroup span="4" width="25"></colgroup>
+        <tbody>
+            <tr>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 2px solid #000000" height="19" align="left" bgcolor="#EDEDED"><font color="#000000">Datum:</font></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000" align="left" bgcolor="#EDEDED"><font color="#000000"><br></font></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000" align="left" bgcolor="#EDEDED"><font color="#000000"><br></font></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-right: 2px solid #000000" colspan="8" align="left" bgcolor="#E7E6E6"><font color="#000000">Bargeldgewerk:     BPS 1020</font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 2px solid #000000" height="19" align="left" bgcolor="#EDEDED"><font color="#000000">Wartungsfirma:</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" bgcolor="#EDEDED"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" bgcolor="#EDEDED"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 2px solid #000000" colspan="8" align="left" bgcolor="#EDEDED"><font color="#000000">Servicetechniker:</font></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 2px solid #000000; border-left: 2px solid #000000" height="20" align="left" bgcolor="#EDEDED"><font color="#000000">Stunden:</font></td>
+                <td style="border-bottom: 2px solid #000000" align="left" bgcolor="#EDEDED"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 2px solid #000000" align="left" bgcolor="#EDEDED"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 2px solid #000000; border-right: 2px solid #000000" colspan="8" align="left" bgcolor="#EDEDED"><font color="#000000">Noten:</font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 2px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" rowspan="2" height="143" align="center" valign="middle"><font color="#000000">Achtung: Arbeiten nur ausführen, wenn keine Werte vorhanden sind.<br><br></font></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">Wartungshandbuch</font></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">in Ordnung</font></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">nicht in Ordnung</font></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="center"><font color="#000000">erledigt</font></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="19" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2">Bei ausgeschalteter Maschine</font></td>
+                <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Rundriemen im Eingabemodul tauschen </font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdnum="1031;0;0,00"><font color="#000000">61</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Rundriemen im OM, DM und SM prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="68" sdnum="1031;"><font color="#000000">68</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Antriebsriemen prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle"><font color="#000000">74</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Rotor und Vereinzlerwalze prüfen und reinigen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle"><font color="#000000">57</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Rotor und Stator der Rückhalteblock prüfen und reinigen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle"><font color="#000000">59</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">BN-Eingabebereich prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="27" sdnum="1031;"><font color="#000000">27</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Shredder prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="80" sdnum="1031;"><font color="#000000">80</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Leitbleche und Weichenflügel im Shredderbereich prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="76" sdnum="1031;"><font color="#000000">76</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Filtermatten der Lüfter reinigen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="85" sdnum="1031;"><font color="#000000">85</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Warnzeichen prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="81" sdnum="1031;"><font color="#000000">81</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Staplerscheiben reinigen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="56" sdnum="1031;"><font color="#000000">56</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Flachriemen reinigen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle"><font color="#000000">x</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left" valign="top"><u><font color="#000000">Bemerkungen:</font></u></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 2px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" height="20" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2">Bei eingeschalteter Maschine</font></td>
+                <td style="border-bottom: 2px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" rowspan="2" height="141" align="center" valign="middle"><font color="#000000">Achtung: Arbeiten nur ausführen, wenn keine Werte vorhanden sind.<br><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">Wartungshandbuch</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">in Ordnung</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">nicht in Ordnung</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="center"><font color="#000000">erledigt</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Shredder - Sicherheitsbereich prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle"><font color="#000000">x</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Luftleitplatte und Reflextaster prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="89" sdnum="1031;"><font color="#000000">89</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Unterdrucksystem prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle"><font color="#000000">x</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Lüfter prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="88" sdnum="1031;"><font color="#000000">88</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left" valign="top"><u><font color="#000000">Bemerkungen:</font></u></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 2px solid #000000; border-left: 1px solid #000000" height="20" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2">Bei laufender Maschine</font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" rowspan="2" height="141" align="center" valign="middle"><font color="#000000">Achtung: Arbeiten nur ausführen, wenn keine Werte vorhanden sind.<br><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">Wartungshandbuch</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">in Ordnung</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000">nicht in Ordnung</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="center"><font color="#000000">erledigt</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Rundriemen auf Gleichlauf überprüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle"><font color="#000000">x</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Transport- und Antriebsrollen prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="93" sdnum="1031;"><font color="#000000">93</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Banderolendruckköpfe und Farbbänder prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="96" sdnum="1031;"><font color="#000000">96</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Banderolierungsvorgang prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle"><font color="#000000">x</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Shredder- Saugluftüberwachung prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="124" sdnum="1031;"><font color="#000000">124</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="30" align="left" valign="middle"><font color="#000000">Sicherheitseinrichtung prüfen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle" sdval="91" sdnum="1031;"><font color="#000000">91</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#E7E6E6"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left" valign="top"><u><font color="#000000">Bemerkungen:</font></u></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 2px solid #000000; border-left: 1px solid #000000" height="20" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2">Benötigte Artikel</font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+                <td align="left" valign="middle" bgcolor="#000000"><font color="#F2F2F2"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" rowspan="2" height="120" align="left"><font color="#000000">Artikel                                                                        Artikelnummer</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" rowspan="2" align="center"><font color="#000000">Anzahl</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" rowspan="2" align="center"><font color="#000000">Lagerort</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" rowspan="2" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000">Rundriemen L = 2842 (M276)</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000">179 720 001</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle" sdval="3" sdnum="1031;"><font color="#000000">3</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000">3 G04</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000">Rundriemen L = 2510</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000">146 605 001</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle" sdval="2" sdnum="1031;"><font color="#000000">2</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000">3 H01</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000">Rundriemen L = 2233 (M274)</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000">179 718 001</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle" sdval="3" sdnum="1031;"><font color="#000000">3</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000">3 G02</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000">Rundriemen L = 1707 (M275)</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000">179 719 001</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle" sdval="2" sdnum="1031;"><font color="#000000">2</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000">3 G01</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000">Rundriemen L = 248 (M279)</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000">156 537 011</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle" sdval="3" sdnum="1031;"><font color="#000000">3</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000">3 F02</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000">Rundriemen L = 236 (M269)</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000">174 264 011</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle" sdval="3" sdnum="1031;"><font color="#000000">3</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000">3 F03</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000">Klemmrollen</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000">272 900 001</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle" sdval="2" sdnum="1031;"><font color="#000000">2</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000">1 E06</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000">Kugellager 6001-2RSH</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000">188 512 000</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle" sdval="3" sdnum="1031;"><font color="#000000">3</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000">1 E12</font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font size="1" color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="30" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+                <td align="left"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="19" align="left" valign="top"><u><font color="#000000">Zusätzliche Arbeiten:</font></u></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+                <td align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000" height="30" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+                <td style="border-top: 1px solid #000000" align="left" valign="top"><font color="#000000"><br></font></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript">
+        function autorun()
+        {
+
+        }
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
+
+            // if (window.addEventListener) window.addEventListener("load", autorun, false);
+            // else if (window.attachEvent) window.attachEvent("onload", autorun);
+            // else window.onload = autorun;
+    </script>
+</body>
+</html>

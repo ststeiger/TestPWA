@@ -1,0 +1,528 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+
+    <title>CIS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!--
+    http://htmlshell.com/
+    <meta name='viewport' content='width=device-width, initial-scale=0.90, minimum-scale=0.90, maximum-scale=0.90' />
+    -->
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+
+    <style type="text/css">
+
+
+        html, body
+        {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        @keyframes blinker
+        {
+            50%
+            {
+                opacity: 0;
+            }
+        }
+
+
+        @media only screen
+        {
+
+            .blink_me
+            {
+                #IE does not support nested queries, so move keyframe out;
+                animation: blinker 1.5s linear infinite;
+            }
+        }
+
+
+        td.slimBlackBorder
+        {
+            border-top: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+            border-left: 1px solid #000000;
+            border-right: 1px solid #000000;
+        }
+
+        td.verticalColumn
+        {
+            vertical-align: bottom;
+            #width: 40px;
+            #height: 100px;
+            #border: 1px solid white;
+            #background-color: black;
+            text-align: center;
+        }
+
+        .vert
+        {
+            display: inline-block;
+            text-align: left;
+            writing-mode: vertical-rl;
+            -ms-writing-mode: tb-rl;
+            transform-origin: center;
+            transform: rotate(180deg);
+            #padding-top: 0mm;
+            #padding-bottom: 2mm;
+            font-family: Arial;
+            #font-size: 11px;
+            #font-weight: 500;
+            line-height: 1.25em;
+            letter-spacing: 0.15mm;
+            height: 4.5cm;
+        }
+
+    </style>
+
+
+    <script src="lib/polyfills/Array.prototype.map.js?v=1"></script>
+    <script src="lib/polyfills/classList.js?v=1"></script>
+    <script src="lib/polyfills/object-setprototypeof-ie9.js?v=1"></script>
+    <script src="lib/polyfills/es6-promise-2.0.0.min.js?v=1"></script>
+    <script src="lib/polyfills/fetch.js?v=1"></script>
+
+
+    <!--
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
+        <script type="text/javascript" src="javascript.js"></script>
+
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
+        <link href="default.css" rel="stylesheet" media="all" type="text/css" title="Default Style" />
+    -->
+    <!--
+    <script type="text/javascript" src="Script.ashx?r=map" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+    -->
+
+</head>
+<body>
+    <img src="images/SNB-Logo-blau.svg" style="width: 6cm;" />
+
+    <h2 style="font-family: Arial; font-size: 14pt;">Wartungscheckliste MUVE</h2>
+
+    <table cellspacing="0" border="0" style="border-collapse: collapse;">
+        <colgroup span="2" width="88"></colgroup>
+        <colgroup width="50"></colgroup>
+        <colgroup width="103"></colgroup>
+        <colgroup width="69"></colgroup>
+        <colgroup width="73"></colgroup>
+        <colgroup width="49"></colgroup>
+        <colgroup span="4" width="25"></colgroup>
+        <tbody>
+            <tr>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-left: 2px solid #000000" align="left" bgcolor="#EDEDED"><span>Datum:</span></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000" align="left" bgcolor="#EDEDED"><span><br></span></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000" align="left" bgcolor="#EDEDED"><span><br></span></td>
+                <td style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-right: 2px solid #000000" colspan="8" align="left"><span>Bargeldgewerk: Münzinspektions- und Sortieranlage</span></td>
+            </tr>
+            <tr>
+                <td style="border-left: 2px solid #000000" align="left" bgcolor="#EDEDED">
+                <span>Wartungsfirma:</span>
+                </td>
+                <td align="left" bgcolor="#EDEDED"><span><br></span></td>
+                <td align="left" bgcolor="#EDEDED"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 2px solid #000000" colspan="8" align="left" bgcolor="#EDEDED">
+                    <span>Servicetechniker:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" rowspan="2" height="143" align="left" valign="top">
+                    <span>Achtung: Arbeiten nur ausführen, wenn keine Werte vorhanden sind.</span>
+                </td>
+                <td class="slimBlackBorder" rowspan="2" align="left"><span class="vert">Wartungs oder Prüfintervall</span></td>
+                <td class="slimBlackBorder" rowspan="2" align="left"><span class="vert">in Ordnung</span></td>
+                <td class="slimBlackBorder" rowspan="2" align="left"><span class="vert">nicht in Ordnung</span></td>
+                <td class="slimBlackBorder" rowspan="2" align="center"><span class="vert">erledigt</span></td>
+                <td class="slimBlackBorder" rowspan="2" align="left"><span class="vert">nicht vorhanden</span></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr style="background-color: #000; border: 1px solid black;" >
+                <td align="left" colspan="11">
+                    <span style="color: #F2F2F2">Prüfarbeiten vor der Durchführung der Arbeiten</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="middle"><span>Prüfung der Sicherheitseinrichtung, Not-Halt Taster</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="34" align="left" valign="middle"><span>Alle Transportbänder auf Beschädigungen oder Risse prüfen. Dazu die untenliegende Abdeckung mit einem Kreuzschlitzschraubenzieher lösen. </span></td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="35" align="left" valign="middle"><span>Prüfen Sie alle bewegliche und schwingende Teile auf lose oder fehlende Schrauben.</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="34" align="left"><span>Überprüfen Sie die Kabel und anderen Anschlüsse auf Verfügbarkeit, Festigkeit, Dichtheit, Schäden, Abrieb der Isolierung.</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr style="background-color: #000; border: 1px solid black;" >
+                <td align="left" colspan="11">
+                    <span style="color: #F2F2F2">Wartungsarbeiten</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="top"><span>Gesamte Anlage reinigen:<br>  -Maschineninnere staubsaugen<br>  -EMS staubsaugen inkl. unterhalb beider Bänder<br>  -Maschinenäusseres staubsaugen; u.a. beim Bunker, Z-Förder und der Sch<br>  -Auffangbehälter wie z.B. Grobabscheider, Abstreifer und bei Rückförderer entleeren und reinigen.<br>  -Sortiereinheit mit einem Staubsauger oder einem weichen Tuch reinigen.<br>  -Reinigungsstation-gross, in Reinigungsstation einspannen Spülwasser und fusselfreies Tuch verwenden <br>  -Reinigungsstation-klein, in Reinigungsstation einspannen Spülwasser und fusselfreies Tuch verwenden </span></td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>W</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left"><span>Festsitzende Münzen in der Maschine überprüfen</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>W</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="35" align="left"><span>Sichtfenster reinigen mit lauwarmes Wasser sowie ein wenig Spülmittel aus. <br>Verwenden dabei ein Mikrofasertuch</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left"><span>Not-Aus-Taster, Kontrolllampen und Anzeigen</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="105" align="left" valign="top">
+                    <span>Transportriemen gross reinigen:<br>  -Vereinzelung aus der Fixierung lösen und einem Tisch deponieren<br>  -An der Vereinzelung prüfen, ob sich Schrauben o.ä. gelöst haben.<br>  -Transportriemen mit Spuhlwasser und einem nicht kratzendem Reinigungsschwamm reinigen.<br>   -Bandposition händisch drehen<br></span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="121" align="left" valign="top">
+                    <span>Transportriemen klein reinigen:<br>  -Sortierung aufklappen<br>  -An der Sortierung prüfen, ob sich Schraube gelöst haben oder starke Abnutzungen sichtbar sind.<br>  -Transportriemen mit Spuhlwasser und einem nicht kratzendem Reinigungsschwamm reinigen.<br>   -Bandposition händisch drehen<br></span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="6" height="69" align="left" valign="top">
+                    <span>Spannung Transporriemen gross überprüfen:<br>  -Der Transporriemen muss so in Position gefahren werden, dass der "BGK-Schriftzug" auf die horizontale Fläche zu liegen kommt.<br>  -Mittels schwarzem Marker sind dort zwei Markierungen angebracht.<br></span>
+                </td>
+                <td class="slimBlackBorder" rowspan="3" align="center" valign="middle">
+                    <span>6M</span>
+                </td>
+                <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="18" align="center" valign="top">
+                    <span><br></span>
+                </td>
+                <td align="left" style="background-color: #000; border: 1px solid #000000;" >
+                <span style="color: #F2F2F2">Grenzwert</span>
+                </td>
+                <td align="left" style="background-color: #000; border: 1px solid #000000;">
+                    <span style="color: #F2F2F2">Messwert</span>
+                </td>
+                <td style="border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" height="21" align="left" valign="top">
+                    <span>-Die Distanz von Punkt zu Punkt sollte 102cm betragen.</span>
+                </td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="top">
+                    <span>&lt;102cm</span>
+                </td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="36" align="left">
+                    <span>Überprüfen Sie die Kabel und anderen Anschlüsse auf Verfügbarkeit, Festigkeit, Dichtheit, Schäden, Abrieb der Isolierung.</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="17" align="left">
+                    <span>Alle Lichtschranken und Sensoren mit einem weichen Reinigungstuch.</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="17" align="left">
+                    <span>Beide Server PC-Filter überprüfen und reinigen oder austauschen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="52" align="left">
+                    <span>Kühlaggregat reinigen<br>  -Nehmen Sie vorsichtig die Abdeckung des Kühlaggregats ab.<br>  -Reinigen Sie die Lamellen vorsichtig mit einem Staubsauger</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr style="background-color: #000; border: 1px solid black;">
+                <td align="left" colspan="11">
+                    <span style="color: #F2F2F2">Wartungsarbeiten</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="69" align="left">
+                    <span>Schwingplatte<br>  -Der Talkbelag der Schwingplatte wird mit einem Spachtel gelöst.<br>  -Anschliessend kann mit einem Reinigungstuch und Bremsreiniger der übrige Schmutz entfernt werden</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="21" align="left"><span>Prüfen Sie die Abscheider und Bürsten auf Verschleiß.</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="51" align="left">
+                    <span>Vision-Einheiten<br>  -Reinigen Sie die Oberfläche der Abdeckung vorsichtig mit dem Staubsauger und  mit einem Microphasertuch</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>W</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="86" align="left"><span>Vision-Linsen<br>  -Reinige die Oberfläche der Linse vorsichtig mit dem Staubsauger/Druckluftpistole und mit einem Microphasertuch.<br>  -Bei Flecken auf der Linse, muss ein Microphasertuch mit wenig Senorreiniger angewendet werden.</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="69" align="left"><span>Speicherplatz<br>  -Überprüfe den Speicherplatz auf dem NAS, falls dieser überläuft können alte Daten gelöscht werden.<br>  -Überprüfen den Speicherplatz auf dem Lokalen Laufwerken, falls der überläuft können Logdateien gelöscht werden.</span></td>
+                <td class="slimBlackBorder" align="center" valign="middle" ><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td align="left"><span><br></span></td>
+                <td align="left"><span><br></span></td>
+                <td align="left"><span><br></span></td>
+                <td align="left"><span><br></span></td>
+                <td align="left"><span><br></span></td>
+                <td align="left"><span><br></span></td>
+                <td align="center" valign="middle" ><span><br></span></td>
+                <td align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td align="left" valign="top"><u><span>Bemerkungen:</span></u></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+            </tr>
+            <tr>
+                <td height="30" align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+                <td align="left" valign="top"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top">
+                    <span><br></span>
+                </td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="center" valign="middle" >
+                    <span><br></span>
+                </td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top">
+                    <span><br></span>
+                </td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 1px solid #000000" height="30" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="center" valign="middle" ><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top">
+                    <span><br></span>
+                </td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 1px solid #000000" height="30" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="center" valign="middle" ><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+            </tr>
+            <tr>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" height="30" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="top"><span><br></span></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript">
+        function autorun()
+        {
+
+        }
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
+
+        // if (window.addEventListener) window.addEventListener("load", autorun, false);
+        // else if (window.attachEvent) window.attachEvent("onload", autorun);
+        // else window.onload = autorun;
+    </script>
+</body>
+</html>

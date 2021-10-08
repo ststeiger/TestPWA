@@ -1,0 +1,156 @@
+﻿React JSX
+React dom
+JXM JSON
+React.createElement
+Generating React Components from JSON
+
+https://localhost:44314/parser.htm
+https://localhost:44314/html2js.htm
+
+
+https://www.sqlshack.com/creating-the-perfect-schema-documentation-script/
+https://solutioncenter.apexsql.com/getting-a-database-under-version-control-how-to-link-a-database-to-source-control-and-initially-commit-objects/
+https://dzone.com/articles/a-strategy-for-implementing-database-source-contro
+
+https://www.red-gate.com/hub/product-learning/sql-source-control/strategy-implementing-database-source-control
+https://www.red-gate.com/hub/product-learning/sql-source-control/github-and-sql-source-control
+https://www.sqlservercentral.com/articles/put-your-database-under-source-control
+
+https://blog.codinghorror.com/get-your-database-under-version-control/
+
+
+
+
+
+
+
+https://www.npmjs.com/package/jsx-transform
+https://www.npmjs.com/package/html-react-parser
+
+
+
+https://reactjsexample.com/a-html-to-react-parser/
+https://www.npmjs.com/package/html-react-parser
+
+
+https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
+https://codepen.io/sthzg/pen/wzyQEG
+https://www.youtube.com/watch?v=NMxMWOZC-Ec
+https://javascript.plainenglish.io/generating-react-components-from-json-850d25a5cd67
+https://harin76.medium.com/generate-vue-js-components-from-a-json-javascript-dom-structure-a76534478d15
+https://www.codegrepper.com/code-examples/javascript/react+createelement+from+object
+https://medium.com/swlh/how-to-generate-dynamic-form-from-json-with-react-5d70386bb38b
+https://www.pluralsight.com/guides/how-to-render-a-component-dynamically-based-on-a-json-config
+https://www.pluralsight.com/guides/how-to-use-reactjs-and-complex-json-objects
+https://www.storyblok.com/tp/react-dynamic-component-from-json
+
+
+{
+     type:"section"  string
+    ,key:null string
+    ,ref:null string
+    ,owner:null string
+    ,_store {} object
+    ,props 
+    { 
+          "attributeName":"attributeValue"
+         ,"id":"lol"
+         ,"name":"lolbot"
+
+        "children": [{dito},{dito}]
+    }
+
+}
+
+============================================================
+
+
+https://magic.reactjs.net/htmltojsx.htm
+<div><h1>Title</h1><p>Paragraph</p><h1>Another title1hello</h1></div>
+
+
+==> 
+
+var NewComponent = React.createClass({
+  render: function() {
+    return (
+
+      <div><h1>Title</h1><p>Paragraph</p><h1>Another title1hello</h1></div>
+    );
+  }
+});
+
+
+==> 
+https://babeljs.io/repl/
+<p style={{color:blue,}}>hello world</p>
+alert("Hello");
+
+============================================================
+
+
+
+https://www.cdata.com/kb/articles/apiserver-react.rst
+https://magic.reactjs.net/htmltojsx.htm
+---------------------------------------
+
+https://github.com/repetere/jsonx
+https://jsfiddle.net/yawetse/ka7ghypd/18/
+https://repetere.github.io/jsonx/manual/getting-started/index.html
+https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
+https://learn.co/lessons/react-create-element
+JSX Compiler Service - JSXTransformer has been deprecated.
+https://babeljs.io/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=AQHgDsDOAuCeA2BTAvAb1QYwPbywJwC4AjeAV0QBoBfKgPgAtF5dgB3feAExAHoxagA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.15.8&externalPlugins=&assumptions=%7B%7D
+
+
+
+const example_JXM_JSON = {
+  component:'p',
+  props:{ style:{ color:'blue' } },
+  children:'hello world'
+};
+alert(jsonx.outputJSX(example_JXM_JSON)); // => '<p style={{color:blue,}}>hello world</p>'
+
+
+
+
+
+var reactNodeLi = React.createElement('li', {id:'li1'}, 'one');
+
+React.createElement(
+  type,
+  [props],
+  [...children]
+)
+
+
+class Greeting extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+
+
+
+
+
+
+
+
+npm install react --save
+npm install react-dom --save
+npm install react-hook-form --save
+
+convy>npm install jsonx --save
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN @hookform/error-message@2.0.0 requires a peer of react@>=16.8.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @hookform/error-message@2.0.0 requires a peer of react-dom@>=16.8.0 but none is installed. You must install peer dependencies yourself.
+npm WARN react-hook-form@7.17.1 requires a peer of react@^16.8.0 || ^17 but none is installed. You must install peer dependencies yourself.
+npm WARN convy No description
+npm WARN convy No repository field.
+npm WARN convy No README data
+npm WARN convy No license field.
+
++ jsonx@1.10.3
+added 11 packages from 133 contributors and audited 11 packages in 1.928s
+found 0 vulnerabilities
