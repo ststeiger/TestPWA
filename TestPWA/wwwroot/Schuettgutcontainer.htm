@@ -168,20 +168,18 @@
                 </td>
             </tr>
             <tr>
-                <td class="slimBlackBorder" colspan="6" rowspan="2" align="center" valign="top">
+                <td class="slimBlackBorder" colspan="6" align="center" valign="top">
                     <span class="blink_me">Achtung: Arbeiten nur ausführen, wenn keine Werte vorhanden sind.</span>
                 </td>
-                <td class="slimBlackBorder verticalColumn" style="height: 4.5cm;" rowspan="2">
+                <td class="slimBlackBorder verticalColumn" style="height: 4.5cm;">
                     <span class="vert">Wartungs oder Prüfintervall [Jahr]</span>
                 </td>
-                <td class="slimBlackBorder verticalColumn" rowspan="2">
+                <td class="slimBlackBorder verticalColumn">
                     <span class="vert">in Ordnung</span>
                 </td>
-                <td class="slimBlackBorder verticalColumn" rowspan="2"><span class="vert">nicht in Ordnung</span></td>
-                <td class="slimBlackBorder verticalColumn" rowspan="2"><span class="vert">erledigt</span></td>
-                <td class="slimBlackBorder verticalColumn" rowspan="2"><span class="vert">nicht vorhanden</span></td>
-            </tr>
-            <tr>
+                <td class="slimBlackBorder verticalColumn"><span class="vert">nicht in Ordnung</span></td>
+                <td class="slimBlackBorder verticalColumn"><span class="vert">erledigt</span></td>
+                <td class="slimBlackBorder verticalColumn"><span class="vert">nicht vorhanden</span></td>
             </tr>
             <tr style="background-color: #000; border: 1px solid black;">
                 <td align="left" colspan="4">
@@ -228,17 +226,7 @@
                 <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
             </tr>
             <tr>
-                <td align="left"><span><br></span></td>
-                <td align="left"><span><br></span></td>
-                <td align="left"><span><br></span></td>
-                <td align="left"><span><br></span></td>
-                <td align="left"><span><br></span></td>
-                <td align="left"><span><br></span></td>
-                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left" valign="middle"><span><br></span></td>
-                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left"><span><br></span></td>
-                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left"><span><br></span></td>
-                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left"><span><br></span></td>
-                <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="left"><span><br></span></td>
+                <td align="left" colspan="11" height="20"><span><br></span></td>
             </tr>
             <tr style="background-color: #000; border: 1px solid black;">
                 <td align="left" colspan="11">
@@ -275,17 +263,19 @@
 
 
     <script type="text/javascript">
+
         function autorun()
         {
 
         }
-        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
-        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
-        else window.onload = autorun;
 
-        // if (window.addEventListener) window.addEventListener("load", autorun, false);
-        // else if (window.attachEvent) window.attachEvent("onload", autorun);
-        // else window.onload = autorun;
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false); 
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun); 
+        else window.onload = autorun; 
+
+        // if (window.addEventListener) window.addEventListener("load", autorun, false); 
+        // else if (window.attachEvent) window.attachEvent("onload", autorun); 
+        // else window.onload = autorun; 
     </script>
 </body>
 </html>
