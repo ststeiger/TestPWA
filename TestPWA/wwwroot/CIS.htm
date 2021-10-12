@@ -457,6 +457,50 @@
 
     <script type="text/javascript">
 
+
+        function ltrim(str)
+        {
+            if (!str) return str;
+            // return str.replace(/^\s+/g, '');
+            return str.replace(/^[\s\uFEFF\xA0]+/g, '');
+        }
+
+        function rtrim(str)
+        {
+            if (!str) return str;
+            //return str.replace(/\s+$/g, '');
+            return str.replace(/[\s\uFEFF\xA0]+$/g, '');
+
+        }
+
+        function trimStr(str) 
+        {
+            if (!str) return str;
+            // return str.replace(/^\s+|\s+$/g, '');
+            return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+        }
+
+
+
+        function getValues()
+        {
+            // td:not([colspan])
+            var eles = document.querySelectorAll('tr td[colspan="6"]');
+            var arr = [];
+
+            for (var i = 0; i < eles.length; ++i)
+            {
+                arr.push(trimStr(eles[i].textContent));
+            }
+
+            return arr;
+        }
+
+        console.log(JSON.stringify(getValues(), null, "  "));
+
+
+
+
         function autorun()
         {
 

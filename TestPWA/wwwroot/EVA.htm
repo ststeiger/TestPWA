@@ -136,7 +136,7 @@
         <colgroup width="49"></colgroup>
         <colgroup span="4" width="25"></colgroup>
         <tbody>
-            <tr style="border: 2px solid #000; border-bottom: 1px solid #000;" >
+            <tr style="border: 2px solid #000; border-bottom: 1px solid #000;">
                 <td align="left" bgcolor="#EDEDED">
                     <span>Datum:</span>
                 </td>
@@ -435,7 +435,7 @@
             </tr>
             <tr style="background-color: #000; border: 1px solid black;">
                 <td colspan="11" align="left">
-                <span style="color: #F2F2F2">Wartungsarbeiten</span>
+                    <span style="color: #F2F2F2">Wartungsarbeiten</span>
                 </td>
             </tr>
             <tr>
@@ -462,6 +462,7 @@
                 <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
                 <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
             </tr>
+            <!--
             <tr>
                 <td class="slimBlackBorder" colspan="6" align="left"><span><br></span></td>
                 <td class="slimBlackBorder" align="left"><span><br></span></td>
@@ -470,18 +471,9 @@
                 <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
                 <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
             </tr>
+            -->
             <tr>
-                <td align="left" valign="top"><span><br></span></td>
-                <td align="left" valign="top"><span><br></span></td>
-                <td align="left" valign="top"><span><br></span></td>
-                <td align="left" valign="top"><span><br></span></td>
-                <td align="left" valign="top"><span><br></span></td>
-                <td align="left" valign="top"><span><br></span></td>
-                <td align="center" valign="middle"><span><br></span></td>
-                <td align="left"><span><br></span></td>
-                <td align="left"><span><br></span></td>
-                <td align="left"><span><br></span></td>
-                <td align="left"><span><br></span></td>
+                <td align="left" valign="top" colspan="11"><span><br></span></td>
             </tr>
             <tr>
                 <td align="left" valign="top" colspan="11">
@@ -489,44 +481,106 @@
                 </td>
             </tr>
             <tr>
-                <td height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
+                <td align="left" valign="top" colspan="11" style="margin: 0; padding: 0;">
+                    <textarea class="notes"></textarea>
+                </td>
             </tr>
         </tbody>
     </table>
+    <style>
 
+        .notes
+        {
+            display: block;
+            width: 100%;
+            height: 5cm;
+            overflow: auto;
+            margin: 0;
+            padding: 0;
+            resize: none;
+            #border-radius: 8px;
+            border: none;
+            #border: 1px solid #ccc;
+            #box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            font-family: Arial, Helvetica, Sans-serif;
+            line-height: 31px;
+            background-image: -webkit-linear-gradient(left, white 0px, transparent 0px), -webkit-linear-gradient(right, white 0px, transparent 0px), -webkit-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-image: -moz-linear-gradient(left, white 0px, transparent 0px), -moz-linear-gradient(right, white 0px, transparent 0px), -moz-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-image: -ms-linear-gradient(left, white 0px, transparent 0px), -ms-linear-gradient(right, white 0px, transparent 0px), -ms-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-image: -o-linear-gradient(left, white 0px, transparent 0px), -o-linear-gradient(right, white 0px, transparent 0px), -o-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-image: linear-gradient(left, white 0px, transparent 0px), linear-gradient(right, white 0px, transparent 0px), linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-size: 100% 100%, 100% 100%, 100% 31px;
+            background-attachment: local;
+        }
+
+        .notes:focus
+        {
+            outline: none;
+        }
+
+    </style>
+    <br /><br />
+    
 
     <script type="text/javascript">
+
+        function ltrim(str)
+        {
+            if (!str) return str;
+            // return str.replace(/^\s+/g, '');
+            return str.replace(/^[\s\uFEFF\xA0]+/g, '');
+        }
+
+        function rtrim(str)
+        {
+            if (!str) return str;
+            //return str.replace(/\s+$/g, '');
+            return str.replace(/[\s\uFEFF\xA0]+$/g, '');
+
+        }
+
+        function trimStr(str) 
+        {
+            if (!str) return str;
+            // return str.replace(/^\s+|\s+$/g, '');
+            return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+        }
+
+
+
+        function getValues()
+        {
+            // td:not([colspan])
+            var eles = document.querySelectorAll('tr td[colspan="6"]');
+            var arr = [];
+
+            for (var i = 0; i < eles.length; ++i)
+            {
+                arr.push(trimStr(eles[i].textContent));
+            }
+
+            return arr;
+        }
+
+        console.log(JSON.stringify(getValues(), null, "  "));
+
+
+
+
+
 
         function autorun()
         {
 
         }
 
-        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false); 
-        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun); 
-        else window.onload = autorun; 
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
 
-        // if (window.addEventListener) window.addEventListener("load", autorun, false); 
-        // else if (window.attachEvent) window.attachEvent("onload", autorun); 
-        // else window.onload = autorun; 
+        // if (window.addEventListener) window.addEventListener("load", autorun, false);
+        // else if (window.attachEvent) window.attachEvent("onload", autorun);
+        // else window.onload = autorun;
     </script>
 </body>
 </html>
