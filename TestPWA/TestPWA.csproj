@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TypeScript\require\HttpUtility.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Code\JS\ReplaceJS.cs" />
     <Content Include="Code\XSLT\XsltTesting.cs" />
+    <Content Include="TypeScript\require\HttpUtility.ts" />
     <Content Include="TypeScript\require\MyRequire.ts" />
   </ItemGroup>
 
@@ -16,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\NewFolder\" />
-    <Folder Include="wwwroot\ts\" />
   </ItemGroup>
 
 </Project>

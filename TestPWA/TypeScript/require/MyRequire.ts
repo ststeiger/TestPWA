@@ -3,18 +3,19 @@
 
 // declare global
 // {
+
 interface Window
 {
     require: (fileName: string) => any;
     asyncRequire: (name: string) => Promise<any>;
 }
+
 // }
 
 // https://mariusschulz.com/blog/declaring-global-variables-in-typescript
 // global scope without window
 declare var require: (fileName: string) => string;
 declare var asyncRequire: (fileName: string) => Promise<string>;
-
 
 
 const fs = {
