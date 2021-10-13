@@ -510,3 +510,252 @@ function htmlEncode(s: string)
 
     return output.join("");
 }
+
+
+
+
+
+function JavaScriptStringEncode(value: string, addDoubleQuotes?: boolean):string
+{
+    addDoubleQuotes = addDoubleQuotes || false;
+
+
+    if (!value)
+        return addDoubleQuotes ? "\"\"" : "";
+
+    let len = value.length;
+    let needEncode = false;
+    let c;
+    for (let i = 0; i < len; i++)
+    {
+        c = value[i];
+        let cc = c.charCodeAt(0);
+
+        if (cc >= 0 && cc <= 31 || cc == 34 || cc == 39 || cc == 60 || cc == 62 || cc == 92)
+        {
+            needEncode = true;
+            break;
+        }
+    }
+
+    if (!needEncode)
+        return addDoubleQuotes ? "\"" + value + "\"" : value;
+
+    let sb:string[] = [];
+    if (addDoubleQuotes)
+        sb.push('"');
+
+    for (let i = 0; i < len; i++)
+    {
+        c = value[i];
+        let cc = c.charCodeAt(0);
+
+        if (cc >= 0 && cc <= 7 || cc == 11 || cc >= 14 && cc <= 31 || cc == 39 || cc == 60 || cc == 62)
+        {
+            let t = "0000" + cc.toString(16);
+            t = "\\u" + t.substr(t.length - 4);
+            sb.push(t);
+        }
+        else switch (cc)
+        {
+			case 8:
+                sb.push("\\b");
+                break;
+			case 9:
+                sb.push("\\t");
+                break;
+			case 10:
+                sb.push("\\n");
+                break;
+			case 12:
+                sb.push("\\f");
+                break;
+			case 13:
+                sb.push("\\r");
+                break;
+		    case 34:
+                sb.push("\\\"");
+                break;
+			case 92:
+                sb.push("\\\\");
+                break;
+			default:
+                sb.push(c);
+                break;
+        }
+    }
+
+    if (addDoubleQuotes)
+        sb.push('"');
+
+    return sb.join("");
+}
+
+
+// https://stackoverflow.com/questions/18729405/how-to-convert-utf8-string-to-byte-array
+function toUTF8Array(str:string):number[]
+{
+    var utf8 = [];
+    for (var i = 0; i < str.length; i++)
+    {
+        var charcode = str.charCodeAt(i);
+        if (charcode < 0x80) utf8.push(charcode);
+        else if (charcode < 0x800)
+        {
+            utf8.push(0xc0 | (charcode >> 6),
+                0x80 | (charcode & 0x3f));
+        }
+        else if (charcode < 0xd800 || charcode >= 0xe000)
+        {
+            utf8.push(0xe0 | (charcode >> 12),
+                0x80 | ((charcode >> 6) & 0x3f),
+                0x80 | (charcode & 0x3f));
+        }
+        // surrogate pair
+        else
+        {
+            i++;
+            // UTF-16 encodes 0x10000-0x10FFFF by
+            // subtracting 0x10000 and splitting the
+            // 20 bits of 0x0-0xFFFFF into two halves
+            charcode = 0x10000 + (((charcode & 0x3ff) << 10)
+                | (str.charCodeAt(i) & 0x3ff));
+            utf8.push(0xf0 | (charcode >> 18),
+                0x80 | ((charcode >> 12) & 0x3f),
+                0x80 | ((charcode >> 6) & 0x3f),
+                0x80 | (charcode & 0x3f));
+        }
+    }
+    return utf8;
+}
+
+
+function urlPathEncode(value: string):string
+{
+    if (!value)
+        return value;
+
+    let result: string[] = [];
+
+
+    function UrlPathEncodeChar(c:string)
+    {
+        let hexChars: string[] = "0123456789abcdef".split('');
+        let cc = c.charCodeAt(0);
+
+        if (cc < 33 || cc > 126)
+        {
+            let bIn: number[] = toUTF8Array(c);
+            for (let i = 0; i < bIn.length; i++)
+            {
+                result.push('%');
+                let idx = (bIn[i]) >> 4;
+                result.push(hexChars[idx]);
+                idx = (bIn[i]) & 0x0F;
+                result.push(hexChars[idx]);
+            }
+        }
+        else if (c == ' ')
+        {
+            result.push('%20');
+        }
+        else
+            result.push(c);
+    }
+
+    let length = value.length;
+    for (let j = 0; j < length; j++)
+        UrlPathEncodeChar(value[j]);
+
+    // return Encoding.ASCII.GetString(result.ToArray());
+    return result.join("");
+}
+
+
+function htmlAttributeDecode(s: string)
+{
+    let len = s.length;
+    let output: string[] = [];
+
+    s = s.replace(/&#39;/g, '\'');
+    s = s.replace(/&lt;/g, '<');
+    s = s.replace(/&quot;/g, '"');
+    s = s.replace(/&amp;/g, '&');
+
+    return s;
+}
+
+
+
+
+function htmlAttributeEncode(s: string): string
+{
+    if (!s)
+        return "";
+
+    let needEncode: boolean = false;
+    for (let i = 0; i < s.length; i++)
+    {
+        let c = s[i];
+        if (c == '&' || c == '"' || c == '<'
+            || c == '\''
+        )
+        {
+            needEncode = true;
+            break;
+        }
+    }
+
+    if (!needEncode)
+        return s;
+
+    let output: string[] = [];
+    let len = s.length;
+
+    for (let i = 0; i < len; i++)
+    {
+        let ch = s[i];
+        switch (ch)
+        {
+            case '&':
+                output.push("&amp;");
+                break;
+            case '"':
+                output.push("&quot;");
+                break;
+            case '<':
+                output.push("&lt;");
+                break;
+            case '\'':
+                output.push("&#39;");
+                break;
+            default:
+                output.push(ch);
+                break;
+        }
+    }
+
+    return output.join("");
+}
+
+
+
+
+// UrlPathEncode("הצüabc")
+//'%c3%a4%c3%b6%c3%bcabc'
+// %c3%a4%c3%b6%c3%bcabc
+
+
+//function htmlDecode(s: string): string
+//function htmlEncode(s: string): string
+
+
+//var a = require("ts/firstModule/HttpUtility.js?v=2");
+//console.log(a);
+//a.htmlDecode(a.htmlEncode("הצü"))
+
+
+// var enc = HtmlAttributeEncode('Hello&"<\'nihao')
+// var dec = htmlAttributeDecode(enc);
+
+// https://www.typescriptlang.org/docs/handbook/modules.html

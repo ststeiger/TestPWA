@@ -437,3 +437,159 @@ function htmlEncode(s) {
     }
     return output.join("");
 }
+function JavaScriptStringEncode(value, addDoubleQuotes) {
+    addDoubleQuotes = addDoubleQuotes || false;
+    if (!value)
+        return addDoubleQuotes ? "\"\"" : "";
+    var len = value.length;
+    var needEncode = false;
+    var c;
+    for (var i = 0; i < len; i++) {
+        c = value[i];
+        var cc = c.charCodeAt(0);
+        if (cc >= 0 && cc <= 31 || cc == 34 || cc == 39 || cc == 60 || cc == 62 || cc == 92) {
+            needEncode = true;
+            break;
+        }
+    }
+    if (!needEncode)
+        return addDoubleQuotes ? "\"" + value + "\"" : value;
+    var sb = [];
+    if (addDoubleQuotes)
+        sb.push('"');
+    for (var i = 0; i < len; i++) {
+        c = value[i];
+        var cc = c.charCodeAt(0);
+        if (cc >= 0 && cc <= 7 || cc == 11 || cc >= 14 && cc <= 31 || cc == 39 || cc == 60 || cc == 62) {
+            var t = "0000" + cc.toString(16);
+            t = "\\u" + t.substr(t.length - 4);
+            sb.push(t);
+        }
+        else
+            switch (cc) {
+                case 8:
+                    sb.push("\\b");
+                    break;
+                case 9:
+                    sb.push("\\t");
+                    break;
+                case 10:
+                    sb.push("\\n");
+                    break;
+                case 12:
+                    sb.push("\\f");
+                    break;
+                case 13:
+                    sb.push("\\r");
+                    break;
+                case 34:
+                    sb.push("\\\"");
+                    break;
+                case 92:
+                    sb.push("\\\\");
+                    break;
+                default:
+                    sb.push(c);
+                    break;
+            }
+    }
+    if (addDoubleQuotes)
+        sb.push('"');
+    return sb.join("");
+}
+function toUTF8Array(str) {
+    var utf8 = [];
+    for (var i = 0; i < str.length; i++) {
+        var charcode = str.charCodeAt(i);
+        if (charcode < 0x80)
+            utf8.push(charcode);
+        else if (charcode < 0x800) {
+            utf8.push(0xc0 | (charcode >> 6), 0x80 | (charcode & 0x3f));
+        }
+        else if (charcode < 0xd800 || charcode >= 0xe000) {
+            utf8.push(0xe0 | (charcode >> 12), 0x80 | ((charcode >> 6) & 0x3f), 0x80 | (charcode & 0x3f));
+        }
+        else {
+            i++;
+            charcode = 0x10000 + (((charcode & 0x3ff) << 10)
+                | (str.charCodeAt(i) & 0x3ff));
+            utf8.push(0xf0 | (charcode >> 18), 0x80 | ((charcode >> 12) & 0x3f), 0x80 | ((charcode >> 6) & 0x3f), 0x80 | (charcode & 0x3f));
+        }
+    }
+    return utf8;
+}
+function urlPathEncode(value) {
+    if (!value)
+        return value;
+    var result = [];
+    function UrlPathEncodeChar(c) {
+        var hexChars = "0123456789abcdef".split('');
+        var cc = c.charCodeAt(0);
+        if (cc < 33 || cc > 126) {
+            var bIn = toUTF8Array(c);
+            for (var i = 0; i < bIn.length; i++) {
+                result.push('%');
+                var idx = (bIn[i]) >> 4;
+                result.push(hexChars[idx]);
+                idx = (bIn[i]) & 0x0F;
+                result.push(hexChars[idx]);
+            }
+        }
+        else if (c == ' ') {
+            result.push('%20');
+        }
+        else
+            result.push(c);
+    }
+    var length = value.length;
+    for (var j = 0; j < length; j++)
+        UrlPathEncodeChar(value[j]);
+    return result.join("");
+}
+function htmlAttributeDecode(s) {
+    var len = s.length;
+    var output = [];
+    s = s.replace(/&#39;/g, '\'');
+    s = s.replace(/&lt;/g, '<');
+    s = s.replace(/&quot;/g, '"');
+    s = s.replace(/&amp;/g, '&');
+    return s;
+}
+function htmlAttributeEncode(s) {
+    if (!s)
+        return "";
+    var needEncode = false;
+    for (var i = 0; i < s.length; i++) {
+        var c = s[i];
+        if (c == '&' || c == '"' || c == '<'
+            || c == '\'') {
+            needEncode = true;
+            break;
+        }
+    }
+    if (!needEncode)
+        return s;
+    var output = [];
+    var len = s.length;
+    for (var i = 0; i < len; i++) {
+        var ch = s[i];
+        switch (ch) {
+            case '&':
+                output.push("&amp;");
+                break;
+            case '"':
+                output.push("&quot;");
+                break;
+            case '<':
+                output.push("&lt;");
+                break;
+            case '\'':
+                output.push("&#39;");
+                break;
+            default:
+                output.push(ch);
+                break;
+        }
+    }
+    return output.join("");
+}

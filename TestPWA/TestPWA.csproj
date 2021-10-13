@@ -3,24 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="TypeScript\require\HttpUtility.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Code\JS\ReplaceJS.cs" />
-    <Content Include="Code\XSLT\XsltTesting.cs" />
-    <Content Include="TypeScript\require\HttpUtility.ts" />
-    <Content Include="TypeScript\require\MyRequire.ts" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\js\NewFolder\" />
-  </ItemGroup>
-
+  
 </Project>
