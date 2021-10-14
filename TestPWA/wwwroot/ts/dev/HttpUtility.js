@@ -1,39 +1,27 @@
-
 "use strict";
-
-
-function htmlEncode(s: string): string 
-{
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.urlPathEncode = exports.javaScriptStringEncode = exports.htmlAttributeDecode = exports.htmlAttributeEncode = exports.htmlDecode = exports.htmlEncode = void 0;
+function htmlEncode(s) {
     if (s == null)
         return null;
-
     if (s.length == 0)
         return s;
-
-    let needEncode:boolean = false;
-    for (let i = 0; i < s.length; i++)
-    {
-        let c = s[i];
+    var needEncode = false;
+    for (var i = 0; i < s.length; i++) {
+        var c = s[i];
         if (c == '&' || c == '"' || c == '<' || c == '>' || c.charCodeAt(0) > 159
-            || c == '\''
-        )
-        {
+            || c == '\'') {
             needEncode = true;
             break;
         }
     }
-
     if (!needEncode)
         return s;
-
-    let output:string[] = [];
-    let len = s.length;
-
-    for (let i = 0; i < len; i++)
-    {
-        let ch = s[i];
-        switch (ch)
-        {
+    var output = [];
+    var len = s.length;
+    for (var i = 0; i < len; i++) {
+        var ch = s[i];
+        switch (ch) {
             case '&':
                 output.push("&amp;");
                 break;
@@ -52,14 +40,11 @@ function htmlEncode(s: string): string
             case '\uff1c':
                 output.push("&#65308;");
                 break;
-
             case '\uff1e':
                 output.push("&#65310;");
                 break;
-
             default:
-                if (ch.charCodeAt(0) > 159 && ch.charCodeAt(0) < 256)
-                {
+                if (ch.charCodeAt(0) > 159 && ch.charCodeAt(0) < 256) {
                     output.push("&#");
                     output.push(ch.charCodeAt(0).toString());
                     output.push(";");
@@ -69,40 +54,24 @@ function htmlEncode(s: string): string
                 break;
         }
     }
-
     return output.join("");
 }
-
-
-
-
-function htmlDecode(s: string): string
-{
+exports.htmlEncode = htmlEncode;
+function htmlDecode(s) {
     if (s == null)
         return null;
-
     if (s.length == 0)
         return "";
-
     if (s.indexOf('&') == -1)
         return s;
-
-    function isDigit(str: string)
-    {
+    function isDigit(str) {
         return /^\d+$/.test(str);
     }
-
-    function isHexDigit(str: string)
-    {
+    function isHexDigit(str) {
         return /[0-9A-Fa-f]{6}/g.test(str);
     }
-
-    function initEntities()
-    {
-        // Build the hash table of HTML entity references.  This list comes
-        // from the HTML 4.01 W3C recommendation.
-        let entities: any = {};
-
+    function initEntities() {
+        var entities = {};
         entities["nbsp"] = '\u00A0';
         entities["iexcl"] = '\u00A1';
         entities["cent"] = '\u00A2';
@@ -355,143 +324,107 @@ function htmlDecode(s: string): string
         entities["lsaquo"] = '\u2039';
         entities["rsaquo"] = '\u203A';
         entities["euro"] = '\u20AC';
-
         return entities;
     }
-
-    let Entities: any = initEntities();
-
-
-    let rawEntity: string[] = [];
-    let entity: string[] = [];
-    let output: string[] = [];
-    let len = s.length;
-    // 0 -> nothing,
-    // 1 -> right after '&'
-    // 2 -> between '&' and ';' but no '#'
-    // 3 -> '#' found after '&' and getting numbers
-    let state = 0;
-    let number = 0;
-    let is_hex_value = false;
-    let have_trailing_digits = false;
-
-    for (let i = 0; i < len; i++)
-    {
-        let c = s[i];
-        if (state == 0)
-        {
-            if (c == '&')
-            {
+    var Entities = initEntities();
+    var rawEntity = [];
+    var entity = [];
+    var output = [];
+    var len = s.length;
+    var state = 0;
+    var number = 0;
+    var is_hex_value = false;
+    var have_trailing_digits = false;
+    for (var i = 0; i < len; i++) {
+        var c = s[i];
+        if (state == 0) {
+            if (c == '&') {
                 entity.push(c);
                 rawEntity.push(c);
                 state = 1;
             }
-            else
-            {
+            else {
                 output.push(c);
             }
             continue;
         }
-
-        if (c == '&')
-        {
+        if (c == '&') {
             state = 1;
-            if (have_trailing_digits)
-            {
+            if (have_trailing_digits) {
                 entity.push(number.toString());
                 have_trailing_digits = false;
             }
-
             output.push(entity.join(""));
             entity = [];
             entity.push('&');
             continue;
         }
-
-        if (state == 1)
-        {
-            if (c == ';')
-            {
+        if (state == 1) {
+            if (c == ';') {
                 state = 0;
                 output.push(entity.join(""));
                 output.push(c);
                 entity = [];
             }
-            else
-            {
+            else {
                 number = 0;
                 is_hex_value = false;
-                if (c != '#')
-                {
+                if (c != '#') {
                     state = 2;
                 }
-                else
-                {
+                else {
                     state = 3;
                 }
                 entity.push(c);
                 rawEntity.push(c);
             }
         }
-        else if (state == 2)
-        {
+        else if (state == 2) {
             entity.push(c);
-            if (c == ';')
-            {
-                let key: string = entity.join("");
+            if (c == ';') {
+                var key = entity.join("");
                 if (key.length > 1 && Entities.hasOwnProperty(key.substr(1, key.length - 2)))
                     key = Entities[key.substr(1, key.length - 2)].toString();
-
                 output.push(key);
                 state = 0;
                 entity = [];
                 rawEntity = [];
             }
         }
-        else if (state == 3)
-        {
-            if (c == ';')
-            {
+        else if (state == 3) {
+            if (c == ';') {
                 if (number == 0)
                     output.push(rawEntity.join("") + ";");
-                else
-                    if (number > 65535)
-                    {
-                        output.push("&#");
-                        output.push(number.toString());
-                        output.push(";");
-                    }
-                    else
-                    {
-                        output.push(String.fromCharCode(number));
-                    }
+                else if (number > 65535) {
+                    output.push("&#");
+                    output.push(number.toString());
+                    output.push(";");
+                }
+                else {
+                    output.push(String.fromCharCode(number));
+                }
                 state = 0;
                 entity = [];
                 rawEntity = [];
                 have_trailing_digits = false;
             }
-            else if (is_hex_value && isHexDigit(c))
-            {
+            else if (is_hex_value && isHexDigit(c)) {
                 number = number * 16 + parseInt(c, 16);
                 have_trailing_digits = true;
                 rawEntity.push(c);
             }
-            else if (isDigit(c))
-            {
+            else if (isDigit(c)) {
                 number = number * 10 + (c.charCodeAt(0) - '0'.charCodeAt(0));
                 have_trailing_digits = true;
                 rawEntity.push(c);
             }
-            else if (number == 0 && (c == 'x' || c == 'X'))
-            {
+            else if (number == 0 && (c == 'x' || c == 'X')) {
                 is_hex_value = true;
                 rawEntity.push(c);
             }
-            else
-            {
+            else {
                 state = 2;
-                if (have_trailing_digits)
-                {
+                if (have_trailing_digits) {
                     entity.push(number.toString());
                     have_trailing_digits = false;
                 }
@@ -499,48 +432,33 @@ function htmlDecode(s: string): string
             }
         }
     }
-
-    if (entity.length > 0)
-    {
+    if (entity.length > 0) {
         output.push(entity.join(""));
     }
-    else if (have_trailing_digits)
-    {
+    else if (have_trailing_digits) {
         output.push(number.toString());
     }
     return output.join("");
 }
-
-
-
-
-function htmlAttributeEncode(s: string): string
-{
+exports.htmlDecode = htmlDecode;
+function htmlAttributeEncode(s) {
     if (!s)
         return "";
-
-    let needEncode: boolean = false;
-    for (let i = 0; i < s.length; i++)
-    {
-        let c = s[i];
-        if (c == '&' || c == '"' || c == '<' || c == '\'')
-        {
+    var needEncode = false;
+    for (var i = 0; i < s.length; i++) {
+        var c = s[i];
+        if (c == '&' || c == '"' || c == '<' || c == '\'') {
             needEncode = true;
             break;
         }
     }
-
     if (!needEncode)
         return s;
-
-    let output: string[] = [];
-    let len = s.length;
-
-    for (let i = 0; i < len; i++)
-    {
-        let ch = s[i];
-        switch (ch)
-        {
+    var output = [];
+    var len = s.length;
+    for (var i = 0; i < len; i++) {
+        var ch = s[i];
+        switch (ch) {
             case '&':
                 output.push("&amp;");
                 break;
@@ -558,203 +476,127 @@ function htmlAttributeEncode(s: string): string
                 break;
         }
     }
-
     return output.join("");
 }
-
-
-function htmlAttributeDecode(s: string): string 
-{
-    let len = s.length;
-    let output: string[] = [];
-
+exports.htmlAttributeEncode = htmlAttributeEncode;
+function htmlAttributeDecode(s) {
+    var len = s.length;
+    var output = [];
     s = s.replace(/&#39;/g, '\'');
     s = s.replace(/&lt;/g, '<');
     s = s.replace(/&quot;/g, '"');
     s = s.replace(/&amp;/g, '&');
-
     return s;
 }
-
-
-
-function javaScriptStringEncode(value: string, addDoubleQuotes?: boolean):string
-{
+exports.htmlAttributeDecode = htmlAttributeDecode;
+function javaScriptStringEncode(value, addDoubleQuotes) {
     addDoubleQuotes = addDoubleQuotes || false;
-
-
     if (!value)
         return addDoubleQuotes ? "\"\"" : "";
-
-    let len = value.length;
-    let needEncode = false;
-    let c;
-    for (let i = 0; i < len; i++)
-    {
+    var len = value.length;
+    var needEncode = false;
+    var c;
+    for (var i = 0; i < len; i++) {
         c = value[i];
-        let cc = c.charCodeAt(0);
-
-        if (cc >= 0 && cc <= 31 || cc == 34 || cc == 39 || cc == 60 || cc == 62 || cc == 92)
-        {
+        var cc = c.charCodeAt(0);
+        if (cc >= 0 && cc <= 31 || cc == 34 || cc == 39 || cc == 60 || cc == 62 || cc == 92) {
             needEncode = true;
             break;
         }
     }
-
     if (!needEncode)
         return addDoubleQuotes ? "\"" + value + "\"" : value;
-
-    let sb:string[] = [];
+    var sb = [];
     if (addDoubleQuotes)
         sb.push('"');
-
-    for (let i = 0; i < len; i++)
-    {
+    for (var i = 0; i < len; i++) {
         c = value[i];
-        let cc = c.charCodeAt(0);
-
-        if (cc >= 0 && cc <= 7 || cc == 11 || cc >= 14 && cc <= 31 || cc == 39 || cc == 60 || cc == 62)
-        {
-            let t = "0000" + cc.toString(16);
+        var cc = c.charCodeAt(0);
+        if (cc >= 0 && cc <= 7 || cc == 11 || cc >= 14 && cc <= 31 || cc == 39 || cc == 60 || cc == 62) {
+            var t = "0000" + cc.toString(16);
             t = "\\u" + t.substr(t.length - 4);
             sb.push(t);
         }
-        else switch (cc)
-        {
-			case 8:
-                sb.push("\\b");
-                break;
-			case 9:
-                sb.push("\\t");
-                break;
-			case 10:
-                sb.push("\\n");
-                break;
-			case 12:
-                sb.push("\\f");
-                break;
-			case 13:
-                sb.push("\\r");
-                break;
-		    case 34:
-                sb.push("\\\"");
-                break;
-			case 92:
-                sb.push("\\\\");
-                break;
-			default:
-                sb.push(c);
-                break;
-        }
+        else
+            switch (cc) {
+                case 8:
+                    sb.push("\\b");
+                    break;
+                case 9:
+                    sb.push("\\t");
+                    break;
+                case 10:
+                    sb.push("\\n");
+                    break;
+                case 12:
+                    sb.push("\\f");
+                    break;
+                case 13:
+                    sb.push("\\r");
+                    break;
+                case 34:
+                    sb.push("\\\"");
+                    break;
+                case 92:
+                    sb.push("\\\\");
+                    break;
+                default:
+                    sb.push(c);
+                    break;
+            }
     }
-
     if (addDoubleQuotes)
         sb.push('"');
-
     return sb.join("");
 }
-
-
-// https://stackoverflow.com/questions/18729405/how-to-convert-utf8-string-to-byte-array
-function toUTF8Array(str:string):number[]
-{
-    let utf8 = [];
-    for (let i = 0; i < str.length; i++)
-    {
-        let charcode = str.charCodeAt(i);
-        if (charcode < 0x80) utf8.push(charcode);
-        else if (charcode < 0x800)
-        {
-            utf8.push(0xc0 | (charcode >> 6),
-                0x80 | (charcode & 0x3f));
+exports.javaScriptStringEncode = javaScriptStringEncode;
+function toUTF8Array(str) {
+    var utf8 = [];
+    for (var i = 0; i < str.length; i++) {
+        var charcode = str.charCodeAt(i);
+        if (charcode < 0x80)
+            utf8.push(charcode);
+        else if (charcode < 0x800) {
+            utf8.push(0xc0 | (charcode >> 6), 0x80 | (charcode & 0x3f));
         }
-        else if (charcode < 0xd800 || charcode >= 0xe000)
-        {
-            utf8.push(0xe0 | (charcode >> 12),
-                0x80 | ((charcode >> 6) & 0x3f),
-                0x80 | (charcode & 0x3f));
+        else if (charcode < 0xd800 || charcode >= 0xe000) {
+            utf8.push(0xe0 | (charcode >> 12), 0x80 | ((charcode >> 6) & 0x3f), 0x80 | (charcode & 0x3f));
         }
-        // surrogate pair
-        else
-        {
+        else {
             i++;
-            // UTF-16 encodes 0x10000-0x10FFFF by
-            // subtracting 0x10000 and splitting the
-            // 20 bits of 0x0-0xFFFFF into two halves
             charcode = 0x10000 + (((charcode & 0x3ff) << 10)
                 | (str.charCodeAt(i) & 0x3ff));
-            utf8.push(0xf0 | (charcode >> 18),
-                0x80 | ((charcode >> 12) & 0x3f),
-                0x80 | ((charcode >> 6) & 0x3f),
-                0x80 | (charcode & 0x3f));
+            utf8.push(0xf0 | (charcode >> 18), 0x80 | ((charcode >> 12) & 0x3f), 0x80 | ((charcode >> 6) & 0x3f), 0x80 | (charcode & 0x3f));
         }
     }
     return utf8;
 }
-
-
-function urlPathEncode(value: string):string
-{
+function urlPathEncode(value) {
     if (!value)
         return value;
-
-    let result: string[] = [];
-
-    function UrlPathEncodeChar(c:string)
-    {
-        let hexChars: string[] = "0123456789abcdef".split('');
-        let cc = c.charCodeAt(0);
-
-        if (cc < 33 || cc > 126)
-        {
-            let bIn: number[] = toUTF8Array(c);
-            for (let i = 0; i < bIn.length; i++)
-            {
+    var result = [];
+    function UrlPathEncodeChar(c) {
+        var hexChars = "0123456789abcdef".split('');
+        var cc = c.charCodeAt(0);
+        if (cc < 33 || cc > 126) {
+            var bIn = toUTF8Array(c);
+            for (var i = 0; i < bIn.length; i++) {
                 result.push('%');
-                let idx = (bIn[i]) >> 4;
+                var idx = (bIn[i]) >> 4;
                 result.push(hexChars[idx]);
                 idx = (bIn[i]) & 0x0F;
                 result.push(hexChars[idx]);
             }
         }
-        else if (c == ' ')
-        {
+        else if (c == ' ') {
             result.push('%20');
         }
         else
             result.push(c);
     }
-
-    let length = value.length;
-    for (let j = 0; j < length; j++)
+    var length = value.length;
+    for (var j = 0; j < length; j++)
         UrlPathEncodeChar(value[j]);
-
     return result.join("");
 }
-
-
-
-
-// function htmlEncode(s: string): string
-// function htmlDecode(s: string): string
-// function htmlAttributeEncode(s: string): string
-// function htmlAttributeDecode(s: string): string
-// function javaScriptStringEncode(value: string, addDoubleQuotes?: boolean): string
-
-// function urlPathEncode(value: string): string
-// function toUTF8Array(str: string): number[]
-
-// UrlPathEncode("הצüabc")
-//'%c3%a4%c3%b6%c3%bcabc'
-// %c3%a4%c3%b6%c3%bcabc
-
-
-// var a = require("ts/firstModule/HttpUtility.js?v=2");
-// console.log(a);
-// a.htmlDecode(a.htmlEncode("הצü"))
-
-
-// var enc = HtmlAttributeEncode('Hello&"<\'nihao')
-// var dec = htmlAttributeDecode(enc);
-
-// https://www.typescriptlang.org/docs/handbook/modules.html
+exports.urlPathEncode = urlPathEncode;

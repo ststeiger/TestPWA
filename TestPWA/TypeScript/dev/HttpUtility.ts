@@ -2,7 +2,7 @@
 "use strict";
 
 
-function htmlEncode(s: string): string 
+export function htmlEncode(s: string): string 
 {
     if (s == null)
         return null;
@@ -10,7 +10,7 @@ function htmlEncode(s: string): string
     if (s.length == 0)
         return s;
 
-    let needEncode:boolean = false;
+    let needEncode: boolean = false;
     for (let i = 0; i < s.length; i++)
     {
         let c = s[i];
@@ -26,7 +26,7 @@ function htmlEncode(s: string): string
     if (!needEncode)
         return s;
 
-    let output:string[] = [];
+    let output: string[] = [];
     let len = s.length;
 
     for (let i = 0; i < len; i++)
@@ -76,7 +76,7 @@ function htmlEncode(s: string): string
 
 
 
-function htmlDecode(s: string): string
+export function htmlDecode(s: string): string
 {
     if (s == null)
         return null;
@@ -514,7 +514,7 @@ function htmlDecode(s: string): string
 
 
 
-function htmlAttributeEncode(s: string): string
+export function htmlAttributeEncode(s: string): string
 {
     if (!s)
         return "";
@@ -563,7 +563,7 @@ function htmlAttributeEncode(s: string): string
 }
 
 
-function htmlAttributeDecode(s: string): string 
+export function htmlAttributeDecode(s: string): string
 {
     let len = s.length;
     let output: string[] = [];
@@ -578,7 +578,7 @@ function htmlAttributeDecode(s: string): string
 
 
 
-function javaScriptStringEncode(value: string, addDoubleQuotes?: boolean):string
+export function javaScriptStringEncode(value: string, addDoubleQuotes?: boolean): string
 {
     addDoubleQuotes = addDoubleQuotes || false;
 
@@ -604,7 +604,7 @@ function javaScriptStringEncode(value: string, addDoubleQuotes?: boolean):string
     if (!needEncode)
         return addDoubleQuotes ? "\"" + value + "\"" : value;
 
-    let sb:string[] = [];
+    let sb: string[] = [];
     if (addDoubleQuotes)
         sb.push('"');
 
@@ -621,28 +621,28 @@ function javaScriptStringEncode(value: string, addDoubleQuotes?: boolean):string
         }
         else switch (cc)
         {
-			case 8:
+            case 8:
                 sb.push("\\b");
                 break;
-			case 9:
+            case 9:
                 sb.push("\\t");
                 break;
-			case 10:
+            case 10:
                 sb.push("\\n");
                 break;
-			case 12:
+            case 12:
                 sb.push("\\f");
                 break;
-			case 13:
+            case 13:
                 sb.push("\\r");
                 break;
-		    case 34:
+            case 34:
                 sb.push("\\\"");
                 break;
-			case 92:
+            case 92:
                 sb.push("\\\\");
                 break;
-			default:
+            default:
                 sb.push(c);
                 break;
         }
@@ -656,7 +656,7 @@ function javaScriptStringEncode(value: string, addDoubleQuotes?: boolean):string
 
 
 // https://stackoverflow.com/questions/18729405/how-to-convert-utf8-string-to-byte-array
-function toUTF8Array(str:string):number[]
+function toUTF8Array(str: string): number[]
 {
     let utf8 = [];
     for (let i = 0; i < str.length; i++)
@@ -693,14 +693,14 @@ function toUTF8Array(str:string):number[]
 }
 
 
-function urlPathEncode(value: string):string
+export function urlPathEncode(value: string): string
 {
     if (!value)
         return value;
 
     let result: string[] = [];
 
-    function UrlPathEncodeChar(c:string)
+    function UrlPathEncodeChar(c: string)
     {
         let hexChars: string[] = "0123456789abcdef".split('');
         let cc = c.charCodeAt(0);
@@ -731,30 +731,3 @@ function urlPathEncode(value: string):string
 
     return result.join("");
 }
-
-
-
-
-// function htmlEncode(s: string): string
-// function htmlDecode(s: string): string
-// function htmlAttributeEncode(s: string): string
-// function htmlAttributeDecode(s: string): string
-// function javaScriptStringEncode(value: string, addDoubleQuotes?: boolean): string
-
-// function urlPathEncode(value: string): string
-// function toUTF8Array(str: string): number[]
-
-// UrlPathEncode("הצüabc")
-//'%c3%a4%c3%b6%c3%bcabc'
-// %c3%a4%c3%b6%c3%bcabc
-
-
-// var a = require("ts/firstModule/HttpUtility.js?v=2");
-// console.log(a);
-// a.htmlDecode(a.htmlEncode("הצü"))
-
-
-// var enc = HtmlAttributeEncode('Hello&"<\'nihao')
-// var dec = htmlAttributeDecode(enc);
-
-// https://www.typescriptlang.org/docs/handbook/modules.html

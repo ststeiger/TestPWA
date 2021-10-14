@@ -6,7 +6,9 @@
 
 interface Window
 {
-    require: (fileName: string) => any;
+    // require: (fileName: string) => any;
+    require<T>(fileName: string): T;
+    exports: any;
 }
 
 // }
@@ -65,9 +67,88 @@ if (!String.prototype.startsWith)
 
 // https://stackoverflow.com/questions/6971583/node-style-require-for-in-browser-javascript
 // https://michelenasti.com/2018/10/02/let-s-write-a-simple-version-of-the-require-function.html
-function require(name: string): any
+function require<T>(name: string): T
 {
     console.log(`Evaluating file ${name}`);
+    
+    var cs = document.currentScript || document.scripts[document.scripts.length - 1];
+    // var cs = document.currentScript;
+    // console.log("cs", cs);
+
+    let src = cs.getAttribute("src");
+    let bs = cs.baseURI;
+    let source:string = null;
+
+    
+    console.log("relativeScript", src);
+    console.log("base", cs.baseURI);
+    
+    let ind = src.lastIndexOf('/')
+    if (ind != -1)
+        source = src.substr(0, ind + 1);
+
+    // console.log("caller", require.caller);
+
+    // https://gist.github.com/jedp/3166317
+    function _getCaller():any
+    {
+        var err = new Error();
+        (<any>Error).captureStackTrace(err);
+
+        // Throw away the first line of the trace
+        var frames = err.stack.split('\n').slice(1);
+
+        // Find the first line in the stack that doesn't name this module.
+        
+        for (var i = 0; i < frames.length; i++)
+        {
+            console.log("framews", frames[i]);
+
+            // var STACK_FRAME_RE = new RegExp(/at ((\S+)\s)?\(?([^:]+):(\d+):(\d+)/);
+            var STACK_FRAME_RE = new RegExp("\\((.*?\\.(js|htm|html)).*\\)");
+            let callerInfo = STACK_FRAME_RE.exec(frames[i]);
+            // console.log("callerInfo", callerInfo);
+            if (callerInfo && callerInfo.length>0)
+            console.log("callerInfo", callerInfo[1]);
+            
+            //if (frames[i].indexOf("/ts/dev/test.js") === -1)
+            //{
+            //    var STACK_FRAME_RE = new RegExp(/at ((\S+)\s)?\(?([^:]+):(\d+):(\d+)/);
+            //    callerInfo = STACK_FRAME_RE.exec(frames[i]);
+            //    break;
+            //}
+        }
+
+        //if (callerInfo)
+        //{
+        //    return {
+        //        function: callerInfo[2] || null,
+        //        module: callerInfo[3] || null,
+        //        line: callerInfo[4] || null,
+        //        column: callerInfo[5] || null
+        //    };
+        //}
+        return null;
+    }
+
+    // https://github.com/browserify/browserify
+
+    // console.log("ci", _getCaller())
+    
+
+
+    function getErrorObject()
+    {
+        try { throw Error('') } catch (err) { return err; }
+    }
+
+    var err = getErrorObject();
+    // var caller_line = err.stack.split("\n")[4];
+    // var index = caller_line.indexOf("at ");
+    // var clean = caller_line.slice(index + 2, caller_line.length);
+    // console.log("stack", err.stack);
+    
+
 
      // If the exact filename is not found, then Node.js will attempt to load the required filename with the added extensions: 
     // .js, .json, and finally .node.
@@ -89,6 +170,21 @@ function require(name: string): any
 
         let contentType: string = null;
         let mimeType: string = null;
+
+
+        if (fileName.startsWith("./"))
+        {
+            fileName = fileName.substr(2);
+            fileName = source + fileName;
+            // console.log("doctored", fileName)
+        }
+
+        // Don't TF cache these files...
+        if (fileName.indexOf("?") == -1)
+            fileName += "?no_cache=" + (new Date()).getTime().toString();
+        else
+            fileName += "&no_cache=" + (new Date()).getTime().toString();
+
 
         function hand()
         {
@@ -180,6 +276,13 @@ function require(name: string): any
         }
         else
         {
+            // module.exports vs exports - default 
+            // module.exports = {} vs. exports.foo='bar'
+            // https://www.sitepoint.com/understanding-module-exports-exports-node-js/
+            // some more properites: id, parent, filename, loaded, children, paths
+            // https://riptutorial.com/javascript/example/16339/universal-module-definition--umd-
+            // https://www.typescriptlang.org/tsconfig#baseUrl
+            // https://www.typescriptlang.org/docs/handbook/modules.html
             let wrapper = Function("require, exports, module", code.text);
             wrapper(require, module.exports, module);
         }
@@ -192,6 +295,8 @@ function require(name: string): any
 
 require.cache = Object.create(null);
 window.require = require;
+window.exports = {};
+
 
 // const stuff = window.require('./main.js');
 // console.log(stuff);

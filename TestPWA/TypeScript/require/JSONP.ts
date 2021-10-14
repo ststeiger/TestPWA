@@ -6,8 +6,11 @@
 
 interface Window
 {
-    require: (fileName: string) => any;
-    asyncRequire: (name: string) => Promise<any>;
+    // require: (fileName: string) => any;
+    // require_async: (name: string) => Promise<any>;
+
+    require<T>(fileName: string): T;
+    require_async<T>(name: string): Promise<T>;
 }
 
 // }
@@ -25,7 +28,7 @@ interface Window
 
 async () =>
 {
-    const asyncStuff = await window.asyncRequire('./main.js');
+    const asyncStuff = await window.require_async('./main.js');
     console.log(asyncStuff);
 }
 

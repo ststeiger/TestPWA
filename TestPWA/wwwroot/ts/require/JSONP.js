@@ -39,7 +39,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     var asyncStuff;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4, window.asyncRequire('./main.js')];
+            case 0: return [4, window.require_async('./main.js')];
             case 1:
                 asyncStuff = _a.sent();
                 console.log(asyncStuff);

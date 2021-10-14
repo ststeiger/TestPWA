@@ -4,8 +4,10 @@
 
 interface Window
 {
-    require: (fileName: string) => any;
-    require_async: (name: string) => Promise<any>;
+    // require: (fileName: string) => any;
+    // require_async: (name: string) => Promise<any>;
+    require<T>(fileName: string): T;
+    require_async<T>(name: string): Promise<T>;
 }
 
 // }
@@ -20,7 +22,8 @@ interface IModule
 
 
 // global scope without window
-declare var require: (fileName: string) => any;
+// declare var require: (fileName: string) => any;
+declare function require<T>(fileName: string): T;
 declare var exports: any;
 declare var module: IModule;
 
@@ -542,3 +545,7 @@ exports.htmlDecode = htmlDecode;
 //    "htmlEncode": htmlEncode,
 //    "htmlDecode": htmlDecode
 //}
+
+
+// function htmlEncode(s: string): string
+// function htmlDecode(s: string): string

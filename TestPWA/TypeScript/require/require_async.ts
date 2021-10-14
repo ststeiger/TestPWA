@@ -6,7 +6,8 @@
 
 interface Window
 {
-    require_async: (name: string) => Promise<any>;
+    // require_async: (name: string) => Promise<any>;
+    require_async<T>(name: string): Promise<T>;
 }
 
 // }
@@ -15,6 +16,8 @@ interface Window
 // https://mariusschulz.com/blog/declaring-global-variables-in-typescript
 // global scope without window
 // declare var require_async: (fileName: string) => Promise<string>;
+// declare function require_async<T>(name: string): Promise<T>;
+
 
 interface IAsynchronousFileFetchResult 
 {
@@ -66,8 +69,8 @@ if (!String.prototype.startsWith)
 
 // https://mariusschulz.com/blog/declaring-global-variables-in-typescript
 // global scope without window
-async function require_async(name: string)
-    : Promise<any>
+async function require_async<T>(name: string)
+    : Promise<T>
 {
     console.log(`Evaluating file ${name}`);
 
@@ -147,6 +150,6 @@ window.require_async = require_async;
 
 (async function () 
 {
-    const asyncStuff = await require_async("https://stackoverflow.com/questions/9901082/what-is-this-javascript-require/63070817#63070817")
+    const asyncStuff = await require_async<string>("https://stackoverflow.com/questions/9901082/what-is-this-javascript-require/63070817#63070817")
     console.log(asyncStuff);
 }());

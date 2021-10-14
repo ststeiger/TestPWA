@@ -10,6 +10,47 @@ interface Window
 }
 
 
+
+interface Window
+{
+    CustomEvent: any;
+    // attachEvent: any;
+    // detachEvent: any;
+    attachEvent(eventName: string, callback: (event: any) => void): void;
+    detachEvent(eventName: string, callback: (event: any) => void): void;
+}
+
+interface Document
+{
+    // attachEvent: any;
+    // detachEvent: any;
+
+    attachEvent(eventName: string, callback: (event: any) => void): void;
+    detachEvent(eventName: string, callback: (event: any) => void): void;
+
+    attachCustomEvent: any;
+}
+
+interface Element
+{
+    attachEvent: any;
+    detachEvent: any;
+    fireEvent: (eventName: string) => void;
+}
+
+
+interface Event
+{
+    clientX: any;
+    clientY: any;
+}
+
+interface CustomEvent
+{
+    pageX: number;
+    pageY: number;
+}
+
 interface IModule
 {
     exports: any;
@@ -19,6 +60,7 @@ interface IModule
 // global scope without window
 // declare var require: (fileName: string) => any;
 declare function require<T>(fileName: string): T;
+declare function require_async<T>(name: string): Promise<T>;
 declare var exports: any;
 declare var module: IModule;
 
@@ -36,40 +78,6 @@ interface IHttpUtility
     // declare function isDigit(str: string): boolean;
     // declare function isHexDigit(str: string): boolean;
 }
-
-
-
-// https://mariusschulz.com/blog/declaring-global-variables-in-typescript
-
-/*
-
-//export as namespace L;
-
-declare module "L"
-{
-      export function htmlEncode(s: string): string;
-      export function htmlDecode(s: string): string;
-}
-
-declare global
-{
-
-    namespace L
-    {
-        declare function htmlDecode(s: string): string;
-        declare function htmlEncode(s: string): string;
-    }
-}
-
-
-*/
-
-
-
-let a: IHttpUtility = require<IHttpUtility>("HttpUtility.js")
-let b = a.htmlEncode("הצü<>[]{}nihao")
-let c = a.htmlDecode(b);
-console.log(c);
 
 
 /*
