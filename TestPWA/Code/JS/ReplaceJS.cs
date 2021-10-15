@@ -36,7 +36,11 @@ namespace TestPWA.JS
                 return str;
 
             int foundAt = 0;
-            while ((foundAt = ((ignoreCase ? str.ToLowerInvariant() : str)).IndexOf(oldToken, foundAt)) != -1)
+
+
+            string ci = ignoreCase ? oldToken.ToLowerInvariant() : oldToken;
+
+            while ((foundAt = ((ignoreCase ? str.ToLowerInvariant() : str)).IndexOf(ci, foundAt)) != -1)
             {
                 str = str.Substring(0, foundAt) + newToken + str.Substring(foundAt + oldToken.Length);
                 foundAt += newToken.Length;

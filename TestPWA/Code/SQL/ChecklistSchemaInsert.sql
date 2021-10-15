@@ -1,12 +1,11 @@
 
-// Required compatibility level
-// --When DB is restored from SQL - Server < 2016
-// ALTER DATABASE < DB_Name > SET COMPATIBILITY_LEVEL = 130
-// ALTER DATABASE COR_Basic_Demo_V4 SET COMPATIBILITY_LEVEL = 130
+IF OBJECT_ID(N'tempdb..#CheckListNodes') IS NOT NULL
+BEGIN
+DROP TABLE #CheckListNodes
+END
+GO
+ 
 
-
-
-let obj: any = `
 
 DECLARE @json nvarchar(max) = N'
 {
@@ -1247,8 +1246,8 @@ DECLARE @json nvarchar(max) = N'
 		,p.tagName
 		,p.properties
 		,p.children
-		,p.innerHtml
-		,0 AS lvl
+		,p.innerHtml 
+		,0 AS lvl 
     FROM OPENJSON(@json, '$')
 	WITH
 	(
@@ -1256,7 +1255,7 @@ DECLARE @json nvarchar(max) = N'
 		,parent_uuid varchar(36)
 		,tagName nvarchar(100)
 		,properties nvarchar(MAX) AS json
-		,children nvarchar(MAX) AS json
+		,children nvarchar(MAX) AS json 
 		,innerHtml nvarchar(MAX)
     ) AS p
 
@@ -1267,9 +1266,9 @@ DECLARE @json nvarchar(max) = N'
 		,c.uuid
 		,p.tagName
 		,p.properties
-		,p.children
-		,p.innerHtml
-		,C.lvl + 1 AS lvl
+		,p.children 
+		,p.innerHtml 
+		,C.lvl + 1 AS lvl 
     FROM CTE AS c
 
     CROSS APPLY OPENJSON(c.children)
@@ -1280,7 +1279,7 @@ DECLARE @json nvarchar(max) = N'
 		,tagName nvarchar(100)
 		,properties nvarchar(MAX) AS json
 		,children nvarchar(MAX) AS json
-		,innerHtml nvarchar(MAX)
+		,innerHtml nvarchar(MAX) 
     ) AS p
 
 )
@@ -1289,11 +1288,46 @@ SELECT
 	,c.tagName
 	,c.parent_uuid
 	-- ,c.children
-	-- ,c.innerHtml
-	,dbo.LTrimWhitespace(dbo.RTrimWhitespace(c.innerHtml)) AS innerHtml
-	,c.properties
-	,c.lvl
+	-- ,c.innerHtml 
+	,dbo.LTrimWhitespace(dbo.RTrimWhitespace(c.innerHtml)) AS innerHtml 
+	,c.properties 
+	,c.lvl 
+INTO #CheckListNodes 
 FROM CTE AS c
 
--- WHERE c.uuid = 'A1191F10-B9BC-4F51-8A07-5D59E412537F' 
-`;
+
+
+
+-- SELECT * FROM #CheckListNodes 
+
+
+SELECT 
+-- -- prop_id	prop_name	prop_value	prop_ele_id
+	 NEWID() AS PRO_UID 
+	,tProperties.attributeName AS PRO_Name 
+	,tProperties.attributeValue AS PRO_Value 
+	,c.uuid AS PRO_ELE_UID 
+	,c.tagName 
+	-- ,c.parent_uuid 
+	-- ,c.innerHtml 
+FROM #CheckListNodes AS c 
+
+OUTER APPLY OPENJSON(c.properties) WITH
+(
+    attributeName nvarchar(MAX)  '$[0]'
+   ,attributeValue nvarchar(MAX) '$[1]'
+) AS tProperties 
+
+-- WHERE uuid = 'A1191F10-B9BC-4F51-8A07-5D59E412537F'
+
+
+
+
+
+
+
+IF OBJECT_ID(N'tempdb..#CheckListNodes') IS NOT NULL
+BEGIN
+DROP TABLE #CheckListNodes
+END
+GO
