@@ -1,7 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var hu = require("./HttpUtility.js");
+var uuid = require("./uuid.js");
 if (true) {
+}
+function left(str, length) {
+    if (!str)
+        return str;
+    return str.substr(0, length);
+}
+function right(str, length) {
+    if (!str)
+        return str;
+    return str.substr(-length);
 }
 function ltrim(str) {
     if (!str)
@@ -18,6 +28,27 @@ function trimStr(str) {
         return str;
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 }
+function replace(str, oldToken, newToken, ignoreCase) {
+    if (Array.isArray(oldToken)) {
+        for (var i = 0; i < oldToken.length; ++i) {
+            str = replace(str, oldToken[i], newToken, ignoreCase);
+        }
+        return str;
+    }
+    newToken = newToken || "";
+    ignoreCase = ignoreCase || false;
+    if (!str || !oldToken)
+        return str;
+    if ((ignoreCase ? oldToken.toLowerCase() : oldToken) == (ignoreCase ? newToken.toLowerCase() : newToken))
+        return str;
+    var foundAt = 0;
+    var ci = (ignoreCase ? oldToken.toLowerCase() : oldToken);
+    while ((foundAt = ((ignoreCase ? str.toLowerCase() : str)).indexOf(ci, foundAt)) != -1) {
+        str = str.substr(0, foundAt) + newToken + str.substr(foundAt + oldToken.length);
+        foundAt += newToken.length;
+    }
+    return str;
+}
 function getValues() {
     var eles = document.querySelectorAll('tr td[colspan="6"]');
     var arr = [];
@@ -26,7 +57,6 @@ function getValues() {
     }
     return arr;
 }
-console.log(JSON.stringify(getValues(), null, "  "));
 function getProperties(el) {
     var arr = [];
     for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
@@ -35,27 +65,33 @@ function getProperties(el) {
     }
     return arr;
 }
-function iterator(p) {
+function collectStructure(p, parent) {
     if (p == null)
         return;
+    parent = parent || null;
     var children = Array.prototype.slice.call(p.childNodes);
+    var guid = uuid.newGuid();
     var checklistData = {
-        "element": {
-            "tagName": p.nodeName,
-            "properties": getProperties(p)
-        },
+        "uuid": guid,
+        "parent_uuid": parent,
+        "tagName": p.nodeName,
+        "properties": getProperties(p),
         "children": []
     };
-    if (p.nodeName.toLowerCase() === "td")
-        checklistData.element.innerHtml = p.innerHTML;
+    if (p.nodeName.toLowerCase() === "td") {
+        checklistData.innerHtml = p.innerHTML;
+    }
     else if (children.length) {
         for (var i = 0; i < children.length; i++) {
             var cur = children[i];
             if (cur.nodeType === Node.TEXT_NODE) {
             }
             else if (cur.nodeType === Node.ELEMENT_NODE) {
-                var ret = iterator(cur);
+                var ret = collectStructure(cur, guid);
                 checklistData.children.push(ret);
+            }
+            else {
+                console.log("unhandeld node", cur.nodeType);
             }
         }
     }
@@ -70,95 +106,41 @@ function createElement(ed) {
         el.innerHTML = ed.innerHtml;
     return el;
 }
-function tabulator(obj, parent) {
+function assemblyStructure(obj, parent) {
     parent = parent || document.createDocumentFragment();
-    var a = createElement(obj.element);
+    var a = createElement(obj);
     for (var i = 0; i < obj.children.length; ++i) {
-        tabulator(obj.children[i], a);
+        assemblyStructure(obj.children[i], a);
     }
     parent.appendChild(a);
     return parent;
 }
-function Replace(str, oldToken, newToken, ignoreCase) {
-    newToken = newToken || "";
-    ignoreCase = ignoreCase || false;
-    if (!str || !oldToken)
-        return str;
-    if ((ignoreCase ? oldToken.toLowerCase() : oldToken) == (ignoreCase ? newToken.toLowerCase() : newToken))
-        return str;
-    var foundAt = 0;
-    while ((foundAt = ((ignoreCase ? str.toLowerCase() : str)).indexOf(oldToken, foundAt)) != -1) {
-        str = str.substr(0, foundAt) + newToken + str.substr(foundAt + oldToken.length);
-        foundAt += newToken.length;
+function getErrorObject() {
+    try {
+        throw Error('');
     }
-    return str;
+    catch (err) {
+        return err;
+    }
 }
-var XML = {
-    parse: function (string, type) {
-        if (type === void 0) { type = 'text/xml'; }
-        return new DOMParser().parseFromString(string, type);
-    },
-    stringify: function (DOM) {
-        return new XMLSerializer().serializeToString(DOM);
-    },
-    transform: function (xml, xsl) {
-        var proc = new XSLTProcessor();
-        proc.importStylesheet(typeof xsl == 'string' ? XML.parse(xsl) : xsl);
-        var output = proc.transformToFragment(typeof xml == 'string' ? XML.parse(xml) : xml, document);
-        return typeof xml == 'string' ? XML.stringify(output) : output;
-    },
-    minify: function (node) {
-        return XML.toString(node, false);
-    },
-    prettify: function (node) {
-        var res = XML.toString(node, true);
-        if (res.startsWith("<#document-fragment>"))
-            res = res.substr("<#document-fragment>".length);
-        if (res.endsWith("</#document-fragment>\n")) {
-            res = res.substr(0, res.length - "</#document-fragment>\n".length);
-            res += "\n";
-        }
-        return res;
-    },
-    toString: function (node, pretty, level, singleton) {
-        if (level === void 0) { level = 0; }
-        if (singleton === void 0) { singleton = false; }
-        if (typeof node == 'string')
-            node = XML.parse(node);
-        var tabs = pretty ? Array(level + 1).fill('').join('\t') : '';
-        var newLine = pretty ? '\n' : '';
-        if (node.nodeType == 3)
-            return (singleton ? '' : tabs) + node.textContent.trim() + (singleton ? '' : newLine);
-        if (!node.nodeName)
-            return XML.toString(node.firstChild, pretty);
-        var output = tabs + ("<" + node.nodeName.toLowerCase());
-        if (node.attributes) {
-            for (var i = 0; i < node.attributes.length; i++)
-                output += " " + node.attributes[i].name + "=\"" + node.attributes[i].value + "\"";
-        }
-        if (node.childNodes.length == 0)
-            return output + ' />' + newLine;
-        else
-            output += '>';
-        var onlyOneTextChild = ((node.childNodes.length == 1) && (node.childNodes[0].nodeType == 3));
-        if (!onlyOneTextChild)
-            output += newLine;
-        for (var i = 0; i < node.childNodes.length; i++)
-            output += XML.toString(node.childNodes[i], pretty, level + 1, onlyOneTextChild);
-        return output + (onlyOneTextChild ? '' : tabs) + ("</" + node.nodeName.toLowerCase() + ">") + newLine;
-    }
-};
+function getScriptName() {
+    var error = getErrorObject(), source, lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/), currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/);
+    if (error.stack && (source = lastStackFrameRegex.exec(error.stack.trim())) && source[1] != "")
+        return source[1];
+    else if (error.stack && (source = currentStackFrameRegex.exec(error.stack.trim())))
+        return source[1];
+    else if (error.fileName != undefined)
+        return error.fileName;
+    return null;
+}
 function autorun() {
     console.log("document ready");
+    console.log("translate data", JSON.stringify(getValues(), null, "  "));
     var table = document.querySelector("body > table");
-    console.log("table", table);
-    var it = iterator(table);
-    var t2 = tabulator(it);
-    console.log("out", t2);
-    console.log(XML.prettify(t2));
-    var b = hu.htmlEncode("äöü<>[]{}nihao");
-    var c = hu.htmlDecode(b);
-    console.log(c);
+    var harvest = collectStructure(table);
+    var obj = require("./mydata.js");
+    console.log("obj", obj);
+    var t2 = assemblyStructure(harvest);
 }
 if (document.addEventListener)
     document.addEventListener("DOMContentLoaded", autorun, false);

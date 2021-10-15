@@ -25,30 +25,31 @@ if (!String.prototype.startsWith) {
         }
     });
 }
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function (search, this_len) {
+        if (this_len === undefined || this_len > this.length) {
+            this_len = this.length;
+        }
+        return this.substring(this_len - search.length, this_len) === search;
+    };
+}
+if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    };
+}
+if (!String.prototype.trimStart) {
+    String.prototype.trimStart = function () {
+        return this.replace(/^[\s\uFEFF\xA0]+/g, '');
+    };
+}
+if (!String.prototype.trimEnd) {
+    String.prototype.trimEnd = function () {
+        return this.replace(/[\s\uFEFF\xA0]+$/g, '');
+    };
+}
 function require(name) {
     console.log("Evaluating file " + name);
-    var cs = document.currentScript || document.scripts[document.scripts.length - 1];
-    var src = cs.getAttribute("src");
-    var bs = cs.baseURI;
-    var source = null;
-    console.log("relativeScript", src);
-    console.log("base", cs.baseURI);
-    var ind = src.lastIndexOf('/');
-    if (ind != -1)
-        source = src.substr(0, ind + 1);
-    function _getCaller() {
-        var err = new Error();
-        Error.captureStackTrace(err);
-        var frames = err.stack.split('\n').slice(1);
-        for (var i = 0; i < frames.length; i++) {
-            console.log("framews", frames[i]);
-            var STACK_FRAME_RE = new RegExp("\\((.*?\\.(js|htm|html)).*\\)");
-            var callerInfo = STACK_FRAME_RE.exec(frames[i]);
-            if (callerInfo && callerInfo.length > 0)
-                console.log("callerInfo", callerInfo[1]);
-        }
-        return null;
-    }
     function getErrorObject() {
         try {
             throw Error('');
@@ -57,14 +58,45 @@ function require(name) {
             return err;
         }
     }
-    var err = getErrorObject();
+    function getScriptName() {
+        var error = getErrorObject(), source, lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/), currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/);
+        if (error.stack) {
+            var rx = (error.stack.indexOf('@') != -1) ? new RegExp("(.*)@(.*):", 'gm')
+                : new RegExp("at\\s((.*?)\\s+)?(\\()?(http.*:)(\\))?", 'gm');
+            var frames_1 = [];
+            var match = void 0;
+            while ((match = rx.exec(error.stack)) !== null) {
+                var method = null;
+                var path = null;
+                if (match.length == 6) {
+                    method = match[2];
+                    path = match[4].substr(0, match[4].lastIndexOf('/') + 1);
+                }
+                else if (match.length == 3) {
+                    method = match[1];
+                    path = match[2].substr(0, match[2].lastIndexOf('/') + 1);
+                }
+                else {
+                    console.log("require.js: bad match: ", match);
+                }
+                if (["getErrorObject", "getScriptName", "readFileSync", "require"].indexOf(method) == -1) {
+                    return path;
+                }
+                frames_1.push([method, path]);
+            }
+            return frames_1[frames_1.length - 1][1];
+        }
+        if (error.fileName != undefined)
+            return error.fileName;
+        return null;
+    }
     function readFileSync(fileName, encoding) {
         var client = new XMLHttpRequest();
         var contentType = null;
         var mimeType = null;
         if (fileName.startsWith("./")) {
             fileName = fileName.substr(2);
-            fileName = source + fileName;
+            fileName = getScriptName() + fileName;
         }
         if (fileName.indexOf("?") == -1)
             fileName += "?no_cache=" + (new Date()).getTime().toString();
@@ -77,11 +109,11 @@ function require(name) {
                     contentType = this.getResponseHeader('content-type');
                     if (contentType != null) {
                         contentType = contentType.toLowerCase();
-                        var ind_1 = contentType.indexOf(";");
-                        if (ind_1 == -1)
+                        var ind = contentType.indexOf(";");
+                        if (ind == -1)
                             mimeType = contentType;
                         else
-                            mimeType = contentType.substr(0, ind_1).replace(/^\s+|\s+$/g, '');
+                            mimeType = contentType.substr(0, ind).replace(/^\s+|\s+$/g, '');
                     }
                 }
                 else {
@@ -89,6 +121,7 @@ function require(name) {
             }
         }
         client.onreadystatechange = hand;
+        console.log("open " + fileName);
         client.open("GET", fileName, false);
         client.send();
         if (client.status === 200) {
@@ -98,7 +131,11 @@ function require(name) {
                 "mimeType": mimeType
             };
         }
-        return null;
+        return {
+            "text": "<!-- -->",
+            "contentType": fileName,
+            "mimeType": encoding
+        };
     }
     if (!(name in require.cache)) {
         console.log(name + " is not in cache; reading from disk");
@@ -112,6 +149,9 @@ function require(name) {
         else {
             var wrapper = Function("require, exports, module", code.text);
             wrapper(require, module.exports, module);
+            if (module.exports.default) {
+                module.exports = module.exports.default;
+            }
         }
     }
     console.log(name + " is in cache. Returning it...");

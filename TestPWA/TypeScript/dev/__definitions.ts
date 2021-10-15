@@ -1,5 +1,39 @@
 
 "use strict";
+/* 
+Grunt => Gulp => browserify => webpack => vite
+
+Vite: 50s =>
+
+
+Gulp	32.4k	https://github.com/gulpjs/gulp
+Grunt 12.1k	https://github.com/gruntjs/grunt
+browserify 13.9k https://github.com/browserify/browserify
+webpack	59.6k	https://github.com/webpack/webpack
+vite 32.7k	https://github.com/vitejs/vite
+esbuild 28k https://github.com/evanw/esbuild
+TypeScript  74.9k   https://github.com/microsoft/TypeScript
+Babel   39.8k   https://github.com/babel/babel
+Flow    21.4k   https://github.com/facebook/flow
+
+
+webpack => esbuild: 40s => 0.33s, 50s => 0.4s, 60s => 0.5s
+
+https://webpack.js.org/concepts/hot-module-replacement/
+https://vitejs.dev/guide/
+https://vitejs.dev/guide/features.html#typescript
+
+
+https://javascript.plainenglish.io/why-you-should-not-use-webpack-f07f4fd7c116
+https://medium.com/@housecor/browserify-vs-webpack-b3d7ca08a0a9
+https://alligator.io/tooling/webpack-gulp-grunt-browserify/
+
+
+https://www.typescriptlang.org/docs/handbook/type-compatibility.html
+https://www.typescriptlang.org/docs/handbook/modules.html
+
+*/
+
 
 interface Window
 {
@@ -7,6 +41,7 @@ interface Window
     // require_async: (name: string) => Promise<any>;
     require<T>(fileName: string): T;
     require_async<T>(name: string): Promise<T>;
+    msCrypto: Crypto;
 }
 
 
@@ -71,12 +106,36 @@ interface IHttpUtility
 {
     htmlEncode(s: string): string;
     htmlDecode(s: string): string;
-
+    htmlAttributeEncode(s: string): string;
+    htmlAttributeDecode(s: string): string;
+    javaScriptStringEncode(value: string, addDoubleQuotes?: boolean): string;
+    urlPathEncode(value: string): string;
+    
     // private parts 
-    // declare function initEntities(): any;
-    // declare let Entities: any;
-    // declare function isDigit(str: string): boolean;
-    // declare function isHexDigit(str: string): boolean;
+    // declare let Entities: any; 
+    // toUTF8Array(str: string): number[]; 
+    // initEntities(): any[]; 
+    // isDigit(str: string): boolean; 
+    // isHexDigit(str: string): boolean; 
+}
+
+
+interface IXmlBeautifier 
+{
+    parse(string: string, type: DOMParserSupportedType): Document;
+    stringify(DOM: Node): string;
+    transform(xml: string, xsl: string): string | DocumentFragment;
+    minify(node: Element): string;
+    prettify(node: Element): string;
+}
+
+
+
+interface IUUID 
+{
+    uuidv4(): string;
+    newId(v?: number): string;
+    newGuid(v?: number): string;
 }
 
 

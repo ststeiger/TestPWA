@@ -563,15 +563,33 @@ export function htmlAttributeEncode(s: string): string
 }
 
 
+function replace(str: string, oldToken: string, newToken: string)
+{
+    if (!str)
+        return str;
+
+    let foundAt = 0;
+    while ((foundAt = str.indexOf(oldToken, foundAt)) != -1)
+    {
+        str = str.substr(0, foundAt) + newToken + str.substr(foundAt + oldToken.length);
+        foundAt += newToken.length;
+    }
+
+    return str;
+}
+
+
+
+
 export function htmlAttributeDecode(s: string): string
 {
     let len = s.length;
     let output: string[] = [];
 
-    s = s.replace(/&#39;/g, '\'');
-    s = s.replace(/&lt;/g, '<');
-    s = s.replace(/&quot;/g, '"');
-    s = s.replace(/&amp;/g, '&');
+    s = replace(s,'&#39;', '\'');
+    s = replace(s, '&lt;', '<');
+    s = replace(s, '&quot;', '"');
+    s = replace(s, '&amp;', '&');
 
     return s;
 }

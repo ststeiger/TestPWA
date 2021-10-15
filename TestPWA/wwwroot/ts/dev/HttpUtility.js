@@ -479,13 +479,23 @@ function htmlAttributeEncode(s) {
     return output.join("");
 }
 exports.htmlAttributeEncode = htmlAttributeEncode;
+function replace(str, oldToken, newToken) {
+    if (!str)
+        return str;
+    var foundAt = 0;
+    while ((foundAt = str.indexOf(oldToken, foundAt)) != -1) {
+        str = str.substr(0, foundAt) + newToken + str.substr(foundAt + oldToken.length);
+        foundAt += newToken.length;
+    }
+    return str;
+}
 function htmlAttributeDecode(s) {
     var len = s.length;
     var output = [];
-    s = s.replace(/&#39;/g, '\'');
-    s = s.replace(/&lt;/g, '<');
-    s = s.replace(/&quot;/g, '"');
-    s = s.replace(/&amp;/g, '&');
+    s = replace(s, '&#39;', '\'');
+    s = replace(s, '&lt;', '<');
+    s = replace(s, '&quot;', '"');
+    s = replace(s, '&amp;', '&');
     return s;
 }
 exports.htmlAttributeDecode = htmlAttributeDecode;
