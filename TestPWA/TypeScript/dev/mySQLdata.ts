@@ -11,6 +11,13 @@
 
 
 
+// Required compatibility level
+// --When DB is restored from SQL - Server < 2016
+// ALTER DATABASE < DB_Name > SET COMPATIBILITY_LEVEL = 130
+// ALTER DATABASE COR_Basic_Demo_V4 SET COMPATIBILITY_LEVEL = 130
+
+
+
 let obj: any = `
 DECLARE @json nvarchar(max) = N'
 {
