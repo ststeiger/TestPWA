@@ -83,3 +83,4 @@ https://www.typescriptlang.org/docs/handbook/declaration-files/dts-from-js.html
 cd / d "D:\username\Documents\Visual Studio 2017\Projects\TestPWA\TestPWA\TypeScript\firstModule"
 npx - p typescript tsc HttpUtility.ts--declaration--allowJs--emitDeclarationOnly--outDir types
 */
+
