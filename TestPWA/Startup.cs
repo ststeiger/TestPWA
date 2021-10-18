@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 
+using AnySqlWebAdmin;
+
+
 namespace TestPWA
 {
 
@@ -28,6 +31,23 @@ namespace TestPWA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // https://stackoverflow.com/questions/47735133/asp-net-core-synchronous-operations-are-disallowed-call-writeasync-or-set-all
+
+            // If using Kestrel:
+            services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            // If using IIS:
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+
+            services.AddSingleton<AnySqlWebAdmin.SqlFactory>();
+
             services.AddRazorPages();
             services.AddMvc();
         } // End Sub ConfigureServices 
@@ -161,6 +181,8 @@ namespace TestPWA
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
             });
+
+            app.UseSqlMiddleware();
 
         } // End Sub Configure 
 

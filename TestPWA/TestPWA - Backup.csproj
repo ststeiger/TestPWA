@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -6,11 +6,10 @@
   
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Npgsql" Version="5.0.10" />
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Dapper\Dapper.csproj" />
+  <Folder Include="Code\SQL\" />
   </ItemGroup>
   
 </Project>

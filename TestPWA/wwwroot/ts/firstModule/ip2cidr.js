@@ -1,4 +1,4 @@
-function IPrange2CIDR(ip1, ip2) {
+function ip_range_to_cidr(ip1, ip2) {
     function IP2num(ip) {
         var nums = ip.split('.');
         var first = parseInt(nums[0], 10);
@@ -23,7 +23,7 @@ function IPrange2CIDR(ip1, ip2) {
     var res = ip1 + "/" + bits.toString();
     return res;
 }
-function CIDR2IP(cidr) {
+function cidr_to_ip(cidr) {
     var parts = cidr.split('/').join('.').split('.');
     var ipnum = (parseInt(parts[0]) << 24) |
         (parseInt(parts[1]) << 16) |
@@ -40,6 +40,8 @@ function CIDR2IP(cidr) {
 }
 function testCidr() {
     var IP = "5.39.40.96/27";
-    CIDR2IP(IP);
-    IPrange2CIDR("5.39.40.96", "5.39.40.127");
+    cidr_to_ip(IP);
+    ip_range_to_cidr("5.39.40.96", "5.39.40.127");
 }
+exports.ip_range_to_cidr = ip_range_to_cidr;
+exports.cidr_to_ip = cidr_to_ip;

@@ -1,7 +1,7 @@
 
 // https://dev.maxmind.com/geoip/
 // https://stackoverflow.com/questions/461742/how-to-convert-an-ipv4-address-into-a-integer-in-c
-function IPrange2CIDR(ip1: string, ip2: string) : string
+function ip_range_to_cidr(ip1: string, ip2: string) : string
 {
 
     function IP2num(ip: string): number
@@ -58,7 +58,7 @@ function IPrange2CIDR(ip1: string, ip2: string) : string
 
 
 // https://www.digitalocean.com/community/tutorials/understanding-ip-addresses-subnets-and-cidr-notation-for-networking
-function CIDR2IP(cidr: string)
+function cidr_to_ip(cidr: string)
 {
     let parts: string[] = cidr.split('/').join('.').split('.');
     
@@ -86,8 +86,13 @@ function testCidr()
 {
     let IP = "5.39.40.96/27";
     // IP = "88.84.128.0/19";
-    CIDR2IP(IP);
+    cidr_to_ip(IP);
 
-    // IPrange2CIDR("88.84.128.0", "88.84.159.255");
-    IPrange2CIDR("5.39.40.96", "5.39.40.127");
+    // ip_range_to_cidr("88.84.128.0", "88.84.159.255");
+    ip_range_to_cidr("5.39.40.96", "5.39.40.127");
 }
+
+
+
+exports.ip_range_to_cidr = ip_range_to_cidr;
+exports.cidr_to_ip = cidr_to_ip;

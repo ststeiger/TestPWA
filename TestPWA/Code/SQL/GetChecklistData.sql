@@ -1,0 +1,17 @@
+
+DECLARE @__cl_uid uniqueidentifier; 
+SET @__cl_uid = 'EB159A9C-E69F-49F4-B10E-3A4825973E46'; 
+
+SELECT CL_UID, CL_Name FROM T_Checklist WHERE CL_UID = @__cl_uid
+-- FOR JSON AUTO, INCLUDE_NULL_VALUES 
+; 
+
+SELECT ELE_UID, ELE_Parent_UID, ELE_CL_UID, ELE_TagName, ELE_InnerHtml FROM T_ChecklistElements WHERE ELE_CL_UID = @__cl_uid
+-- FOR JSON AUTO, INCLUDE_NULL_VALUES 
+; 
+
+
+
+SELECT PRO_UID, PRO_Name, PRO_Value, PRO_ELE_UID FROM T_Checklist_ZO_ElementProperties WHERE PRO_ELE_UID IN (SELECT ELE_UID FROM T_ChecklistElements WHERE ELE_CL_UID = @__cl_uid) ORDER BY PRO_ELE_UID, PRO_Name
+-- FOR JSON AUTO, INCLUDE_NULL_VALUES 
+; 

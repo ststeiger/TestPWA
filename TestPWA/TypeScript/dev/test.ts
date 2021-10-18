@@ -4,6 +4,11 @@
 import * as hu from "./HttpUtility.js";
 import * as xml from "./XmlBeautifier.js";
 import * as uuid from "./uuid.js";
+// import * as table_wrapper from "./TableWrapper.js";
+// https://stackoverflow.com/questions/39282253/how-can-i-alias-a-default-import-in-javascript
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+import { TableWrapper as tableWrapper } from "./TableWrapper.js";
+
 
 // let hu: IHttpUtility = require<IHttpUtility>("./HttpUtility.js")
 // let hu: IHttpUtility = null;
@@ -87,7 +92,7 @@ function replace(str: string, oldToken: string[] | string, newToken?: string, ig
 
 
 
-function getValues()
+function getTranslateData()
 {
     // td:not([colspan])
     let eles = document.querySelectorAll('tr td[colspan="6"]');
@@ -124,15 +129,17 @@ interface IXmlStructure
     properties: string[][];
     innerHtml?: string;
     children: IXmlStructure[];
+    sort: number;
 }
 
 
-function collectStructure(p: Node, parent?: string)
+function collectStructure(p: Node, parent?: string, sort?:number)
 {
     if (p == null)
         return;
 
     parent = parent || null;
+    sort = sort || 0;
 
     let children: Node[] = Array.prototype.slice.call(p.childNodes);
     let guid = uuid.newGuid();
@@ -142,9 +149,10 @@ function collectStructure(p: Node, parent?: string)
         ,"parent_uuid": parent
         ,"tagName": p.nodeName 
         ,"properties": getProperties(<Element>p)
-        ,"children": []
+        , "children": []
+        , "sort": sort
     };
-    
+
     if (p.nodeName.toLowerCase() === "td")
     {
         checklistData.innerHtml = (<Element>p).innerHTML;
@@ -152,6 +160,9 @@ function collectStructure(p: Node, parent?: string)
     else 
     if (children.length)
     {
+
+        let childSort = 0;
+
         for (let i = 0; i < children.length; i++)
         {
             let cur: Node = children[i];
@@ -168,8 +179,7 @@ function collectStructure(p: Node, parent?: string)
                 // console.log("cur.nodeName", cur.nodeName);
                 // console.log("cur.nodeValue", cur.nodeValue);
                 // console.log("cur.getProperties", getProperties(<Element>cur));
-
-                let ret = collectStructure(cur, guid);
+                let ret = collectStructure(cur, guid, childSort++);
                 checklistData.children.push(ret);
             }
             else
@@ -185,29 +195,29 @@ function collectStructure(p: Node, parent?: string)
 } // End Sub iterator
 
 
-function createElement(ed: IXmlStructure)
+function createElement(data: IXmlStructure)
 {
-    let el = document.createElement(ed.tagName);
-    for (let i = 0; i < ed.properties.length; ++i)
+    let el = document.createElement(data.tagName);
+    for (let i = 0; i < data.properties.length; ++i)
     {
-        el.setAttribute(ed.properties[i][0], ed.properties[i][1]);
+        el.setAttribute(data.properties[i][0], data.properties[i][1]);
     }
 
-    if(ed.innerHtml)
-        el.innerHTML = ed.innerHtml;
+    if (data.innerHtml)
+        el.innerHTML = data.innerHtml;
     
     return el;
 }
 
 
-function assemblyStructure(obj: IXmlStructure, parent?: Node)
+function assembleStructure(container: IXmlStructure, parent?: Node)
 {
     parent = parent || document.createDocumentFragment();
-    let a = createElement(obj);
+    let a = createElement(container);
     
-    for (let i = 0; i < obj.children.length; ++i)
+    for (let i = 0; i < container.children.length; ++i)
     {
-        assemblyStructure(obj.children[i], a);
+        assembleStructure(container.children[i], a);
     }
 
     parent.appendChild(a);
@@ -215,47 +225,18 @@ function assemblyStructure(obj: IXmlStructure, parent?: Node)
     return parent;
 }
 
-function getErrorObject()
-{
-    try { throw Error('') } catch (err) { return err; }
-}
-
-
-function getScriptName():string
-{
-    let error = getErrorObject() // new Error()
-        , source
-        , lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/)
-        , currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/);
-    
-    if (error.stack && (source = lastStackFrameRegex.exec(error.stack.trim())) && source[1] != "")
-        return source[1];
-    else if (error.stack && (source = currentStackFrameRegex.exec(error.stack.trim())))
-        return source[1];
-    else if ((<any>error).fileName != undefined)
-        return (<any>error).fileName;
-
-    // let cs = document.currentScript || document.scripts[document.scripts.length - 1];
-    // let src = cs.getAttribute("src");
-    // let bs = cs.baseURI;
-    // return cs.getAttribute("src");
-    return null;
-}
 
 
 // https://localhost:44314/ts/require/require.js?v=1
 // https://localhost:44314/vertical_text.htm
 // https://localhost:44314/Schuettgutcontainer.htm
-function autorun(): void
+async function autorun(): Promise<any>
 {
     console.log("document ready");
     
-    // console.log("scriptName", getScriptName());
     // console.log("scriptName", console.trace());
     
-
-
-    console.log("translate data", JSON.stringify(getValues(), null, "  "));
+    console.log("translate data", JSON.stringify(getTranslateData(), null, "  "));
 
     let table = document.querySelector("body > table")
     // console.log("table", table);
@@ -265,11 +246,11 @@ function autorun(): void
     // console.log(JSON.stringify(harvest, null, "  "));
 
 
-    let obj = require("./mydata.js");
-    console.log("obj", obj);
+    // let obj = require("./mydata.js");
+    // console.log("obj", obj);
 
     // Zusammensetzen:
-    let t2 = <HTMLElement>assemblyStructure(harvest);
+    let t2 = <HTMLElement>assembleStructure(harvest);
     // console.log("out", t2);
     // document.body.append(t2);
 
@@ -282,7 +263,96 @@ function autorun(): void
     // let b = hu.htmlEncode("הצü<>[]{}nihao")
     // let c = hu.htmlDecode(b);
     // console.log(c);
+
+
+    let fetchSingleChecklist = await fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1");
+
+    // let checkListDatat: any = await fetchSingleChecklist.text();
+    // console.log("checkListDatat", checkListDatat);
+    
+    let checkListData: any = await fetchSingleChecklist.json();
+    // console.log(checkListData.tables[0]);
+    // console.log(checkListData.tables[1]);
+    // console.log(checkListData.tables[2]);
+
+    
+    // let tab: TableWrapper<ITestTable1> = new TableWrapper<ITestTable1>(["col1", "col2"], [[1, 2], [3, 4]]);
+    // tab.columns=["col1","col2", "col3"];
+
+
+    // console.log(checkListData.tables[0]);
+    let checklistName = new tableWrapper<IT_Checklist>(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
+    let elements = new tableWrapper<IT_ChecklistElements>(checkListData.tables[1].columns, checkListData.tables[1].rows, false);
+    let elemntProps = new tableWrapper<IT_Checklist_ZO_ElementProperties>(checkListData.tables[2].columns, checkListData.tables[2].rows, false);
+
+    if(false)
+    for (let i = 0; i < checklistName.rowCount; ++i)
+    {
+        console.log("hi.columnCount", checklistName.columnCount);
+
+        for (let j = 0; j < checklistName.columnCount; ++j)
+        {
+            console.log("i", i, "j", j);
+
+            // console.log(checklistName.rows[i][j]);
+            // console.log(checklistName.row(i)["CL_Name"]);
+            
+            console.log("Name:", checklistName.row(i).CL_Name, "CL_UID:", checklistName.row(i).CL_UID);
+        }
+
+    }
+
+    for (let i = 0; i < elements.rowCount; ++i)
+    {
+        // console.log(elements.row(i).ELE_UID);
+        // console.log(elements.row(i).ELE_Parent_UID);
+        // console.log(elements.row(i).ELE_TagName);
+        // console.log(elements.row(i).ELE_InnerHtml);
+    }
+
+
+    for (let i = 0; i < elemntProps.rowCount; ++i)
+    {
+        // // console.log(elemntProps.row(i).PRO_UID);
+        // console.log(elemntProps.row(i).PRO_ELE_UID);
+        // console.log(elemntProps.row(i).PRO_Name);
+        // console.log(elemntProps.row(i).PRO_Value);
+    }
+
+    // https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1
+    // xxx.tables[3]
+
+
 }
+
+
+interface IT_Checklist
+{
+    CL_UID: string;
+    CL_Name: string;
+}
+
+
+
+interface IT_ChecklistElements
+{
+    ELE_UID: string;
+    ELE_Parent_UID: string;
+    ELE_CL_UID: string;
+    ELE_TagName: string;
+    ELE_InnerHtml: string;
+}
+
+
+interface IT_Checklist_ZO_ElementProperties
+{
+    
+    PRO_UID: string;
+    PRO_Name: string;
+    PRO_Value: string;
+    PRO_ELE_UID: string;
+}
+
 
 if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
 else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
