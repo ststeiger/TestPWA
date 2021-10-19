@@ -1,32 +1,102 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TableWrapper = void 0;
-var TableWrapper = (function () {
-    function TableWrapper(columns, data, ignoreCase) {
-        if (ignoreCase == null)
-            ignoreCase = true;
-        for (var i = 0; i < columns.length; ++i) {
-            if (ignoreCase)
-                columns[i] = columns[i].toLowerCase();
-        }
+exports.TableWrapper = exports.GroupedTableWrapper = exports.GroupedData = void 0;
+var linq_js_1 = require("./linq.js");
+var autobind_autotrace_js_1 = require("./autobind_autotrace.js");
+var GroupedData = (function () {
+    function GroupedData(key, columns, columnMap, data) {
+        autobind_autotrace_js_1.autoBind(this);
         var that = this;
-        this.getIndex.bind(this);
-        this.setColumns.bind(this);
-        this.row.bind(this);
-        this.addRow.bind(this);
-        this.removeRow.bind(this);
-        this.rows = data;
-        this.setColumns(columns);
         this.m_accessor = {};
+        this.m_key = key;
+        this.m_columns = columns;
+        this.m_columnMap = columnMap;
+        this.m_groupedData = data;
         var _loop_1 = function (i) {
-            var propName = columns[i];
+            var propName = that.columns[i];
+            Object.defineProperty(that.m_accessor, propName, {
+                get: function () {
+                    var currentRow = that.m_groupedData[that.m_i];
+                    return currentRow == null ? currentRow : currentRow[i];
+                }.bind(that),
+                set: function (value) {
+                    var currentRow = that.m_groupedData[that.m_i];
+                    if (currentRow != null)
+                        currentRow[i] = value;
+                }.bind(that),
+                enumerable: true,
+                configurable: true
+            });
+        };
+        for (var i = 0; i < that.columns.length; ++i) {
+            _loop_1(i);
+        }
+    }
+    Object.defineProperty(GroupedData.prototype, "key", {
+        get: function () {
+            return this.m_key;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(GroupedData.prototype, "columns", {
+        get: function () {
+            return this.m_columns;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(GroupedData.prototype, "rows", {
+        get: function () {
+            return this.m_groupedData;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(GroupedData.prototype, "rowCount", {
+        get: function () {
+            return this.m_groupedData.length;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(GroupedData.prototype, "columnMap", {
+        get: function () {
+            return this.m_columnMap;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    GroupedData.prototype.row = function (i) {
+        this.m_i = i;
+        return this.m_accessor;
+    };
+    GroupedData.prototype.getIndex = function (name) {
+        return this.m_columnMap[name];
+    };
+    return GroupedData;
+}());
+exports.GroupedData = GroupedData;
+var GroupedTableWrapper = (function () {
+    function GroupedTableWrapper(tw, propertyToGroupBy) {
+        var that = this;
+        autobind_autotrace_js_1.autoBind(this);
+        this.m_columnMap = tw.columnMap;
+        this.m_columns = tw.columns;
+        this.m_columnLength = tw.columns.length;
+        this.m_groupedData = linq_js_1.groupBy(tw.rows, function (item) {
+            return item[tw.getIndex(propertyToGroupBy)];
+        });
+        this.m_accessor = {};
+        var _loop_2 = function (i) {
+            var propName = this_1.m_columns[i];
             Object.defineProperty(this_1.m_accessor, propName, {
                 get: function () {
-                    var currentRow = that.rows[that.m_i];
+                    var currentRow = that.m_groupedData[that.m_id];
                     return currentRow == null ? currentRow : currentRow[i];
                 },
                 set: function (value) {
-                    var currentRow = that.rows[that.m_i];
+                    var currentRow = that.m_groupedData[that.m_id];
                     if (currentRow != null)
                         currentRow[i] = value;
                 },
@@ -35,10 +105,74 @@ var TableWrapper = (function () {
             });
         };
         var this_1 = this;
-        for (var i = 0; i < columns.length; ++i) {
-            _loop_1(i);
+        for (var i = 0; i < this.m_columnLength; ++i) {
+            _loop_2(i);
         }
     }
+    Object.defineProperty(GroupedTableWrapper.prototype, "columnCount", {
+        get: function () {
+            return this.m_columns.length;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(GroupedTableWrapper.prototype, "columns", {
+        get: function () {
+            return this.m_columns;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    GroupedTableWrapper.prototype.getGroup = function (id) {
+        return new GroupedData(id, this.columns, this.m_columnMap, this.m_groupedData[id]);
+    };
+    GroupedTableWrapper.prototype.getIndex = function (name) {
+        return this.m_columnMap[name];
+    };
+    return GroupedTableWrapper;
+}());
+exports.GroupedTableWrapper = GroupedTableWrapper;
+var TableWrapper = (function () {
+    function TableWrapper(columns, data, ignoreCase) {
+        var that = this;
+        autobind_autotrace_js_1.autoBind(this);
+        if (ignoreCase == null)
+            ignoreCase = true;
+        for (var i = 0; i < columns.length; ++i) {
+            if (ignoreCase)
+                columns[i] = columns[i].toLowerCase();
+        }
+        this.rows = data;
+        this.setColumns(columns);
+        this.m_accessor = {};
+        var _loop_3 = function (i) {
+            var propName = columns[i];
+            Object.defineProperty(this_2.m_accessor, propName, {
+                get: function () {
+                    var currentRow = that.rows[that.m_i];
+                    return currentRow == null ? currentRow : currentRow[i];
+                }.bind(that),
+                set: function (value) {
+                    var currentRow = that.rows[that.m_i];
+                    if (currentRow != null)
+                        currentRow[i] = value;
+                }.bind(that),
+                enumerable: true,
+                configurable: true
+            });
+        };
+        var this_2 = this;
+        for (var i = 0; i < columns.length; ++i) {
+            _loop_3(i);
+        }
+    }
+    Object.defineProperty(TableWrapper.prototype, "columnMap", {
+        get: function () {
+            return this.m_columnMap;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(TableWrapper.prototype, "rowCount", {
         get: function () {
             return this.rows.length;
@@ -83,6 +217,9 @@ var TableWrapper = (function () {
     TableWrapper.prototype.removeRow = function (i) {
         this.rows.splice(i, 1);
         return this;
+    };
+    TableWrapper.prototype.groupBy = function (key) {
+        return new GroupedTableWrapper(this, key);
     };
     return TableWrapper;
 }());

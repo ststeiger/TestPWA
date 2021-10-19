@@ -4,10 +4,12 @@
 import * as hu from "./HttpUtility.js";
 import * as xml from "./XmlBeautifier.js";
 import * as uuid from "./uuid.js";
-// import * as table_wrapper from "./TableWrapper.js";
+import * as linq from "./linq.js";
+import * as autobind_autotrace from "./autobind_autotrace.js";
 // https://stackoverflow.com/questions/39282253/how-can-i-alias-a-default-import-in-javascript
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
-import { TableWrapper as tableWrapper } from "./TableWrapper.js";
+import { TableWrapper as tableWrapper, GroupedTableWrapper as groupedTableWrapper } from "./TableWrapper.js";
+
 
 
 // let hu: IHttpUtility = require<IHttpUtility>("./HttpUtility.js")
@@ -16,6 +18,37 @@ import { TableWrapper as tableWrapper } from "./TableWrapper.js";
 // let xml: IXmlBeautifier = null;
 // let uuid = require<IUUID>("./uuid.js");
 // let uuid: IUUID = null;
+
+
+
+
+interface IT_Checklist
+{
+    CL_UID: string;
+    CL_Name: string;
+}
+
+
+
+interface IT_ChecklistElements
+{
+    ELE_UID: string;
+    ELE_Parent_UID: string;
+    ELE_CL_UID: string;
+    ELE_TagName: string;
+    ELE_InnerHtml: string;
+}
+
+
+interface IT_Checklist_ZO_ElementProperties
+{
+
+    PRO_UID: string;
+    PRO_Name: string;
+    PRO_Value: string;
+    PRO_ELE_UID: string;
+}
+
 
 
 // do polyfills immediately on script-load
@@ -226,14 +259,18 @@ function assembleStructure(container: IXmlStructure, parent?: Node)
 }
 
 
-
 // https://localhost:44314/ts/require/require.js?v=1
 // https://localhost:44314/vertical_text.htm
 // https://localhost:44314/Schuettgutcontainer.htm
 async function autorun(): Promise<any>
 {
+    let _: any = {
+         "linq": linq 
+        , "autobind_autotrace": autobind_autotrace
+    }; // goddamn, if not used, it's not imported ...
+
+
     console.log("document ready");
-    
     // console.log("scriptName", console.trace());
     
     console.log("translate data", JSON.stringify(getTranslateData(), null, "  "));
@@ -282,9 +319,13 @@ async function autorun(): Promise<any>
 
     // console.log(checkListData.tables[0]);
     let checklistName = new tableWrapper<IT_Checklist>(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
+    // console.log("checklistName", checklistName.columns);
     let elements = new tableWrapper<IT_ChecklistElements>(checkListData.tables[1].columns, checkListData.tables[1].rows, false);
+    // console.log("elements", elements.columns);
     let elemntProps = new tableWrapper<IT_Checklist_ZO_ElementProperties>(checkListData.tables[2].columns, checkListData.tables[2].rows, false);
+    // console.log("elemntProps", elemntProps.columns);
 
+    
     if(false)
     for (let i = 0; i < checklistName.rowCount; ++i)
     {
@@ -296,7 +337,6 @@ async function autorun(): Promise<any>
 
             // console.log(checklistName.rows[i][j]);
             // console.log(checklistName.row(i)["CL_Name"]);
-            
             console.log("Name:", checklistName.row(i).CL_Name, "CL_UID:", checklistName.row(i).CL_UID);
         }
 
@@ -311,6 +351,30 @@ async function autorun(): Promise<any>
     }
 
 
+    let groupedElements = elements.groupBy("ELE_Parent_UID");
+    
+
+    let aaa = groupedElements.getGroup("0b17226e-9722-4c2e-ac50-b36eab66e4f3");
+    
+
+    for (let i = 0; i < aaa.rows.length; ++i)
+    {
+        console.log("group row", aaa.row(i).ELE_UID);
+    }
+
+    
+
+    /*
+    console.log("grouped by", linq.groupBy(elements.rows,
+        function (x: any)
+        {
+            return x[elements.getIndex("ELE_Parent_UID")]
+        }
+    ));
+    */
+
+
+    if (false)
     for (let i = 0; i < elemntProps.rowCount; ++i)
     {
         // // console.log(elemntProps.row(i).PRO_UID);
@@ -325,35 +389,6 @@ async function autorun(): Promise<any>
 
 }
 
-
-interface IT_Checklist
-{
-    CL_UID: string;
-    CL_Name: string;
-}
-
-
-
-interface IT_ChecklistElements
-{
-    ELE_UID: string;
-    ELE_Parent_UID: string;
-    ELE_CL_UID: string;
-    ELE_TagName: string;
-    ELE_InnerHtml: string;
-}
-
-
-interface IT_Checklist_ZO_ElementProperties
-{
-    
-    PRO_UID: string;
-    PRO_Name: string;
-    PRO_Value: string;
-    PRO_ELE_UID: string;
-}
-
-
-if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
-else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
-else window.onload = autorun;
+if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false); 
+else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun); 
+else window.onload = autorun; 

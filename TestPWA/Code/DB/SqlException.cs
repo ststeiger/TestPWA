@@ -57,9 +57,9 @@ namespace AnySqlWebAdmin
             // https://stackoverflow.com/questions/27197317/json-net-is-ignoring-properties-in-types-derived-from-system-exception-why
             // JsonSerializer.SerializeAndIgnoreSerializableInterface(this, s);
 
-            if (true)
+#if true
+            using (StreamWriter writer = new StreamWriter(s))
             {
-                using (StreamWriter writer = new StreamWriter(s))
                 using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
                 {
                     JsonSerializer ser = new JsonSerializer();
@@ -67,17 +67,16 @@ namespace AnySqlWebAdmin
                     ser.Serialize(jsonWriter, this);
                     jsonWriter.Flush();
                 }
-
-                await System.Threading.Tasks.Task.CompletedTask;
-                return;
             }
-
+            await System.Threading.Tasks.Task.CompletedTask;
+#else
             System.Text.Json.JsonSerializerOptions jso = new System.Text.Json.JsonSerializerOptions();
             jso.IncludeFields = true;
             jso.WriteIndented = true;
             // jso.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
             // System.Text.Json.JsonSerializer.Serialize(s,this, this.GetType(), jso);
             await System.Text.Json.JsonSerializer.SerializeAsync(s, this, this.GetType(), jso);
+#endif
         } // End Constructor 
 
 

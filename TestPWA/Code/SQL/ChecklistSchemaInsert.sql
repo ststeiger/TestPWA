@@ -1389,12 +1389,14 @@ SELECT
 	,N'Testcheckliste' AS CL_Name -- nvarchar(256) 
 ;
 
-INSERT INTO T_ChecklistElements(ELE_UID, ELE_Parent_UID, ELE_CL_UID, ELE_TagName, ELE_InnerHtml)
+INSERT INTO T_ChecklistElements(ELE_UID, ELE_Parent_UID, ELE_CL_UID, ELE_TagName, ELE_Level, ELE_Sort, ELE_InnerHtml)
 SELECT 
 	 uuid AS ELE_UID -- uniqueidentifier
 	,parent_uuid AS ELE_Parent_UID -- uniqueidentifier
 	,'EB159A9C-E69F-49F4-B10E-3A4825973E46' AS ELE_CL_UID -- uniqueidentifier
 	,tagName AS ELE_TagName -- nvarchar(256)
+	,lvl AS ELE_Level -- int 
+	,sort AS ELE_Sort -- int 
 	,innerHtml AS ELE_InnerHtml -- nvarchar(max)
 FROM #CheckListNodes 
 
@@ -1444,7 +1446,7 @@ SELECT CL_UID, CL_Name FROM T_Checklist WHERE CL_UID = @__cl_uid
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
 ; 
 
-SELECT ELE_UID, ELE_Parent_UID, ELE_CL_UID, ELE_TagName, ELE_InnerHtml FROM T_ChecklistElements WHERE ELE_CL_UID = @__cl_uid
+SELECT ELE_UID, ELE_Parent_UID, ELE_CL_UID, ELE_TagName, ELE_Sort, ELE_InnerHtml FROM T_ChecklistElements WHERE ELE_CL_UID = @__cl_uid
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
 ; 
 

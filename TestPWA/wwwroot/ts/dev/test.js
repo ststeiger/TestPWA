@@ -37,6 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var uuid = require("./uuid.js");
+var linq = require("./linq.js");
+var autobind_autotrace = require("./autobind_autotrace.js");
 var TableWrapper_js_1 = require("./TableWrapper.js");
 if (true) {
 }
@@ -157,10 +159,14 @@ function assembleStructure(container, parent) {
 }
 function autorun() {
     return __awaiter(this, void 0, void 0, function () {
-        var table, harvest, t2, fetchSingleChecklist, checkListData, checklistName, elements, elemntProps, i, j, i, i;
+        var _, table, harvest, t2, fetchSingleChecklist, checkListData, checklistName, elements, elemntProps, i, j, i, groupedElements, aaa, i, i;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    _ = {
+                        "linq": linq,
+                        "autobind_autotrace": autobind_autotrace
+                    };
                     console.log("document ready");
                     console.log("translate data", JSON.stringify(getTranslateData(), null, "  "));
                     table = document.querySelector("body > table");
@@ -185,8 +191,14 @@ function autorun() {
                         }
                     for (i = 0; i < elements.rowCount; ++i) {
                     }
-                    for (i = 0; i < elemntProps.rowCount; ++i) {
+                    groupedElements = elements.groupBy("ELE_Parent_UID");
+                    aaa = groupedElements.getGroup("0b17226e-9722-4c2e-ac50-b36eab66e4f3");
+                    for (i = 0; i < aaa.rows.length; ++i) {
+                        console.log("group row", aaa.row(i).ELE_UID);
                     }
+                    if (false)
+                        for (i = 0; i < elemntProps.rowCount; ++i) {
+                        }
                     return [2];
             }
         });

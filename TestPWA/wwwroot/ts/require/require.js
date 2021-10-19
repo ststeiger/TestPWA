@@ -58,7 +58,7 @@ function require(name) {
             return err;
         }
     }
-    function getScriptName() {
+    function getScriptName(fn) {
         var error = getErrorObject(), source, lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/), currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/);
         if (error.stack) {
             var rx = (error.stack.indexOf('@') != -1) ? new RegExp("(.*)@(.*):", 'gm')
@@ -96,7 +96,7 @@ function require(name) {
         var mimeType = null;
         if (fileName.startsWith("./")) {
             fileName = fileName.substr(2);
-            fileName = getScriptName() + fileName;
+            fileName = getScriptName(fileName) + fileName;
         }
         if (fileName.indexOf("?") == -1)
             fileName += "?no_cache=" + (new Date()).getTime().toString();
@@ -158,5 +158,14 @@ function require(name) {
     return require.cache[name].exports;
 }
 require.cache = Object.create(null);
-window.require = require;
-window.exports = {};
+require.paths = Object.create(null);
+(function () {
+    window.require = require;
+    window.exports = window.exports || Object.create(null);
+    var cs = document.currentScript || document.scripts[document.scripts.length - 1];
+    if (cs != null) {
+        require.paths.main = cs.getAttribute("data-main");
+        require.paths.src = cs.getAttribute("src");
+        require.paths.html = document.location.href;
+    }
+}());

@@ -114,9 +114,8 @@ function require<T>(name: string): T
     console.log(`Evaluating file ${name}`);
 
     // let cs = document.currentScript || document.scripts[document.scripts.length - 1];
-    // let cs = document.currentScript;
     // console.log("cs", cs);
-
+    
     // let src = cs.getAttribute("src");
     // let bs = cs.baseURI;
     // let source:string = null;
@@ -132,7 +131,7 @@ function require<T>(name: string): T
 
 
     // https://gist.github.com/jedp/3166317
-    function getScriptName(): string
+    function getScriptName(fn:string): string
     {
         let error = getErrorObject() // new Error()
             , source
@@ -211,10 +210,6 @@ function require<T>(name: string): T
         if ((<any>error).fileName != undefined)
             return (<any>error).fileName;
 
-        // let cs = document.currentScript || document.scripts[document.scripts.length - 1];
-        // let src = cs.getAttribute("src");
-        // let bs = cs.baseURI;
-        // return cs.getAttribute("src");
         return null;
     }
 
@@ -244,7 +239,7 @@ function require<T>(name: string): T
         if (fileName.startsWith("./"))
         {
             fileName = fileName.substr(2);
-            fileName = getScriptName() + fileName;
+            fileName = getScriptName(fileName) + fileName;
             // console.log("doctored", fileName)
         }
 
@@ -329,7 +324,7 @@ function require<T>(name: string): T
             , "mimeType": encoding
         };
     }
-
+    
     if (!(name in require.cache))
     {
         console.log(`${name} is not in cache; reading from disk`);
@@ -376,10 +371,30 @@ function require<T>(name: string): T
     return require.cache[name].exports;
 }
 
-
 require.cache = Object.create(null);
-window.require = require;
-window.exports = {};
+require.paths = Object.create(null);
+
+(function ()
+{
+    window.require = require;
+    // https://nodejs.org/api/globals.html
+    // __dirname: This variable may appear to be global but is not. The directory name of the current module. This is the same as the path.dirname() of the __filename.
+    // __filename: This variable may appear to be global but is not. The file name of the current module. This is the current module file's absolute path with symlinks resolved.
+    // jep, it's a global-object: __dirname, __filename, exports, module, require()
+    window.exports = window.exports || Object.create(null);
+
+    let cs = document.currentScript || document.scripts[document.scripts.length - 1];
+
+    // console.log("cs", cs);
+    if (cs != null)
+    {
+        require.paths.main = cs.getAttribute("data-main");
+        require.paths.src = cs.getAttribute("src");
+        require.paths.html = document.location.href; // cs.baseURI || ;
+    }
+}());
+
+
 
 
 // const stuff = window.require('./main.js');
@@ -388,3 +403,8 @@ window.exports = {};
 
 // function wrapper(require, exports, module)
 // function require(name: string): any
+
+
+// https://syfuhs.net/bruce-a-command-line-kerberos-net-management-tool
+// https://github.com/dotnet/Kerberos.NET
+// https://github.com/SIGAN/gssapi
