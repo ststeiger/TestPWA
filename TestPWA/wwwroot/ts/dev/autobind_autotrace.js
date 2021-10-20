@@ -8,30 +8,21 @@ function autoBind(self) {
             var desc = Object.getOwnPropertyDescriptor(self.constructor.prototype, key);
             self.defineProperty;
             if (desc != null) {
+                if (!desc.configurable) {
+                    console.log("AUTOBIND-WARNING: Property \"" + key + "\" not configurable ! (" + self.constructor.name + ")");
+                    continue;
+                }
                 var g = desc.get != null;
                 var s = desc.set != null;
                 if (g || s) {
-                    var newGetter = null;
-                    var newSetter = null;
+                    var newDescriptor = {};
+                    newDescriptor.enumerable = desc.enumerable;
+                    newDescriptor.configurable = desc.configurable;
                     if (g)
-                        newGetter = desc.get.bind(self);
+                        newDescriptor.get = desc.get.bind(self);
                     if (s)
-                        newSetter = desc.set.bind(self);
-                    if (newGetter != null && newSetter == null) {
-                        Object.defineProperty(self, key, {
-                            get: newGetter
-                        });
-                    }
-                    else if (newSetter != null && newGetter == null) {
-                        Object.defineProperty(self, key, {
-                            set: newSetter
-                        });
-                    }
-                    else {
-                        Object.defineProperty(self, key, {
-                            get: newGetter, set: newSetter
-                        });
-                    }
+                        newDescriptor.set = desc.set.bind(self);
+                    Object.defineProperty(self, key, newDescriptor);
                     continue;
                 }
             }
@@ -88,30 +79,21 @@ function autoTrace(self) {
         if (key !== 'constructor') {
             var desc = Object.getOwnPropertyDescriptor(self.constructor.prototype, key);
             if (desc != null) {
+                if (!desc.configurable) {
+                    console.log("AUTOTRACE-WARNING: Property \"" + key + "\" not configurable ! (" + self.constructor.name + ")");
+                    continue;
+                }
                 var g = desc.get != null;
                 var s = desc.set != null;
                 if (g || s) {
-                    var newGetter = null;
-                    var newSetter = null;
+                    var newDescriptor = {};
+                    newDescriptor.enumerable = desc.enumerable;
+                    newDescriptor.configurable = desc.configurable;
                     if (g)
-                        newGetter = getLoggableFunction(desc.get.bind(self), "Property", "get_" + key);
+                        newDescriptor.get = getLoggableFunction(desc.get.bind(self), "Property", "get_" + key);
                     if (s)
-                        newSetter = getLoggableFunction(desc.set.bind(self), "Property", "set_" + key);
-                    if (newGetter != null && newSetter == null) {
-                        Object.defineProperty(self, key, {
-                            get: newGetter
-                        });
-                    }
-                    else if (newSetter != null && newGetter == null) {
-                        Object.defineProperty(self, key, {
-                            set: newSetter
-                        });
-                    }
-                    else {
-                        Object.defineProperty(self, key, {
-                            get: newGetter, set: newSetter
-                        });
-                    }
+                        newDescriptor.set = getLoggableFunction(desc.set.bind(self), "Property", "set_" + key);
+                    Object.defineProperty(self, key, newDescriptor);
                     continue;
                 }
             }

@@ -82,15 +82,13 @@ namespace AnySqlWebAdmin
                     format = (RenderType_t)renderType;
                 } // End if (pars.ContainsKey("format")) 
 
-
+                
                 using (System.Data.Common.DbConnection cnn = this.m_service.Connection)
                 {
+                    
                     System.Exception hasErrors = await cnn.AsJSON(context.Response.Body, sql, format, pars);
-
-                    // TOOD: Log if not NULL
-
+                    throw new System.Exception("SQL-Execution Error", hasErrors);
                 }
-
 
                 // await SqlServiceJsonHelper.AnyDataReaderToJson(sql, pars, context, format);
 
@@ -105,25 +103,35 @@ namespace AnySqlWebAdmin
                 // header('HTTP/1.1 200 OK');
 
                 // context.Response.Headers["HTTP/1.0 500 Internal Server Error"] = "";
-                context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                context.Response.Headers["X-Error-Message"] = "Incorrect username or password";
+                try
+                {
 
-                context.Response.ContentType = "text/plain";
+                    context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                    // context.Response.Headers["X-Error-Message"] = "Incorrect username or password";
+                    context.Response.Headers["X-Error-Message"] = ex.Message;
 
-                SqlException se = new SqlException(ex.Message, sql, pars, context, ex);
-                await se.ToJSON(context.Response.Body);
+                    context.Response.ContentType = "text/plain";
 
-                //await context.Response.WriteAsync(ex.Message);
-                //await context.Response.WriteAsync(System.Environment.NewLine);
-                //await context.Response.WriteAsync(System.Environment.NewLine);
-                //await context.Response.WriteAsync(ex.StackTrace);
-                //await context.Response.WriteAsync(System.Environment.NewLine);
-                //await context.Response.WriteAsync(System.Environment.NewLine);
-                //await context.Response.WriteAsync(sql);
-                //await context.Response.WriteAsync(System.Environment.NewLine);
-                //await context.Response.WriteAsync(System.Environment.NewLine);
-                //await context.Response.WriteAsync(System.Convert.ToString(pars));
-                System.Console.WriteLine();
+                    SqlException se = new SqlException(ex.Message, sql, pars, context, ex);
+                    await se.ToJSON(context.Response.Body);
+
+                    //await context.Response.WriteAsync(ex.Message);
+                    //await context.Response.WriteAsync(System.Environment.NewLine);
+                    //await context.Response.WriteAsync(System.Environment.NewLine);
+                    //await context.Response.WriteAsync(ex.StackTrace);
+                    //await context.Response.WriteAsync(System.Environment.NewLine);
+                    //await context.Response.WriteAsync(System.Environment.NewLine);
+                    //await context.Response.WriteAsync(sql);
+                    //await context.Response.WriteAsync(System.Environment.NewLine);
+                    //await context.Response.WriteAsync(System.Environment.NewLine);
+                    //await context.Response.WriteAsync(System.Convert.ToString(pars));
+                    System.Console.WriteLine();
+                }
+                catch (System.Exception ex2)
+                {
+                    System.Console.WriteLine(ex2.Message);
+                    System.Console.WriteLine(ex2.StackTrace);
+                }
             } // End Catch 
 
         } // End Async Invoke 

@@ -1,7 +1,6 @@
 
 import { groupBy } from "./linq.js";
-import { autoBind } from "./autobind_autotrace.js";
-
+import { autoBind, autoTrace } from "./autobind_autotrace.js";
 
 
 export class GroupedData<T>
@@ -19,13 +18,14 @@ export class GroupedData<T>
     constructor(key: string, columns: string[], columnMap: { [columnName: string]: number; }, data: T[])
     {
         autoBind(this);
+        // autoTrace(this);
         let that = this;
         this.m_accessor = {}; // Creates a new object
         this.m_key = key;
         this.m_columns = columns;
         this.m_columnMap = columnMap;
-        this.m_groupedData = data;
-        
+        this.m_groupedData = data || null;
+
         for (let i = 0; i < that.columns.length; ++i)
         {
             let propName = that.columns[i];
@@ -42,11 +42,17 @@ export class GroupedData<T>
                 // set: setter, 
                 get: function ()
                 {
+                    if (that.m_groupedData == null)
+                        return null;
+
                     let currentRow = <any>that.m_groupedData[that.m_i];
                     return currentRow == null ? currentRow : currentRow[i];
                 }.bind(that),
                 set: function (value: any) 
                 {
+                    if (that.m_groupedData == null)
+                        that.m_groupedData = [];
+
                     let currentRow = <any>that.m_groupedData[that.m_i];
                     if (currentRow != null)
                         currentRow[i] = value;
@@ -73,11 +79,17 @@ export class GroupedData<T>
 
     get rows(): T[]    
     {
+        if (this.m_groupedData == null)
+            return [];
+
         return this.m_groupedData;
     }
 
     public get rowCount(): number
     {
+        if (this.m_groupedData == null)
+            return 0;
+
         return this.m_groupedData.length;
     }
 
@@ -151,14 +163,15 @@ export class GroupedTableWrapper<T>
                 get: function ()
                 {
                     let currentRow = that.m_groupedData[that.m_id];
-                    return currentRow == null ? currentRow : currentRow[i];
-                },
+                    return currentRow == null ? null : currentRow[i];
+                }.bind(that),
                 set: function (value: any) 
                 {
-                    let currentRow = that.m_groupedData[that.m_id];
-                    if (currentRow != null)
-                        currentRow[i] = value;
-                },
+                    if (that.m_groupedData[that.m_id] == null)
+                        that.m_groupedData[that.m_id] = [];
+
+                    that.m_groupedData[that.m_id][i] = value;
+                }.bind(that),
                 enumerable: true,
                 configurable: true
             });
@@ -317,13 +330,14 @@ export class TableWrapper<T>
                 get: function ()
                 {
                     let currentRow = <any>that.rows[that.m_i];
-                    return currentRow == null ? currentRow : currentRow[i];
+                    return currentRow == null ? null : currentRow[i];
                 }.bind(that),
                 set: function (value: any) 
                 {
-                    let currentRow = <any>that.rows[that.m_i];
-                    if (currentRow != null)
-                        currentRow[i] = value;
+                    if (that.rows[that.m_i] == null)
+                        that.rows[that.m_i] = [];
+
+                    that.rows[that.m_i][i] = value;
                 }.bind(that),
                 enumerable: true,
                 configurable: true

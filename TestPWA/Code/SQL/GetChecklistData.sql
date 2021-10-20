@@ -1,6 +1,6 @@
 
-DECLARE @__cl_uid uniqueidentifier; 
-SET @__cl_uid = 'EB159A9C-E69F-49F4-B10E-3A4825973E46'; 
+-- DECLARE @__cl_uid uniqueidentifier; 
+-- SET @__cl_uid = 'EB159A9C-E69F-49F4-B10E-3A4825973E46'; 
 
 
 

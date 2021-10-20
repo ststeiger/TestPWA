@@ -8,7 +8,7 @@ import * as linq from "./linq.js";
 import * as autobind_autotrace from "./autobind_autotrace.js";
 // https://stackoverflow.com/questions/39282253/how-can-i-alias-a-default-import-in-javascript
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
-import { TableWrapper as tableWrapper, GroupedTableWrapper as groupedTableWrapper } from "./TableWrapper.js";
+import { TableWrapper as tableWrapper, GroupedTableWrapper as groupedTableWrapper, GroupedData } from "./TableWrapper.js";
 
 
 
@@ -36,7 +36,10 @@ interface IT_ChecklistElements
     ELE_Parent_UID: string;
     ELE_CL_UID: string;
     ELE_TagName: string;
+    ELE_Level: number;
+    ELE_Sort: number;
     ELE_InnerHtml: string;
+    ELE_InnerHtml2: string;
 }
 
 
@@ -154,18 +157,6 @@ function getProperties(el:Element)
 }
 
 
-interface IXmlStructure
-{
-    uuid: string;
-    parent_uuid?: string;
-    tagName: string;
-    properties: string[][];
-    innerHtml?: string;
-    children: IXmlStructure[];
-    sort: number;
-}
-
-
 function collectStructure(p: Node, parent?: string, sort?:number)
 {
     if (p == null)
@@ -259,6 +250,75 @@ function assembleStructure(container: IXmlStructure, parent?: Node)
 }
 
 
+
+interface IXmlStructure
+{
+    uuid: string;
+    parent_uuid?: string;
+    tagName: string;
+    properties: string[][];
+    innerHtml?: string;
+    children: IXmlStructure[];
+    sort: number;
+    lvl?: number;
+    rootNode?: number;
+}
+
+
+
+function constructRecursiveDataStructure(
+      elements: tableWrapper<IT_ChecklistElements>
+    , properties: groupedTableWrapper<IT_Checklist_ZO_ElementProperties>
+    , parentUID?: string, obj?: IXmlStructure
+    , lvl?: number
+) : IXmlStructure 
+{
+    parentUID = parentUID || "null";
+    obj = obj || <IXmlStructure><any>{ "rootNode" : true};
+    obj.children = obj.children || [];
+    lvl = lvl || 0;
+
+    let groupedElements = elements.groupBy("ELE_Parent_UID");
+    let childElements: GroupedData<IT_ChecklistElements> = groupedElements.getGroup(parentUID);
+
+    
+    for (let i = 0; i < childElements.rowCount; ++i)
+    {
+        let thisRow = childElements.row(i);
+        // console.log("thisRow", thisRow);
+
+        let props:string[][] = [];
+
+        let propArray = properties.getGroup(thisRow.ELE_UID);
+        
+        for (let i = 0; i < propArray.rowCount; ++i)
+        {
+            let currentItem = propArray.row(i);
+            props.push([currentItem.PRO_Name, currentItem.PRO_Value]);
+        }
+        
+        let childData = <IXmlStructure>{
+             "uuid": thisRow.ELE_UID 
+            ,"parent_uuid": thisRow.ELE_Parent_UID 
+            ,"tagName": thisRow.ELE_TagName 
+            ,"sort": thisRow.ELE_Sort 
+            ,"lvl": lvl 
+            ,"properties": props 
+            ,"innerHtml": thisRow.ELE_InnerHtml 
+        };
+
+        let child = constructRecursiveDataStructure(elements, properties, thisRow.ELE_UID, childData, lvl+1);
+        obj.children.push(child);
+    }
+
+    if (lvl === 0 && obj.children.length === 1)
+        return obj.children[0];
+
+    return obj;
+}
+
+
+
 // https://localhost:44314/ts/require/require.js?v=1
 // https://localhost:44314/vertical_text.htm
 // https://localhost:44314/Schuettgutcontainer.htm
@@ -266,20 +326,20 @@ async function autorun(): Promise<any>
 {
     let _: any = {
          "linq": linq 
-        , "autobind_autotrace": autobind_autotrace
+        ,"autobind_autotrace": autobind_autotrace 
     }; // goddamn, if not used, it's not imported ...
 
 
     console.log("document ready");
     // console.log("scriptName", console.trace());
     
-    console.log("translate data", JSON.stringify(getTranslateData(), null, "  "));
+    // console.log("translate data", JSON.stringify(getTranslateData(), null, "  "));
 
-    let table = document.querySelector("body > table")
+    // let table = document.querySelector("body > table")
     // console.log("table", table);
 
 
-    let harvest: IXmlStructure = collectStructure(table);
+    // let harvest: IXmlStructure = collectStructure(table);
     // console.log(JSON.stringify(harvest, null, "  "));
 
 
@@ -287,7 +347,7 @@ async function autorun(): Promise<any>
     // console.log("obj", obj);
 
     // Zusammensetzen:
-    let t2 = <HTMLElement>assembleStructure(harvest);
+    // let t2 = <HTMLElement>assembleStructure(harvest);
     // console.log("out", t2);
     // document.body.append(t2);
 
@@ -302,7 +362,7 @@ async function autorun(): Promise<any>
     // console.log(c);
 
 
-    let fetchSingleChecklist = await fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1");
+    let fetchSingleChecklist = await fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=EB159A9C-E69F-49F4-B10E-3A4825973E46");
 
     // let checkListDatat: any = await fetchSingleChecklist.text();
     // console.log("checkListDatat", checkListDatat);
@@ -351,17 +411,29 @@ async function autorun(): Promise<any>
     }
 
 
+    let argh = constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
+    let arghHtml = <HTMLElement>assembleStructure(argh);
+    console.log(argh, arghHtml);
+    document.body.append(arghHtml);
+
+
+    /*
     let groupedElements = elements.groupBy("ELE_Parent_UID");
     
 
-    let aaa = groupedElements.getGroup("0b17226e-9722-4c2e-ac50-b36eab66e4f3");
+    let rootElements = groupedElements.getGroup("18a4911b-9e3b-49a9-bfb2-801a94f39281");
+    console.log("rootElements", rootElements);
     
-
-    for (let i = 0; i < aaa.rows.length; ++i)
+    for (let i = 0; i < rootElements.rowCount; ++i)
     {
-        console.log("group row", aaa.row(i).ELE_UID);
+        let currentEle = rootElements.row(i).ELE_UID;
+        console.log("currentEle", currentEle);
+        let ceChildren = groupedElements.getGroup(currentEle);
+        console.log("ceChildren", ceChildren.rowCount);
     }
+    */
 
+    
     
 
     /*

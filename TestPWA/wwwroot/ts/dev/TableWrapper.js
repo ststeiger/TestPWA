@@ -11,15 +11,19 @@ var GroupedData = (function () {
         this.m_key = key;
         this.m_columns = columns;
         this.m_columnMap = columnMap;
-        this.m_groupedData = data;
+        this.m_groupedData = data || null;
         var _loop_1 = function (i) {
             var propName = that.columns[i];
             Object.defineProperty(that.m_accessor, propName, {
                 get: function () {
+                    if (that.m_groupedData == null)
+                        return null;
                     var currentRow = that.m_groupedData[that.m_i];
                     return currentRow == null ? currentRow : currentRow[i];
                 }.bind(that),
                 set: function (value) {
+                    if (that.m_groupedData == null)
+                        that.m_groupedData = [];
                     var currentRow = that.m_groupedData[that.m_i];
                     if (currentRow != null)
                         currentRow[i] = value;
@@ -48,6 +52,8 @@ var GroupedData = (function () {
     });
     Object.defineProperty(GroupedData.prototype, "rows", {
         get: function () {
+            if (this.m_groupedData == null)
+                return [];
             return this.m_groupedData;
         },
         enumerable: false,
@@ -55,6 +61,8 @@ var GroupedData = (function () {
     });
     Object.defineProperty(GroupedData.prototype, "rowCount", {
         get: function () {
+            if (this.m_groupedData == null)
+                return 0;
             return this.m_groupedData.length;
         },
         enumerable: false,
@@ -93,13 +101,13 @@ var GroupedTableWrapper = (function () {
             Object.defineProperty(this_1.m_accessor, propName, {
                 get: function () {
                     var currentRow = that.m_groupedData[that.m_id];
-                    return currentRow == null ? currentRow : currentRow[i];
-                },
+                    return currentRow == null ? null : currentRow[i];
+                }.bind(that),
                 set: function (value) {
-                    var currentRow = that.m_groupedData[that.m_id];
-                    if (currentRow != null)
-                        currentRow[i] = value;
-                },
+                    if (that.m_groupedData[that.m_id] == null)
+                        that.m_groupedData[that.m_id] = [];
+                    that.m_groupedData[that.m_id][i] = value;
+                }.bind(that),
                 enumerable: true,
                 configurable: true
             });
@@ -150,12 +158,12 @@ var TableWrapper = (function () {
             Object.defineProperty(this_2.m_accessor, propName, {
                 get: function () {
                     var currentRow = that.rows[that.m_i];
-                    return currentRow == null ? currentRow : currentRow[i];
+                    return currentRow == null ? null : currentRow[i];
                 }.bind(that),
                 set: function (value) {
-                    var currentRow = that.rows[that.m_i];
-                    if (currentRow != null)
-                        currentRow[i] = value;
+                    if (that.rows[that.m_i] == null)
+                        that.rows[that.m_i] = [];
+                    that.rows[that.m_i][i] = value;
                 }.bind(that),
                 enumerable: true,
                 configurable: true

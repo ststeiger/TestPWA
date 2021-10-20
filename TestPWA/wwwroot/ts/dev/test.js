@@ -157,9 +157,40 @@ function assembleStructure(container, parent) {
     parent.appendChild(a);
     return parent;
 }
+function constructRecursiveDataStructure(elements, properties, parentUID, obj, lvl) {
+    parentUID = parentUID || "null";
+    obj = obj || { "rootNode": true };
+    obj.children = obj.children || [];
+    lvl = lvl || 0;
+    var groupedElements = elements.groupBy("ELE_Parent_UID");
+    var childElements = groupedElements.getGroup(parentUID);
+    for (var i = 0; i < childElements.rowCount; ++i) {
+        var thisRow = childElements.row(i);
+        var props = [];
+        var propArray = properties.getGroup(thisRow.ELE_UID);
+        for (var i_1 = 0; i_1 < propArray.rowCount; ++i_1) {
+            var currentItem = propArray.row(i_1);
+            props.push([currentItem.PRO_Name, currentItem.PRO_Value]);
+        }
+        var childData = {
+            "uuid": thisRow.ELE_UID,
+            "parent_uuid": thisRow.ELE_Parent_UID,
+            "tagName": thisRow.ELE_TagName,
+            "sort": thisRow.ELE_Sort,
+            "lvl": lvl,
+            "properties": props,
+            "innerHtml": thisRow.ELE_InnerHtml
+        };
+        var child = constructRecursiveDataStructure(elements, properties, thisRow.ELE_UID, childData, lvl + 1);
+        obj.children.push(child);
+    }
+    if (lvl === 0 && obj.children.length === 1)
+        return obj.children[0];
+    return obj;
+}
 function autorun() {
     return __awaiter(this, void 0, void 0, function () {
-        var _, table, harvest, t2, fetchSingleChecklist, checkListData, checklistName, elements, elemntProps, i, j, i, groupedElements, aaa, i, i;
+        var _, fetchSingleChecklist, checkListData, checklistName, elements, elemntProps, i, j, i, argh, arghHtml, i;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -168,11 +199,7 @@ function autorun() {
                         "autobind_autotrace": autobind_autotrace
                     };
                     console.log("document ready");
-                    console.log("translate data", JSON.stringify(getTranslateData(), null, "  "));
-                    table = document.querySelector("body > table");
-                    harvest = collectStructure(table);
-                    t2 = assembleStructure(harvest);
-                    return [4, fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1")];
+                    return [4, fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=EB159A9C-E69F-49F4-B10E-3A4825973E46")];
                 case 1:
                     fetchSingleChecklist = _a.sent();
                     return [4, fetchSingleChecklist.json()];
@@ -191,11 +218,10 @@ function autorun() {
                         }
                     for (i = 0; i < elements.rowCount; ++i) {
                     }
-                    groupedElements = elements.groupBy("ELE_Parent_UID");
-                    aaa = groupedElements.getGroup("0b17226e-9722-4c2e-ac50-b36eab66e4f3");
-                    for (i = 0; i < aaa.rows.length; ++i) {
-                        console.log("group row", aaa.row(i).ELE_UID);
-                    }
+                    argh = constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
+                    arghHtml = assembleStructure(argh);
+                    console.log(argh, arghHtml);
+                    document.body.append(arghHtml);
                     if (false)
                         for (i = 0; i < elemntProps.rowCount; ++i) {
                         }
