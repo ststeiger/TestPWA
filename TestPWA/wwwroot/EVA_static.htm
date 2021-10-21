@@ -1,0 +1,586 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+
+    <title>EVA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!--
+    http://htmlshell.com/
+    <meta name='viewport' content='width=device-width, initial-scale=0.90, minimum-scale=0.90, maximum-scale=0.90' />
+    -->
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+
+    <style type="text/css">
+
+        html, body
+        {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        @keyframes blinker
+        {
+            50%
+            {
+                opacity: 0;
+            }
+        }
+
+
+        @media only screen
+        {
+
+            .blink_me
+            {
+                #IE does not support nested queries, so move keyframe out;
+                animation: blinker 1.5s linear infinite;
+            }
+        }
+
+
+        td.slimBlackBorder
+        {
+            border-top: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+            border-left: 1px solid #000000;
+            border-right: 1px solid #000000;
+        }
+
+        td.verticalColumn
+        {
+            vertical-align: bottom;
+            #width: 40px;
+            #height: 100px;
+            #border: 1px solid white;
+            #background-color: black;
+            text-align: center;
+        }
+
+        .vert
+        {
+            display: inline-block;
+            text-align: left;
+            writing-mode: vertical-rl;
+            -ms-writing-mode: tb-rl;
+            transform-origin: center;
+            transform: rotate(180deg);
+            padding-top: 1mm;
+            padding-bottom: 2mm;
+            font-family: Arial;
+            #font-size: 11px;
+            #font-weight: 500;
+            line-height: 1.25em;
+            letter-spacing: 0.15mm;
+        }
+
+
+        .remLines
+        {
+            border-top: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+        }
+
+    </style>
+
+
+    <script src="lib/polyfills/Array.prototype.map.js?v=1"></script>
+    <script src="lib/polyfills/classList.js?v=1"></script>
+    <script src="lib/polyfills/object-setprototypeof-ie9.js?v=1"></script>
+    <script src="lib/polyfills/es6-promise-2.0.0.min.js?v=1"></script>
+    <script src="lib/polyfills/fetch.js?v=1"></script>
+
+
+    <!--
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
+        <script type="text/javascript" src="javascript.js"></script>
+
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
+        <link href="default.css" rel="stylesheet" media="all" type="text/css" title="Default Style" />
+    -->
+    <!--
+    <script type="text/javascript" src="Script.ashx?r=map" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+    -->
+
+</head>
+<body>
+    <img src="images/SNB-Logo-blau.svg" style="width: 6cm;" />
+
+    <h2 style="font-family: Arial; font-size: 14pt;">Wartungscheckliste MUVE</h2>
+
+    <table cellspacing="0" border="0" style="border-collapse: collapse;">
+        <colgroup span="2" width="88"></colgroup>
+        <colgroup width="50"></colgroup>
+        <colgroup width="103"></colgroup>
+        <colgroup width="88"></colgroup>
+        <colgroup width="55"></colgroup>
+        <colgroup width="49"></colgroup>
+        <colgroup span="4" width="25"></colgroup>
+        <tbody>
+            <tr style="border: 2px solid #000; border-bottom: 1px solid #000;">
+                <td align="left" bgcolor="#EDEDED">
+                    <span>Datum:</span>
+                </td>
+                <td align="left" bgcolor="#EDEDED">
+                    <span><br></span>
+                </td>
+                <td align="left" bgcolor="#EDEDED">
+                    <span><br></span>
+                </td>
+                <td align="left" colspan="8">
+                    <span>Bargeldgewerk: Ent- und Verpackungsanlage</span>
+                </td>
+            </tr>
+            <tr style="border: 2px solid #000; border-top: 1px solid #000;">
+                <td align="left" bgcolor="#EDEDED">
+                    <span>Wartungsfirma:</span>
+                </td>
+                <td align="left" bgcolor="#EDEDED">
+                    <span><br></span>
+                </td>
+                <td align="left" bgcolor="#EDEDED">
+                    <span><br></span>
+                </td>
+                <td align="left" bgcolor="#EDEDED" colspan="8">
+                    <span>Servicetechniker:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="143" align="center" valign="top">
+                    <span>Achtung: Arbeiten nur ausführen, wenn keine Werte vorhanden sind.</span>
+                </td>
+                <td class="verticalColumn slimBlackBorder" style="height: 4.5cm;" align="left">
+                    <span class="vert">Wartungs oder Prüfintervall [Jahr]</span>
+                </td>
+                <td class="verticalColumn slimBlackBorder" align="left">
+                    <span class="vert">in Ordnung</span>
+                </td>
+                <td class="verticalColumn slimBlackBorder" align="left">
+                    <span class="vert">nicht in Ordnung</span>
+                </td>
+                <td class="verticalColumn slimBlackBorder" align="center">
+                    <span class="vert">erledigt</span>
+                </td>
+                <td class="verticalColumn slimBlackBorder" align="left">
+                    <span class="vert">nicht vorhanden</span>
+                </td>
+            </tr>
+            <tr style="background-color: #000; border: 1px solid black;">
+                <td colspan="11" align="left">
+                    <span style="color: #F2F2F2">Prüfarbeiten vor der Durchführung der Arbeiten</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="middle">
+                    <span>Prüfung der Sicherheitseinrichtung, Not-Halt Taster</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>J</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="middle">
+                    <span>Prüfung der Sicherheitseinrichtung, Sicherheitsschalter beim Steigband</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="middle">
+                    <span>Prüfung der Sicherheitseinrichtung, Abdeckung auf Beschädigungen prüfen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="middle">
+                    <span>Geräteprüfung nach SNR 462638 durchgeführt</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>2J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="middle">
+                    <span>Steigband auf Beschädigungen oder Risse prüfen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="37" align="left" valign="middle">
+                    <span>Steigband Zentrierung des Fördergurts prüfen. Der seitliche Abstand links/rechts sollte ca. identisch sein.</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="33" align="left" valign="middle">
+                    <span>Transferband auf Beschädigungen oder Risse prüfen. Dazu die untenliegende Abdeckung mit einem Kreuzschlitzschraubenzieher lösen.</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="37" align="left" valign="middle">
+                    <span>Alle Mitnehmerstege auf den Förderbändern mechanisch prüfen und fixieren wenn gelockert</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="37" align="left" valign="top">
+                    <span>Antriebsmotoren für die Transportbänder prüfen (Geräusche, Laufruhe, Lager, Kabelanschlüsse, Schraubenkontrolle)</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="36" align="left" valign="middle">
+                    <span>Rollenförderer bei Ent- und Verpackungsstation auf Beschädigungen prüfen (Laufruhe, Geräusche, Riemen, Anschlusskabel)</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="37" align="left" valign="middle">
+                    <span>Ausrichtung der Sensoren prüfen (Lichtschranke, Positionsschalter,Reflektoren, Füllstandssensor)</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="36" align="left" valign="middle">
+                    <span>Linearantriebe bei Befüllung Münzrollierer und Schüttgutcontainer prüfen (Bewegungen, Positionierung, Geräusche)</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="70" align="left" valign="middle">
+                    <span>Zustand der zwei Pneumatikeinheiten kontrollieren<br>- Kondensatabscheider<br>- Not-Halt Entlüftungsventil<br>- Druckregelventil</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>J</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="73" align="left" valign="middle">
+                    <span>Mechanische Kontrolle der pneumatischen Stopper, Zentrierer, Abschieber bei Münzverpacker prüfen<br>- Bewegungsgeschwindigkeit, Druck<br>- Endanschlag</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td align="left" valign="middle" colspan="11"><span><br></span></td>
+            </tr>
+            <tr style="background-color: #000; border: 1px solid black;">
+                <td align="left" colspan="11">
+                    <span style="color: #F2F2F2">Wartungsarbeiten</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="72" align="left">
+                    <span>Kartonverdichter, Wasserstopp Schlauchplatzsicherung prüfen.<br>-Wasserhahn bei Kartonverdichter schliessen<br>-Wasser Auffanggefäss unter Wasserhahn stellen<br>-Wasserhahn sprunghaft voll öffnen. </span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>6M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left">
+                    <span>Filtermatten an den Schaltschränken bei starker Verschmutzung austauschen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle"><span>6M</span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left">
+                    <span>Sensoren mit trockenem, fusselfreien Tuch reinigen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>6M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left">
+                    <span>Förderstrecken reinigen (Münzablagerungen, Papierresten)</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>3M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="top">
+                    <span>Roboterbereiche von Roboter 1-5 von Verschmutzungen reinigen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>3M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="top">
+                    <span>Alle drei Münzrollierer von Verschmutzungen reinigen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>3M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="top">
+                    <span>Kartonsverschliesser von Verschmmutzungen reinigen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>3M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="top">
+                    <span>Bereich der Strapex Bindegeräte von Verschmutzungen reinigen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>3M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr style="background-color: #000; border: 1px solid black;">
+                <td colspan="11" align="left">
+                    <span style="color: #F2F2F2">Wartungsarbeiten</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left" valign="top">
+                    <span>Etikettierer von Verschmmutzungen reinigen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>3M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <tr>
+                <td class="slimBlackBorder" colspan="6" height="38" align="left">
+                    <span>Prüfen ob die Daten auf der Datenablage auf dem NAS abgelegt werden, Speicher-platzbelegung prüfen</span>
+                </td>
+                <td class="slimBlackBorder" align="center" valign="middle">
+                    <span>1M</span>
+                </td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            <!--
+            <tr>
+                <td class="slimBlackBorder" colspan="6" align="left"><span><br></span></td>
+                <td class="slimBlackBorder" align="left"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+                <td class="slimBlackBorder" align="left" bgcolor="#E7E6E6"><span><br></span></td>
+            </tr>
+            -->
+            <tr>
+                <td align="left" valign="top" colspan="11"><span><br></span></td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" colspan="11">
+                    <u><span>Bemerkungen:</span></u>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" colspan="11" style="margin: 0; padding: 0;">
+                    <textarea class="notes"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <style>
+
+        .notes
+        {
+            display: block;
+            width: 100%;
+            height: 5cm;
+            overflow: auto;
+            margin: 0;
+            padding: 0;
+            resize: none;
+            #border-radius: 8px;
+            border: none;
+            #border: 1px solid #ccc;
+            #box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            font-family: Arial, Helvetica, Sans-serif;
+            line-height: 31px;
+            background-image: -webkit-linear-gradient(left, white 0px, transparent 0px), -webkit-linear-gradient(right, white 0px, transparent 0px), -webkit-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-image: -moz-linear-gradient(left, white 0px, transparent 0px), -moz-linear-gradient(right, white 0px, transparent 0px), -moz-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-image: -ms-linear-gradient(left, white 0px, transparent 0px), -ms-linear-gradient(right, white 0px, transparent 0px), -ms-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-image: -o-linear-gradient(left, white 0px, transparent 0px), -o-linear-gradient(right, white 0px, transparent 0px), -o-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-image: linear-gradient(left, white 0px, transparent 0px), linear-gradient(right, white 0px, transparent 0px), linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+            background-size: 100% 100%, 100% 100%, 100% 31px;
+            background-attachment: local;
+        }
+
+        .notes:focus
+        {
+            outline: none;
+        }
+
+    </style>
+    <br /><br />
+    
+
+    <script type="text/javascript">
+
+        function ltrim(str)
+        {
+            if (!str) return str;
+            // return str.replace(/^\s+/g, '');
+            return str.replace(/^[\s\uFEFF\xA0]+/g, '');
+        }
+
+        function rtrim(str)
+        {
+            if (!str) return str;
+            //return str.replace(/\s+$/g, '');
+            return str.replace(/[\s\uFEFF\xA0]+$/g, '');
+
+        }
+
+        function trimStr(str) 
+        {
+            if (!str) return str;
+            // return str.replace(/^\s+|\s+$/g, '');
+            return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+        }
+
+
+
+        function getValues()
+        {
+            // td:not([colspan])
+            var eles = document.querySelectorAll('tr td[colspan="6"]');
+            var arr = [];
+
+            for (var i = 0; i < eles.length; ++i)
+            {
+                arr.push(trimStr(eles[i].textContent));
+            }
+
+            return arr;
+        }
+
+        console.log(JSON.stringify(getValues(), null, "  "));
+
+
+
+
+
+
+        function autorun()
+        {
+
+        }
+
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
+
+        // if (window.addEventListener) window.addEventListener("load", autorun, false);
+        // else if (window.attachEvent) window.attachEvent("onload", autorun);
+        // else window.onload = autorun;
+    </script>
+</body>
+</html>

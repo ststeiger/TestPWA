@@ -8,6 +8,16 @@ END
 GO
  
 
+DECLARE @numSortDigits int; 
+SET @numSortDigits = 10; 
+
+
+-- Required compatibility level
+-- When DB is restored from SQL - Server < 2016
+-- ALTER DATABASE < DB_Name > SET COMPATIBILITY_LEVEL = 130
+-- ALTER DATABASE COR_Basic_Demo_V4 SET COMPATIBILITY_LEVEL = 130
+
+
 
 DECLARE @json nvarchar(max) = N'{
   "uuid": "84576419-E652-41C5-94A2-B402215A8968",
@@ -1318,14 +1328,15 @@ DECLARE @json nvarchar(max) = N'{
 ;WITH CTE AS
 (
     SELECT
-         p.uuid
-		,p.parent_uuid AS parent_uuid
-		,p.tagName
-		,p.properties
-		,p.children
-		,p.innerHtml 
-		,p.sort 
+         tJson.uuid 
+		,tJson.parent_uuid AS parent_uuid 
+		,tJson.tagName 
+		,tJson.properties 
+		,tJson.children 
+		,tJson.innerHtml 
+		,tJson.sort 
 		,0 AS lvl 
+		,CAST(RIGHT(REPLICATE('0', @numSortDigits) + CAST(tJson.sort AS varchar(36) ), @numSortDigits) AS varchar(MAX)) AS recsort 
     FROM OPENJSON(@json, '$') 
 	WITH 
 	( 
@@ -1336,22 +1347,23 @@ DECLARE @json nvarchar(max) = N'{
 		,children nvarchar(MAX) AS json 
 		,innerHtml nvarchar(MAX) 
 		,sort int 
-    ) AS p 
+    ) AS tJson 
 
     UNION ALL
 
     SELECT
-         p.uuid
-		,c.uuid
-		,p.tagName
-		,p.properties
-		,p.children 
-		,p.innerHtml 
-		,p.sort 
-		,C.lvl + 1 AS lvl 
-    FROM CTE AS c 
+         tJson.uuid 
+		,CTE.uuid 
+		,tJson.tagName 
+		,tJson.properties 
+		,tJson.children 
+		,tJson.innerHtml 
+		,tJson.sort 
+		,CTE.lvl + 1 AS lvl 
+		,CAST(CTE.recsort + '.' + RIGHT(REPLICATE('0', @numSortDigits) + CAST(tJson.sort AS varchar(36) ), @numSortDigits) AS varchar(MAX)) AS recsort 
+    FROM CTE 
 
-    CROSS APPLY OPENJSON(c.children) 
+    CROSS APPLY OPENJSON(CTE.children) 
 	WITH 
 	( 
          uuid varchar(36) 
@@ -1361,21 +1373,22 @@ DECLARE @json nvarchar(max) = N'{
 		,children nvarchar(MAX) AS json 
 		,innerHtml nvarchar(MAX) 
 		,sort int 
-    ) AS p 
+    ) AS tJson 
 )
 SELECT
-     c.uuid
-	,c.tagName
-	,c.parent_uuid
-	-- ,c.children
-	-- ,c.innerHtml 
-	,dbo.LTrimWhitespace(dbo.RTrimWhitespace(c.innerHtml)) AS innerHtml 
-	,c.sort 
-	,c.properties 
-	,c.lvl 
+     CTE.uuid
+	,CTE.tagName
+	,CTE.parent_uuid
+	-- ,CTE.children
+	-- ,CTE.innerHtml 
+	,dbo.LTrimWhitespace(dbo.RTrimWhitespace(CTE.innerHtml)) AS innerHtml 
+	,CTE.sort 
+	,CTE.properties 
+	,CTE.lvl 
+	,CTE.recsort 
 INTO #CheckListNodes 
-FROM CTE AS c
-ORDER BY c.lvl, c.sort 
+FROM CTE 
+ORDER BY CTE.lvl, CTE.sort 
 
 
 
@@ -1389,7 +1402,7 @@ SELECT
 	,N'Testcheckliste' AS CL_Name -- nvarchar(256) 
 ;
 
-INSERT INTO T_ChecklistElements(ELE_UID, ELE_Parent_UID, ELE_CL_UID, ELE_TagName, ELE_Level, ELE_Sort, ELE_InnerHtml)
+INSERT INTO T_ChecklistElements(ELE_UID, ELE_Parent_UID, ELE_CL_UID, ELE_TagName, ELE_Level, ELE_Sort, ELE_RecSort, ELE_InnerHtml) 
 SELECT 
 	 uuid AS ELE_UID -- uniqueidentifier
 	,parent_uuid AS ELE_Parent_UID -- uniqueidentifier
@@ -1397,6 +1410,7 @@ SELECT
 	,tagName AS ELE_TagName -- nvarchar(256)
 	,lvl AS ELE_Level -- int 
 	,sort AS ELE_Sort -- int 
+	,recsort AS ELE_RecSort -- varchar(max) 
 	,innerHtml AS ELE_InnerHtml -- nvarchar(max)
 FROM #CheckListNodes 
 

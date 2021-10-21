@@ -55,7 +55,7 @@ namespace AnySqlWebAdmin
 
             try
             {
-                pars = SqlServiceHelper.GetParameters(context);
+                pars = await SqlServiceHelper.GetParameters(context);
                 pars["BE_Hash"] = 12435;
                 pars["__stichtag"] = System.DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
 
@@ -82,12 +82,13 @@ namespace AnySqlWebAdmin
                     format = (RenderType_t)renderType;
                 } // End if (pars.ContainsKey("format")) 
 
-                
+
+                // https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=EB159A9C-E69F-49F4-B10E-3A4825973E46
                 using (System.Data.Common.DbConnection cnn = this.m_service.Connection)
                 {
-                    
-                    System.Exception hasErrors = await cnn.AsJSON(context.Response.Body, sql, format, pars);
-                    throw new System.Exception("SQL-Execution Error", hasErrors);
+                    // System.Exception hasErrors = await cnn.AsJSON(context.Response.Body, sql, format, pars);
+                    System.Exception hasErrors = await cnn.AsSystemTextJson(context.Response.Body, sql, format, pars);
+                    if (hasErrors != null) throw new System.Exception("SQL-Execution Error", hasErrors);
                 }
 
                 // await SqlServiceJsonHelper.AnyDataReaderToJson(sql, pars, context, format);

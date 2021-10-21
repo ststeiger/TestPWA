@@ -76,6 +76,7 @@ CREATE TABLE dbo.T_ChecklistElements
 	,ELE_TagName national character varying(256) 
 	,ELE_Level int 
 	,ELE_Sort int 
+	,ELE_RecSort varchar(MAX) 
 	,ELE_InnerHtml national character varying(MAX) 
 );
 

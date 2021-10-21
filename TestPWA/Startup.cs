@@ -33,6 +33,7 @@ namespace TestPWA
         {
             // https://stackoverflow.com/questions/47735133/asp-net-core-synchronous-operations-are-disallowed-call-writeasync-or-set-all
 
+#if false
             // If using Kestrel:
             services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
             {
@@ -44,7 +45,7 @@ namespace TestPWA
             {
                 options.AllowSynchronousIO = true;
             });
-
+#endif 
 
             services.AddSingleton<AnySqlWebAdmin.SqlFactory>();
 

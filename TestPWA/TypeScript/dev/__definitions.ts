@@ -1,5 +1,11 @@
 
 "use strict";
+
+// Modules should have short, all - lowercase names.
+// Underscores can be used in the module name if it improves readability. 
+// Python packages should also have short, all - lowercase names, although the use of underscores is discouraged.
+
+
 /* 
 Grunt => Gulp => browserify => webpack => vite
 
@@ -102,6 +108,11 @@ declare var module: IModule;
 
 
 
+
+
+
+
+
 interface IHttpUtility
 {
     htmlEncode(s: string): string;
@@ -150,3 +161,58 @@ https://www.typescriptlang.org/docs/handbook/declaration-files/dts-from-js.html
 cd / d "D:\username\Documents\Visual Studio 2017\Projects\TestPWA\TestPWA\TypeScript\firstModule"
 npx - p typescript tsc HttpUtility.ts--declaration--allowJs--emitDeclarationOnly--outDir types
 */
+
+
+
+
+
+
+
+// sobald modul: declare global {
+
+interface IXmlStructure
+{
+    uuid: string;
+    parent_uuid?: string;
+    tagName: string;
+    properties: string[][];
+    innerHtml?: string;
+    children: IXmlStructure[];
+    sort: number;
+    lvl?: number;
+    rootNode?: number;
+}
+
+
+
+
+interface IT_Checklist
+{
+    CL_UID: string;
+    CL_Name: string;
+}
+
+
+
+interface IT_ChecklistElements
+{
+    ELE_UID: string;
+    ELE_Parent_UID: string;
+    ELE_CL_UID: string;
+    ELE_TagName: string;
+    ELE_Level: number;
+    ELE_Sort: number;
+    ELE_InnerHtml: string;
+    ELE_InnerHtml2: string;
+}
+
+
+interface IT_Checklist_ZO_ElementProperties
+{
+
+    PRO_UID: string;
+    PRO_Name: string;
+    PRO_Value: string;
+    PRO_ELE_UID: string;
+}
+
