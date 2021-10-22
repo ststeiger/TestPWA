@@ -24,84 +24,6 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-
-    <style type="text/css">
-
-
-        html, body
-        {
-            margin: 0px;
-            padding: 0px;
-            width: 100%;
-            height: 100%;
-        }
-
-
-        @keyframes blinker
-        {
-            50%
-            {
-                opacity: 0;
-            }
-        }
-
-
-        @media only screen
-        {
-
-            .blink_me
-            {
-                #IE does not support nested queries, so move keyframe out;
-                animation: blinker 1.5s linear infinite;
-            }
-        }
-
-
-        td.slimBlackBorder
-        {
-            border-top: 1px solid #000000;
-            border-bottom: 1px solid #000000;
-            border-left: 1px solid #000000;
-            border-right: 1px solid #000000;
-        }
-
-        td.verticalColumn
-        {
-            vertical-align: bottom;
-            #width: 40px;
-            #height: 100px;
-            #border: 1px solid white;
-            #background-color: black;
-            text-align: center;
-        }
-
-        .vert
-        {
-            display: inline-block;
-            text-align: left;
-            writing-mode: vertical-rl;
-            -ms-writing-mode: tb-rl;
-            transform-origin: center;
-            transform: rotate(180deg);
-            padding-top: 1mm;
-            padding-bottom: 2mm;
-            font-family: Arial;
-            #font-size: 11px;
-            #font-weight: 500;
-            line-height: 1.25em;
-            letter-spacing: 0.15mm;
-        }
-
-
-        .remLines
-        {
-            border-top: 1px solid #000000;
-            border-bottom: 1px solid #000000;
-        }
-
-    </style>
-
-
     <script src="lib/polyfills/Array.prototype.map.js?v=1"></script>
     <script src="lib/polyfills/classList.js?v=1"></script>
     <script src="lib/polyfills/object-setprototypeof-ie9.js?v=1"></script>
@@ -431,88 +353,14 @@
                 </td>
             </tr>
             <tr>
-                <td height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
-            </tr>
-            <tr>
-                <td class="remLines" height="30" align="left" valign="top" colspan="11"><span><br></span></td>
+                <td align="left" valign="top" colspan="11" style="margin: 0; padding: 0;">
+                    <textarea class="notes"></textarea>
+                </td>
             </tr>
         </tbody>
     </table>
 
-
-    <script type="text/javascript">
-
-
-        function ltrim(str)
-        {
-            if (!str) return str;
-            // return str.replace(/^\s+/g, '');
-            return str.replace(/^[\s\uFEFF\xA0]+/g, '');
-        }
-
-        function rtrim(str)
-        {
-            if (!str) return str;
-            //return str.replace(/\s+$/g, '');
-            return str.replace(/[\s\uFEFF\xA0]+$/g, '');
-
-        }
-
-        function trimStr(str) 
-        {
-            if (!str) return str;
-            // return str.replace(/^\s+|\s+$/g, '');
-            return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-        }
-
-
-
-        function getValues()
-        {
-            // td:not([colspan])
-            var eles = document.querySelectorAll('tr td[colspan="6"]');
-            var arr = [];
-
-            for (var i = 0; i < eles.length; ++i)
-            {
-                arr.push(trimStr(eles[i].textContent));
-            }
-
-            return arr;
-        }
-
-        console.log(JSON.stringify(getValues(), null, "  "));
-
-
-
-
-        function autorun()
-        {
-
-        }
-
-        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
-        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
-        else window.onload = autorun;
-
-        // if (window.addEventListener) window.addEventListener("load", autorun, false);
-        // else if (window.attachEvent) window.attachEvent("onload", autorun);
-        // else window.onload = autorun;
-    </script>
+    <br /><br />
+    <link rel="stylesheet" href="css/checklist.css" />
 </body>
 </html>

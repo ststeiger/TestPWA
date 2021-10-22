@@ -16,7 +16,7 @@ function _getProperties(el) {
 }
 function collectStructure(p, parent, sort) {
     if (p == null)
-        return;
+        return null;
     parent = parent || null;
     sort = sort || 0;
     var children = Array.prototype.slice.call(p.childNodes);

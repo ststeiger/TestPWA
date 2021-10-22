@@ -9,12 +9,18 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.37" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql" Version="5.0.10" />
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\Dapper\Dapper.csproj" />
+    <ProjectReference Include="..\EPPlus.NetStandard2\EPPlus.NetStandard2.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Code\AutoGen\" />
   </ItemGroup>
   
 </Project>

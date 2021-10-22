@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="___NoMono\FontFamily.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="OpenDocumentSpreadsheet\template.ods" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="OpenDocumentSpreadsheet\template.ods" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SharpZipLib" Version="1.3.3" />
+    <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta15" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
+    <PackageReference Include="System.CodeDom" Version="4.4.0" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="4.4.0" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="4.4.2" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.4.0" />
+  </ItemGroup>
+  
+</Project>

@@ -408,3 +408,39 @@ require.paths = Object.create(null);
 // https://syfuhs.net/bruce-a-command-line-kerberos-net-management-tool
 // https://github.com/dotnet/Kerberos.NET
 // https://github.com/SIGAN/gssapi
+
+(function ()
+{
+    // require all polyfills based on requirements ! 
+    // try-catch 
+
+    // old browsers won't remove sync-http-request ! 
+
+    // if (!Array.prototype.map) {
+    // <script src="lib/polyfills/Array.prototype.map.js?v=1"></script>
+
+
+    // https://gist.github.com/lski/0eae0d2738831b6b0ec2b88a8a603952
+    // array.reduce-polyfill.min.js
+
+    // https://stackoverflow.com/questions/27684465/javascript-filter-function-polyfill
+    // array.prototype.filter.js
+
+
+    // if ("document" in window.self) { if (!("classList" in document.createElement("_")) || document.createElementNS && !("classList" in document.createElementNS("http://www.w3.org/2000/svg", "g")))
+    // warning ! // 3. Patch in unsupported methods in DOMTokenList
+    // <script src="lib/polyfills/classList.js?v=1"></script>
+
+
+    // if (typeof Object.setPrototypeOf === 'undefined' && typeof Object.getOwnPropertyNames === 'function')
+    // <script src="lib/polyfills/object-setprototypeof-ie9.js?v=1"></script>
+
+
+    // window.Promise = window.Promise || ES6Promise.Promise;
+    // <script src="lib/polyfills/es6-promise-2.0.0.min.js?v=1"></script>
+
+    // if (window.fetch)
+    // <script src="lib/polyfills/fetch.js?v=1"></script>
+
+    // run main here !
+}());

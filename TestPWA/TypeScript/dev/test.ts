@@ -2,6 +2,7 @@
 "use strict";
 
 import * as autobind_autotrace from "./autobind_autotrace.js";
+import * as autorun from "./autorun.js";
 import * as utils from "./string_utils.js";
 import * as hu from "./http_utility.js";
 import * as xml from "./xml_beautifier.js";
@@ -9,6 +10,7 @@ import * as uuid from "./uuid.js";
 import * as linq from "./linq.js";
 import { TableWrapper as tableWrapper, GroupedTableWrapper as groupedTableWrapper, GroupedData } from "./table_wrapper.js";
 import * as db_html from "./db_html.js";
+import * as translations from "./translations.js";
 
 // https://stackoverflow.com/questions/39282253/how-can-i-alias-a-default-import-in-javascript
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
@@ -32,41 +34,31 @@ if (true)
 
 
 
-function getTranslateData()
-{
-    // td:not([colspan])
-    let eles = document.querySelectorAll('tr td[colspan="6"]');
-    let arr = [];
-
-    for (let i = 0; i < eles.length; ++i)
-    {
-        arr.push(utils.trim(eles[i].textContent));
-    }
-
-    return arr;
-}
 
 
 
 // https://localhost:44314/ts/require/require.js?v=1
 // https://localhost:44314/vertical_text.htm
 // https://localhost:44314/Schuettgutcontainer.htm
-async function autorun(): Promise<any>
+async function main(): Promise<any>
 {
     let _: any = {
          "autobind_autotrace": autobind_autotrace
+        ,"autorun": autorun
         ,"hu": hu
         ,"linq": linq
-        , "tr": tableWrapper
-        ,"uuid": uuid 
+        ,"tr": tableWrapper
+        ,"tra": translations
+        ,"utils": utils
+        ,"uuid": uuid
         ,"xml": xml
     }; // goddamn, if not used, it's not imported ...
 
 
     console.log("document ready");
     // console.log("scriptName", console.trace());
-    
-    // console.log("translate data", JSON.stringify(getTranslateData(), null, "  "));
+
+    // console.log("translate data", JSON.stringify(translations.getTranslateData(), null, "  "));
 
     // let table = document.querySelector("body > table")
     // console.log("table", table);
@@ -158,10 +150,6 @@ async function autorun(): Promise<any>
 
     // https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1
     // xxx.tables[3]
-
-
 }
 
-if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false); 
-else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun); 
-else window.onload = autorun; 
+autorun.documentReady(main);

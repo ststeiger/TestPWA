@@ -1,15 +1,10 @@
 ﻿
-using Newtonsoft.Json;
-using System.IO;
-
 namespace AnySqlWebAdmin
 {
 
 
     public class SqlException
-    // : System.Exception
     {
-        // :base(serializationinfo, streamingContext)
 
         public bool hasError;
         public string SQL;
@@ -20,12 +15,11 @@ namespace AnySqlWebAdmin
 
 
         public SqlException(
-             string message
+              string message
             , string sql
             , System.Collections.Generic.Dictionary<string, object> parameters
             , Microsoft.AspNetCore.Http.HttpContext context
             , System.Exception innerException)
-        //:base(message, innerException)
         {
             this.hasError = true;
             this.SQL = sql;
@@ -83,41 +77,36 @@ namespace AnySqlWebAdmin
                         // new TestPWA.Code.DB.DataTableConverter(),
                         // new TestPWA.Code.DB.DataSetConverter()
                     }
-                ,IncludeFields = true
-                ,WriteIndented = true
-                // ,ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
-            };
+                    ,IncludeFields = true
+                    ,WriteIndented = true
+                    // ,PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase 
+                    // ,ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
+                    // Where has ReferenceLoopHandling.Ignore gone ? 
+                };
 
             await System.Text.Json.JsonSerializer.SerializeAsync(s, this, this.GetType(), options);
         }
 
 
-        public async System.Threading.Tasks.Task ToJSONOld(System.IO.Stream s)
+        public async System.Threading.Tasks.Task ToNewtonJSON(System.IO.Stream s)
         {
             // https://stackoverflow.com/questions/27197317/json-net-is-ignoring-properties-in-types-derived-from-system-exception-why
             // JsonSerializer.SerializeAndIgnoreSerializableInterface(this, s);
 
-#if false
-            using (StreamWriter writer = new StreamWriter(s))
+            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(s))
             {
-                using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
+                using (Newtonsoft.Json.JsonTextWriter jsonWriter = new Newtonsoft.Json.JsonTextWriter(writer))
                 {
-                    JsonSerializer ser = new JsonSerializer();
-                    ser.Formatting = Formatting.Indented;
+                    Newtonsoft.Json.JsonSerializer ser = new Newtonsoft.Json.JsonSerializer();
+                    ser.Formatting = Newtonsoft.Json.Formatting.Indented;
                     ser.Serialize(jsonWriter, this);
                     jsonWriter.Flush();
-                }
-            }
+                } // End Using jsonWriter 
+
+            } // End Using writer 
+
             await System.Threading.Tasks.Task.CompletedTask;
-#else
-            System.Text.Json.JsonSerializerOptions jso = new System.Text.Json.JsonSerializerOptions();
-            jso.IncludeFields = true;
-            jso.WriteIndented = true;
-            // jso.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-            // System.Text.Json.JsonSerializer.Serialize(s,this, this.GetType(), jso);
-            await System.Text.Json.JsonSerializer.SerializeAsync(s, this, this.GetType(), jso);
-#endif
-        } // End Constructor 
+        } // End Task ToNewtonJSON 
 
 
     } // End Class SqlException 

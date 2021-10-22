@@ -169,3 +169,5 @@ require.paths = Object.create(null);
         require.paths.html = document.location.href;
     }
 }());
+(function () {
+}());

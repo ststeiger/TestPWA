@@ -66,7 +66,7 @@ interface Document
     // attachEvent: any;
     // detachEvent: any;
 
-    attachEvent(eventName: string, callback: (event: any) => void): void;
+    attachEvent(eventName: string, callback: EventListenerOrEventListenerObject) : void;
     detachEvent(eventName: string, callback: (event: any) => void): void;
 
     attachCustomEvent: any;

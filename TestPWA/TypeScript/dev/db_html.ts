@@ -26,7 +26,7 @@ function _getProperties(el: Element)
 export function collectStructure(p: Node, parent?: string, sort?: number)
 {
     if (p == null)
-        return;
+        return null;
 
     parent = parent || null;
     sort = sort || 0;

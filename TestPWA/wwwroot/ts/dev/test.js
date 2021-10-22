@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var autobind_autotrace = require("./autobind_autotrace.js");
+var autorun = require("./autorun.js");
 var utils = require("./string_utils.js");
 var hu = require("./http_utility.js");
 var xml = require("./xml_beautifier.js");
@@ -44,17 +45,10 @@ var uuid = require("./uuid.js");
 var linq = require("./linq.js");
 var table_wrapper_js_1 = require("./table_wrapper.js");
 var db_html = require("./db_html.js");
+var translations = require("./translations.js");
 if (true) {
 }
-function getTranslateData() {
-    var eles = document.querySelectorAll('tr td[colspan="6"]');
-    var arr = [];
-    for (var i = 0; i < eles.length; ++i) {
-        arr.push(utils.trim(eles[i].textContent));
-    }
-    return arr;
-}
-function autorun() {
+function main() {
     return __awaiter(this, void 0, void 0, function () {
         var _, fetchSingleChecklist, checkListData, checklistName, elements, elemntProps, argh, arghHtml, i;
         return __generator(this, function (_a) {
@@ -62,9 +56,12 @@ function autorun() {
                 case 0:
                     _ = {
                         "autobind_autotrace": autobind_autotrace,
+                        "autorun": autorun,
                         "hu": hu,
                         "linq": linq,
                         "tr": table_wrapper_js_1.TableWrapper,
+                        "tra": translations,
+                        "utils": utils,
                         "uuid": uuid,
                         "xml": xml
                     };
@@ -92,9 +89,4 @@ function autorun() {
         });
     });
 }
-if (document.addEventListener)
-    document.addEventListener("DOMContentLoaded", autorun, false);
-else if (document.attachEvent)
-    document.attachEvent("onreadystatechange", autorun);
-else
-    window.onload = autorun;
+autorun.documentReady(main);

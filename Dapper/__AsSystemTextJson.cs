@@ -4,11 +4,122 @@ namespace Dapper
 
 
 
+    public delegate bool WriteValueExtender_t(System.Type t, System.Text.Json.Utf8JsonWriter jsonWriter, object obj);
+
+
     internal static class Utf8JsonWriterExtensions
     {
 
-        // https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/JsonWriter.cs#L525
+        public static void WriteValue(this System.Text.Json.Utf8JsonWriter jsonWriter, object obj, WriteValueExtender_t extensions)
+        {
+            if (obj == System.DBNull.Value || obj == null)
+            {
+                jsonWriter.WriteNullValue();
+                return;
+            }
+
+            System.Type t = obj.GetType();
+
+            if (WriteValueInternalUnhandled(t, jsonWriter, obj))
+                if(extensions != null || extensions(t, jsonWriter, obj))
+                    throw new System.NotImplementedException("WriteValue for " + t.FullName);
+        }
+
         public static void WriteValue(this System.Text.Json.Utf8JsonWriter jsonWriter, object obj)
+        {
+            if (obj == System.DBNull.Value || obj == null)
+            {
+                jsonWriter.WriteNullValue();
+                return;
+            }
+
+            System.Type t = obj.GetType();
+
+            if (WriteValueInternalUnhandled(t, jsonWriter, obj))
+                throw new System.NotImplementedException("WriteValue for " + t.FullName);
+        }
+
+
+        // https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/JsonWriter.cs#L525
+        private static bool WriteValueInternalUnhandled(System.Type t, System.Text.Json.Utf8JsonWriter jsonWriter, object obj)
+        {
+            // The problem with the functional c-type switch is that it is not getting the precompiled speed that the actual switch-case syntax gets. 
+
+            // C# 7+ Switch
+            switch (obj) 
+            {
+                case System.Guid tGuid:
+                    jsonWriter.WriteStringValue(tGuid);
+                    return false;
+                case System.String tString:
+                    jsonWriter.WriteStringValue(tString);
+                    return false;
+                case System.Char tChar:
+                    jsonWriter.WriteStringValue(tChar.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    return false;
+                case System.Boolean tBoolean:
+                    jsonWriter.WriteBooleanValue(tBoolean);
+                    return false;
+                case System.DateTime tDateTime:
+                    jsonWriter.WriteStringValue(tDateTime);
+                    return false;
+                case System.DateTimeOffset tOffset:
+                    jsonWriter.WriteStringValue(tOffset);
+                    return false;
+                case System.Single tSingle:
+                    jsonWriter.WriteNumberValue(tSingle);
+                    return false;
+                case System.Double tDouble:
+                    jsonWriter.WriteNumberValue(tDouble);
+                    return false;
+                case System.Decimal tDecimal:
+                    jsonWriter.WriteNumberValue(tDecimal);
+                    return false;
+                case System.Byte tByte:
+                    jsonWriter.WriteNumberValue(tByte);
+                    return false;
+                case System.SByte tSByte:
+                    jsonWriter.WriteNumberValue(tSByte);
+                    return false;
+                case System.Int16 tInt16:
+                    jsonWriter.WriteNumberValue(tInt16);
+                    return false;
+                case System.UInt16 tUInt16:
+                    jsonWriter.WriteNumberValue(tUInt16);
+                    return false;
+                case System.Int32 tInt32:
+                    jsonWriter.WriteNumberValue(tInt32);
+                    return false;
+                case System.UInt32 tUInt32:
+                    jsonWriter.WriteNumberValue(tUInt32);
+                    return false;
+                case System.Int64 tInt64:
+                    jsonWriter.WriteNumberValue(tInt64);
+                    return false;
+                case System.UInt64 tUInt64:
+                    jsonWriter.WriteNumberValue(tUInt64);
+                    return false;
+                case System.IntPtr tIntPtr:
+                    jsonWriter.WriteNumberValue(tIntPtr.ToInt64());
+                    return false;
+                case System.UIntPtr tUIntPtr:
+                    jsonWriter.WriteNumberValue(tUIntPtr.ToUInt64());
+                    return false;
+                // https://github.com/microsoftarchive/bcl/blob/master/Libraries/BigRational/BigRationalLibrary/BigRational.cs
+                // https://github.com/orgs/microsoftarchive/repositories
+                case System.Numerics.BigInteger tBigInteger:
+                    jsonWriter.WriteStringValue(tBigInteger.ToString(System.Globalization.CultureInfo.InvariantCulture)); // TODO: FixMe
+                    return false;
+                case byte[] tBuffer:
+                    jsonWriter.WriteStringValue(System.Convert.ToBase64String(tBuffer));
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        public static void WriteObjectValueOld(this System.Text.Json.Utf8JsonWriter jsonWriter, object obj)
         {
             if (obj == System.DBNull.Value)
                 obj = null;
@@ -91,6 +202,8 @@ namespace Dapper
                 throw new System.NotImplementedException("WriteValue for " + t.FullName);
             }
         }
+
+
     }
 
 
