@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-
-
+﻿
 using Dapper;
 using Microsoft.AspNetCore.Builder;
 
@@ -83,19 +77,17 @@ namespace AnySqlWebAdmin
                 } // End if (pars.ContainsKey("format")) 
 
 
+                System.Exception hasErrors = null;
+
                 // https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=EB159A9C-E69F-49F4-B10E-3A4825973E46
                 using (System.Data.Common.DbConnection cnn = this.m_service.Connection)
                 {
                     // System.Exception hasErrors = await cnn.AsJSON(context.Response.Body, sql, format, pars);
-                    System.Exception hasErrors = await cnn.AsSystemTextJson(context.Response.Body, sql, format, pars);
-                    if (hasErrors != null) throw new System.Exception("SQL-Execution Error", hasErrors);
+                    hasErrors = await cnn.AsSystemTextJson(context.Response.Body, sql, format, pars);
                 }
 
-                // await SqlServiceJsonHelper.AnyDataReaderToJson(sql, pars, context, format);
-
-                // throw new Exception("SQL error");
-                // await context.Response.WriteAsync("Howdy");
-                // context.Response.StatusCode = 500;
+                if (hasErrors != null)
+                    await TransmitError(context, hasErrors, sql, pars);
             } // End Try 
             catch (System.Exception ex)
             {
@@ -104,38 +96,32 @@ namespace AnySqlWebAdmin
                 // header('HTTP/1.1 200 OK');
 
                 // context.Response.Headers["HTTP/1.0 500 Internal Server Error"] = "";
-                try
-                {
-
-                    context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                    // context.Response.Headers["X-Error-Message"] = "Incorrect username or password";
-                    context.Response.Headers["X-Error-Message"] = ex.Message;
-
-                    context.Response.ContentType = "text/plain";
-
-                    SqlException se = new SqlException(ex.Message, sql, pars, context, ex);
-                    await se.ToJSON(context.Response.Body);
-
-                    //await context.Response.WriteAsync(ex.Message);
-                    //await context.Response.WriteAsync(System.Environment.NewLine);
-                    //await context.Response.WriteAsync(System.Environment.NewLine);
-                    //await context.Response.WriteAsync(ex.StackTrace);
-                    //await context.Response.WriteAsync(System.Environment.NewLine);
-                    //await context.Response.WriteAsync(System.Environment.NewLine);
-                    //await context.Response.WriteAsync(sql);
-                    //await context.Response.WriteAsync(System.Environment.NewLine);
-                    //await context.Response.WriteAsync(System.Environment.NewLine);
-                    //await context.Response.WriteAsync(System.Convert.ToString(pars));
-                    System.Console.WriteLine();
-                }
-                catch (System.Exception ex2)
-                {
-                    System.Console.WriteLine(ex2.Message);
-                    System.Console.WriteLine(ex2.StackTrace);
-                }
+                await TransmitError(context, ex, sql, pars);
             } // End Catch 
 
         } // End Async Invoke 
+
+
+        public async System.Threading.Tasks.Task TransmitError(
+            Microsoft.AspNetCore.Http.HttpContext context,
+            System.Exception exception,
+            string sql,
+            System.Collections.Generic.Dictionary<string, object> pars = null)
+        {
+            try
+            {
+                context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                context.Response.Headers["X-Error-Message"] = exception.Message;
+                context.Response.ContentType = "application/json";
+                SqlException se = new SqlException(exception.Message, sql, pars, context, exception);
+                await se.ToJSON(context.Response.Body);
+            }
+            catch (System.Exception ex2)
+            {
+                System.Console.WriteLine(ex2.Message);
+                System.Console.WriteLine(ex2.StackTrace);
+            }
+        }
 
 
     } // End Class SqlMiddleware 
@@ -144,19 +130,26 @@ namespace AnySqlWebAdmin
     public static class SqlMiddlewareExtensions
     {
 
+
         public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
-            this Microsoft.AspNetCore.Builder.IApplicationBuilder app)
+            this Microsoft.AspNetCore.Builder.IApplicationBuilder app, 
+            System.StringComparison comparison, params string[] startSegments
+        )
         {
             // return app.UseMiddleware<SqlMiddleware>();
-
             // app.UseWhen(context => context.Request.Path.StartsWithSegments("/blob"), appBuilder => { }
 
             // https://www.devtrends.co.uk/blog/conditional-middleware-based-on-request-in-asp.net-core
             app.UseWhen(
                 delegate (Microsoft.AspNetCore.Http.HttpContext context)
                 {
-                    return context.Request.Path.StartsWithSegments("/sql")
-                    || context.Request.Path.StartsWithSegments("/ajax/AnySelect.ashx");
+                    for (int i = 0; i < startSegments.Length; ++i)
+                    {
+                        if (context.Request.Path.StartsWithSegments(startSegments[i], comparison))
+                            return true;
+                    }
+
+                    return false;
                 }
                 , delegate (Microsoft.AspNetCore.Builder.IApplicationBuilder appBuilder)
                 {
@@ -167,6 +160,75 @@ namespace AnySqlWebAdmin
             );
 
             return app;
+        } // End Function UseSqlMiddleware 
+
+
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+            this Microsoft.AspNetCore.Builder.IApplicationBuilder app, 
+            params string[] startSegments
+        )
+        {
+            return UseSqlMiddleware(app, System.StringComparison.InvariantCultureIgnoreCase, startSegments);
+        }
+
+
+
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+           this Microsoft.AspNetCore.Builder.IApplicationBuilder app,
+           System.Collections.Generic.IEnumerable<string> startSegments,
+           System.StringComparison comparison 
+       )
+        {
+            System.Collections.Generic.List<string> ls = new System.Collections.Generic.List<string>(startSegments);
+            return UseSqlMiddleware(app, comparison, ls.ToArray());
+        }
+
+
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+            this Microsoft.AspNetCore.Builder.IApplicationBuilder app,
+            System.Collections.Generic.IEnumerable<string> startSegments
+        )
+        {
+            return UseSqlMiddleware(app, startSegments, System.StringComparison.InvariantCultureIgnoreCase);
+        }
+
+
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+            this Microsoft.AspNetCore.Builder.IApplicationBuilder app, string startSegment, System.StringComparison comparison)
+        {
+            app.UseWhen(
+                delegate (Microsoft.AspNetCore.Http.HttpContext context)
+                {
+                    return context.Request.Path.StartsWithSegments(startSegment, comparison);
+                }
+                , delegate (Microsoft.AspNetCore.Builder.IApplicationBuilder appBuilder)
+                {
+                    appBuilder.UseMiddleware<SqlMiddleware>();
+                }
+            );
+
+            return app;
+        } // End Function UseSqlMiddleware 
+
+
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+          this Microsoft.AspNetCore.Builder.IApplicationBuilder app, string startSegment)
+        {
+            return UseSqlMiddleware(app, startSegment, System.StringComparison.InvariantCultureIgnoreCase);
+        }
+
+
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+            this Microsoft.AspNetCore.Builder.IApplicationBuilder app, System.StringComparison comparison)
+        {
+            return UseSqlMiddleware(app, comparison, "/sql", "/ajax/AnySelect.ashx");
+        } // End Function UseSqlMiddleware 
+
+
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+          this Microsoft.AspNetCore.Builder.IApplicationBuilder app)
+        {
+            return UseSqlMiddleware(app, System.StringComparison.InvariantCultureIgnoreCase);
         } // End Function UseSqlMiddleware 
 
 
