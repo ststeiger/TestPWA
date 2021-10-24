@@ -1,4 +1,22 @@
 
+// 3 ways to install typescript: 
+//   - NuGet package (Install-Package Microsoft.TypeScript.MSBuild -Version 4.4.4) 
+//     for TypeScript 3.2 or higher is installed into your project, 
+//     the corresponding version of the TypeScript language service gets loaded in the editor.
+//   - TypeScript SDK as a standalone SDK download from the VS Marketplace.
+//   - NPM npm install -g typescript / npm install -g typescript@next /  npm install typescript@1.7.5
+//     to check open cmd and run tsc -v
+//     npm uninstall typescript;npm install typescript@3.9.7
+
+// https://docs.microsoft.com/en-us/visualstudio/javascript/javascript-in-vs-2019?view=vs-2019
+// https://docs.microsoft.com/en-us/visualstudio/javascript/compile-typescript-code-nuget?view=vs-2019
+// <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.9.7">
+//    <PrivateAssets>all</PrivateAssets>
+//    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+// </PackageReference>
+
+
+
 export function autoBind(self: any): any
 {
     for (const key of Object.getOwnPropertyNames(self.constructor.prototype))

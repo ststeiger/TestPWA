@@ -53,6 +53,7 @@ namespace AnySqlWebAdmin
                 pars["BE_Hash"] = 12435;
                 pars["__stichtag"] = System.DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
 
+                // https://stackoverflow.com/questions/3050518/what-http-status-response-code-should-i-use-if-the-request-is-missing-a-required
                 if (!pars.ContainsKey("sql"))
                     throw new System.Exception("Parameter sql not provided....");
 
@@ -94,6 +95,16 @@ namespace AnySqlWebAdmin
                 // header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
                 // header("HTTP/1.0 500 Internal Server Error");
                 // header('HTTP/1.1 200 OK');
+
+                // https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html#sec6.1.1
+                // 1xx: Informational - Request received, continuing process
+                // 2xx: Success - The action was successfully received, understood, and accepted
+                // 3xx: Redirection - Further action must be taken in order to complete the request
+                // 4xx: Client Error -The request contains bad syntax or cannot be fulfilled
+                // 5xx: Server Error -The server failed to fulfill an apparently valid request
+
+                //  "400"  ; Section 10.4.1: Bad Request
+
 
                 // context.Response.Headers["HTTP/1.0 500 Internal Server Error"] = "";
                 await TransmitError(context, ex, sql, pars);
