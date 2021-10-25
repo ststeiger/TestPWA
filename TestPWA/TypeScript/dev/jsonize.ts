@@ -1,16 +1,12 @@
 
 import * as autobind_autotrace from "./autobind_autotrace.js";
 import * as uuid from "./uuid.js";
-import * as utils from "./string_utils.js";
-
+import * as string_utils from "./string_utils.js";
 
 // https://stackoverflow.com/questions/39282253/how-can-i-alias-a-default-import-in-javascript
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
 import { TableWrapper as tableWrapper, GroupedTableWrapper as groupedTableWrapper, GroupedData } from "./table_wrapper.js";
 
-let _ = {
-    "ab": autobind_autotrace
-};
 
 function _getProperties(el: Element)
 {
@@ -38,17 +34,50 @@ export function collectStructure(p: Node, parent?: string, sort?: number)
     let guid = uuid.newGuid();
 
     let checklistData: IXmlStructure = {
-        "uuid": guid
-        , "parent_uuid": parent
-        , "tagName": p.nodeName
-        , "properties": _getProperties(<Element>p)
-        , "children": []
-        , "sort": sort
+         "uuid": guid
+        ,"parent_uuid": parent
+        ,"tagName": p.nodeName
+        ,"properties": _getProperties(<Element>p)
+        ,"children": []
+        ,"sort": sort
     };
 
+
+    // id's value must not contain whitespace (spaces, tabs etc.). 
+    // Browsers treat non-conforming IDs that contain whitespace as if the whitespace is part of the ID. 
+    // In contrast to the class attribute, which allows space-separated values, 
+    // elements can only have one single ID value.
+
+    // Note: 
+    // Using characters except ASCII letters, digits, '_', '-' and '.' may cause compatibility problems,
+    // as they weren't allowed in HTML 4. 
+    // Though this restriction has been lifted in HTML5, 
+    // an ID should start with a letter for compatibility.
+
+    
     if (p.nodeName.toLowerCase() === "td")
+    // if (p.nodeType === Node.ELEMENT_NODE && (<Element>p).children.length === 0)
+    // if (p.nodeType === Node.ELEMENT_NODE && p.nodeName === "SPAN" && (<Element>p).innerHTML.indexOf("<b>") != -1)
     {
-        checklistData.innerHtml = (<Element>p).innerHTML;
+        let inputSort = 0;
+
+        for (let i = 0; i < children.length; ++i)
+        {
+            let tagName = children[i].nodeName.toLowerCase();
+
+            // if (children[i].nodeType === Node.TEXT_NODE && !string_utils.isNullOrWhiteSpace(children[i].nodeValue))
+            if (children[i].nodeType === Node.ELEMENT_NODE &&
+                (tagName === "input" || tagName === "textarea")
+            )
+            {
+                // (<HTMLInputElement>p).name
+                let ret = collectStructure(children[i], guid, inputSort++);
+                checklistData.children.push(ret);
+            }
+        }
+
+        if (inputSort == 0)
+            checklistData.innerHtml = (<Element>p).innerHTML;
     }
     else
         if (children.length)
@@ -97,14 +126,7 @@ function _createElement(data: IXmlStructure)
     {
         el.setAttribute("id", data.uuid.toLowerCase());
         el.id = data.uuid.toLowerCase();
-
-        let tagName = data.tagName.toLowerCase();
-        if (tagName === "input" || tagName === "textarea")
-        {
-            el.setAttribute("name", el.id);
-        }
     }
-
 
     for (let i = 0; i < data.properties.length; ++i)
     {
@@ -189,67 +211,35 @@ export function constructRecursiveDataStructure(
 }
 
 
-interface ISaveValues
+
+
+
+(function ()
 {
-    uuid: string;
-    value: string;
-    type?: string;
-    __cls_uid?: string;
-}
+
+    let _ = {
+        "ab": autobind_autotrace
+    };
+
+    let doc = collectStructure(document.querySelector("table"));
+    console.log(doc);
 
 
-export function collectSaveData(p: Element, cls_uid?:string): ISaveValues[]
-{
-    if (p == null)
-        return null;
 
-    let checklistData: ISaveValues[] = [];
 
-    let nodeName = p.nodeName.toLowerCase();
+    let div = document.createElement("div")
+    div.setAttribute("id", "abc");
+
+    var t = document.createTextNode("Hello World");
+    (<any>t).id = "foobar2021";
+    div.appendChild(t);
+
+
+    document.body.appendChild(div);
+
+    console.log("hello", (<any>document.getElementById("abc").childNodes[0]).id);
     
-    if (p.nodeType === Node.ELEMENT_NODE && ("input" === nodeName || "textarea" === nodeName))
-    {
-        let uuid: string = (<Element>p).getAttribute("id") || "unknown";
-        let type: string = (<Element>p).getAttribute("type") || "";
-        let value = null;
 
-        if ("checkbox" === type.toLowerCase())
-        {
-            value = (<HTMLInputElement>(<Element>p)).checked.toString().toLowerCase();
-        }
-        else if ("text" === type.toLowerCase())
-        {
-            value = (<HTMLInputElement>(<Element>p)).value;
-            value = utils.normalizeNewLines(value);
-        }
-        else if ("textarea" === nodeName)
-        {
-            value = (<HTMLTextAreaElement>(<Element>p)).value;
-            value = utils.normalizeNewLines(value);
-            type = "textarea";
-        }
-
-        // console.log("value", p, "type:", type, "value", value, "uuid", uuid);
-        return [{
-              "uuid": uuid
-            , "value": value
-            //, "type": type
-            , "__cls_uid": cls_uid
-        }];
-    }
-    else if (p.children.length)
-    {
-        for (let i = 0; i < p.children.length; i++)
-        {
-            let ret = collectSaveData(p.children[i], cls_uid);
-            for (let j = 0; j < ret.length; ++j)
-            {
-                checklistData.push(ret[j]);
-            }
-            
-        } // Next i 
-
-    } // End if (children.length) 
-
-    return checklistData;
-} // End Sub collectSaveData
+    // run main here !
+    console.log("finished !");
+}());

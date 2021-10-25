@@ -1,4 +1,4 @@
-
+﻿
 IF OBJECT_ID(N'tempdb..#CheckListNodes') IS NOT NULL
 BEGIN
 	DROP TABLE #CheckListNodes; 

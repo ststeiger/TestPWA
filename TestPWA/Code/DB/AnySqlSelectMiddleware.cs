@@ -15,7 +15,7 @@ namespace AnySqlWebAdmin
 {
 
 
-    public class SqlMiddleware
+    public class AnySqlSelectMiddleware
     {
 
         protected SqlFactory m_service;
@@ -23,7 +23,7 @@ namespace AnySqlWebAdmin
         protected readonly string m_sqlRootPath;
 
 
-        public SqlMiddleware(Microsoft.AspNetCore.Http.RequestDelegate next, SqlFactory service, Microsoft.Extensions.Hosting.IHostingEnvironment env)
+        public AnySqlSelectMiddleware(Microsoft.AspNetCore.Http.RequestDelegate next, SqlFactory service, Microsoft.Extensions.Hosting.IHostEnvironment env)
         {
             this._next = next;
             this.m_service = service;
@@ -45,7 +45,7 @@ namespace AnySqlWebAdmin
             // context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
             // throw new Exception("YaY");
             string sql = null;
-            System.Collections.Generic.Dictionary<string, object> pars = null;
+            RequestParameters pars = null;
 
             try
             {
@@ -117,7 +117,7 @@ namespace AnySqlWebAdmin
             Microsoft.AspNetCore.Http.HttpContext context,
             System.Exception exception,
             string sql,
-            System.Collections.Generic.Dictionary<string, object> pars = null)
+            RequestParameters pars = null)
         {
             try
             {
@@ -137,12 +137,12 @@ namespace AnySqlWebAdmin
 
     } // End Class SqlMiddleware 
 
-
-    public static class SqlMiddlewareExtensions
+    
+    public static class AnySqlSelectMiddlewareExtensions
     {
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlSelect(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app, 
             System.StringComparison comparison, params string[] startSegments
         )
@@ -165,7 +165,7 @@ namespace AnySqlWebAdmin
                 , delegate (Microsoft.AspNetCore.Builder.IApplicationBuilder appBuilder)
                 {
                     // appBuilder.UseStatusCodePagesWithReExecute("/apierror/{0}");
-                    appBuilder.UseMiddleware<SqlMiddleware>();
+                    appBuilder.UseMiddleware<AnySqlSelectMiddleware>();
                     //appBuilder.UseExceptionHandler("/apierror/500");
                 }
             );
@@ -174,37 +174,37 @@ namespace AnySqlWebAdmin
         } // End Function UseSqlMiddleware 
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlSelect(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app, 
             params string[] startSegments
         )
         {
-            return UseSqlMiddleware(app, System.StringComparison.InvariantCultureIgnoreCase, startSegments);
+            return UseAnySqlSelect(app, System.StringComparison.InvariantCultureIgnoreCase, startSegments);
         }
 
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlSelect(
            this Microsoft.AspNetCore.Builder.IApplicationBuilder app,
            System.Collections.Generic.IEnumerable<string> startSegments,
            System.StringComparison comparison 
        )
         {
             System.Collections.Generic.List<string> ls = new System.Collections.Generic.List<string>(startSegments);
-            return UseSqlMiddleware(app, comparison, ls.ToArray());
+            return UseAnySqlSelect(app, comparison, ls.ToArray());
         }
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlSelect(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app,
             System.Collections.Generic.IEnumerable<string> startSegments
         )
         {
-            return UseSqlMiddleware(app, startSegments, System.StringComparison.InvariantCultureIgnoreCase);
+            return UseAnySqlSelect(app, startSegments, System.StringComparison.InvariantCultureIgnoreCase);
         }
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlSelect(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app, string startSegment, System.StringComparison comparison)
         {
             app.UseWhen(
@@ -214,7 +214,7 @@ namespace AnySqlWebAdmin
                 }
                 , delegate (Microsoft.AspNetCore.Builder.IApplicationBuilder appBuilder)
                 {
-                    appBuilder.UseMiddleware<SqlMiddleware>();
+                    appBuilder.UseMiddleware<AnySqlSelectMiddleware>();
                 }
             );
 
@@ -222,24 +222,24 @@ namespace AnySqlWebAdmin
         } // End Function UseSqlMiddleware 
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlSelect(
           this Microsoft.AspNetCore.Builder.IApplicationBuilder app, string startSegment)
         {
-            return UseSqlMiddleware(app, startSegment, System.StringComparison.InvariantCultureIgnoreCase);
+            return UseAnySqlSelect(app, startSegment, System.StringComparison.InvariantCultureIgnoreCase);
         }
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlSelect(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app, System.StringComparison comparison)
         {
-            return UseSqlMiddleware(app, comparison, "/sql", "/ajax/AnySelect.ashx");
+            return UseAnySqlSelect(app, comparison, "/sql/select", "/ajax/anySelect.ashx");
         } // End Function UseSqlMiddleware 
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSqlMiddleware(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlSelect(
           this Microsoft.AspNetCore.Builder.IApplicationBuilder app)
         {
-            return UseSqlMiddleware(app, System.StringComparison.InvariantCultureIgnoreCase);
+            return UseAnySqlSelect(app, System.StringComparison.InvariantCultureIgnoreCase);
         } // End Function UseSqlMiddleware 
 
 

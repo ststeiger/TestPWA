@@ -1,4 +1,4 @@
-
+ï»¿
 IF OBJECT_ID(N'tempdb..#CheckListNodes') IS NOT NULL
 BEGIN
 	DROP TABLE #CheckListNodes; 
@@ -211,7 +211,7 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [],
               "sort": 3,
-              "innerHtml": "\n                    <span>Bargeldgewerk: Schüttgutcontainer</span>\n                "
+              "innerHtml": "\n                    <span>Bargeldgewerk: SchÃ¼ttgutcontainer</span>\n                "
             },
             {
               "uuid": "B0F7A062-03B8-4F24-802D-54ACDCB7D596",
@@ -458,7 +458,7 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [],
               "sort": 0,
-              "innerHtml": "\n                    <span class=\"blink_notme\">Achtung: Arbeiten nur ausführen, wenn keine Werte vorhanden sind.</span>\n                "
+              "innerHtml": "\n                    <span class=\"blink_notme\">Achtung: Arbeiten nur ausfÃ¼hren, wenn keine Werte vorhanden sind.</span>\n                "
             },
             {
               "uuid": "B67AFB41-75CE-4FC9-ACC5-C76874BC8D6F",
@@ -476,7 +476,7 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [],
               "sort": 1,
-              "innerHtml": "\n                    <span class=\"vert\">Wartungs oder Prüfintervall [Jahr]</span>\n                "
+              "innerHtml": "\n                    <span class=\"vert\">Wartungs oder PrÃ¼fintervall [Jahr]</span>\n                "
             },
             {
               "uuid": "1E9860DA-83DF-4ED6-A7E2-6B817DFF6124",
@@ -564,7 +564,7 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [],
               "sort": 0,
-              "innerHtml": "\n                    <span style=\"color: #F2F2F2;\">Prüfarbeiten vor der Durchführung der Arbeiten</span>\n                "
+              "innerHtml": "\n                    <span style=\"color: #F2F2F2;\">PrÃ¼farbeiten vor der DurchfÃ¼hrung der Arbeiten</span>\n                "
             },
             {
               "uuid": "FD09EBEB-7514-442E-88C5-1DFD065745A8",
@@ -693,7 +693,7 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [],
               "sort": 0,
-              "innerHtml": "\n                    <span>Im plombierten Zustand muss die grösst mögliche Öffnung gemessen werden.</span>\n                "
+              "innerHtml": "\n                    <span>Im plombierten Zustand muss die grÃ¶sst mÃ¶gliche Ã–ffnung gemessen werden.</span>\n                "
             },
             {
               "uuid": "C8E561FC-736E-445F-BCAA-712B285D5ECB",
@@ -862,7 +862,7 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [],
               "sort": 0,
-              "innerHtml": "\n                    <span>Auf Beschädigungen oder Defekte prüfen</span>\n                "
+              "innerHtml": "\n                    <span>Auf BeschÃ¤digungen oder Defekte prÃ¼fen</span>\n                "
             },
             {
               "uuid": "0AC82E4C-245E-44BE-9011-C979F136CFB4",
@@ -1035,7 +1035,7 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [],
               "sort": 0,
-              "innerHtml": "\n                    <span style=\"color: #F2F2F2;\">Prüfarbeiten vor der Durchführung der Arbeiten</span>\n                "
+              "innerHtml": "\n                    <span style=\"color: #F2F2F2;\">PrÃ¼farbeiten vor der DurchfÃ¼hrung der Arbeiten</span>\n                "
             }
           ],
           "sort": 7
@@ -1066,7 +1066,7 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [],
               "sort": 0,
-              "innerHtml": "\n                    <span>Führungsschiene links / rechts fetten mit Molykote weisses Lagerfett</span>\n                "
+              "innerHtml": "\n                    <span>FÃ¼hrungsschiene links / rechts fetten mit Molykote weisses Lagerfett</span>\n                "
             },
             {
               "uuid": "B0D63058-2A70-4764-96C6-BABFC205D775",

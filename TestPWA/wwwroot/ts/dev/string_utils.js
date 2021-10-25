@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.replace = exports.trim = exports.rtrim = exports.ltrim = exports.right = exports.left = void 0;
+exports.normalizeNewLines = exports.toUnixNewLines = exports.replace = exports.isNullOrWhiteSpace = exports.trim = exports.rtrim = exports.ltrim = exports.right = exports.left = void 0;
 function left(str, length) {
     if (!str)
         return str;
@@ -31,6 +31,12 @@ function trim(str) {
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 }
 exports.trim = trim;
+function isNullOrWhiteSpace(str) {
+    if (str == null)
+        return true;
+    return /^[\s\uFEFF\xA0]*$/g.test(str);
+}
+exports.isNullOrWhiteSpace = isNullOrWhiteSpace;
 function replace(str, oldToken, newToken, ignoreCase) {
     if (Array.isArray(oldToken)) {
         for (var i = 0; i < oldToken.length; ++i) {
@@ -53,3 +59,15 @@ function replace(str, oldToken, newToken, ignoreCase) {
     return str;
 }
 exports.replace = replace;
+function toUnixNewLines(str) {
+    if (!str)
+        return "";
+    return replace(str, "\r\n", "\n", false);
+}
+exports.toUnixNewLines = toUnixNewLines;
+function normalizeNewLines(str) {
+    if (!str)
+        return "";
+    return replace(toUnixNewLines(str), "\n", "\r\n", false);
+}
+exports.normalizeNewLines = normalizeNewLines;

@@ -66,7 +66,7 @@ function main() {
                         "xml": xml
                     };
                     console.log("document ready");
-                    return [4, fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=EB159A9C-E69F-49F4-B10E-3A4825973E46")];
+                    return [4, fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F")];
                 case 1:
                     fetchSingleChecklist = _a.sent();
                     return [4, fetchSingleChecklist.json()];
@@ -79,8 +79,46 @@ function main() {
                         document.title = checklistName.row(0).CL_Name;
                     argh = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
                     arghHtml = db_html.assembleStructure(argh);
-                    console.log(argh, arghHtml);
-                    document.body.append(arghHtml);
+                    document.body.appendChild(arghHtml);
+                    document.addEventListener('saveChecklist', function (e) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var cls_uid, saveData, rawResponse, saveChecklistResponse, content;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        cls_uid = uuid.newGuid();
+                                        saveData = db_html.collectSaveData(document.querySelector("table"), cls_uid);
+                                        console.log("saveData", saveData);
+                                        console.log("saveData", saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; }));
+                                        return [4, fetch('ajax/anyInsert.ashx?sql=SaveChecklistDataSet.sql', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({ "__cls_uid": cls_uid, "__cls_cl_uid": "F1A2DD8A-2D11-496E-9B14-13559405089F" })
+                                            })];
+                                    case 1:
+                                        rawResponse = _a.sent();
+                                        return [4, fetch('ajax/anyInsert.ashx?sql=SaveChecklistData.sql', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(saveData)
+                                            })];
+                                    case 2:
+                                        saveChecklistResponse = _a.sent();
+                                        return [4, saveChecklistResponse.json()];
+                                    case 3:
+                                        content = _a.sent();
+                                        console.log("rawResponse", content);
+                                        return [2];
+                                }
+                            });
+                        });
+                    }, false);
                     if (false)
                         for (i = 0; i < elemntProps.rowCount; ++i) {
                         }

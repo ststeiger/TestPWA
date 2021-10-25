@@ -31,6 +31,16 @@ export function trim(str: string)
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 }
 
+export function isNullOrWhiteSpace(str: string)
+{
+    if (str == null)
+        return true;
+
+    return /^[\s\uFEFF\xA0]*$/g.test(str);
+}
+
+
+
 
 export function replace(str: string, oldToken: string[] | string, newToken?: string, ignoreCase?: boolean)
 {
@@ -62,4 +72,22 @@ export function replace(str: string, oldToken: string[] | string, newToken?: str
     }
 
     return str;
+}
+
+
+export function toUnixNewLines(str: string): string 
+{
+    if (!str)
+        return "";
+
+    return replace(str, "\r\n", "\n", false);
+}
+
+
+export function normalizeNewLines(str: string):string 
+{
+    if (!str)
+        return "";
+
+    return replace(toUnixNewLines(str), "\n", "\r\n", false);
 }

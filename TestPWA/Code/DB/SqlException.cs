@@ -8,7 +8,7 @@ namespace AnySqlWebAdmin
 
         public bool hasError;
         public string SQL;
-        public System.Collections.Generic.Dictionary<string, object> Parameters;
+        public RequestParameters Parameters;
         public HttpContextWrapper Context;
         public System.Exception InnerException;
 
@@ -17,7 +17,7 @@ namespace AnySqlWebAdmin
         public SqlException(
               string message
             , string sql
-            , System.Collections.Generic.Dictionary<string, object> parameters
+            , RequestParameters parameters
             , Microsoft.AspNetCore.Http.HttpContext context
             , System.Exception innerException)
         {
@@ -29,7 +29,7 @@ namespace AnySqlWebAdmin
         }
 
 
-        public SqlException(string message, System.Collections.Generic.Dictionary<string, object> parameters
+        public SqlException(string message, RequestParameters parameters
             , Microsoft.AspNetCore.Http.HttpContext context
             , string sql)
             : this(message, sql, parameters, context, null)

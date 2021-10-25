@@ -19,7 +19,7 @@ SET @numSortDigits = 10;
 
 
 DECLARE @json nvarchar(max) = N'{
-  "uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+  "uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
   "tagName": "table",
   "properties": [
     [
@@ -37,8 +37,8 @@ DECLARE @json nvarchar(max) = N'{
   ],
   "children": [
     {
-      "uuid": "1db755e2-9a8f-4835-9a41-94cc21e2d6cf",
-      "parent_uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+      "uuid": "210a3ccc-eb46-4825-80e2-147f7e30a4e8",
+      "parent_uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
       "tagName": "colgroup",
       "properties": [
         [
@@ -55,8 +55,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "512f0d1c-ae1b-4cf5-b1aa-d5e4a7e37772",
-      "parent_uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+      "uuid": "9771a5b6-bf3b-4891-9241-d25b000b8992",
+      "parent_uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
       "tagName": "colgroup",
       "properties": [
         [
@@ -69,8 +69,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "32272962-3551-44ab-90ff-436cdf97f2cb",
-      "parent_uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+      "uuid": "f14066e3-521b-450b-b1fd-2f9f23b72fa0",
+      "parent_uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
       "tagName": "colgroup",
       "properties": [
         [
@@ -83,8 +83,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "782b08d0-c030-4f86-95ac-29a30f87a234",
-      "parent_uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+      "uuid": "f03d26ba-7390-4b66-92c9-3d1c707742f3",
+      "parent_uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
       "tagName": "colgroup",
       "properties": [
         [
@@ -97,8 +97,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "377f8d63-0fa7-443b-a0a5-41cff4198987",
-      "parent_uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+      "uuid": "84f94d4d-eeb3-47f6-bbd6-67c7acf26c43",
+      "parent_uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
       "tagName": "colgroup",
       "properties": [
         [
@@ -111,8 +111,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "7966285c-667b-4988-b4d5-731ffa289552",
-      "parent_uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+      "uuid": "8d148ead-e655-4aef-acfe-a2adc754d3f0",
+      "parent_uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
       "tagName": "colgroup",
       "properties": [
         [
@@ -125,8 +125,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "f14148b3-fadf-4962-af48-b1f9ab3fde84",
-      "parent_uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+      "uuid": "dc8f4dc3-3d08-4f6a-b44a-0701eaf7b23f",
+      "parent_uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
       "tagName": "colgroup",
       "properties": [
         [
@@ -143,14 +143,14 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
-      "parent_uuid": "7582df6f-e5e0-42a2-86a3-fc6fad8112a8",
+      "uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
+      "parent_uuid": "1f209199-4dd2-407e-a11b-8bc5ac288c69",
       "tagName": "tbody",
       "properties": [],
       "children": [
         {
-          "uuid": "f33a344e-c6a7-41ba-bd4b-894fc31195c7",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "e3342316-3749-4994-9bc9-fe0826be5b8f",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [
             [
@@ -160,8 +160,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "380c0cb4-353f-43ff-ace0-7bdd02b0256f",
-              "parent_uuid": "f33a344e-c6a7-41ba-bd4b-894fc31195c7",
+              "uuid": "870516f8-760e-46ed-b528-62151d0b1a79",
+              "parent_uuid": "e3342316-3749-4994-9bc9-fe0826be5b8f",
               "tagName": "td",
               "properties": [
                 [
@@ -183,8 +183,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ae80ab95-8a54-41d7-8d8c-17fe59692e29",
-              "parent_uuid": "f33a344e-c6a7-41ba-bd4b-894fc31195c7",
+              "uuid": "de2aad69-dffe-4e23-b55a-b8ada13c1ebd",
+              "parent_uuid": "e3342316-3749-4994-9bc9-fe0826be5b8f",
               "tagName": "td",
               "properties": [
                 [
@@ -202,8 +202,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "3e44a5cf-8cce-44ee-99d6-bf3965fcddbd",
-              "parent_uuid": "f33a344e-c6a7-41ba-bd4b-894fc31195c7",
+              "uuid": "68c12378-bbc0-440a-a5ba-99665d1a1b29",
+              "parent_uuid": "e3342316-3749-4994-9bc9-fe0826be5b8f",
               "tagName": "td",
               "properties": [
                 [
@@ -221,8 +221,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "85fa350d-c730-47da-9051-e83ec7e805cd",
-              "parent_uuid": "f33a344e-c6a7-41ba-bd4b-894fc31195c7",
+              "uuid": "13f4d14f-639c-4303-a41b-b9a104f52647",
+              "parent_uuid": "e3342316-3749-4994-9bc9-fe0826be5b8f",
               "tagName": "td",
               "properties": [
                 [
@@ -248,8 +248,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "277d1818-118d-443b-a0d9-1c8af54d271b",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "deca5157-d2dd-4723-81a4-cc107f9e0616",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [
             [
@@ -259,8 +259,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "21b6f694-f17d-4f85-9682-d5cb79afc2e7",
-              "parent_uuid": "277d1818-118d-443b-a0d9-1c8af54d271b",
+              "uuid": "4dc336a6-4606-4e8a-beaa-d7c5a275e37f",
+              "parent_uuid": "deca5157-d2dd-4723-81a4-cc107f9e0616",
               "tagName": "td",
               "properties": [
                 [
@@ -282,8 +282,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "f0c88784-d114-4b7d-bb2d-c987e63dac68",
-              "parent_uuid": "277d1818-118d-443b-a0d9-1c8af54d271b",
+              "uuid": "fde59fa2-1d2c-4309-be5e-302f3b4baa7a",
+              "parent_uuid": "deca5157-d2dd-4723-81a4-cc107f9e0616",
               "tagName": "td",
               "properties": [
                 [
@@ -301,8 +301,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "498a70ec-61b6-4799-ae44-3aea78092a5a",
-              "parent_uuid": "277d1818-118d-443b-a0d9-1c8af54d271b",
+              "uuid": "070974ee-a395-4f3d-82d8-e3029b93b8ca",
+              "parent_uuid": "deca5157-d2dd-4723-81a4-cc107f9e0616",
               "tagName": "td",
               "properties": [
                 [
@@ -320,8 +320,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "27362523-5676-4a4a-88e8-7aa9b200b60f",
-              "parent_uuid": "277d1818-118d-443b-a0d9-1c8af54d271b",
+              "uuid": "208b4be3-c6c5-436a-a4b5-77613b8ce26f",
+              "parent_uuid": "deca5157-d2dd-4723-81a4-cc107f9e0616",
               "tagName": "td",
               "properties": [
                 [
@@ -347,8 +347,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "8d216494-5c90-455f-ac4f-43d1ccba77f8",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "8988a433-042a-43e0-8b03-605317c49aff",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [
             [
@@ -358,8 +358,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "c2b2a74a-8db9-40b2-9307-aa82022238db",
-              "parent_uuid": "8d216494-5c90-455f-ac4f-43d1ccba77f8",
+              "uuid": "d82837bf-caf0-4317-b1bc-161bc7500383",
+              "parent_uuid": "8988a433-042a-43e0-8b03-605317c49aff",
               "tagName": "td",
               "properties": [
                 [
@@ -385,8 +385,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c4fad1dc-7cd0-40a5-82cd-0acc6d7d2d4c",
-              "parent_uuid": "8d216494-5c90-455f-ac4f-43d1ccba77f8",
+              "uuid": "a1555897-c332-4d17-b6e9-e431563df6fe",
+              "parent_uuid": "8988a433-042a-43e0-8b03-605317c49aff",
               "tagName": "td",
               "properties": [
                 [
@@ -408,8 +408,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c8bd69ca-e6a4-4a22-9029-15541868c730",
-              "parent_uuid": "8d216494-5c90-455f-ac4f-43d1ccba77f8",
+              "uuid": "4cb6f99d-6df6-4580-b216-e907daae4a7e",
+              "parent_uuid": "8988a433-042a-43e0-8b03-605317c49aff",
               "tagName": "td",
               "properties": [
                 [
@@ -431,8 +431,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "f56bc047-2c7b-42e0-95c6-5577f00a30aa",
-              "parent_uuid": "8d216494-5c90-455f-ac4f-43d1ccba77f8",
+              "uuid": "48f7b5b2-8813-474c-a747-dc26b6f13f0c",
+              "parent_uuid": "8988a433-042a-43e0-8b03-605317c49aff",
               "tagName": "td",
               "properties": [
                 [
@@ -462,14 +462,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "93ef174e-bd09-4c1b-b028-53cd993276f5",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "ab8c4e1a-e8da-459f-9c79-c43fc2e39b35",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "476c9fb2-3bd2-48ce-aede-2721e1ade738",
-              "parent_uuid": "93ef174e-bd09-4c1b-b028-53cd993276f5",
+              "uuid": "d22beac1-c4d6-4398-bfd0-d8f017faaaa6",
+              "parent_uuid": "ab8c4e1a-e8da-459f-9c79-c43fc2e39b35",
               "tagName": "td",
               "properties": [
                 [
@@ -499,8 +499,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "bbb9b0aa-78e3-4ecb-8576-f01ac7387f86",
-              "parent_uuid": "93ef174e-bd09-4c1b-b028-53cd993276f5",
+              "uuid": "9759f361-5f8f-48f6-b267-b643d4f1c0c6",
+              "parent_uuid": "ab8c4e1a-e8da-459f-9c79-c43fc2e39b35",
               "tagName": "td",
               "properties": [
                 [
@@ -518,8 +518,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "20977c6a-0846-48a8-b2e0-324fdc4c82a0",
-              "parent_uuid": "93ef174e-bd09-4c1b-b028-53cd993276f5",
+              "uuid": "239d5c3f-3b4c-428c-9952-e893b9753698",
+              "parent_uuid": "ab8c4e1a-e8da-459f-9c79-c43fc2e39b35",
               "tagName": "td",
               "properties": [
                 [
@@ -537,8 +537,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e5a4ab60-e926-4b5a-9358-2b686fd1da78",
-              "parent_uuid": "93ef174e-bd09-4c1b-b028-53cd993276f5",
+              "uuid": "ebd3a551-5667-48f8-84ae-11defe08c9e4",
+              "parent_uuid": "ab8c4e1a-e8da-459f-9c79-c43fc2e39b35",
               "tagName": "td",
               "properties": [
                 [
@@ -556,8 +556,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "2ae2638d-f33d-469d-bb9f-6f84f351009b",
-              "parent_uuid": "93ef174e-bd09-4c1b-b028-53cd993276f5",
+              "uuid": "3c5017a3-f384-44cb-a734-6b3c2d4f07f9",
+              "parent_uuid": "ab8c4e1a-e8da-459f-9c79-c43fc2e39b35",
               "tagName": "td",
               "properties": [
                 [
@@ -575,8 +575,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "64050859-f7c6-4bdf-980d-dd6f7c61c1a7",
-              "parent_uuid": "93ef174e-bd09-4c1b-b028-53cd993276f5",
+              "uuid": "a621e76a-b179-4ae8-8f00-cc25c9e0e3e5",
+              "parent_uuid": "ab8c4e1a-e8da-459f-9c79-c43fc2e39b35",
               "tagName": "td",
               "properties": [
                 [
@@ -598,8 +598,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "96f0cc98-0832-4140-bb99-13c55fb3969a",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "d1717307-eff3-44cb-bc4f-4fd61b8380bb",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [
             [
@@ -609,8 +609,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "1d8ea35d-82f7-4497-9221-6785280e55f9",
-              "parent_uuid": "96f0cc98-0832-4140-bb99-13c55fb3969a",
+              "uuid": "c0c96897-f55a-4e6d-8212-187e26e64b5c",
+              "parent_uuid": "d1717307-eff3-44cb-bc4f-4fd61b8380bb",
               "tagName": "td",
               "properties": [
                 [
@@ -636,14 +636,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "cc1657ef-557e-4b00-bc78-09df24bf25a7",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "f13957c9-9336-4c2c-b098-67bb647c6be2",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "05360049-0e20-47b8-be4f-30fb49767c12",
-              "parent_uuid": "cc1657ef-557e-4b00-bc78-09df24bf25a7",
+              "uuid": "778a27db-914b-401d-a021-44d2a7e33e7e",
+              "parent_uuid": "f13957c9-9336-4c2c-b098-67bb647c6be2",
               "tagName": "td",
               "properties": [
                 [
@@ -673,8 +673,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "d6d18314-7c06-488f-971d-8eb1b9c6798a",
-              "parent_uuid": "cc1657ef-557e-4b00-bc78-09df24bf25a7",
+              "uuid": "156f084c-b54c-41a5-be42-8a820f7ce277",
+              "parent_uuid": "f13957c9-9336-4c2c-b098-67bb647c6be2",
               "tagName": "td",
               "properties": [
                 [
@@ -696,8 +696,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "52fbc056-8a1d-4134-a307-4d30faabefd5",
-              "parent_uuid": "cc1657ef-557e-4b00-bc78-09df24bf25a7",
+              "uuid": "80c5159d-f6ab-49d2-bb3f-07c823ef707f",
+              "parent_uuid": "f13957c9-9336-4c2c-b098-67bb647c6be2",
               "tagName": "td",
               "properties": [
                 [
@@ -713,14 +713,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "02466a2b-2b95-433e-b572-896817b7aaa6",
+                  "parent_uuid": "80c5159d-f6ab-49d2-bb3f-07c823ef707f",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "6f388211-047f-42b3-8d73-100578649cb5",
-              "parent_uuid": "cc1657ef-557e-4b00-bc78-09df24bf25a7",
+              "uuid": "769fb7b8-f667-4cc5-89ee-dbce96fd0f69",
+              "parent_uuid": "f13957c9-9336-4c2c-b098-67bb647c6be2",
               "tagName": "td",
               "properties": [
                 [
@@ -736,14 +750,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "f3da8c44-ae41-4dc4-88a2-583463c74f76",
+                  "parent_uuid": "769fb7b8-f667-4cc5-89ee-dbce96fd0f69",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "d12bd331-86b4-4981-be0f-359fac814f44",
-              "parent_uuid": "cc1657ef-557e-4b00-bc78-09df24bf25a7",
+              "uuid": "de6e06b8-f250-4430-8f87-9896c781cbfb",
+              "parent_uuid": "f13957c9-9336-4c2c-b098-67bb647c6be2",
               "tagName": "td",
               "properties": [
                 [
@@ -759,14 +787,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "f5e8d4e5-a455-4b5f-94ef-54cc1dbccca6",
+                  "parent_uuid": "de6e06b8-f250-4430-8f87-9896c781cbfb",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "6042b7d2-7965-4826-9f3a-69d4997211d7",
-              "parent_uuid": "cc1657ef-557e-4b00-bc78-09df24bf25a7",
+              "uuid": "f08d59db-5182-4b71-971f-8cc5d8582315",
+              "parent_uuid": "f13957c9-9336-4c2c-b098-67bb647c6be2",
               "tagName": "td",
               "properties": [
                 [
@@ -782,8 +824,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "12190590-a2a3-49e9-a4eb-b3df623eaeab",
+                  "parent_uuid": "f08d59db-5182-4b71-971f-8cc5d8582315",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -792,14 +848,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "0f117e08-a772-4585-9a87-47282501ca69",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "166f82b7-7a3f-4f90-b8df-b2b1647771ef",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "639283a3-0072-472b-b1e5-125558b2789d",
-              "parent_uuid": "0f117e08-a772-4585-9a87-47282501ca69",
+              "uuid": "60bddaeb-cb72-4e36-bd5f-b31469f56310",
+              "parent_uuid": "166f82b7-7a3f-4f90-b8df-b2b1647771ef",
               "tagName": "td",
               "properties": [
                 [
@@ -829,8 +885,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "b6d728b0-721f-444f-a24e-652755ff80a3",
-              "parent_uuid": "0f117e08-a772-4585-9a87-47282501ca69",
+              "uuid": "77ee6485-3bf3-40ff-a4f1-af0195686fc9",
+              "parent_uuid": "166f82b7-7a3f-4f90-b8df-b2b1647771ef",
               "tagName": "td",
               "properties": [
                 [
@@ -852,8 +908,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "14937713-3170-4faa-b2c3-8c27f0670bd4",
-              "parent_uuid": "0f117e08-a772-4585-9a87-47282501ca69",
+              "uuid": "49369ac2-1c12-47b6-9ab0-d665e4255773",
+              "parent_uuid": "166f82b7-7a3f-4f90-b8df-b2b1647771ef",
               "tagName": "td",
               "properties": [
                 [
@@ -869,14 +925,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "e6802864-da54-43a1-8931-fe2466f1787e",
+                  "parent_uuid": "49369ac2-1c12-47b6-9ab0-d665e4255773",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "b65675d7-d255-4d10-927f-94d26773c2a7",
-              "parent_uuid": "0f117e08-a772-4585-9a87-47282501ca69",
+              "uuid": "a50436dc-3e84-4b6d-918a-02727ca23a9a",
+              "parent_uuid": "166f82b7-7a3f-4f90-b8df-b2b1647771ef",
               "tagName": "td",
               "properties": [
                 [
@@ -892,14 +962,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "3df33ee3-9e25-48fd-866e-74a0ccbc9167",
+                  "parent_uuid": "a50436dc-3e84-4b6d-918a-02727ca23a9a",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "25d84571-44fc-4a93-83a8-2a9180bb17b9",
-              "parent_uuid": "0f117e08-a772-4585-9a87-47282501ca69",
+              "uuid": "e64224dd-8a42-4d34-90be-5c1ffbdabd54",
+              "parent_uuid": "166f82b7-7a3f-4f90-b8df-b2b1647771ef",
               "tagName": "td",
               "properties": [
                 [
@@ -915,14 +999,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "a8d0a062-8f96-4351-b4e9-1e72b98c8129",
+                  "parent_uuid": "e64224dd-8a42-4d34-90be-5c1ffbdabd54",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "5e4c7234-5b1c-4cd3-90d8-40a802f5fe10",
-              "parent_uuid": "0f117e08-a772-4585-9a87-47282501ca69",
+              "uuid": "c2fd3f07-122f-4d44-abfe-d0ea2181211b",
+              "parent_uuid": "166f82b7-7a3f-4f90-b8df-b2b1647771ef",
               "tagName": "td",
               "properties": [
                 [
@@ -938,8 +1036,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "0127c874-41d3-490d-b4df-1534a25c9223",
+                  "parent_uuid": "c2fd3f07-122f-4d44-abfe-d0ea2181211b",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -948,14 +1060,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "faa8c3d7-8c13-4d89-9bcc-1a4e7f2acd84",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "3cebc9b3-402f-41bd-adbb-afa2d9ec9b48",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "cf46efd7-ba28-49ab-9c23-296e48a43ae0",
-              "parent_uuid": "faa8c3d7-8c13-4d89-9bcc-1a4e7f2acd84",
+              "uuid": "ce1ee53e-bf5b-4592-9343-cee24ac116db",
+              "parent_uuid": "3cebc9b3-402f-41bd-adbb-afa2d9ec9b48",
               "tagName": "td",
               "properties": [
                 [
@@ -985,8 +1097,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "50629854-105a-4b68-82aa-9b4dcdf5a6af",
-              "parent_uuid": "faa8c3d7-8c13-4d89-9bcc-1a4e7f2acd84",
+              "uuid": "f7c92454-fab1-454a-8001-42ad3375e84a",
+              "parent_uuid": "3cebc9b3-402f-41bd-adbb-afa2d9ec9b48",
               "tagName": "td",
               "properties": [
                 [
@@ -1008,8 +1120,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "08693c07-4a50-4f0b-8992-9685c4975db0",
-              "parent_uuid": "faa8c3d7-8c13-4d89-9bcc-1a4e7f2acd84",
+              "uuid": "809a5466-b47d-40f9-ac39-49b6a8675839",
+              "parent_uuid": "3cebc9b3-402f-41bd-adbb-afa2d9ec9b48",
               "tagName": "td",
               "properties": [
                 [
@@ -1029,14 +1141,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "44c2e916-d36b-47cc-9d9f-20c36f4d6649",
+                  "parent_uuid": "809a5466-b47d-40f9-ac39-49b6a8675839",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "9cbb3895-8c9f-4fa7-8004-cc4b3cf7253f",
-              "parent_uuid": "faa8c3d7-8c13-4d89-9bcc-1a4e7f2acd84",
+              "uuid": "10ef5dcf-5e78-4d62-832b-a5a5b59e8877",
+              "parent_uuid": "3cebc9b3-402f-41bd-adbb-afa2d9ec9b48",
               "tagName": "td",
               "properties": [
                 [
@@ -1056,14 +1182,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "dbe84436-e509-48bb-bb28-893911aded10",
+                  "parent_uuid": "10ef5dcf-5e78-4d62-832b-a5a5b59e8877",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "7548ff56-fca8-4441-8bd6-9aa76f15aeae",
-              "parent_uuid": "faa8c3d7-8c13-4d89-9bcc-1a4e7f2acd84",
+              "uuid": "2d7971de-0e31-43bf-96be-1bb5ce916c3f",
+              "parent_uuid": "3cebc9b3-402f-41bd-adbb-afa2d9ec9b48",
               "tagName": "td",
               "properties": [
                 [
@@ -1083,14 +1223,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "621a0d30-3359-4bff-bfc7-4f377f330039",
+                  "parent_uuid": "2d7971de-0e31-43bf-96be-1bb5ce916c3f",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "607a72e8-f36b-4bd5-a69a-c557300fef45",
-              "parent_uuid": "faa8c3d7-8c13-4d89-9bcc-1a4e7f2acd84",
+              "uuid": "a29da656-b641-459b-9e77-c7d5870ea1d6",
+              "parent_uuid": "3cebc9b3-402f-41bd-adbb-afa2d9ec9b48",
               "tagName": "td",
               "properties": [
                 [
@@ -1110,8 +1264,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "c78a2c7f-7bb0-4aa7-9c16-575f39c837dd",
+                  "parent_uuid": "a29da656-b641-459b-9e77-c7d5870ea1d6",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -1120,14 +1288,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "8f8d4933-7bf4-4b35-9a53-23561b39a796",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "d3dc546b-8a9e-4908-b56d-d59c8b48b576",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "86f56a86-7345-4f90-ad02-b36b73342585",
-              "parent_uuid": "8f8d4933-7bf4-4b35-9a53-23561b39a796",
+              "uuid": "8456fa90-8287-4e7f-acf0-c96ae59fbb9b",
+              "parent_uuid": "d3dc546b-8a9e-4908-b56d-d59c8b48b576",
               "tagName": "td",
               "properties": [
                 [
@@ -1157,8 +1325,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "4b02b6f4-c6cc-48fe-944a-4c87b92865c9",
-              "parent_uuid": "8f8d4933-7bf4-4b35-9a53-23561b39a796",
+              "uuid": "31bf0a56-3f8d-4efe-aa73-4cd5c716d679",
+              "parent_uuid": "d3dc546b-8a9e-4908-b56d-d59c8b48b576",
               "tagName": "td",
               "properties": [
                 [
@@ -1180,8 +1348,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "4fef1cd7-e701-4589-801e-a810eba0e39b",
-              "parent_uuid": "8f8d4933-7bf4-4b35-9a53-23561b39a796",
+              "uuid": "7dbca6c9-f2af-4788-a9cc-4fc95b3cda2e",
+              "parent_uuid": "d3dc546b-8a9e-4908-b56d-d59c8b48b576",
               "tagName": "td",
               "properties": [
                 [
@@ -1201,14 +1369,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "aa48e6fc-afbd-4711-9824-def7bc1473ac",
+                  "parent_uuid": "7dbca6c9-f2af-4788-a9cc-4fc95b3cda2e",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "1bbcf48c-4c4c-4fdb-b94c-e80040f4b331",
-              "parent_uuid": "8f8d4933-7bf4-4b35-9a53-23561b39a796",
+              "uuid": "6e00eca4-201d-406e-bef2-fcd8a1103c77",
+              "parent_uuid": "d3dc546b-8a9e-4908-b56d-d59c8b48b576",
               "tagName": "td",
               "properties": [
                 [
@@ -1228,14 +1410,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "e3c0f6a0-53db-4815-958c-ee21b9656e1d",
+                  "parent_uuid": "6e00eca4-201d-406e-bef2-fcd8a1103c77",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "51d6a508-b6a4-4360-9264-9022760e5d54",
-              "parent_uuid": "8f8d4933-7bf4-4b35-9a53-23561b39a796",
+              "uuid": "71ca5e1a-21e7-4e62-a7b8-0c690fa7f1d8",
+              "parent_uuid": "d3dc546b-8a9e-4908-b56d-d59c8b48b576",
               "tagName": "td",
               "properties": [
                 [
@@ -1255,14 +1451,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "f464ad00-ab08-48ac-b7a5-0aaa7a8069f5",
+                  "parent_uuid": "71ca5e1a-21e7-4e62-a7b8-0c690fa7f1d8",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "ca562306-45d0-48d1-aa6c-762431450ad0",
-              "parent_uuid": "8f8d4933-7bf4-4b35-9a53-23561b39a796",
+              "uuid": "b57cf8bd-d59e-43d8-a917-944a7f4d3d8e",
+              "parent_uuid": "d3dc546b-8a9e-4908-b56d-d59c8b48b576",
               "tagName": "td",
               "properties": [
                 [
@@ -1282,8 +1492,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "abadd56e-b10e-4490-b117-e6746ba10df4",
+                  "parent_uuid": "b57cf8bd-d59e-43d8-a917-944a7f4d3d8e",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -1292,14 +1516,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "7cdf5800-2965-402e-b3cf-630de1ffd300",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "3e4a5bdd-268d-490b-ae4c-6fd8ab7d2c4e",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "a399cc4d-6c2e-418e-9eb3-39ac56bfcf95",
-              "parent_uuid": "7cdf5800-2965-402e-b3cf-630de1ffd300",
+              "uuid": "ccf26ff9-cb9e-44c2-a0a6-f5e5c04c2493",
+              "parent_uuid": "3e4a5bdd-268d-490b-ae4c-6fd8ab7d2c4e",
               "tagName": "td",
               "properties": [
                 [
@@ -1329,8 +1553,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "410b4e85-c06b-4176-a8ec-6f7ff8ec4aad",
-              "parent_uuid": "7cdf5800-2965-402e-b3cf-630de1ffd300",
+              "uuid": "21abc2f1-fbca-496a-9d50-275cfd3e021e",
+              "parent_uuid": "3e4a5bdd-268d-490b-ae4c-6fd8ab7d2c4e",
               "tagName": "td",
               "properties": [
                 [
@@ -1352,8 +1576,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "0bf0a073-6326-4254-917d-59f3935cfca6",
-              "parent_uuid": "7cdf5800-2965-402e-b3cf-630de1ffd300",
+              "uuid": "6c78cb6f-ca8c-4d8a-9723-a42f25dbc9ab",
+              "parent_uuid": "3e4a5bdd-268d-490b-ae4c-6fd8ab7d2c4e",
               "tagName": "td",
               "properties": [
                 [
@@ -1373,14 +1597,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "0372a17e-0926-437f-98bc-b2ea2d2dc18b",
+                  "parent_uuid": "6c78cb6f-ca8c-4d8a-9723-a42f25dbc9ab",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "c059b643-9ea6-42cd-b9a5-4708a70852e2",
-              "parent_uuid": "7cdf5800-2965-402e-b3cf-630de1ffd300",
+              "uuid": "74c8d7f0-997a-46c3-8563-3195535716ad",
+              "parent_uuid": "3e4a5bdd-268d-490b-ae4c-6fd8ab7d2c4e",
               "tagName": "td",
               "properties": [
                 [
@@ -1400,14 +1638,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "8b3582d3-098f-49ad-a00a-ad8c0319372e",
+                  "parent_uuid": "74c8d7f0-997a-46c3-8563-3195535716ad",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "5add2070-de3d-4137-ae5d-075e6f40e1cb",
-              "parent_uuid": "7cdf5800-2965-402e-b3cf-630de1ffd300",
+              "uuid": "49de9cb2-01c0-41ce-a781-09ec54758efb",
+              "parent_uuid": "3e4a5bdd-268d-490b-ae4c-6fd8ab7d2c4e",
               "tagName": "td",
               "properties": [
                 [
@@ -1427,14 +1679,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "42003962-3bbb-4141-a504-d4b5b1f35746",
+                  "parent_uuid": "49de9cb2-01c0-41ce-a781-09ec54758efb",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "bfe2bb66-89ed-409f-b00b-db26bd61ce79",
-              "parent_uuid": "7cdf5800-2965-402e-b3cf-630de1ffd300",
+              "uuid": "832a8e7c-c990-4586-aa19-3dbb886416cd",
+              "parent_uuid": "3e4a5bdd-268d-490b-ae4c-6fd8ab7d2c4e",
               "tagName": "td",
               "properties": [
                 [
@@ -1454,8 +1720,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "1e2d7f54-3f4e-46a4-9b89-18bd5ad94e89",
+                  "parent_uuid": "832a8e7c-c990-4586-aa19-3dbb886416cd",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -1464,14 +1744,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "0dd8300c-e490-4da5-b7e1-a00afb6941c5",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "ecd2f825-47ab-4e48-b4db-4f491ad16328",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "df629814-7556-4129-aed6-5d372a83e17b",
-              "parent_uuid": "0dd8300c-e490-4da5-b7e1-a00afb6941c5",
+              "uuid": "379cf3bc-4d62-4791-af95-c776e19de78b",
+              "parent_uuid": "ecd2f825-47ab-4e48-b4db-4f491ad16328",
               "tagName": "td",
               "properties": [
                 [
@@ -1501,8 +1781,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "f7c01761-f1c1-48c2-a753-43f3a97411bd",
-              "parent_uuid": "0dd8300c-e490-4da5-b7e1-a00afb6941c5",
+              "uuid": "d671f557-85db-4d04-ae7f-84fc7543984c",
+              "parent_uuid": "ecd2f825-47ab-4e48-b4db-4f491ad16328",
               "tagName": "td",
               "properties": [
                 [
@@ -1524,8 +1804,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "30fef15c-8118-4a86-97b0-6ba0b45f41e0",
-              "parent_uuid": "0dd8300c-e490-4da5-b7e1-a00afb6941c5",
+              "uuid": "bdda6a7b-b78e-44c2-9970-9601c301c96e",
+              "parent_uuid": "ecd2f825-47ab-4e48-b4db-4f491ad16328",
               "tagName": "td",
               "properties": [
                 [
@@ -1545,14 +1825,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "cb7b341d-7864-40c3-b453-ae2c4463f735",
+                  "parent_uuid": "bdda6a7b-b78e-44c2-9970-9601c301c96e",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "0f868d25-2415-43ae-8181-1920f0d7eb87",
-              "parent_uuid": "0dd8300c-e490-4da5-b7e1-a00afb6941c5",
+              "uuid": "87c5e207-ca98-43c8-9b4f-e216f3e1b671",
+              "parent_uuid": "ecd2f825-47ab-4e48-b4db-4f491ad16328",
               "tagName": "td",
               "properties": [
                 [
@@ -1572,14 +1866,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "ab393392-7daa-4d50-b2c6-541063c5b1c8",
+                  "parent_uuid": "87c5e207-ca98-43c8-9b4f-e216f3e1b671",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "95945d1f-02a8-46d1-b317-cd0c2fa2f214",
-              "parent_uuid": "0dd8300c-e490-4da5-b7e1-a00afb6941c5",
+              "uuid": "4b490218-c12e-4357-8df3-c0efda131484",
+              "parent_uuid": "ecd2f825-47ab-4e48-b4db-4f491ad16328",
               "tagName": "td",
               "properties": [
                 [
@@ -1599,14 +1907,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "2625dd5c-5653-4029-8072-302e03b7ce8a",
+                  "parent_uuid": "4b490218-c12e-4357-8df3-c0efda131484",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "96664445-1644-438a-8c79-68feb2e8a260",
-              "parent_uuid": "0dd8300c-e490-4da5-b7e1-a00afb6941c5",
+              "uuid": "4370c1d7-57c0-43f8-9719-ad5cd77055c3",
+              "parent_uuid": "ecd2f825-47ab-4e48-b4db-4f491ad16328",
               "tagName": "td",
               "properties": [
                 [
@@ -1626,8 +1948,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "ce07b4e0-9e83-4025-817e-a4cbeca46c7a",
+                  "parent_uuid": "4370c1d7-57c0-43f8-9719-ad5cd77055c3",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -1636,14 +1972,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "89b559ab-6038-4412-9678-d7c8e615901c",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "1ddf7278-3c63-4316-8c08-aa4981e6a49a",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "9ed0776f-c16f-4cc9-98a3-22a95e1beda4",
-              "parent_uuid": "89b559ab-6038-4412-9678-d7c8e615901c",
+              "uuid": "4f44e423-ac34-4ba1-8f97-bf4a81ed17d7",
+              "parent_uuid": "1ddf7278-3c63-4316-8c08-aa4981e6a49a",
               "tagName": "td",
               "properties": [
                 [
@@ -1673,8 +2009,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "10b8152a-d589-4937-9641-debd1e1659ab",
-              "parent_uuid": "89b559ab-6038-4412-9678-d7c8e615901c",
+              "uuid": "94a9a591-1752-4d17-878b-eb8745751e25",
+              "parent_uuid": "1ddf7278-3c63-4316-8c08-aa4981e6a49a",
               "tagName": "td",
               "properties": [
                 [
@@ -1696,8 +2032,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c9b27e40-2d44-4f31-9df5-9e237d28c506",
-              "parent_uuid": "89b559ab-6038-4412-9678-d7c8e615901c",
+              "uuid": "b0c77b44-b985-4274-b537-1512371aa5e5",
+              "parent_uuid": "1ddf7278-3c63-4316-8c08-aa4981e6a49a",
               "tagName": "td",
               "properties": [
                 [
@@ -1717,14 +2053,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "cc332993-3bf8-4890-9c80-33fe99544a2d",
+                  "parent_uuid": "b0c77b44-b985-4274-b537-1512371aa5e5",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "75e60626-2060-4c37-aa1d-56c19a123119",
-              "parent_uuid": "89b559ab-6038-4412-9678-d7c8e615901c",
+              "uuid": "f68f8a65-9363-4b22-aae0-a0c620524758",
+              "parent_uuid": "1ddf7278-3c63-4316-8c08-aa4981e6a49a",
               "tagName": "td",
               "properties": [
                 [
@@ -1744,14 +2094,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "2cfb9729-ea5c-43ec-bd27-8b8a87d19ecb",
+                  "parent_uuid": "f68f8a65-9363-4b22-aae0-a0c620524758",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "f50fef62-567d-4c20-9a63-d42f42574a01",
-              "parent_uuid": "89b559ab-6038-4412-9678-d7c8e615901c",
+              "uuid": "7336ec13-b954-48e8-8808-d4dae207af8f",
+              "parent_uuid": "1ddf7278-3c63-4316-8c08-aa4981e6a49a",
               "tagName": "td",
               "properties": [
                 [
@@ -1771,14 +2135,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "8115a104-653c-409c-9906-f284bfa4832c",
+                  "parent_uuid": "7336ec13-b954-48e8-8808-d4dae207af8f",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "80b1cf3f-4067-458f-a72c-105cd331dcd5",
-              "parent_uuid": "89b559ab-6038-4412-9678-d7c8e615901c",
+              "uuid": "15262dde-e47e-400c-a0d2-e20693653ac9",
+              "parent_uuid": "1ddf7278-3c63-4316-8c08-aa4981e6a49a",
               "tagName": "td",
               "properties": [
                 [
@@ -1798,8 +2176,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "629645ce-6f01-41ab-aebf-f91b0f000072",
+                  "parent_uuid": "15262dde-e47e-400c-a0d2-e20693653ac9",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -1808,14 +2200,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "d98f9305-09c2-4ef3-a9f4-4b2834c9bd17",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "18114f4c-4e3c-4cef-9801-bf3ab5859102",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "50ae1fb9-4279-418c-8287-5511205cbe52",
-              "parent_uuid": "d98f9305-09c2-4ef3-a9f4-4b2834c9bd17",
+              "uuid": "102eaa09-382c-4127-9d5a-41202efa349f",
+              "parent_uuid": "18114f4c-4e3c-4cef-9801-bf3ab5859102",
               "tagName": "td",
               "properties": [
                 [
@@ -1845,8 +2237,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "6564ffec-10c1-4bcd-b86d-f16606e4596f",
-              "parent_uuid": "d98f9305-09c2-4ef3-a9f4-4b2834c9bd17",
+              "uuid": "102e2b2b-8e08-4964-8284-fc2baa412b58",
+              "parent_uuid": "18114f4c-4e3c-4cef-9801-bf3ab5859102",
               "tagName": "td",
               "properties": [
                 [
@@ -1868,8 +2260,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "25535bb4-43e7-4102-9f73-7389d0f481aa",
-              "parent_uuid": "d98f9305-09c2-4ef3-a9f4-4b2834c9bd17",
+              "uuid": "50824afc-0d8a-46c8-b04e-4ede5419c592",
+              "parent_uuid": "18114f4c-4e3c-4cef-9801-bf3ab5859102",
               "tagName": "td",
               "properties": [
                 [
@@ -1889,14 +2281,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "f2aef1f3-f6cc-49bd-a2bf-8bd4fd70aaac",
+                  "parent_uuid": "50824afc-0d8a-46c8-b04e-4ede5419c592",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "46313f8f-131a-4769-9723-268689e09573",
-              "parent_uuid": "d98f9305-09c2-4ef3-a9f4-4b2834c9bd17",
+              "uuid": "9cf99655-6bdf-4042-8ae5-8a7d1f0c9027",
+              "parent_uuid": "18114f4c-4e3c-4cef-9801-bf3ab5859102",
               "tagName": "td",
               "properties": [
                 [
@@ -1916,14 +2322,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "c1f4d802-27ff-4104-bfe6-6ad237664e3e",
+                  "parent_uuid": "9cf99655-6bdf-4042-8ae5-8a7d1f0c9027",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "46a966b3-e4a4-4401-b638-a1d31888db30",
-              "parent_uuid": "d98f9305-09c2-4ef3-a9f4-4b2834c9bd17",
+              "uuid": "1c6550ad-914f-42f9-b66f-ad8941f1c7c3",
+              "parent_uuid": "18114f4c-4e3c-4cef-9801-bf3ab5859102",
               "tagName": "td",
               "properties": [
                 [
@@ -1943,14 +2363,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "be01688a-c775-4c70-8b64-72f5adab5ca2",
+                  "parent_uuid": "1c6550ad-914f-42f9-b66f-ad8941f1c7c3",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "e41a17a9-36e9-43be-83f2-8fba4771fa17",
-              "parent_uuid": "d98f9305-09c2-4ef3-a9f4-4b2834c9bd17",
+              "uuid": "4deb7e9d-06d3-446a-8aac-c3714c1f85fa",
+              "parent_uuid": "18114f4c-4e3c-4cef-9801-bf3ab5859102",
               "tagName": "td",
               "properties": [
                 [
@@ -1970,8 +2404,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "99c658e7-072d-4adf-912b-4226034cb926",
+                  "parent_uuid": "4deb7e9d-06d3-446a-8aac-c3714c1f85fa",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -1980,14 +2428,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "a2daad68-06f0-4010-ba09-455eead90260",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "fd3757ef-7682-4f8a-874d-c79849b08275",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "712e7447-0a67-49c2-90e1-93a1d6c599b9",
-              "parent_uuid": "a2daad68-06f0-4010-ba09-455eead90260",
+              "uuid": "1088edcc-ab92-4bc2-a647-f52725e73539",
+              "parent_uuid": "fd3757ef-7682-4f8a-874d-c79849b08275",
               "tagName": "td",
               "properties": [
                 [
@@ -2017,8 +2465,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ec6849e0-b6fe-4312-af59-16f322cdeef4",
-              "parent_uuid": "a2daad68-06f0-4010-ba09-455eead90260",
+              "uuid": "42dc3faf-7744-4848-8d92-78f8393e435d",
+              "parent_uuid": "fd3757ef-7682-4f8a-874d-c79849b08275",
               "tagName": "td",
               "properties": [
                 [
@@ -2040,8 +2488,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "d94a7e84-fa73-44cf-8dd5-033324b1a340",
-              "parent_uuid": "a2daad68-06f0-4010-ba09-455eead90260",
+              "uuid": "d32b0204-07b9-4268-b486-71cf4562ac19",
+              "parent_uuid": "fd3757ef-7682-4f8a-874d-c79849b08275",
               "tagName": "td",
               "properties": [
                 [
@@ -2061,14 +2509,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "35b0c812-2b1d-4c24-b3eb-9cb02f0e7508",
+                  "parent_uuid": "d32b0204-07b9-4268-b486-71cf4562ac19",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "6e24128b-c3af-4c1b-a01c-484647b5500a",
-              "parent_uuid": "a2daad68-06f0-4010-ba09-455eead90260",
+              "uuid": "2767da86-1556-45ec-90e8-5cf6503e6210",
+              "parent_uuid": "fd3757ef-7682-4f8a-874d-c79849b08275",
               "tagName": "td",
               "properties": [
                 [
@@ -2088,14 +2550,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "125126f5-af60-40f2-80b4-f02767f7dcd2",
+                  "parent_uuid": "2767da86-1556-45ec-90e8-5cf6503e6210",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "5a70438e-3c72-457b-97b3-a932fd0dd801",
-              "parent_uuid": "a2daad68-06f0-4010-ba09-455eead90260",
+              "uuid": "74873e0d-0370-4cde-9faf-bca9d9bac346",
+              "parent_uuid": "fd3757ef-7682-4f8a-874d-c79849b08275",
               "tagName": "td",
               "properties": [
                 [
@@ -2115,14 +2591,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "0040be3d-a45b-4605-9458-e53811ee7807",
+                  "parent_uuid": "74873e0d-0370-4cde-9faf-bca9d9bac346",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "2acb4dd3-a1ad-4999-9976-4d9524c9b38f",
-              "parent_uuid": "a2daad68-06f0-4010-ba09-455eead90260",
+              "uuid": "47866046-d718-483a-bbd4-4ef3dcc3f81d",
+              "parent_uuid": "fd3757ef-7682-4f8a-874d-c79849b08275",
               "tagName": "td",
               "properties": [
                 [
@@ -2142,8 +2632,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "1344da49-6860-43d5-9547-f16a105f3076",
+                  "parent_uuid": "47866046-d718-483a-bbd4-4ef3dcc3f81d",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -2152,14 +2656,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "64a85b99-cdef-4a06-b8c4-6e22f5aabe8d",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "a061511a-f1db-49f8-9221-71ae02accaaf",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "647a6543-1933-497a-915a-15f96c5e3f0e",
-              "parent_uuid": "64a85b99-cdef-4a06-b8c4-6e22f5aabe8d",
+              "uuid": "54b7b79e-987d-4831-89f0-9ea0d3339f14",
+              "parent_uuid": "a061511a-f1db-49f8-9221-71ae02accaaf",
               "tagName": "td",
               "properties": [
                 [
@@ -2189,8 +2693,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "2bfc8fc0-fc88-45e9-8f0f-a8bed4c1bcf5",
-              "parent_uuid": "64a85b99-cdef-4a06-b8c4-6e22f5aabe8d",
+              "uuid": "213e5021-14c3-4799-83d8-125db9914615",
+              "parent_uuid": "a061511a-f1db-49f8-9221-71ae02accaaf",
               "tagName": "td",
               "properties": [
                 [
@@ -2212,8 +2716,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "84625147-56a9-47f6-9041-aa0a47380cf9",
-              "parent_uuid": "64a85b99-cdef-4a06-b8c4-6e22f5aabe8d",
+              "uuid": "c54e6a2d-6887-4ac4-8659-45df87513342",
+              "parent_uuid": "a061511a-f1db-49f8-9221-71ae02accaaf",
               "tagName": "td",
               "properties": [
                 [
@@ -2233,14 +2737,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "fddec606-6205-4fd5-ac01-050a70f2d7bf",
+                  "parent_uuid": "c54e6a2d-6887-4ac4-8659-45df87513342",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "8898497b-bb2d-4df2-8d84-fd91c2687c3a",
-              "parent_uuid": "64a85b99-cdef-4a06-b8c4-6e22f5aabe8d",
+              "uuid": "bd36f8fd-5a1f-4ce9-9984-35b82af4109c",
+              "parent_uuid": "a061511a-f1db-49f8-9221-71ae02accaaf",
               "tagName": "td",
               "properties": [
                 [
@@ -2260,14 +2778,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "97a5a6d3-2bb2-4468-b0b4-3c49c96f87ee",
+                  "parent_uuid": "bd36f8fd-5a1f-4ce9-9984-35b82af4109c",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "0d7779d2-2045-4662-bdf9-695606ff1b96",
-              "parent_uuid": "64a85b99-cdef-4a06-b8c4-6e22f5aabe8d",
+              "uuid": "4b99cce2-b38f-4007-a7d1-023585966720",
+              "parent_uuid": "a061511a-f1db-49f8-9221-71ae02accaaf",
               "tagName": "td",
               "properties": [
                 [
@@ -2287,14 +2819,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "285b1d78-b771-4d1a-b1f9-f2e27016a821",
+                  "parent_uuid": "4b99cce2-b38f-4007-a7d1-023585966720",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "571bedd4-3def-43e0-b570-fd88a5934bc8",
-              "parent_uuid": "64a85b99-cdef-4a06-b8c4-6e22f5aabe8d",
+              "uuid": "ff90af2f-5320-4e3e-a296-176420fb9bcf",
+              "parent_uuid": "a061511a-f1db-49f8-9221-71ae02accaaf",
               "tagName": "td",
               "properties": [
                 [
@@ -2314,8 +2860,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "d167eda1-3447-419a-be03-f3fd277a9af6",
+                  "parent_uuid": "ff90af2f-5320-4e3e-a296-176420fb9bcf",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -2324,14 +2884,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "6df4f296-4ce2-4885-9177-478af70fca9c",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "24a5b134-2206-4916-aceb-43497ffaf12e",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "dcafd0d7-db59-490f-b6f8-290681b1314e",
-              "parent_uuid": "6df4f296-4ce2-4885-9177-478af70fca9c",
+              "uuid": "2149b719-cb95-48f4-b01d-ce5a44593253",
+              "parent_uuid": "24a5b134-2206-4916-aceb-43497ffaf12e",
               "tagName": "td",
               "properties": [
                 [
@@ -2361,8 +2921,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "9d84bda7-4e01-4b30-b281-7387eea42848",
-              "parent_uuid": "6df4f296-4ce2-4885-9177-478af70fca9c",
+              "uuid": "bf3e2ffd-bd51-4406-95b2-00ca08ac1462",
+              "parent_uuid": "24a5b134-2206-4916-aceb-43497ffaf12e",
               "tagName": "td",
               "properties": [
                 [
@@ -2384,8 +2944,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "df515f7f-ea55-4f2f-b27f-0807494464ad",
-              "parent_uuid": "6df4f296-4ce2-4885-9177-478af70fca9c",
+              "uuid": "70bca772-3ca4-4ab8-88b4-2891539dc70e",
+              "parent_uuid": "24a5b134-2206-4916-aceb-43497ffaf12e",
               "tagName": "td",
               "properties": [
                 [
@@ -2405,14 +2965,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "03ce2cec-75d7-4ab9-bcdf-b1ee7a46cf79",
+                  "parent_uuid": "70bca772-3ca4-4ab8-88b4-2891539dc70e",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "6c90010f-a292-4a08-ad3a-1b542439c70b",
-              "parent_uuid": "6df4f296-4ce2-4885-9177-478af70fca9c",
+              "uuid": "7206136c-bf63-4274-9ab4-dfa1fedf0e8c",
+              "parent_uuid": "24a5b134-2206-4916-aceb-43497ffaf12e",
               "tagName": "td",
               "properties": [
                 [
@@ -2432,14 +3006,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "05f3962f-4d1c-4979-8501-8544b802c080",
+                  "parent_uuid": "7206136c-bf63-4274-9ab4-dfa1fedf0e8c",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "2458a080-9118-44c7-8c21-e475863ab23d",
-              "parent_uuid": "6df4f296-4ce2-4885-9177-478af70fca9c",
+              "uuid": "b8114d52-e4a3-40b1-bbc3-64afe8f39aff",
+              "parent_uuid": "24a5b134-2206-4916-aceb-43497ffaf12e",
               "tagName": "td",
               "properties": [
                 [
@@ -2459,14 +3047,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "1328ec69-bc12-4e18-ae53-4ac089dd45ee",
+                  "parent_uuid": "b8114d52-e4a3-40b1-bbc3-64afe8f39aff",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "d43c1759-03d3-46a5-9a73-38fd94f2685d",
-              "parent_uuid": "6df4f296-4ce2-4885-9177-478af70fca9c",
+              "uuid": "326f0e2b-b90b-47b3-b97b-9852d2935ce7",
+              "parent_uuid": "24a5b134-2206-4916-aceb-43497ffaf12e",
               "tagName": "td",
               "properties": [
                 [
@@ -2486,8 +3088,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "6b4b6dd3-0677-4b83-865f-305f945fba4f",
+                  "parent_uuid": "326f0e2b-b90b-47b3-b97b-9852d2935ce7",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -2496,14 +3112,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "23150987-4b10-4ffa-a67a-6e42e5ae9c6b",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "41d8ec3f-88c2-4f34-8b3d-69598a7fc849",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "d295b492-4f4d-4d5c-9bfc-b440095dcbd9",
-              "parent_uuid": "23150987-4b10-4ffa-a67a-6e42e5ae9c6b",
+              "uuid": "ec332067-8637-4eb2-94ee-0278bbabc267",
+              "parent_uuid": "41d8ec3f-88c2-4f34-8b3d-69598a7fc849",
               "tagName": "td",
               "properties": [
                 [
@@ -2533,8 +3149,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "30f28b98-5997-48e9-a516-b795ecbc4e5d",
-              "parent_uuid": "23150987-4b10-4ffa-a67a-6e42e5ae9c6b",
+              "uuid": "5c181225-175f-4025-88ed-e9241fb03700",
+              "parent_uuid": "41d8ec3f-88c2-4f34-8b3d-69598a7fc849",
               "tagName": "td",
               "properties": [
                 [
@@ -2556,8 +3172,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "77838b4d-7a75-4abf-8871-b64370347a03",
-              "parent_uuid": "23150987-4b10-4ffa-a67a-6e42e5ae9c6b",
+              "uuid": "dfc48045-b995-4cc6-b937-064b69efb4fe",
+              "parent_uuid": "41d8ec3f-88c2-4f34-8b3d-69598a7fc849",
               "tagName": "td",
               "properties": [
                 [
@@ -2577,14 +3193,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "c49e3217-5cfd-4ec7-8e71-23598ce56bb6",
+                  "parent_uuid": "dfc48045-b995-4cc6-b937-064b69efb4fe",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "85ead1b6-5bef-47ce-9063-a40d309896c5",
-              "parent_uuid": "23150987-4b10-4ffa-a67a-6e42e5ae9c6b",
+              "uuid": "043d4509-609b-4d42-b9da-ae6011bd2461",
+              "parent_uuid": "41d8ec3f-88c2-4f34-8b3d-69598a7fc849",
               "tagName": "td",
               "properties": [
                 [
@@ -2604,14 +3234,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "74022cbb-73fd-4cbf-937b-3ba46391d52c",
+                  "parent_uuid": "043d4509-609b-4d42-b9da-ae6011bd2461",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "01a46fd4-c725-4e8e-b733-00951aec1df5",
-              "parent_uuid": "23150987-4b10-4ffa-a67a-6e42e5ae9c6b",
+              "uuid": "43c2ff7c-e320-4b2e-b757-b2792ef40dc7",
+              "parent_uuid": "41d8ec3f-88c2-4f34-8b3d-69598a7fc849",
               "tagName": "td",
               "properties": [
                 [
@@ -2631,14 +3275,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "f74ec47e-2b31-4273-a14e-54c3d38c64b3",
+                  "parent_uuid": "43c2ff7c-e320-4b2e-b757-b2792ef40dc7",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "46d7164e-203f-4ac5-b4e4-d2e6aed05d9a",
-              "parent_uuid": "23150987-4b10-4ffa-a67a-6e42e5ae9c6b",
+              "uuid": "611ebfab-50ef-4940-9bc0-7ea8c10155af",
+              "parent_uuid": "41d8ec3f-88c2-4f34-8b3d-69598a7fc849",
               "tagName": "td",
               "properties": [
                 [
@@ -2658,8 +3316,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "5e6c7115-433c-4b19-806c-15a02d0b7b2c",
+                  "parent_uuid": "611ebfab-50ef-4940-9bc0-7ea8c10155af",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -2668,14 +3340,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "7123636f-65f3-4d50-af3b-973e1ffdab66",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "a1bfd728-b29e-4906-a65e-8c5c8d8cd3e9",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "16514a27-03e3-494b-8183-78bee2c613e8",
-              "parent_uuid": "7123636f-65f3-4d50-af3b-973e1ffdab66",
+              "uuid": "b27c70ba-0dc0-4677-92b4-ceb27f4a149b",
+              "parent_uuid": "a1bfd728-b29e-4906-a65e-8c5c8d8cd3e9",
               "tagName": "td",
               "properties": [
                 [
@@ -2705,14 +3377,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "1dd692c8-c5b3-4bdc-a255-baa01f9fdda4",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "fe609ccb-3e42-4a44-a144-5505862f039b",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "0e4cda22-6079-4830-bf90-e50ec888c1a7",
-              "parent_uuid": "1dd692c8-c5b3-4bdc-a255-baa01f9fdda4",
+              "uuid": "e5ffcfcc-2f6a-4980-b290-65b67ff2c2c2",
+              "parent_uuid": "fe609ccb-3e42-4a44-a144-5505862f039b",
               "tagName": "td",
               "properties": [
                 [
@@ -2742,14 +3414,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "be0ca81c-bfe9-46bc-b2c4-879d0a58a940",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "a91bd509-df65-44c5-873a-f3c7217c257a",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "52c71de9-c3ad-437d-a76d-b7d6be3e2e46",
-              "parent_uuid": "be0ca81c-bfe9-46bc-b2c4-879d0a58a940",
+              "uuid": "27da356c-a9fe-41d6-a887-f73e32941c2a",
+              "parent_uuid": "a91bd509-df65-44c5-873a-f3c7217c257a",
               "tagName": "td",
               "properties": [
                 [
@@ -2769,8 +3441,22 @@ DECLARE @json nvarchar(max) = N'{
                   "margin: 0; padding: 0;"
                 ]
               ],
-              "innerHtml": "\r\n                    <textarea class=\"notes\"></textarea>\r\n                ",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "c1d06d32-80f0-4a59-ad6f-688b347c6814",
+                  "parent_uuid": "27da356c-a9fe-41d6-a887-f73e32941c2a",
+                  "tagName": "textarea",
+                  "properties": [
+                    [
+                      "class",
+                      "notes"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 0,
               "lvl": 0
             }
@@ -2779,14 +3465,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "91dac631-0c64-485d-972b-382023eaabc6",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "bbadce99-8f7c-4ce6-b64e-6419578661d2",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "2babdbef-7559-4b64-833e-3860666215bc",
-              "parent_uuid": "91dac631-0c64-485d-972b-382023eaabc6",
+              "uuid": "72b53f4c-d786-4581-8a90-b9a939222726",
+              "parent_uuid": "bbadce99-8f7c-4ce6-b64e-6419578661d2",
               "tagName": "td",
               "properties": [
                 [
@@ -2816,8 +3502,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "024eb81f-02a6-4ad4-b191-0ef4987afb63",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "13bc4de3-1bb6-42b1-9add-5f486e85c713",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [
             [
@@ -2827,8 +3513,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "d5c30bda-a1e6-426d-941e-8c0fa1bd0aea",
-              "parent_uuid": "024eb81f-02a6-4ad4-b191-0ef4987afb63",
+              "uuid": "58370211-d578-4e4d-80fe-2dfbb460101a",
+              "parent_uuid": "13bc4de3-1bb6-42b1-9add-5f486e85c713",
               "tagName": "td",
               "properties": [
                 [
@@ -2858,14 +3544,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "6dcc803c-f8d4-4277-8703-819c169b5f50",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "54948550-9058-4773-bfb3-36ec61908cc5",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "ea48bb13-73a6-4a40-bc0a-0bff24cdff68",
-              "parent_uuid": "6dcc803c-f8d4-4277-8703-819c169b5f50",
+              "uuid": "e6ba4796-1278-4e63-a817-e9743260d898",
+              "parent_uuid": "54948550-9058-4773-bfb3-36ec61908cc5",
               "tagName": "td",
               "properties": [
                 [
@@ -2895,8 +3581,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "6b9ccdad-6e54-4206-b7ef-f37336f5b3c7",
-              "parent_uuid": "6dcc803c-f8d4-4277-8703-819c169b5f50",
+              "uuid": "fd891c53-18b2-49f8-b0a1-7ede0080a38f",
+              "parent_uuid": "54948550-9058-4773-bfb3-36ec61908cc5",
               "tagName": "td",
               "properties": [
                 [
@@ -2914,8 +3600,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "98579203-429c-494b-bb66-2cdccf54e79b",
-              "parent_uuid": "6dcc803c-f8d4-4277-8703-819c169b5f50",
+              "uuid": "ce853ad4-70bb-4596-9cd2-ffa8510b6dd3",
+              "parent_uuid": "54948550-9058-4773-bfb3-36ec61908cc5",
               "tagName": "td",
               "properties": [
                 [
@@ -2933,8 +3619,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "f313140f-7f1b-4b44-afe7-a5955af3c5e5",
-              "parent_uuid": "6dcc803c-f8d4-4277-8703-819c169b5f50",
+              "uuid": "9a59c077-c2d0-4be2-8249-2dcdcc663eb1",
+              "parent_uuid": "54948550-9058-4773-bfb3-36ec61908cc5",
               "tagName": "td",
               "properties": [
                 [
@@ -2952,8 +3638,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "7393bb44-382f-4142-89ac-ef63744ea089",
-              "parent_uuid": "6dcc803c-f8d4-4277-8703-819c169b5f50",
+              "uuid": "afb5129b-7ce1-43b6-b60a-a25df8e5db74",
+              "parent_uuid": "54948550-9058-4773-bfb3-36ec61908cc5",
               "tagName": "td",
               "properties": [
                 [
@@ -2971,8 +3657,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c67b8635-8fe2-4ccb-ae5b-1afd3b0cfea3",
-              "parent_uuid": "6dcc803c-f8d4-4277-8703-819c169b5f50",
+              "uuid": "dae09136-4b52-4d07-a2d0-42382abdd60b",
+              "parent_uuid": "54948550-9058-4773-bfb3-36ec61908cc5",
               "tagName": "td",
               "properties": [
                 [
@@ -2994,14 +3680,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "8eb247e1-6f38-473a-afe5-ef32abff81d3",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "9391df48-723d-41cf-a319-61a359c26232",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "9be2f3a3-9b0f-48fc-b26f-a3e0f039eb2c",
-              "parent_uuid": "8eb247e1-6f38-473a-afe5-ef32abff81d3",
+              "uuid": "8b595585-6791-44d3-b889-793e8b0a1db5",
+              "parent_uuid": "9391df48-723d-41cf-a319-61a359c26232",
               "tagName": "td",
               "properties": [
                 [
@@ -3031,8 +3717,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ce4cd53d-b699-4fda-b0a1-9dded056b2d7",
-              "parent_uuid": "8eb247e1-6f38-473a-afe5-ef32abff81d3",
+              "uuid": "79aee704-d1eb-475c-9073-77f8c675539d",
+              "parent_uuid": "9391df48-723d-41cf-a319-61a359c26232",
               "tagName": "td",
               "properties": [
                 [
@@ -3054,8 +3740,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "126d652a-297e-4002-80e4-93cd75202fa2",
-              "parent_uuid": "8eb247e1-6f38-473a-afe5-ef32abff81d3",
+              "uuid": "7e1fea90-03c5-4926-8c42-756475fa0873",
+              "parent_uuid": "9391df48-723d-41cf-a319-61a359c26232",
               "tagName": "td",
               "properties": [
                 [
@@ -3075,14 +3761,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "a7575f67-2a69-45f5-8b18-7794924b4fbe",
+                  "parent_uuid": "7e1fea90-03c5-4926-8c42-756475fa0873",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "d7a04641-c879-4832-ac6c-1dff4947a9b8",
-              "parent_uuid": "8eb247e1-6f38-473a-afe5-ef32abff81d3",
+              "uuid": "bf0e77f7-2ec2-4301-aa7e-4faa3c62c1dc",
+              "parent_uuid": "9391df48-723d-41cf-a319-61a359c26232",
               "tagName": "td",
               "properties": [
                 [
@@ -3102,14 +3802,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "b0a6e794-8fa0-45b8-8cc1-50d8c2788b85",
+                  "parent_uuid": "bf0e77f7-2ec2-4301-aa7e-4faa3c62c1dc",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "adfad39b-5a9b-41ed-8db3-1814c92660fd",
-              "parent_uuid": "8eb247e1-6f38-473a-afe5-ef32abff81d3",
+              "uuid": "18bb087e-2686-4c14-90d8-2de40caa9377",
+              "parent_uuid": "9391df48-723d-41cf-a319-61a359c26232",
               "tagName": "td",
               "properties": [
                 [
@@ -3129,14 +3843,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "df51e660-bea3-432c-985c-46ea3090774a",
+                  "parent_uuid": "18bb087e-2686-4c14-90d8-2de40caa9377",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "6ebb6a9b-f3ea-4c1b-9d1c-bb4473b3c31e",
-              "parent_uuid": "8eb247e1-6f38-473a-afe5-ef32abff81d3",
+              "uuid": "f40ac8ad-a9b9-4daa-8788-9ec86bec6750",
+              "parent_uuid": "9391df48-723d-41cf-a319-61a359c26232",
               "tagName": "td",
               "properties": [
                 [
@@ -3156,8 +3884,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "0d5824fa-b43f-4950-b9fc-9b513ceb7ff4",
+                  "parent_uuid": "f40ac8ad-a9b9-4daa-8788-9ec86bec6750",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -3166,14 +3908,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "85dffee9-a233-4409-ae00-2f5c81952c43",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "eccb6f7a-6d7f-49cc-87a0-7d8e76b138ae",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "68c4f042-43b8-4fe3-acf3-e7d763bc8674",
-              "parent_uuid": "85dffee9-a233-4409-ae00-2f5c81952c43",
+              "uuid": "9329eb9e-20b7-4236-a8f2-1b41880b342b",
+              "parent_uuid": "eccb6f7a-6d7f-49cc-87a0-7d8e76b138ae",
               "tagName": "td",
               "properties": [
                 [
@@ -3203,8 +3945,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "9cb58b86-3941-454a-9de1-95ef43ae5279",
-              "parent_uuid": "85dffee9-a233-4409-ae00-2f5c81952c43",
+              "uuid": "c9cedfb3-a16f-4b93-961b-90b40da08a75",
+              "parent_uuid": "eccb6f7a-6d7f-49cc-87a0-7d8e76b138ae",
               "tagName": "td",
               "properties": [
                 [
@@ -3226,8 +3968,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "3ec93579-e821-4b2d-ad92-3bc5c31040cb",
-              "parent_uuid": "85dffee9-a233-4409-ae00-2f5c81952c43",
+              "uuid": "dbc66906-850e-4a45-ad34-ac3bfc9890dd",
+              "parent_uuid": "eccb6f7a-6d7f-49cc-87a0-7d8e76b138ae",
               "tagName": "td",
               "properties": [
                 [
@@ -3247,14 +3989,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "bb702273-7f6f-4f2a-92c3-01074cd8b117",
+                  "parent_uuid": "dbc66906-850e-4a45-ad34-ac3bfc9890dd",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "e9799b1b-9243-478e-9b14-9b2bc0f81eae",
-              "parent_uuid": "85dffee9-a233-4409-ae00-2f5c81952c43",
+              "uuid": "6dc83aad-b9dc-44a3-b026-0ca37bc015e0",
+              "parent_uuid": "eccb6f7a-6d7f-49cc-87a0-7d8e76b138ae",
               "tagName": "td",
               "properties": [
                 [
@@ -3274,14 +4030,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "81f219a3-16a1-4398-ad28-3c55f56f4f2c",
+                  "parent_uuid": "6dc83aad-b9dc-44a3-b026-0ca37bc015e0",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "a9a4f070-31a9-48cd-9af3-9bf7e8ca98cc",
-              "parent_uuid": "85dffee9-a233-4409-ae00-2f5c81952c43",
+              "uuid": "108099fc-8853-446e-8e72-8c040bc79fba",
+              "parent_uuid": "eccb6f7a-6d7f-49cc-87a0-7d8e76b138ae",
               "tagName": "td",
               "properties": [
                 [
@@ -3301,14 +4071,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "1d5a9ae1-144c-43d4-84ec-6df293f21c1d",
+                  "parent_uuid": "108099fc-8853-446e-8e72-8c040bc79fba",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "decde0d5-330c-459b-a15f-6913ff93af3a",
-              "parent_uuid": "85dffee9-a233-4409-ae00-2f5c81952c43",
+              "uuid": "26b34591-5547-43f4-be5d-4e4dbae22db7",
+              "parent_uuid": "eccb6f7a-6d7f-49cc-87a0-7d8e76b138ae",
               "tagName": "td",
               "properties": [
                 [
@@ -3328,8 +4112,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "1860550a-7864-407b-b132-d62d2afc7494",
+                  "parent_uuid": "26b34591-5547-43f4-be5d-4e4dbae22db7",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -3338,14 +4136,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "29eb4234-6d53-43e0-ba33-2d25ab710314",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "5347e2d4-e271-4170-8858-c8c2aaa49aad",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "6cdf9951-40dc-4f8d-9308-0be46b069fd1",
-              "parent_uuid": "29eb4234-6d53-43e0-ba33-2d25ab710314",
+              "uuid": "9eaa1278-a60d-4552-a01f-079f7a51d525",
+              "parent_uuid": "5347e2d4-e271-4170-8858-c8c2aaa49aad",
               "tagName": "td",
               "properties": [
                 [
@@ -3375,8 +4173,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "21579692-ac5a-4004-8ccb-88eaf213ed99",
-              "parent_uuid": "29eb4234-6d53-43e0-ba33-2d25ab710314",
+              "uuid": "6fb647c1-6ef2-4b80-91c9-47bcfa9fd268",
+              "parent_uuid": "5347e2d4-e271-4170-8858-c8c2aaa49aad",
               "tagName": "td",
               "properties": [
                 [
@@ -3398,8 +4196,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "1f57caf6-a580-417f-a5db-776ba9e57cb3",
-              "parent_uuid": "29eb4234-6d53-43e0-ba33-2d25ab710314",
+              "uuid": "0ffa0b20-f628-41b8-9c0d-3d65222b93aa",
+              "parent_uuid": "5347e2d4-e271-4170-8858-c8c2aaa49aad",
               "tagName": "td",
               "properties": [
                 [
@@ -3419,14 +4217,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "a63a9bc7-be0d-4390-b3f0-5315e1ec9549",
+                  "parent_uuid": "0ffa0b20-f628-41b8-9c0d-3d65222b93aa",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "efbd74d8-1938-46fb-8299-e57e4dc514cf",
-              "parent_uuid": "29eb4234-6d53-43e0-ba33-2d25ab710314",
+              "uuid": "dd7e7285-22e5-4bb0-a644-2b22e97dd4e0",
+              "parent_uuid": "5347e2d4-e271-4170-8858-c8c2aaa49aad",
               "tagName": "td",
               "properties": [
                 [
@@ -3446,14 +4258,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "fbca16c6-4c5b-4b8e-837a-fc93e7b3a7bc",
+                  "parent_uuid": "dd7e7285-22e5-4bb0-a644-2b22e97dd4e0",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "1cb9e86f-c73f-43be-a271-7706333be423",
-              "parent_uuid": "29eb4234-6d53-43e0-ba33-2d25ab710314",
+              "uuid": "0413e669-39c5-43a3-b5a7-ccbf65f5b0a3",
+              "parent_uuid": "5347e2d4-e271-4170-8858-c8c2aaa49aad",
               "tagName": "td",
               "properties": [
                 [
@@ -3473,14 +4299,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "b8e38bf9-bd57-4c4e-9ac1-c8b4f15c5cce",
+                  "parent_uuid": "0413e669-39c5-43a3-b5a7-ccbf65f5b0a3",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "afebb4d9-208a-4992-ae5c-bb8d526f520c",
-              "parent_uuid": "29eb4234-6d53-43e0-ba33-2d25ab710314",
+              "uuid": "cf3fbfcc-bb6d-41e6-b768-06d77e03ead0",
+              "parent_uuid": "5347e2d4-e271-4170-8858-c8c2aaa49aad",
               "tagName": "td",
               "properties": [
                 [
@@ -3500,8 +4340,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "7693707d-8a88-47b5-8722-494f66126b5e",
+                  "parent_uuid": "cf3fbfcc-bb6d-41e6-b768-06d77e03ead0",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -3510,14 +4364,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "d8c5bb38-0e97-4304-9357-ebfe89ab486e",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "90c4b727-a961-420c-8b75-8c75b2f1e539",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "b686905e-1e52-4b50-a741-528e4cdad936",
-              "parent_uuid": "d8c5bb38-0e97-4304-9357-ebfe89ab486e",
+              "uuid": "32552636-6619-4c1f-a70e-6eefdad8c806",
+              "parent_uuid": "90c4b727-a961-420c-8b75-8c75b2f1e539",
               "tagName": "td",
               "properties": [
                 [
@@ -3547,8 +4401,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "6a237cdf-dad2-4cdd-a7f0-59d20db4c3ca",
-              "parent_uuid": "d8c5bb38-0e97-4304-9357-ebfe89ab486e",
+              "uuid": "2e9d80c7-657d-449f-9692-1e551f878888",
+              "parent_uuid": "90c4b727-a961-420c-8b75-8c75b2f1e539",
               "tagName": "td",
               "properties": [
                 [
@@ -3570,8 +4424,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "b4e2988a-96f1-4152-bcfd-f3752d077882",
-              "parent_uuid": "d8c5bb38-0e97-4304-9357-ebfe89ab486e",
+              "uuid": "82ad96d7-0e56-4b0d-9ce3-10b79ab17ff2",
+              "parent_uuid": "90c4b727-a961-420c-8b75-8c75b2f1e539",
               "tagName": "td",
               "properties": [
                 [
@@ -3591,14 +4445,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "8c8e3507-f304-479f-9462-73d8f049bfb4",
+                  "parent_uuid": "82ad96d7-0e56-4b0d-9ce3-10b79ab17ff2",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "167f681f-cba0-41d2-af2f-7cffc0ee5d86",
-              "parent_uuid": "d8c5bb38-0e97-4304-9357-ebfe89ab486e",
+              "uuid": "147b8022-8db4-4223-b2eb-f69dbca0f42b",
+              "parent_uuid": "90c4b727-a961-420c-8b75-8c75b2f1e539",
               "tagName": "td",
               "properties": [
                 [
@@ -3618,14 +4486,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "4075de29-091f-45a9-8e82-722a5829e9d8",
+                  "parent_uuid": "147b8022-8db4-4223-b2eb-f69dbca0f42b",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "24b892d1-d487-410e-b4df-b8811bb16646",
-              "parent_uuid": "d8c5bb38-0e97-4304-9357-ebfe89ab486e",
+              "uuid": "e92e02e7-4e64-40a5-9011-6376e2f079b5",
+              "parent_uuid": "90c4b727-a961-420c-8b75-8c75b2f1e539",
               "tagName": "td",
               "properties": [
                 [
@@ -3645,14 +4527,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "5bef1b3c-b99d-4352-ad4a-a5670cea0e5d",
+                  "parent_uuid": "e92e02e7-4e64-40a5-9011-6376e2f079b5",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "197bd7f6-5f7e-43e2-b879-23e35760c741",
-              "parent_uuid": "d8c5bb38-0e97-4304-9357-ebfe89ab486e",
+              "uuid": "0a937e09-6bec-4880-b3d7-dbe21e3969ea",
+              "parent_uuid": "90c4b727-a961-420c-8b75-8c75b2f1e539",
               "tagName": "td",
               "properties": [
                 [
@@ -3672,8 +4568,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "c9a90c30-9d18-4f5c-9dd4-623f5ff9395f",
+                  "parent_uuid": "0a937e09-6bec-4880-b3d7-dbe21e3969ea",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -3682,14 +4592,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "24b48bbf-3ff3-4989-98d6-4c98118f26c8",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "8483b0e2-e130-4b11-86a4-46640bc45eb0",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "1de67ef1-78de-4d95-b853-4620a8276805",
-              "parent_uuid": "24b48bbf-3ff3-4989-98d6-4c98118f26c8",
+              "uuid": "cffc01ef-b3d2-4bd8-8217-9db690f609e8",
+              "parent_uuid": "8483b0e2-e130-4b11-86a4-46640bc45eb0",
               "tagName": "td",
               "properties": [
                 [
@@ -3719,14 +4629,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "91a27fe3-a31a-4cc6-b297-27e09aeb1177",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "fbdeaa2b-1a89-4910-8acc-c5965aa2c267",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "3bca9d83-66e3-4812-9046-d9dcb82c403d",
-              "parent_uuid": "91a27fe3-a31a-4cc6-b297-27e09aeb1177",
+              "uuid": "15ce7080-1a62-4c74-949f-4ef6354efa27",
+              "parent_uuid": "fbdeaa2b-1a89-4910-8acc-c5965aa2c267",
               "tagName": "td",
               "properties": [
                 [
@@ -3756,14 +4666,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "74ef3d15-2bce-4353-bc7c-28117ca46a4b",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "e9526397-58ea-4118-a6ef-3abfe55afa14",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "a877bb85-6ccb-4e9a-a10d-773e0d577269",
-              "parent_uuid": "74ef3d15-2bce-4353-bc7c-28117ca46a4b",
+              "uuid": "133c7c6d-fa94-468f-86a7-80c1357e2a93",
+              "parent_uuid": "e9526397-58ea-4118-a6ef-3abfe55afa14",
               "tagName": "td",
               "properties": [
                 [
@@ -3783,8 +4693,22 @@ DECLARE @json nvarchar(max) = N'{
                   "margin: 0; padding: 0;"
                 ]
               ],
-              "innerHtml": "\r\n                    <textarea class=\"notes\"></textarea>\r\n                ",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "ffa9ba11-b4c3-4b0b-95d8-9041aca54aa4",
+                  "parent_uuid": "133c7c6d-fa94-468f-86a7-80c1357e2a93",
+                  "tagName": "textarea",
+                  "properties": [
+                    [
+                      "class",
+                      "notes"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 0,
               "lvl": 0
             }
@@ -3793,14 +4717,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "b460c13d-69c1-4a96-8342-284191ebd67c",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "510ec763-61bf-414a-a172-95db9332d82e",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "ac445660-72c4-4b73-845b-f348e44a3f02",
-              "parent_uuid": "b460c13d-69c1-4a96-8342-284191ebd67c",
+              "uuid": "d011aacc-a9b5-4416-9a6b-d1e9c3ac27dc",
+              "parent_uuid": "510ec763-61bf-414a-a172-95db9332d82e",
               "tagName": "td",
               "properties": [
                 [
@@ -3830,8 +4754,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "eb2fb7c9-3873-44ec-b136-a94c64836f6e",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "541eb595-ed2d-4c75-bf78-b1dd6b02f2ad",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [
             [
@@ -3841,8 +4765,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "e9065340-f3ec-4051-b9e3-9ae74a51148c",
-              "parent_uuid": "eb2fb7c9-3873-44ec-b136-a94c64836f6e",
+              "uuid": "4791df19-2fb6-4c54-b58e-ae9432a87a42",
+              "parent_uuid": "541eb595-ed2d-4c75-bf78-b1dd6b02f2ad",
               "tagName": "td",
               "properties": [
                 [
@@ -3872,14 +4796,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "edb10a57-887d-4a94-8436-f4ef17e60c61",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "4ee03cae-b601-408d-97ae-33b8ae41fe1b",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "893585fa-346b-412f-916e-53c25615e988",
-              "parent_uuid": "edb10a57-887d-4a94-8436-f4ef17e60c61",
+              "uuid": "123227a9-15e2-4eb7-9063-f675c4c5d2f9",
+              "parent_uuid": "4ee03cae-b601-408d-97ae-33b8ae41fe1b",
               "tagName": "td",
               "properties": [
                 [
@@ -3909,8 +4833,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e00996d2-4e91-4bc7-b938-cd905af7c931",
-              "parent_uuid": "edb10a57-887d-4a94-8436-f4ef17e60c61",
+              "uuid": "5aeb1275-3139-4cd8-a697-30e34e83212a",
+              "parent_uuid": "4ee03cae-b601-408d-97ae-33b8ae41fe1b",
               "tagName": "td",
               "properties": [
                 [
@@ -3928,8 +4852,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "901d0886-0bc0-47f3-9d2f-63e1965eb82b",
-              "parent_uuid": "edb10a57-887d-4a94-8436-f4ef17e60c61",
+              "uuid": "940eba72-b5dc-4bad-90ec-342576c17005",
+              "parent_uuid": "4ee03cae-b601-408d-97ae-33b8ae41fe1b",
               "tagName": "td",
               "properties": [
                 [
@@ -3947,8 +4871,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "7733c29a-8288-47a8-9b6c-1dedb543ccc9",
-              "parent_uuid": "edb10a57-887d-4a94-8436-f4ef17e60c61",
+              "uuid": "4fb0d8a0-4224-41c9-a2ad-f8570a88ecac",
+              "parent_uuid": "4ee03cae-b601-408d-97ae-33b8ae41fe1b",
               "tagName": "td",
               "properties": [
                 [
@@ -3966,8 +4890,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ea3dbb6e-9725-4093-b68e-07a287b3eb1a",
-              "parent_uuid": "edb10a57-887d-4a94-8436-f4ef17e60c61",
+              "uuid": "5722b586-9d59-4152-a78d-b5c04363fe72",
+              "parent_uuid": "4ee03cae-b601-408d-97ae-33b8ae41fe1b",
               "tagName": "td",
               "properties": [
                 [
@@ -3985,8 +4909,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "226aba66-08c0-4834-afb9-56bd23b6464a",
-              "parent_uuid": "edb10a57-887d-4a94-8436-f4ef17e60c61",
+              "uuid": "ecec5b91-6c64-48c2-b5c7-8fa245b2e610",
+              "parent_uuid": "4ee03cae-b601-408d-97ae-33b8ae41fe1b",
               "tagName": "td",
               "properties": [
                 [
@@ -4008,8 +4932,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "61253680-4805-455e-a0b7-e9d558b66519",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "139575e7-e085-470d-9e6e-db5f47a2ba44",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [],
@@ -4017,14 +4941,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "482a42ce-98e2-4263-93cb-afd3695d80d3",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "d178f70c-db1a-4cee-9a1e-23659f0f6640",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "86b56745-e353-4c8c-a47c-bc1b5e05e27e",
-              "parent_uuid": "482a42ce-98e2-4263-93cb-afd3695d80d3",
+              "uuid": "9f496698-74e3-4e96-885e-569fcf46a357",
+              "parent_uuid": "d178f70c-db1a-4cee-9a1e-23659f0f6640",
               "tagName": "td",
               "properties": [
                 [
@@ -4054,8 +4978,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e26c41a3-9806-4989-95b4-1f420964eb22",
-              "parent_uuid": "482a42ce-98e2-4263-93cb-afd3695d80d3",
+              "uuid": "f34796cd-4087-461e-992a-af24069f6e59",
+              "parent_uuid": "d178f70c-db1a-4cee-9a1e-23659f0f6640",
               "tagName": "td",
               "properties": [
                 [
@@ -4077,8 +5001,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "d22c5b69-f9f9-4b03-9375-fabffba99903",
-              "parent_uuid": "482a42ce-98e2-4263-93cb-afd3695d80d3",
+              "uuid": "f86fe2f5-b96a-43e5-9589-b5e12dd0e6c0",
+              "parent_uuid": "d178f70c-db1a-4cee-9a1e-23659f0f6640",
               "tagName": "td",
               "properties": [
                 [
@@ -4098,14 +5022,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "3895ec09-fab1-4f9f-b300-23c5f4b554e9",
+                  "parent_uuid": "f86fe2f5-b96a-43e5-9589-b5e12dd0e6c0",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "6eaf7285-a636-46ec-b728-9f51a60aed21",
-              "parent_uuid": "482a42ce-98e2-4263-93cb-afd3695d80d3",
+              "uuid": "c8e18703-2f53-40bb-89f0-ff61b9b0b2fb",
+              "parent_uuid": "d178f70c-db1a-4cee-9a1e-23659f0f6640",
               "tagName": "td",
               "properties": [
                 [
@@ -4125,14 +5063,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "54a863ce-8ce4-4853-bb67-c241766cbe96",
+                  "parent_uuid": "c8e18703-2f53-40bb-89f0-ff61b9b0b2fb",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "01b1c7b6-ce37-4ef2-b670-d6488da4a5c2",
-              "parent_uuid": "482a42ce-98e2-4263-93cb-afd3695d80d3",
+              "uuid": "88ad4570-9854-4816-acda-f6d9c60f737c",
+              "parent_uuid": "d178f70c-db1a-4cee-9a1e-23659f0f6640",
               "tagName": "td",
               "properties": [
                 [
@@ -4152,14 +5104,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "69ef9cd7-9774-4106-bbd8-c49a94c1217a",
+                  "parent_uuid": "88ad4570-9854-4816-acda-f6d9c60f737c",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "cce8753f-3f97-498d-970a-087596bfd8cf",
-              "parent_uuid": "482a42ce-98e2-4263-93cb-afd3695d80d3",
+              "uuid": "cd710dcc-6a0a-4535-87bf-e82c9c72370e",
+              "parent_uuid": "d178f70c-db1a-4cee-9a1e-23659f0f6640",
               "tagName": "td",
               "properties": [
                 [
@@ -4179,8 +5145,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "f62534a1-4a0f-436a-9677-2111c8889a72",
+                  "parent_uuid": "cd710dcc-6a0a-4535-87bf-e82c9c72370e",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -4189,14 +5169,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "95cb883f-889f-4fda-b66a-42aa2fdc9355",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "568afe98-af2a-4948-b329-9cde506406b6",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "2d92d680-09ec-4c86-a1ea-f53de9482d45",
-              "parent_uuid": "95cb883f-889f-4fda-b66a-42aa2fdc9355",
+              "uuid": "fedaae53-11ed-476c-94ce-a5b4ff0dccfb",
+              "parent_uuid": "568afe98-af2a-4948-b329-9cde506406b6",
               "tagName": "td",
               "properties": [
                 [
@@ -4226,8 +5206,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "6026fd27-9615-47da-a9da-845ead956233",
-              "parent_uuid": "95cb883f-889f-4fda-b66a-42aa2fdc9355",
+              "uuid": "884eaa0a-cc3f-432c-9aac-b7252c20c9da",
+              "parent_uuid": "568afe98-af2a-4948-b329-9cde506406b6",
               "tagName": "td",
               "properties": [
                 [
@@ -4249,8 +5229,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "3ed14b00-6ebd-41dd-80bc-5ef019bebc7b",
-              "parent_uuid": "95cb883f-889f-4fda-b66a-42aa2fdc9355",
+              "uuid": "4311be76-90f8-4067-b2e6-30f400a8bf4f",
+              "parent_uuid": "568afe98-af2a-4948-b329-9cde506406b6",
               "tagName": "td",
               "properties": [
                 [
@@ -4270,14 +5250,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "29259e54-fb9e-4d8e-b46b-1b7cdde365ee",
+                  "parent_uuid": "4311be76-90f8-4067-b2e6-30f400a8bf4f",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "7ad30de6-9032-4b23-ba14-9db9ff2d8737",
-              "parent_uuid": "95cb883f-889f-4fda-b66a-42aa2fdc9355",
+              "uuid": "b293703d-b7c5-4f1e-92f5-4aaf6d349d6a",
+              "parent_uuid": "568afe98-af2a-4948-b329-9cde506406b6",
               "tagName": "td",
               "properties": [
                 [
@@ -4297,14 +5291,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "514db0dd-04a0-4d51-b0f3-4176f5826f75",
+                  "parent_uuid": "b293703d-b7c5-4f1e-92f5-4aaf6d349d6a",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "ef79b443-59cc-4ec5-b6d7-a9f19088f502",
-              "parent_uuid": "95cb883f-889f-4fda-b66a-42aa2fdc9355",
+              "uuid": "26fcd954-500a-4b61-8f09-fcf5b66cc90b",
+              "parent_uuid": "568afe98-af2a-4948-b329-9cde506406b6",
               "tagName": "td",
               "properties": [
                 [
@@ -4324,14 +5332,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "ab1a1193-7621-4c8e-800e-6a380db09548",
+                  "parent_uuid": "26fcd954-500a-4b61-8f09-fcf5b66cc90b",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "2267015d-3d19-4f39-b26a-2a51f7cb80ee",
-              "parent_uuid": "95cb883f-889f-4fda-b66a-42aa2fdc9355",
+              "uuid": "f3865673-81bd-48e2-a92a-976c7293f2a9",
+              "parent_uuid": "568afe98-af2a-4948-b329-9cde506406b6",
               "tagName": "td",
               "properties": [
                 [
@@ -4351,8 +5373,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "fd140ce8-3d09-438a-87cb-ac3b6633776e",
+                  "parent_uuid": "f3865673-81bd-48e2-a92a-976c7293f2a9",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -4361,14 +5397,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "69f253b9-c288-44c4-b38a-b6f15cc9a309",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "e4410329-8ef7-4a51-9436-e6644911c93f",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "5c422097-3c33-4e7c-882e-38c457193f25",
-              "parent_uuid": "69f253b9-c288-44c4-b38a-b6f15cc9a309",
+              "uuid": "ce5ebd73-0c3e-4c6b-983c-414d0a5fb5d8",
+              "parent_uuid": "e4410329-8ef7-4a51-9436-e6644911c93f",
               "tagName": "td",
               "properties": [
                 [
@@ -4398,8 +5434,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "6636a5b2-fb7f-48dd-a801-dc6b4db87c37",
-              "parent_uuid": "69f253b9-c288-44c4-b38a-b6f15cc9a309",
+              "uuid": "cbd1345c-ac43-43b3-a3c7-8e5c4dfde45a",
+              "parent_uuid": "e4410329-8ef7-4a51-9436-e6644911c93f",
               "tagName": "td",
               "properties": [
                 [
@@ -4421,8 +5457,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e4843b38-8e2e-4663-9a08-efbb3060b140",
-              "parent_uuid": "69f253b9-c288-44c4-b38a-b6f15cc9a309",
+              "uuid": "813cca48-908c-41e5-826f-a3c4a1cea209",
+              "parent_uuid": "e4410329-8ef7-4a51-9436-e6644911c93f",
               "tagName": "td",
               "properties": [
                 [
@@ -4442,14 +5478,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "fccc4fd3-10c4-44db-a1c9-43a98e0d8f05",
+                  "parent_uuid": "813cca48-908c-41e5-826f-a3c4a1cea209",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "bedb1851-dad3-4dd1-90e1-b90ea06b74f4",
-              "parent_uuid": "69f253b9-c288-44c4-b38a-b6f15cc9a309",
+              "uuid": "9a9c4f0f-946e-4c36-a702-734947df411d",
+              "parent_uuid": "e4410329-8ef7-4a51-9436-e6644911c93f",
               "tagName": "td",
               "properties": [
                 [
@@ -4469,14 +5519,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "48117992-75bf-49f8-9c6d-69c3cfa9f486",
+                  "parent_uuid": "9a9c4f0f-946e-4c36-a702-734947df411d",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "c3e77d3d-661c-478a-b772-29bb92c3f789",
-              "parent_uuid": "69f253b9-c288-44c4-b38a-b6f15cc9a309",
+              "uuid": "f5302941-8fcd-4e88-a87a-de30c0bb4da9",
+              "parent_uuid": "e4410329-8ef7-4a51-9436-e6644911c93f",
               "tagName": "td",
               "properties": [
                 [
@@ -4496,14 +5560,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "5300bfe1-5aa4-416d-82ad-239043f10dcf",
+                  "parent_uuid": "f5302941-8fcd-4e88-a87a-de30c0bb4da9",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "d6550234-d196-47f5-8dda-938eacbcb75b",
-              "parent_uuid": "69f253b9-c288-44c4-b38a-b6f15cc9a309",
+              "uuid": "c9bcdba5-cd08-4393-afa6-a64dd435aa2d",
+              "parent_uuid": "e4410329-8ef7-4a51-9436-e6644911c93f",
               "tagName": "td",
               "properties": [
                 [
@@ -4523,8 +5601,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "5e8c8a11-b8f9-4ef2-bf76-5cd0e86b7131",
+                  "parent_uuid": "c9bcdba5-cd08-4393-afa6-a64dd435aa2d",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -4533,14 +5625,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "ab4cd088-2989-459e-9280-58d39b43021d",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "afd72ea9-e825-4f43-84e5-1e7e76ea632a",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "8e72e461-6c8f-435c-b770-48d2f3914c48",
-              "parent_uuid": "ab4cd088-2989-459e-9280-58d39b43021d",
+              "uuid": "0386f712-f620-45ae-948b-132a766db6bb",
+              "parent_uuid": "afd72ea9-e825-4f43-84e5-1e7e76ea632a",
               "tagName": "td",
               "properties": [
                 [
@@ -4570,8 +5662,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "3795a0e9-33ab-4e14-9699-2ff383660c5e",
-              "parent_uuid": "ab4cd088-2989-459e-9280-58d39b43021d",
+              "uuid": "0d062ec0-6f02-47fb-8ed3-89ebde32ff13",
+              "parent_uuid": "afd72ea9-e825-4f43-84e5-1e7e76ea632a",
               "tagName": "td",
               "properties": [
                 [
@@ -4593,8 +5685,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "85043e7a-5928-4261-98c9-ed6f537f48fc",
-              "parent_uuid": "ab4cd088-2989-459e-9280-58d39b43021d",
+              "uuid": "71d6b0c7-9c0b-4fc9-bab4-975224ca15ed",
+              "parent_uuid": "afd72ea9-e825-4f43-84e5-1e7e76ea632a",
               "tagName": "td",
               "properties": [
                 [
@@ -4614,14 +5706,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "3b552451-6d7e-4945-8f08-02a856b91309",
+                  "parent_uuid": "71d6b0c7-9c0b-4fc9-bab4-975224ca15ed",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "5f305586-7fd1-48dc-bd79-c3541e29a733",
-              "parent_uuid": "ab4cd088-2989-459e-9280-58d39b43021d",
+              "uuid": "8eef64a5-ad31-4977-a49c-2bdbb58b8918",
+              "parent_uuid": "afd72ea9-e825-4f43-84e5-1e7e76ea632a",
               "tagName": "td",
               "properties": [
                 [
@@ -4641,14 +5747,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "55ef0b73-130c-4cb8-9d8e-3c1e8dfaf7db",
+                  "parent_uuid": "8eef64a5-ad31-4977-a49c-2bdbb58b8918",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "60e48bb8-dfbf-4e23-9d7d-e1346fc660e8",
-              "parent_uuid": "ab4cd088-2989-459e-9280-58d39b43021d",
+              "uuid": "3373dd61-9c5a-48b0-8497-f19406f4583e",
+              "parent_uuid": "afd72ea9-e825-4f43-84e5-1e7e76ea632a",
               "tagName": "td",
               "properties": [
                 [
@@ -4668,14 +5788,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "8b043f35-33f1-4ddd-af9b-f060e5f5ab3d",
+                  "parent_uuid": "3373dd61-9c5a-48b0-8497-f19406f4583e",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "aa9200ff-55d4-440c-8482-3e24f5654642",
-              "parent_uuid": "ab4cd088-2989-459e-9280-58d39b43021d",
+              "uuid": "c84c9a50-ade7-4a53-891b-7258b2bcb848",
+              "parent_uuid": "afd72ea9-e825-4f43-84e5-1e7e76ea632a",
               "tagName": "td",
               "properties": [
                 [
@@ -4695,8 +5829,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "7df37f07-7982-4099-b6b6-56a7e97aad3d",
+                  "parent_uuid": "c84c9a50-ade7-4a53-891b-7258b2bcb848",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -4705,14 +5853,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "10795c6b-2eec-4201-8dcd-6c7cf916dbd0",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "dae444e8-700f-49fc-9574-c46b95ed72ad",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "1571e6c4-40d6-4120-aa2f-5810e4555b7b",
-              "parent_uuid": "10795c6b-2eec-4201-8dcd-6c7cf916dbd0",
+              "uuid": "bb602443-6929-4a86-95bf-7db2f3ee2b56",
+              "parent_uuid": "dae444e8-700f-49fc-9574-c46b95ed72ad",
               "tagName": "td",
               "properties": [
                 [
@@ -4742,8 +5890,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "fcc26623-7b7d-4065-8d99-dfb15522aa3e",
-              "parent_uuid": "10795c6b-2eec-4201-8dcd-6c7cf916dbd0",
+              "uuid": "3883e085-f792-4375-9a67-907ef72c8f80",
+              "parent_uuid": "dae444e8-700f-49fc-9574-c46b95ed72ad",
               "tagName": "td",
               "properties": [
                 [
@@ -4765,8 +5913,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "4152c370-059b-4589-81eb-382d5b271eb3",
-              "parent_uuid": "10795c6b-2eec-4201-8dcd-6c7cf916dbd0",
+              "uuid": "23c89f66-fc36-4c07-9e0e-7c6f22e7026a",
+              "parent_uuid": "dae444e8-700f-49fc-9574-c46b95ed72ad",
               "tagName": "td",
               "properties": [
                 [
@@ -4786,14 +5934,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "3b4bb37c-992a-457e-b0fe-1582e940f575",
+                  "parent_uuid": "23c89f66-fc36-4c07-9e0e-7c6f22e7026a",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "5b56a693-045a-418d-bcf0-e21676d620cd",
-              "parent_uuid": "10795c6b-2eec-4201-8dcd-6c7cf916dbd0",
+              "uuid": "58c01428-03eb-48ca-8f88-2305d28d852b",
+              "parent_uuid": "dae444e8-700f-49fc-9574-c46b95ed72ad",
               "tagName": "td",
               "properties": [
                 [
@@ -4813,14 +5975,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "ee09cff6-713b-42c1-aacb-061395ea32cf",
+                  "parent_uuid": "58c01428-03eb-48ca-8f88-2305d28d852b",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "3dbe51b9-2826-4e0c-996c-df0fca1c1178",
-              "parent_uuid": "10795c6b-2eec-4201-8dcd-6c7cf916dbd0",
+              "uuid": "358ad3e3-fc09-4786-b380-ef3058404457",
+              "parent_uuid": "dae444e8-700f-49fc-9574-c46b95ed72ad",
               "tagName": "td",
               "properties": [
                 [
@@ -4840,14 +6016,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "624a7c66-61d7-4232-b372-9ede6689e2df",
+                  "parent_uuid": "358ad3e3-fc09-4786-b380-ef3058404457",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "64ed1824-8a8b-4f7c-846e-d4dd70f29679",
-              "parent_uuid": "10795c6b-2eec-4201-8dcd-6c7cf916dbd0",
+              "uuid": "2d6152bb-8fb7-469d-9871-37ace28f666b",
+              "parent_uuid": "dae444e8-700f-49fc-9574-c46b95ed72ad",
               "tagName": "td",
               "properties": [
                 [
@@ -4867,8 +6057,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "74d19eef-e3f9-4f8d-8815-7dffb6cefaef",
+                  "parent_uuid": "2d6152bb-8fb7-469d-9871-37ace28f666b",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -4877,14 +6081,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "4d4dcc08-79b4-4ddf-badd-1966df79e196",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "ca14ab88-63d4-4ad8-806b-f5129cdbbe95",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "2c7867b7-b285-4028-86ee-7226ae2c2488",
-              "parent_uuid": "4d4dcc08-79b4-4ddf-badd-1966df79e196",
+              "uuid": "5562c9e2-1722-4988-baad-1f6ee13f91bd",
+              "parent_uuid": "ca14ab88-63d4-4ad8-806b-f5129cdbbe95",
               "tagName": "td",
               "properties": [
                 [
@@ -4914,8 +6118,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "9632f844-efbc-42ff-a569-c8ed7972293b",
-              "parent_uuid": "4d4dcc08-79b4-4ddf-badd-1966df79e196",
+              "uuid": "ccf6eecb-ba79-4b72-a938-4ca12ca24fc6",
+              "parent_uuid": "ca14ab88-63d4-4ad8-806b-f5129cdbbe95",
               "tagName": "td",
               "properties": [
                 [
@@ -4937,8 +6141,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "9e11d250-4e43-4ae8-b50b-c0bf786392eb",
-              "parent_uuid": "4d4dcc08-79b4-4ddf-badd-1966df79e196",
+              "uuid": "17f278e5-d96e-4951-b93a-8cb64e3a82cd",
+              "parent_uuid": "ca14ab88-63d4-4ad8-806b-f5129cdbbe95",
               "tagName": "td",
               "properties": [
                 [
@@ -4958,14 +6162,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "674976ec-ae51-46e9-8ba8-3a79246946e2",
+                  "parent_uuid": "17f278e5-d96e-4951-b93a-8cb64e3a82cd",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 2,
               "lvl": 0
             },
             {
-              "uuid": "55fd3179-fad9-4efc-b61c-aec46f9602d2",
-              "parent_uuid": "4d4dcc08-79b4-4ddf-badd-1966df79e196",
+              "uuid": "62af57d1-9177-442e-8336-ad10da29b203",
+              "parent_uuid": "ca14ab88-63d4-4ad8-806b-f5129cdbbe95",
               "tagName": "td",
               "properties": [
                 [
@@ -4985,14 +6203,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "769dd14e-a291-4a7d-9bfd-18041de42305",
+                  "parent_uuid": "62af57d1-9177-442e-8336-ad10da29b203",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 3,
               "lvl": 0
             },
             {
-              "uuid": "a35105d9-7fa6-4899-ad0c-b494f87f8225",
-              "parent_uuid": "4d4dcc08-79b4-4ddf-badd-1966df79e196",
+              "uuid": "4f10c0b8-c3ce-4d0a-979b-206227b600e2",
+              "parent_uuid": "ca14ab88-63d4-4ad8-806b-f5129cdbbe95",
               "tagName": "td",
               "properties": [
                 [
@@ -5012,14 +6244,28 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "afadbe8d-e815-4657-93ce-8973a5f8a8f4",
+                  "parent_uuid": "4f10c0b8-c3ce-4d0a-979b-206227b600e2",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 4,
               "lvl": 0
             },
             {
-              "uuid": "24dfa312-7011-4f11-9c4a-028e843d802c",
-              "parent_uuid": "4d4dcc08-79b4-4ddf-badd-1966df79e196",
+              "uuid": "9427d7f1-c848-46b5-b5e3-95c59bb1db07",
+              "parent_uuid": "ca14ab88-63d4-4ad8-806b-f5129cdbbe95",
               "tagName": "td",
               "properties": [
                 [
@@ -5039,8 +6285,22 @@ DECLARE @json nvarchar(max) = N'{
                   "#E7E6E6"
                 ]
               ],
-              "innerHtml": "<input type=\"checkbox\">",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "304ab5e5-951c-4a42-9bf2-90906e643b07",
+                  "parent_uuid": "9427d7f1-c848-46b5-b5e3-95c59bb1db07",
+                  "tagName": "input",
+                  "properties": [
+                    [
+                      "type",
+                      "checkbox"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 5,
               "lvl": 0
             }
@@ -5049,14 +6309,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "9dab576b-410a-454b-a51c-8b832efeed41",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "b7051ecb-3095-4e51-86cf-8ae4883ba763",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "ca3139b4-0818-4f4a-9223-eb25ae10d024",
-              "parent_uuid": "9dab576b-410a-454b-a51c-8b832efeed41",
+              "uuid": "0f7ac7dc-f6c9-44b3-b91b-f579cb625d87",
+              "parent_uuid": "b7051ecb-3095-4e51-86cf-8ae4883ba763",
               "tagName": "td",
               "properties": [
                 [
@@ -5082,14 +6342,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "febb88f1-a185-4928-8b12-ea7aeab4c747",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "326d5279-74cf-4210-b4b4-830896a3e85a",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "e981eabe-4364-459f-acae-00703b1fc4d7",
-              "parent_uuid": "febb88f1-a185-4928-8b12-ea7aeab4c747",
+              "uuid": "0be9df44-f332-4631-adaf-ce1540fdf439",
+              "parent_uuid": "326d5279-74cf-4210-b4b4-830896a3e85a",
               "tagName": "td",
               "properties": [
                 [
@@ -5115,14 +6375,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "ecd3f3aa-2935-4735-b373-eec6a5902aa4",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "3d371cb4-7666-4ca4-973d-84f476c6f944",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "451bd70f-1201-4e05-b4b8-a82b712a8a2c",
-              "parent_uuid": "ecd3f3aa-2935-4735-b373-eec6a5902aa4",
+              "uuid": "576adbc2-e6b9-4c7b-a4a3-9b0d95773ab5",
+              "parent_uuid": "3d371cb4-7666-4ca4-973d-84f476c6f944",
               "tagName": "td",
               "properties": [
                 [
@@ -5142,8 +6402,22 @@ DECLARE @json nvarchar(max) = N'{
                   "margin: 0; padding: 0;"
                 ]
               ],
-              "innerHtml": "\r\n                    <textarea class=\"notes\"></textarea>\r\n                ",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "a08896ba-122e-42f2-bfb9-b1ee45bc70e4",
+                  "parent_uuid": "576adbc2-e6b9-4c7b-a4a3-9b0d95773ab5",
+                  "tagName": "textarea",
+                  "properties": [
+                    [
+                      "class",
+                      "notes"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 0,
               "lvl": 0
             }
@@ -5152,14 +6426,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "954f2e27-0703-440e-9655-9cb1749f26ab",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "86e4266e-cbeb-45d3-ba8a-18607e8c67b9",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "547c1ef4-124b-4800-ade4-dc5bbe979fce",
-              "parent_uuid": "954f2e27-0703-440e-9655-9cb1749f26ab",
+              "uuid": "575e6856-b91d-44bd-9e0a-da2bcccf8cc8",
+              "parent_uuid": "86e4266e-cbeb-45d3-ba8a-18607e8c67b9",
               "tagName": "td",
               "properties": [
                 [
@@ -5189,8 +6463,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "9327daf3-f416-46d6-9884-f671931cf5fe",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "e070bb7a-a786-4899-8b8d-00f82f7ebc81",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [
             [
@@ -5200,8 +6474,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "d045ff67-515a-47f7-b343-143baa3eddbd",
-              "parent_uuid": "9327daf3-f416-46d6-9884-f671931cf5fe",
+              "uuid": "9a66b18b-1f8c-472e-bcd6-6d0f865a454c",
+              "parent_uuid": "e070bb7a-a786-4899-8b8d-00f82f7ebc81",
               "tagName": "td",
               "properties": [
                 [
@@ -5231,14 +6505,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "90538e0e-3798-48ba-b0f8-b965e94fe375",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "224d58fd-c515-488e-b30a-cfa6ed50bf7a",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "f3844ac1-dbc8-4b32-8b04-91c143ac9148",
-              "parent_uuid": "90538e0e-3798-48ba-b0f8-b965e94fe375",
+              "uuid": "480520a0-b8c7-4423-a56c-0dd7b9fcec1b",
+              "parent_uuid": "224d58fd-c515-488e-b30a-cfa6ed50bf7a",
               "tagName": "td",
               "properties": [
                 [
@@ -5264,8 +6538,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ea519b88-3804-4490-8820-54f8d25ec966",
-              "parent_uuid": "90538e0e-3798-48ba-b0f8-b965e94fe375",
+              "uuid": "a6d65703-ca15-481c-bf50-2eb04394d4a1",
+              "parent_uuid": "224d58fd-c515-488e-b30a-cfa6ed50bf7a",
               "tagName": "td",
               "properties": [
                 [
@@ -5291,8 +6565,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "d4e68d54-68d4-4513-a75e-3799a9ca47f7",
-              "parent_uuid": "90538e0e-3798-48ba-b0f8-b965e94fe375",
+              "uuid": "b1740aac-ac77-471f-9dd6-353c2016015d",
+              "parent_uuid": "224d58fd-c515-488e-b30a-cfa6ed50bf7a",
               "tagName": "td",
               "properties": [
                 [
@@ -5314,8 +6588,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "8835ab9e-6969-4317-980c-fb682983c82a",
-              "parent_uuid": "90538e0e-3798-48ba-b0f8-b965e94fe375",
+              "uuid": "ceecb940-a5e5-45b2-bca3-0fcd3a586afc",
+              "parent_uuid": "224d58fd-c515-488e-b30a-cfa6ed50bf7a",
               "tagName": "td",
               "properties": [
                 [
@@ -5337,8 +6611,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c29f7da0-37e4-49e0-bfcd-a4c88ab4472c",
-              "parent_uuid": "90538e0e-3798-48ba-b0f8-b965e94fe375",
+              "uuid": "71a0a106-4f2c-493b-94e7-167a4f2d0c6c",
+              "parent_uuid": "224d58fd-c515-488e-b30a-cfa6ed50bf7a",
               "tagName": "td",
               "properties": [
                 [
@@ -5360,14 +6634,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "d22c7e72-e560-4899-81c3-338caa29dfcf",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "9494a6bb-303c-4db1-bd50-2ad2cfcb4662",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "48646595-7076-4a44-9193-2a2cf51a3536",
-              "parent_uuid": "d22c7e72-e560-4899-81c3-338caa29dfcf",
+              "uuid": "c85d7f8c-ff54-4b6d-9919-925742fb3239",
+              "parent_uuid": "9494a6bb-303c-4db1-bd50-2ad2cfcb4662",
               "tagName": "td",
               "properties": [
                 [
@@ -5397,8 +6671,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "2ca4ffa7-fb50-47b1-9e9c-2920ae215d68",
-              "parent_uuid": "d22c7e72-e560-4899-81c3-338caa29dfcf",
+              "uuid": "90af2acd-7a0a-42d7-96e6-9451ba57baf7",
+              "parent_uuid": "9494a6bb-303c-4db1-bd50-2ad2cfcb4662",
               "tagName": "td",
               "properties": [
                 [
@@ -5424,8 +6698,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "73c118d5-8fa9-441a-a0d9-61cc2937b325",
-              "parent_uuid": "d22c7e72-e560-4899-81c3-338caa29dfcf",
+              "uuid": "798357ef-07c0-4ad9-a903-e58c678761ea",
+              "parent_uuid": "9494a6bb-303c-4db1-bd50-2ad2cfcb4662",
               "tagName": "td",
               "properties": [
                 [
@@ -5451,8 +6725,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "071cd18b-6471-47d8-a3ad-85017133e23f",
-              "parent_uuid": "d22c7e72-e560-4899-81c3-338caa29dfcf",
+              "uuid": "9343c619-499a-4346-85fc-6bea88081e9c",
+              "parent_uuid": "9494a6bb-303c-4db1-bd50-2ad2cfcb4662",
               "tagName": "td",
               "properties": [
                 [
@@ -5478,8 +6752,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "8dc7db39-80b3-4869-bbc4-31a809ba5f7c",
-              "parent_uuid": "d22c7e72-e560-4899-81c3-338caa29dfcf",
+              "uuid": "a601ac9a-ab9a-41c1-a2c1-ddf3ada1d56d",
+              "parent_uuid": "9494a6bb-303c-4db1-bd50-2ad2cfcb4662",
               "tagName": "td",
               "properties": [
                 [
@@ -5501,14 +6775,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "8a57d8cb-6682-4b0a-8678-e7561b1ac455",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "8551fc92-5b0a-4436-8bba-7c395359624f",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "a0ec0ad8-0432-4277-accd-05a11b16143c",
-              "parent_uuid": "8a57d8cb-6682-4b0a-8678-e7561b1ac455",
+              "uuid": "375e44c8-87ff-440e-a363-9e2801dce8ec",
+              "parent_uuid": "8551fc92-5b0a-4436-8bba-7c395359624f",
               "tagName": "td",
               "properties": [
                 [
@@ -5538,8 +6812,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "6edc319a-8096-4a33-8973-6b6af86ba828",
-              "parent_uuid": "8a57d8cb-6682-4b0a-8678-e7561b1ac455",
+              "uuid": "b8c373a1-bac2-42ec-8ef4-65e8b929898d",
+              "parent_uuid": "8551fc92-5b0a-4436-8bba-7c395359624f",
               "tagName": "td",
               "properties": [
                 [
@@ -5565,8 +6839,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "15bb73c0-4860-452c-81c5-fa7981163370",
-              "parent_uuid": "8a57d8cb-6682-4b0a-8678-e7561b1ac455",
+              "uuid": "98252482-f71b-4080-9e2b-55f7a8946904",
+              "parent_uuid": "8551fc92-5b0a-4436-8bba-7c395359624f",
               "tagName": "td",
               "properties": [
                 [
@@ -5592,8 +6866,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "bd334bdb-0ad3-4c5b-b8f1-5743592b0f37",
-              "parent_uuid": "8a57d8cb-6682-4b0a-8678-e7561b1ac455",
+              "uuid": "6069d10a-81b7-40a0-850f-6a349a6a7df9",
+              "parent_uuid": "8551fc92-5b0a-4436-8bba-7c395359624f",
               "tagName": "td",
               "properties": [
                 [
@@ -5619,8 +6893,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "144c7cda-4437-40c8-b2fb-24618967301c",
-              "parent_uuid": "8a57d8cb-6682-4b0a-8678-e7561b1ac455",
+              "uuid": "26294074-78d3-419c-876b-0dce07dec1ce",
+              "parent_uuid": "8551fc92-5b0a-4436-8bba-7c395359624f",
               "tagName": "td",
               "properties": [
                 [
@@ -5642,14 +6916,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "7197203e-b442-4bf0-b242-8b7b98e77b1e",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "5d773fae-4cc5-4db0-9866-cc3058c8aaa7",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "ef23ce99-924d-413f-989d-088937c3d43a",
-              "parent_uuid": "7197203e-b442-4bf0-b242-8b7b98e77b1e",
+              "uuid": "7173fa0f-bc34-49d9-91a9-b0e213d01a34",
+              "parent_uuid": "5d773fae-4cc5-4db0-9866-cc3058c8aaa7",
               "tagName": "td",
               "properties": [
                 [
@@ -5679,8 +6953,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "f0526554-ccbd-4d38-8c3e-8e9d26c7e89b",
-              "parent_uuid": "7197203e-b442-4bf0-b242-8b7b98e77b1e",
+              "uuid": "ecef2d9f-eb97-457b-b6a9-7ab0d358f69b",
+              "parent_uuid": "5d773fae-4cc5-4db0-9866-cc3058c8aaa7",
               "tagName": "td",
               "properties": [
                 [
@@ -5706,8 +6980,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "036575f7-31a1-46dd-8e8e-149742c82c6d",
-              "parent_uuid": "7197203e-b442-4bf0-b242-8b7b98e77b1e",
+              "uuid": "2535c2d8-1e1e-42af-9e02-74e3f7aa2847",
+              "parent_uuid": "5d773fae-4cc5-4db0-9866-cc3058c8aaa7",
               "tagName": "td",
               "properties": [
                 [
@@ -5733,8 +7007,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "16aa210e-473c-45f5-a51b-95d817b18f42",
-              "parent_uuid": "7197203e-b442-4bf0-b242-8b7b98e77b1e",
+              "uuid": "48c45340-c877-4a63-a957-82828264b4a2",
+              "parent_uuid": "5d773fae-4cc5-4db0-9866-cc3058c8aaa7",
               "tagName": "td",
               "properties": [
                 [
@@ -5760,8 +7034,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e40093e4-df58-426c-890f-fb72969aca81",
-              "parent_uuid": "7197203e-b442-4bf0-b242-8b7b98e77b1e",
+              "uuid": "85df8fda-90fa-40f1-846c-1616bee0cdcc",
+              "parent_uuid": "5d773fae-4cc5-4db0-9866-cc3058c8aaa7",
               "tagName": "td",
               "properties": [
                 [
@@ -5783,14 +7057,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "a408c901-7529-481b-89a2-9b6e4f442a42",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "00c240d5-f099-4ecd-8588-2c7232c2559f",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "4afbf7a6-7c31-4ae2-a2e4-1e2d784a2924",
-              "parent_uuid": "a408c901-7529-481b-89a2-9b6e4f442a42",
+              "uuid": "080885e4-81f5-472d-a365-d9bfdabc235a",
+              "parent_uuid": "00c240d5-f099-4ecd-8588-2c7232c2559f",
               "tagName": "td",
               "properties": [
                 [
@@ -5820,8 +7094,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c7f0a689-7c55-4cab-91ca-22d85a7f0a39",
-              "parent_uuid": "a408c901-7529-481b-89a2-9b6e4f442a42",
+              "uuid": "94e8bcb1-abaf-48b4-8aee-3005fba47492",
+              "parent_uuid": "00c240d5-f099-4ecd-8588-2c7232c2559f",
               "tagName": "td",
               "properties": [
                 [
@@ -5847,8 +7121,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "66acaa1c-81fc-4898-8fbf-d85bfa7116a9",
-              "parent_uuid": "a408c901-7529-481b-89a2-9b6e4f442a42",
+              "uuid": "78b430f4-d065-4dea-8727-cfdacd93b12e",
+              "parent_uuid": "00c240d5-f099-4ecd-8588-2c7232c2559f",
               "tagName": "td",
               "properties": [
                 [
@@ -5874,8 +7148,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ab942cd2-a48a-41fb-9258-e632a6a0de4c",
-              "parent_uuid": "a408c901-7529-481b-89a2-9b6e4f442a42",
+              "uuid": "37f8a80d-0489-4ae3-8bf1-772d3fe5c1c5",
+              "parent_uuid": "00c240d5-f099-4ecd-8588-2c7232c2559f",
               "tagName": "td",
               "properties": [
                 [
@@ -5901,8 +7175,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c27bd5cb-5904-492e-ad95-e0cb2e59c3a2",
-              "parent_uuid": "a408c901-7529-481b-89a2-9b6e4f442a42",
+              "uuid": "4e6fa403-dbc8-4666-898c-29b97f499cd2",
+              "parent_uuid": "00c240d5-f099-4ecd-8588-2c7232c2559f",
               "tagName": "td",
               "properties": [
                 [
@@ -5924,14 +7198,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "35b8e7ee-dd95-4811-afd9-a5c58de50f71",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "2502d264-b828-4a6e-8298-01c7bbadc901",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "4220723d-6f41-468e-b943-ad1eb3ca1867",
-              "parent_uuid": "35b8e7ee-dd95-4811-afd9-a5c58de50f71",
+              "uuid": "26ccbec8-3b9f-4b4c-a369-b278c1378e95",
+              "parent_uuid": "2502d264-b828-4a6e-8298-01c7bbadc901",
               "tagName": "td",
               "properties": [
                 [
@@ -5961,8 +7235,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "72a0b5f4-9725-4b55-ab45-67bd8d3ed763",
-              "parent_uuid": "35b8e7ee-dd95-4811-afd9-a5c58de50f71",
+              "uuid": "8d153457-d241-4bdc-bec6-bbbc0428090e",
+              "parent_uuid": "2502d264-b828-4a6e-8298-01c7bbadc901",
               "tagName": "td",
               "properties": [
                 [
@@ -5988,8 +7262,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "aef75e73-d3b4-478c-b388-e69ba9237906",
-              "parent_uuid": "35b8e7ee-dd95-4811-afd9-a5c58de50f71",
+              "uuid": "fefcc0ed-d20c-46a9-9e14-1dd794bd9278",
+              "parent_uuid": "2502d264-b828-4a6e-8298-01c7bbadc901",
               "tagName": "td",
               "properties": [
                 [
@@ -6015,8 +7289,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "b0f0718c-681d-4f1b-9345-bdecdcedad14",
-              "parent_uuid": "35b8e7ee-dd95-4811-afd9-a5c58de50f71",
+              "uuid": "82af24fa-7ace-4fcf-bd53-a34f2d82621a",
+              "parent_uuid": "2502d264-b828-4a6e-8298-01c7bbadc901",
               "tagName": "td",
               "properties": [
                 [
@@ -6042,8 +7316,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "00212157-fd28-468a-8122-3ee20b7d72fc",
-              "parent_uuid": "35b8e7ee-dd95-4811-afd9-a5c58de50f71",
+              "uuid": "2cc59c8e-fdb2-434a-988d-c05ea3a473a2",
+              "parent_uuid": "2502d264-b828-4a6e-8298-01c7bbadc901",
               "tagName": "td",
               "properties": [
                 [
@@ -6065,14 +7339,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "3e3949a5-c646-4917-889d-87a639561816",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "6f6317d2-ab51-4fed-a498-4c9dec8b8d76",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "7f5b5ef8-cc63-4b05-b627-bc555cbc804e",
-              "parent_uuid": "3e3949a5-c646-4917-889d-87a639561816",
+              "uuid": "d01dc324-6909-4041-8324-f329fa4abd5c",
+              "parent_uuid": "6f6317d2-ab51-4fed-a498-4c9dec8b8d76",
               "tagName": "td",
               "properties": [
                 [
@@ -6102,8 +7376,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "43b4f8dc-edad-482e-a0c7-b3e7d97f6d22",
-              "parent_uuid": "3e3949a5-c646-4917-889d-87a639561816",
+              "uuid": "9b344833-a9e9-40cf-9803-ef6c90908225",
+              "parent_uuid": "6f6317d2-ab51-4fed-a498-4c9dec8b8d76",
               "tagName": "td",
               "properties": [
                 [
@@ -6129,8 +7403,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "dce32112-197a-455a-80af-630930e699ee",
-              "parent_uuid": "3e3949a5-c646-4917-889d-87a639561816",
+              "uuid": "a031f436-0033-40cb-917c-dc0bd4d95df0",
+              "parent_uuid": "6f6317d2-ab51-4fed-a498-4c9dec8b8d76",
               "tagName": "td",
               "properties": [
                 [
@@ -6156,8 +7430,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "3b4b5f56-849c-4aa7-8585-3b40ff507694",
-              "parent_uuid": "3e3949a5-c646-4917-889d-87a639561816",
+              "uuid": "b76710d0-3cdb-4742-a59a-11167b2a480b",
+              "parent_uuid": "6f6317d2-ab51-4fed-a498-4c9dec8b8d76",
               "tagName": "td",
               "properties": [
                 [
@@ -6183,8 +7457,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ab9050ce-8e18-4d33-8217-276f8045f262",
-              "parent_uuid": "3e3949a5-c646-4917-889d-87a639561816",
+              "uuid": "c65787ce-a532-41f4-a7db-e6162e48a63c",
+              "parent_uuid": "6f6317d2-ab51-4fed-a498-4c9dec8b8d76",
               "tagName": "td",
               "properties": [
                 [
@@ -6206,14 +7480,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "42507083-5da8-4de8-a995-493cbb568dda",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "f084da98-5a36-45e5-a13e-b0056c30b386",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "2ec955b6-c61d-48e2-9a0c-a79da1e59313",
-              "parent_uuid": "42507083-5da8-4de8-a995-493cbb568dda",
+              "uuid": "f13a7048-d4a2-42bc-a617-2457e192e04e",
+              "parent_uuid": "f084da98-5a36-45e5-a13e-b0056c30b386",
               "tagName": "td",
               "properties": [
                 [
@@ -6243,8 +7517,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "6328b653-7f15-4ce9-a0d5-3a394b426b88",
-              "parent_uuid": "42507083-5da8-4de8-a995-493cbb568dda",
+              "uuid": "cdf8ba5a-d46d-41fc-9446-de2c62d07ffe",
+              "parent_uuid": "f084da98-5a36-45e5-a13e-b0056c30b386",
               "tagName": "td",
               "properties": [
                 [
@@ -6270,8 +7544,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "be14a0dc-265e-4868-a3f3-09d9ed48d2cd",
-              "parent_uuid": "42507083-5da8-4de8-a995-493cbb568dda",
+              "uuid": "bd27256e-659b-4e16-87b5-d780a3846bf9",
+              "parent_uuid": "f084da98-5a36-45e5-a13e-b0056c30b386",
               "tagName": "td",
               "properties": [
                 [
@@ -6297,8 +7571,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "4b38effd-f600-4eac-b727-5b9d5abbfccb",
-              "parent_uuid": "42507083-5da8-4de8-a995-493cbb568dda",
+              "uuid": "47dbf97d-db35-4ab6-8438-3e36f359fce1",
+              "parent_uuid": "f084da98-5a36-45e5-a13e-b0056c30b386",
               "tagName": "td",
               "properties": [
                 [
@@ -6324,8 +7598,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "400e3917-8f24-4803-ba32-a4ea650b8dfd",
-              "parent_uuid": "42507083-5da8-4de8-a995-493cbb568dda",
+              "uuid": "b19c7f30-ec0f-4b56-9030-83227a52ee69",
+              "parent_uuid": "f084da98-5a36-45e5-a13e-b0056c30b386",
               "tagName": "td",
               "properties": [
                 [
@@ -6347,14 +7621,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "e102b638-7bc7-4e7b-b619-6e50f4a1b9c9",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "a18c9d23-b25e-450d-a21c-f3964a766361",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "1c3718b2-a515-4fd1-b16a-ea2bca25beab",
-              "parent_uuid": "e102b638-7bc7-4e7b-b619-6e50f4a1b9c9",
+              "uuid": "5e10c20f-5a91-4b8d-84f6-6b3bd0700bbe",
+              "parent_uuid": "a18c9d23-b25e-450d-a21c-f3964a766361",
               "tagName": "td",
               "properties": [
                 [
@@ -6384,8 +7658,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "344fb059-8b58-40cc-a339-c3edd42a8386",
-              "parent_uuid": "e102b638-7bc7-4e7b-b619-6e50f4a1b9c9",
+              "uuid": "0ab2e4dd-b604-40e9-88bc-2ac21ff8a498",
+              "parent_uuid": "a18c9d23-b25e-450d-a21c-f3964a766361",
               "tagName": "td",
               "properties": [
                 [
@@ -6411,8 +7685,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "8d34267e-5dd1-49ad-9a6e-7a876b7dd1f7",
-              "parent_uuid": "e102b638-7bc7-4e7b-b619-6e50f4a1b9c9",
+              "uuid": "3d48758a-c758-4b89-a273-580ad8007979",
+              "parent_uuid": "a18c9d23-b25e-450d-a21c-f3964a766361",
               "tagName": "td",
               "properties": [
                 [
@@ -6438,8 +7712,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "db94af1c-2f31-42d5-b7c3-234c87369e22",
-              "parent_uuid": "e102b638-7bc7-4e7b-b619-6e50f4a1b9c9",
+              "uuid": "11879623-6a06-4065-8881-53ac811f2d0a",
+              "parent_uuid": "a18c9d23-b25e-450d-a21c-f3964a766361",
               "tagName": "td",
               "properties": [
                 [
@@ -6465,8 +7739,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "819f31a9-639b-4a6d-839f-a646013b69b8",
-              "parent_uuid": "e102b638-7bc7-4e7b-b619-6e50f4a1b9c9",
+              "uuid": "c1b42e57-5d58-4e7c-a11d-a527b8ad402b",
+              "parent_uuid": "a18c9d23-b25e-450d-a21c-f3964a766361",
               "tagName": "td",
               "properties": [
                 [
@@ -6488,14 +7762,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "5ba5102c-eeb0-41f0-b3ed-89fae328bef7",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "af7d16e6-c480-44a9-91d1-e1f62760a7f4",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "b4fd18ad-f680-414e-9bd5-8843ced5573b",
-              "parent_uuid": "5ba5102c-eeb0-41f0-b3ed-89fae328bef7",
+              "uuid": "06f3f60c-d7c8-4c87-9466-c2a6246355eb",
+              "parent_uuid": "af7d16e6-c480-44a9-91d1-e1f62760a7f4",
               "tagName": "td",
               "properties": [
                 [
@@ -6521,14 +7795,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "4f053fe3-4ec3-4eb9-8296-3087578006cf",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "23daec72-afb6-4b05-bd5e-73c2b0b2f973",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "bf8c78e2-48c3-40cf-8b8f-1b3543bf75ff",
-              "parent_uuid": "4f053fe3-4ec3-4eb9-8296-3087578006cf",
+              "uuid": "1fbf6bc5-6006-4c52-8e20-4a7c23def99b",
+              "parent_uuid": "23daec72-afb6-4b05-bd5e-73c2b0b2f973",
               "tagName": "td",
               "properties": [
                 [
@@ -6558,14 +7832,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "df2fcd5d-f2d8-4550-850e-b80d029a473d",
-          "parent_uuid": "df3c388a-83de-4b93-9dd9-5c1c79df64f1",
+          "uuid": "156524bc-5b6d-4fef-b10d-7ff75409f611",
+          "parent_uuid": "35814dd2-bba0-42d1-b248-2f215495e412",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "1107621f-2c41-4d51-981e-bda11da8760f",
-              "parent_uuid": "df2fcd5d-f2d8-4550-850e-b80d029a473d",
+              "uuid": "20bfb953-52fe-47d1-8889-d76f4b8567e2",
+              "parent_uuid": "156524bc-5b6d-4fef-b10d-7ff75409f611",
               "tagName": "td",
               "properties": [
                 [
@@ -6585,8 +7859,22 @@ DECLARE @json nvarchar(max) = N'{
                   "margin: 0; padding: 0;"
                 ]
               ],
-              "innerHtml": "\r\n                    <textarea class=\"notes\"></textarea>\r\n                ",
-              "children": [],
+              "children": [
+                {
+                  "uuid": "e88159dc-538a-4bd7-9216-9b05e2f91d8f",
+                  "parent_uuid": "20bfb953-52fe-47d1-8889-d76f4b8567e2",
+                  "tagName": "textarea",
+                  "properties": [
+                    [
+                      "class",
+                      "notes"
+                    ]
+                  ],
+                  "children": [],
+                  "sort": 0,
+                  "lvl": 0
+                }
+              ],
               "sort": 0,
               "lvl": 0
             }

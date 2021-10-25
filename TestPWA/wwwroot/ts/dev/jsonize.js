@@ -1,12 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.collectSaveData = exports.constructRecursiveDataStructure = exports.assembleStructure = exports.collectStructure = void 0;
+exports.constructRecursiveDataStructure = exports.assembleStructure = exports.collectStructure = void 0;
 var autobind_autotrace = require("./autobind_autotrace.js");
 var uuid = require("./uuid.js");
-var utils = require("./string_utils.js");
-var _ = {
-    "ab": autobind_autotrace
-};
 function _getProperties(el) {
     var arr = [];
     for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
@@ -31,7 +27,17 @@ function collectStructure(p, parent, sort) {
         "sort": sort
     };
     if (p.nodeName.toLowerCase() === "td") {
-        checklistData.innerHtml = p.innerHTML;
+        var inputSort = 0;
+        for (var i = 0; i < children.length; ++i) {
+            var tagName = children[i].nodeName.toLowerCase();
+            if (children[i].nodeType === Node.ELEMENT_NODE &&
+                (tagName === "input" || tagName === "textarea")) {
+                var ret = collectStructure(children[i], guid, inputSort++);
+                checklistData.children.push(ret);
+            }
+        }
+        if (inputSort == 0)
+            checklistData.innerHtml = p.innerHTML;
     }
     else if (children.length) {
         var childSort = 0;
@@ -56,10 +62,6 @@ function _createElement(data) {
     if (data.uuid != null) {
         el.setAttribute("id", data.uuid.toLowerCase());
         el.id = data.uuid.toLowerCase();
-        var tagName = data.tagName.toLowerCase();
-        if (tagName === "input" || tagName === "textarea") {
-            el.setAttribute("name", el.id);
-        }
     }
     for (var i = 0; i < data.properties.length; ++i) {
         el.setAttribute(data.properties[i][0], data.properties[i][1]);
@@ -110,41 +112,18 @@ function constructRecursiveDataStructure(elements, properties, parentUID, obj, l
     return obj;
 }
 exports.constructRecursiveDataStructure = constructRecursiveDataStructure;
-function collectSaveData(p, cls_uid) {
-    if (p == null)
-        return null;
-    var checklistData = [];
-    var nodeName = p.nodeName.toLowerCase();
-    if (p.nodeType === Node.ELEMENT_NODE && ("input" === nodeName || "textarea" === nodeName)) {
-        var uuid_1 = p.getAttribute("id") || "unknown";
-        var type = p.getAttribute("type") || "";
-        var value = null;
-        if ("checkbox" === type.toLowerCase()) {
-            value = p.checked.toString().toLowerCase();
-        }
-        else if ("text" === type.toLowerCase()) {
-            value = p.value;
-            value = utils.normalizeNewLines(value);
-        }
-        else if ("textarea" === nodeName) {
-            value = p.value;
-            value = utils.normalizeNewLines(value);
-            type = "textarea";
-        }
-        return [{
-                "uuid": uuid_1,
-                "value": value,
-                "__cls_uid": cls_uid
-            }];
-    }
-    else if (p.children.length) {
-        for (var i = 0; i < p.children.length; i++) {
-            var ret = collectSaveData(p.children[i], cls_uid);
-            for (var j = 0; j < ret.length; ++j) {
-                checklistData.push(ret[j]);
-            }
-        }
-    }
-    return checklistData;
-}
-exports.collectSaveData = collectSaveData;
+(function () {
+    var _ = {
+        "ab": autobind_autotrace
+    };
+    var doc = collectStructure(document.querySelector("table"));
+    console.log(doc);
+    var div = document.createElement("div");
+    div.setAttribute("id", "abc");
+    var t = document.createTextNode("Hello World");
+    t.id = "foobar2021";
+    div.appendChild(t);
+    document.body.appendChild(div);
+    console.log("hello", document.getElementById("abc").childNodes[0].id);
+    console.log("finished !");
+}());

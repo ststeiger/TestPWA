@@ -5,16 +5,47 @@ namespace TestPWA
 
     public class XmlStructure
     {
+        [Newtonsoft.Json.JsonProperty("uuid")]
+        [System.Text.Json.Serialization.JsonPropertyName("uuid")]
         public string uuid;
+
+        [Newtonsoft.Json.JsonProperty("parent_uuid")]
+        [System.Text.Json.Serialization.JsonPropertyName("parent_uuid")]
         public string parent_uuid;
+
+        [Newtonsoft.Json.JsonProperty("tagName")]
+        [System.Text.Json.Serialization.JsonPropertyName("tagName")]
         public string tagName;
+
+
+        [Newtonsoft.Json.JsonProperty("formName")]
+        [System.Text.Json.Serialization.JsonPropertyName("formName")]
+        public string formName;
+
+        [Newtonsoft.Json.JsonProperty("properties")]
+        [System.Text.Json.Serialization.JsonPropertyName("properties")]
         public System.Collections.Generic.List<System.Collections.Generic.List<string>> properties;
+
+        [Newtonsoft.Json.JsonProperty("innerHtml")]
+        [System.Text.Json.Serialization.JsonPropertyName("innerHtml")]
         public string innerHtml;
+
+        [Newtonsoft.Json.JsonProperty("children")]
+        [System.Text.Json.Serialization.JsonPropertyName("children")]
         public System.Collections.Generic.List<XmlStructure> children;
+
+        [Newtonsoft.Json.JsonProperty("sort")]
+        [System.Text.Json.Serialization.JsonPropertyName("sort")]
         public long sort;
+
+        [Newtonsoft.Json.JsonProperty("lvl")]
+        [System.Text.Json.Serialization.JsonPropertyName("lvl")]
         public long lvl;
+
+        [Newtonsoft.Json.JsonProperty("rootNode")]
+        [System.Text.Json.Serialization.JsonPropertyName("rootNode")]
         public bool? rootNode;
-    }
+    } // End Class XmlStructure 
 
 
     public class DbHtml
@@ -30,10 +61,10 @@ namespace TestPWA
             {
                 string target = link.Attributes["href"].Value;
                 ls.Add(target);
-            }
+            } // Next link 
 
             return ls;
-        }
+        } // End Function AllLinks 
 
 
         private static System.Collections.Generic.List<System.Collections.Generic.List<string>>
@@ -44,14 +75,16 @@ namespace TestPWA
 
             if (el.HasAttributes)
             {
+
                 foreach (HtmlAgilityPack.HtmlAttribute attr in el.Attributes)
                 {
                     arr.Add(new System.Collections.Generic.List<string>() { attr.Name, attr.Value });
-                }
-            }
+                } // Next attr 
+
+            } // End if (el.HasAttributes) 
 
             return arr;
-        }
+        } // End Function GetProperties 
 
 
         public static XmlStructure CollectStructure(HtmlAgilityPack.HtmlNode p, string parent = null, long sort = 0)
@@ -79,14 +112,31 @@ namespace TestPWA
 
             if (p.Name.ToLowerInvariant() == "td")
             {
-                checklistData.innerHtml = p.InnerHtml;
+                int inputSort = 0;
+
+                for (int i = 0; i < p.ChildNodes.Count; ++i)
+                {
+                    string tagName = p.ChildNodes[i].Name.ToLowerInvariant();
+
+                    // if (children[i].nodeType === Node.TEXT_NODE && !string_utils.isNullOrWhiteSpace(children[i].nodeValue))
+                    if (p.ChildNodes[i].NodeType == HtmlAgilityPack.HtmlNodeType.Element
+                        && (tagName == "input" || tagName == "textarea"))
+                    {
+                        XmlStructure ret = CollectStructure(p.ChildNodes[i], guid, inputSort++);
+                        checklistData.children.Add(ret);
+                    }
+
+                }
+
+                if (inputSort == 0)
+                    checklistData.innerHtml = p.InnerHtml;
             }
             else if (p.HasChildNodes)
             {
                 long childSort = 0;
 
                 //for (long i = 0; i < children.length; i++)
-                foreach (var cur in p.ChildNodes)
+                foreach (HtmlAgilityPack.HtmlNode cur in p.ChildNodes)
                 {
                     // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
                     if (cur.NodeType == HtmlAgilityPack.HtmlNodeType.Text)
@@ -113,7 +163,7 @@ namespace TestPWA
             } // End if (children.length) 
 
             return checklistData;
-        } // End Sub collectStructure
+        } // End Function CollectStructure
 
 
         public static string DocumentToJson(string file, string outputPath)
@@ -133,7 +183,7 @@ namespace TestPWA
             });
 
             return json;
-        }
+        } // End Function DocumentToJson 
 
 
         public static void GenerateAllChecklists()
@@ -187,4 +237,4 @@ namespace TestPWA
     } // End Class DbHtml 
 
 
-}
+} // End Namespace TestPWA 

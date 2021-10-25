@@ -183,7 +183,8 @@ namespace TestPWA
                 );
             });
 
-            app.UseSqlMiddleware();
+            app.UseAnySqlSelect();
+            app.UseAnySqlInsert();
 
         } // End Sub Configure 
 

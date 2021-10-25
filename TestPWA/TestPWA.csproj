@@ -19,8 +19,4 @@
     <ProjectReference Include="..\EPPlus.NetStandard2\EPPlus.NetStandard2.csproj" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="Code\AutoGen\" />
-  </ItemGroup>
-  
 </Project>
