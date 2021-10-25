@@ -57,14 +57,9 @@ namespace AnySqlWebAdmin
                 if (!pars.ContainsKey("sql"))
                     throw new System.Exception("Parameter sql not provided....");
 
-                // throw new System.Exception("foobar!");
-
                 sql = System.Convert.ToString(pars["sql"]);
-
                 sql = System.IO.Path.Combine(this.m_sqlRootPath, sql);
-
                 sql = System.IO.File.ReadAllText(sql, System.Text.Encoding.UTF8);
-
 
                 RenderType_t format = RenderType_t.Array;
 
