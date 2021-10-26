@@ -35,6 +35,52 @@ if (true)
 
 
 
+async function loadChecklistValues(cl_uid?:string)
+{
+    cl_uid = cl_uid || "F1A2DD8A-2D11-496E-9B14-13559405089F";
+
+    let fetchChecklistValues = await fetch("ajax/AnySelect.ashx?sql=LoadChecklist.sql&format=1&__cl_uid=" + cl_uid, {
+        method: 'POST',
+        headers: {
+              "Accept": "application/json"
+            , "Content-Type": "application/json"
+            , "credentials": "same-origin" // the default would be same-origin, but there's an exciting Edge-bug ... 
+            , "pragma": "no-cache"
+            , "cache-control": "no-cache"
+        }
+        // , body: JSON.stringify({ "a": 1, "b": "Textual content" })
+    });
+
+    let checkListData: any = await fetchChecklistValues.json();
+
+    let checklistValues = new tableWrapper<IT_Checklist_ZO_ElementValues>(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
+    // console.log("checklistValues", checklistValues);
+
+    for (let i = 0; i < checklistValues.rowCount; ++i)
+    {
+        let ele = document.getElementById(checklistValues.row(i).CLV_ELE_UID);
+        if (!ele)
+            continue;
+
+        let type = (ele.getAttribute("type") || "").toLowerCase();
+        if ("checkbox" === type)
+        {
+            (<HTMLInputElement>ele).checked = (checklistValues.row(i).CLV_Value === 'true');
+        }
+        else if ("text" === type)
+        {
+            (<HTMLInputElement>ele).value = checklistValues.row(i).CLV_Value;
+        }
+        else if ("textarea" === ele.nodeName.toLowerCase())
+        {
+            (<HTMLInputElement>ele).value = checklistValues.row(i).CLV_Value;
+        }
+    }
+
+
+}
+
+
 
 
 // https://localhost:44314/ts/require/require.js?v=1
@@ -84,7 +130,21 @@ async function main(): Promise<any>
 
 
     // let fetchSingleChecklist = await fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=EB159A9C-E69F-49F4-B10E-3A4825973E46");
-    let fetchSingleChecklist = await fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F");
+    // let fetchSingleChecklist = await fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F");
+
+
+    let fetchSingleChecklist = await fetch("ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F", {
+        method: 'POST',
+        headers: {
+            "Accept": "application/json"
+            , "Content-Type": "application/json"
+            , "credentials": "same-origin" // the default would be same-origin, but there's an exciting Edge-bug ... 
+            , "pragma": "no-cache"
+            , "cache-control": "no-cache"
+        }
+        // , body: JSON.stringify({ "a": 1, "b": "Textual content" })
+    });
+
 
     // let checkListDatat: any = await fetchSingleChecklist.text();
     // console.log("checkListDatat", checkListDatat);
@@ -118,26 +178,31 @@ async function main(): Promise<any>
         // e.target matches elem
         let saveData = db_html.collectSaveData(document.querySelector("table"), cls_uid);
         console.log("saveData", saveData);
+
         console.log("saveData", 
             saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; })
         );
 
-
-        let rawResponse = await fetch('ajax/anyInsert.ashx?sql=SaveChecklistDataSet.sql', {
+        let rawResponse = await fetch("ajax/anyInsert.ashx?sql=SaveChecklistDataSet.sql", {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                 "Accept": "application/json" 
+                ,"Content-Type": "application/json" 
+                ,"credentials": "same-origin" // the default would be same-origin, but there's an exciting Edge-bug ... 
+                ,"pragma": "no-cache" 
+                ,"cache-control": "no-cache" 
             }
             , body: JSON.stringify({ "__cls_uid": cls_uid, "__cls_cl_uid": "F1A2DD8A-2D11-496E-9B14-13559405089F" })
         });
 
-
-        let saveChecklistResponse = await fetch('ajax/anyInsert.ashx?sql=SaveChecklistData.sql', {
+        let saveChecklistResponse = await fetch("ajax/anyInsert.ashx?sql=SaveChecklistData.sql", {
                 method: 'POST',
                 headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                     "Accept": "application/json" 
+                    ,"Content-Type": "application/json" 
+                    ,"credentials": "same-origin" // the default would be same-origin, but there's an exciting Edge-bug ... 
+                    ,"pragma": "no-cache" 
+                    ,"cache-control": "no-cache" 
                 }
             // , body: JSON.stringify({ "a": 1, "b": "Textual content" })
             , body: JSON.stringify(saveData)
@@ -147,6 +212,8 @@ async function main(): Promise<any>
         console.log("rawResponse", content);
     }, false);
 
+
+    await loadChecklistValues();
 
     /*
     let groupedElements = elements.groupBy("ELE_Parent_UID");

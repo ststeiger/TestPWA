@@ -185,7 +185,7 @@ namespace TestPWA
 
             app.UseAnySqlSelect();
             app.UseAnySqlInsert();
-
+            app.UseTestHandler();
         } // End Sub Configure 
 
 

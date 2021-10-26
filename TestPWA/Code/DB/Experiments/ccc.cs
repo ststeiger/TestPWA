@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-
-namespace TestPWA.Code.DB
+﻿
+namespace TestPWA.Code.DB3
 {
+
 
     // https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/Linq/JContainer.cs
     public partial class JContainer
          : JToken //, IList<JToken>
-    { 
-    
+    {
+
     }
+
 
     // https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/Linq/JToken.cs
     public partial class JToken
-        //: IJEnumerable<JToken>, IJsonLineInfo
+    //: IJEnumerable<JToken>, IJsonLineInfo
     {
         private JContainer? _parent;
         private JToken? _previous;
@@ -177,11 +172,11 @@ namespace TestPWA.Code.DB
         }
 
 
-        public override DataTable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override System.Data.DataTable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
         {
-            if (reader.TokenType != JsonTokenType.StartObject)
+            if (reader.TokenType != System.Text.Json.JsonTokenType.StartObject)
             {
-                throw new JsonException();
+                throw new System.Text.Json.JsonException();
             }
 
 
@@ -213,27 +208,27 @@ namespace TestPWA.Code.DB
             while (reader.Read())
             {
                 // here we need to count open-close
-                if (reader.TokenType == JsonTokenType.EndObject && objectCount == 0)
+                if (reader.TokenType == System.Text.Json.JsonTokenType.EndObject && objectCount == 0)
                 {
                     return dt;
                 }
 
-                if (reader.TokenType == JsonTokenType.StartObject)
+                if (reader.TokenType == System.Text.Json.JsonTokenType.StartObject)
                 {
                     objectCount++;
                 }
-                else if (reader.TokenType == JsonTokenType.EndObject)
+                else if (reader.TokenType == System.Text.Json.JsonTokenType.EndObject)
                 {
                     objectCount--;
                 }
-                else if (reader.TokenType == JsonTokenType.PropertyName)
+                else if (reader.TokenType == System.Text.Json.JsonTokenType.PropertyName)
                 {
                     string propertyName = reader.GetString();
                     reader.Read();
                     switch (propertyName)
                     {
                         case "Date":
-                            DateTimeOffset date = reader.GetDateTimeOffset();
+                            System.DateTimeOffset date = reader.GetDateTimeOffset();
                             // wf.Date = date;
                             break;
                         case "TemperatureCelsius":
@@ -248,13 +243,13 @@ namespace TestPWA.Code.DB
                 }
             }
 
-            throw new JsonException();
+            throw new System.Text.Json.JsonException();
         }
 
 
-        public override void Write(Utf8JsonWriter writer, DataTable value, JsonSerializerOptions options)
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.Data.DataTable value, System.Text.Json.JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
 

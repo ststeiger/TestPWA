@@ -185,11 +185,18 @@ interface IXmlStructure
 
 
 
-
 interface IT_Checklist
 {
     CL_UID: string;
     CL_Name: string;
+}
+
+
+
+interface IT_Checklist_ZO_ElementValues
+{
+    CLV_ELE_UID: string;
+    CLV_Value: string;
 }
 
 

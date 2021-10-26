@@ -12,7 +12,7 @@
     <meta http-equiv="pragma" content="no-cache" />
 
 
-    <title>Sch&uuml;ttgutcontainer</title>
+    <title>Checkliste</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <!--
     http://htmlshell.com/
@@ -71,13 +71,8 @@
 
         function saveChecklist()
         {
-            //// Create the event.
             var event = document.createEvent('Event');
-
-            // Define that the event name is 'build'.
             event.initEvent('saveChecklist', true, true);
-
-            // target can be any Element or other EventTarget.
             document.dispatchEvent(event);
         }
 

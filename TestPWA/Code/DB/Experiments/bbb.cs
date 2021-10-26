@@ -1,15 +1,11 @@
 ﻿
 // https://weblog.west-wind.com/posts/2008/sep/03/datatable-json-serialization-in-jsonnet-and-javascriptserializer
-using System;
-using System.Data;
-using System.Text.Json;
-
 
 // https://github.com/ststeiger/CoreCms/blob/master/CoreCMS/AppCode/Serializer/DataTableSerializer.cs
 // read: 
 // https://github.com/ststeiger/ImportExportTableData/blob/master/ImportExportTableData/Experimental/DataTableConverter.cs
 
-namespace CoreCMS
+namespace TestPWA.Code.DB2
 {
 
 
@@ -30,13 +26,13 @@ namespace CoreCMS
         /// <summary>
         /// Reads the JSON representation of the object.
         /// </summary>
-        public override DataRow Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override System.Data.DataRow Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
 
-        public override void Write(Utf8JsonWriter writer, DataRow row, JsonSerializerOptions options)
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.Data.DataRow row, System.Text.Json.JsonSerializerOptions options)
         {
             writer.WriteStartObject();
             foreach (System.Data.DataColumn column in row.Table.Columns)
@@ -44,9 +40,9 @@ namespace CoreCMS
                 writer.WritePropertyName(column.ColumnName);
 
                 if (row[column] == System.DBNull.Value)
-                    JsonSerializer.Serialize(writer, null, options);
+                    System.Text.Json.JsonSerializer.Serialize(writer, null, options);
                 else
-                    JsonSerializer.Serialize(writer, row[column], options);
+                    System.Text.Json.JsonSerializer.Serialize(writer, row[column], options);
             }
             writer.WriteEndObject();
         }
@@ -54,7 +50,7 @@ namespace CoreCMS
 
 
 
-    public class DataTableConverter 
+    public class DataTableConverter
         : System.Text.Json.Serialization.JsonConverter<System.Data.DataTable>
     {
 
@@ -70,18 +66,18 @@ namespace CoreCMS
         /// <summary>
         /// Reads the JSON representation of the object.
         /// </summary>
-        public override DataTable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override System.Data.DataTable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
 
-    
-    /// <summary>
-    /// Writes the JSON representation of the object.
-    /// </summary>
-    public override void Write(Utf8JsonWriter writer, DataTable table, JsonSerializerOptions options)
-    {
+
+        /// <summary>
+        /// Writes the JSON representation of the object.
+        /// </summary>
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.Data.DataTable table, System.Text.Json.JsonSerializerOptions options)
+        {
             DataRowConverter converter = new DataRowConverter();
 
             writer.WriteStartObject();
@@ -102,7 +98,7 @@ namespace CoreCMS
     }
 
 
-    public class DataSetConverter 
+    public class DataSetConverter
         : System.Text.Json.Serialization.JsonConverter<System.Data.DataSet>
     {
         /// <summary>
@@ -116,14 +112,14 @@ namespace CoreCMS
         /// <summary>
         /// Reads the JSON representation of the object.
         /// </summary>
-        public override DataSet Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override System.Data.DataSet Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
         {
             throw new System.NotImplementedException();
         }
 
 
 
-        public override void Write(Utf8JsonWriter writer, DataSet dataSet, JsonSerializerOptions options)
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.Data.DataSet dataSet, System.Text.Json.JsonSerializerOptions options)
         {
             DataTableConverter converter = new DataTableConverter();
 

@@ -159,36 +159,61 @@ namespace TestPWA
             return (T)System.Convert.ChangeType(prop, typeof(T));
         }
 
-        public static int GetColspan(System.Collections.Generic.List<System.Collections.Generic.List<string>> properties)
+
+        public static int GetIntegerProperty(string property, System.Collections.Generic.List<System.Collections.Generic.List<string>> properties, int defaultValue)
         {
-            string prop = GetProperty("colspan", properties);
+            string prop = GetProperty(property, properties);
             if (prop == null)
-                return 1;
+                return defaultValue;
 
             prop = prop.Trim();
 
             int colSpan = int.Parse(prop, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture);
             return colSpan;
+        }
+
+
+        public static int GetSpan(System.Collections.Generic.List<System.Collections.Generic.List<string>> properties)
+        {
+            return GetIntegerProperty("span", properties, 1);
+        }
+
+        public static int GetColspan(System.Collections.Generic.List<System.Collections.Generic.List<string>> properties)
+        {
+            return GetIntegerProperty("colspan", properties, 1);
         }
 
         public static int GetRowspan(System.Collections.Generic.List<System.Collections.Generic.List<string>> properties)
         {
-            string prop = GetProperty("rowspan", properties);
-            if (prop == null)
-                return 1;
-
-            prop = prop.Trim();
-
-            int colSpan = int.Parse(prop, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture);
-            return colSpan;
+            return GetIntegerProperty("rowspan", properties, 1);
         }
 
 
-        public static void Excelize(XmlStructure data, OfficeOpenXml.ExcelPackage package, ref int? y, ref int? x)
+        public static void Excelize(XmlStructure data, OfficeOpenXml.ExcelPackage package, ref int? colGroup, ref int? y, ref int? x)
         {
             string tagName = data.tagName.ToLowerInvariant();
+            OfficeOpenXml.ExcelWorksheet ww = package.Workbook.Worksheets[1];
 
-            if ("tr" == tagName)
+            if ("colgroup" == tagName)
+            {
+                if (!colGroup.HasValue)
+                    colGroup = 1;
+                else
+                    colGroup += 1;
+
+                int span = GetSpan(data.properties);
+                int width = GetIntegerProperty("width", data.properties, 30);
+                int singleSpanWidth = (int) System.Math.Round( ((float)width / (float)span* 0.4f), 0, System.MidpointRounding.AwayFromZero);
+
+                for (int i = colGroup.Value; i < colGroup.Value + span; ++i)
+                {
+                    ww.Column(i).Width = singleSpanWidth;
+                }
+
+                if (span > 1)
+                    colGroup += span;
+            }
+            else if ("tr" == tagName)
             {
                 if (!y.HasValue)
                     y = 1;
@@ -198,8 +223,7 @@ namespace TestPWA
                 int rowSpan = GetRowspan(data.properties);
                 x = null;
             }
-
-            if ("td" == tagName)
+            else if ("td" == tagName)
             {
                 if (!x.HasValue)
                     x = 1;
@@ -207,7 +231,7 @@ namespace TestPWA
                     x += 1;
 
                 int colSpan = GetColspan(data.properties);
-                OfficeOpenXml.ExcelWorksheet ww = package.Workbook.Worksheets[1];
+                
                 if (colSpan > 1)
                 { 
                     ww.Cells[y.Value, x.Value, y.Value, x.Value + colSpan - 1].Merge = true;
@@ -221,8 +245,7 @@ namespace TestPWA
                 {
                     // package.Workbook.Worksheets[0].Column(0)
                     // package.Workbook.Worksheets[0].Row(0);
-                    
-                    OfficeOpenXml.ExcelWorksheet ww = package.Workbook.Worksheets[1];
+
                     OfficeOpenXml.ExcelRange cell = ww.Cells[y.Value, x.Value];
                     // object a = package.Workbook.Worksheets[0].Cells[1, 1].Value;
 
@@ -296,7 +319,7 @@ namespace TestPWA
 
             foreach (XmlStructure thisChild in data.children)
             {
-                Excelize(thisChild, package, ref y, ref x);
+                Excelize(thisChild, package, ref colGroup, ref y, ref x);
             }
 
         }
@@ -325,7 +348,8 @@ namespace TestPWA
 
                 int? x = 0;
                 int? y = 0;
-                Excelize(data, package, ref y, ref x);
+                int? colGroup = 0;
+                Excelize(data, package, ref colGroup, ref y, ref x);
 
                 // OfficeOpenXml.ExcelRange cell = worksheet.Cells["A1"];
                 // cell.RichText.Add("hello world");

@@ -7,6 +7,32 @@ html, body
     height: 100%;
 }
 
+*
+{
+    -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
+    color-adjust: exact !important; /*Firefox*/
+}
+
+
+@media print {
+  @page { 
+      margin: 1.5cm; 
+      size: A4;
+  }
+
+  body { margin: 1.5cm; }
+}
+
+@media print
+{
+    tr.page-break
+    {
+        display: block;
+        page-break-after: always;
+        break-after: always;
+    }
+}
+
 
 @keyframes blinker
 {

@@ -70,19 +70,19 @@ namespace AnySqlWebAdmin
             System.Text.Json.JsonSerializerOptions options = 
                 new System.Text.Json.JsonSerializerOptions()
             {
-                 Converters = {
-                        new TestPWA.Code.DB.ExceptionConverter()
-                        // new TestPWA.Code.DB.SystemTypeConverter(), 
-                        // new TestPWA.Code.DB.HttpContextWrapperConverter(),
-                        // new TestPWA.Code.DB.DataTableConverter(),
-                        // new TestPWA.Code.DB.DataSetConverter()
-                    }
-                    ,IncludeFields = true
-                    ,WriteIndented = true
-                    // ,PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase 
-                    // ,ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
-                    // Where has ReferenceLoopHandling.Ignore gone ? 
-                };
+                Converters = {
+                    new TestPWA.ExceptionConverter()
+                    // ,new TestPWA.SystemTypeConverter() 
+                    // ,new TestPWA.HttpContextWrapperConverter()
+                    // ,new TestPWA.Code.DB.DataTableConverter()
+                    // ,new TestPWA.Code.DB.DataSetConverter()
+                }
+                ,IncludeFields = true
+                ,WriteIndented = true
+                // ,PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase 
+                // ,ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
+                // Where has ReferenceLoopHandling.Ignore gone ? 
+            };
 
             await System.Text.Json.JsonSerializer.SerializeAsync(s, this, this.GetType(), options);
         }

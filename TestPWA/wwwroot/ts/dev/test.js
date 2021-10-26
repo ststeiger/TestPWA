@@ -48,6 +48,49 @@ var db_html = require("./db_html.js");
 var translations = require("./translations.js");
 if (true) {
 }
+function loadChecklistValues(cl_uid) {
+    return __awaiter(this, void 0, void 0, function () {
+        var fetchChecklistValues, checkListData, checklistValues, i, ele, type;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    cl_uid = cl_uid || "F1A2DD8A-2D11-496E-9B14-13559405089F";
+                    return [4, fetch("ajax/AnySelect.ashx?sql=LoadChecklist.sql&format=1&__cl_uid=" + cl_uid, {
+                            method: 'POST',
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "credentials": "same-origin",
+                                "pragma": "no-cache",
+                                "cache-control": "no-cache"
+                            }
+                        })];
+                case 1:
+                    fetchChecklistValues = _a.sent();
+                    return [4, fetchChecklistValues.json()];
+                case 2:
+                    checkListData = _a.sent();
+                    checklistValues = new table_wrapper_js_1.TableWrapper(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
+                    for (i = 0; i < checklistValues.rowCount; ++i) {
+                        ele = document.getElementById(checklistValues.row(i).CLV_ELE_UID);
+                        if (!ele)
+                            continue;
+                        type = (ele.getAttribute("type") || "").toLowerCase();
+                        if ("checkbox" === type) {
+                            ele.checked = (checklistValues.row(i).CLV_Value === 'true');
+                        }
+                        else if ("text" === type) {
+                            ele.value = checklistValues.row(i).CLV_Value;
+                        }
+                        else if ("textarea" === ele.nodeName.toLowerCase()) {
+                            ele.value = checklistValues.row(i).CLV_Value;
+                        }
+                    }
+                    return [2];
+            }
+        });
+    });
+}
 function main() {
     return __awaiter(this, void 0, void 0, function () {
         var _, fetchSingleChecklist, checkListData, checklistName, elements, elemntProps, argh, arghHtml, i;
@@ -66,7 +109,16 @@ function main() {
                         "xml": xml
                     };
                     console.log("document ready");
-                    return [4, fetch("https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F")];
+                    return [4, fetch("ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F", {
+                            method: 'POST',
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "credentials": "same-origin",
+                                "pragma": "no-cache",
+                                "cache-control": "no-cache"
+                            }
+                        })];
                 case 1:
                     fetchSingleChecklist = _a.sent();
                     return [4, fetchSingleChecklist.json()];
@@ -90,21 +142,27 @@ function main() {
                                         saveData = db_html.collectSaveData(document.querySelector("table"), cls_uid);
                                         console.log("saveData", saveData);
                                         console.log("saveData", saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; }));
-                                        return [4, fetch('ajax/anyInsert.ashx?sql=SaveChecklistDataSet.sql', {
+                                        return [4, fetch("ajax/anyInsert.ashx?sql=SaveChecklistDataSet.sql", {
                                                 method: 'POST',
                                                 headers: {
-                                                    'Accept': 'application/json',
-                                                    'Content-Type': 'application/json'
+                                                    "Accept": "application/json",
+                                                    "Content-Type": "application/json",
+                                                    "credentials": "same-origin",
+                                                    "pragma": "no-cache",
+                                                    "cache-control": "no-cache"
                                                 },
                                                 body: JSON.stringify({ "__cls_uid": cls_uid, "__cls_cl_uid": "F1A2DD8A-2D11-496E-9B14-13559405089F" })
                                             })];
                                     case 1:
                                         rawResponse = _a.sent();
-                                        return [4, fetch('ajax/anyInsert.ashx?sql=SaveChecklistData.sql', {
+                                        return [4, fetch("ajax/anyInsert.ashx?sql=SaveChecklistData.sql", {
                                                 method: 'POST',
                                                 headers: {
-                                                    'Accept': 'application/json',
-                                                    'Content-Type': 'application/json'
+                                                    "Accept": "application/json",
+                                                    "Content-Type": "application/json",
+                                                    "credentials": "same-origin",
+                                                    "pragma": "no-cache",
+                                                    "cache-control": "no-cache"
                                                 },
                                                 body: JSON.stringify(saveData)
                                             })];
@@ -119,6 +177,9 @@ function main() {
                             });
                         });
                     }, false);
+                    return [4, loadChecklistValues()];
+                case 3:
+                    _a.sent();
                     if (false)
                         for (i = 0; i < elemntProps.rowCount; ++i) {
                         }
