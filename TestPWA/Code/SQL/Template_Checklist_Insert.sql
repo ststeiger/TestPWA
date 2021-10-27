@@ -81,7 +81,7 @@ SELECT
 	,CTE.parent_uuid
 	-- ,CTE.children
 	-- ,CTE.innerHtml 
-	,dbo.LTrimWhitespace(dbo.RTrimWhitespace(CTE.innerHtml)) AS innerHtml 
+	,dbo.fu_Basic_LTRIM(dbo.fu_Basic_RTRIM(CTE.innerHtml)) AS innerHtml 
 	,CTE.sort 
 	,CTE.properties 
 	,CTE.lvl 

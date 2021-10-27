@@ -22,7 +22,7 @@
     "noEmitOnError": true,
     "removeComments": true,
     "sourceMap": false,
-    "outDir": "../../wwwroot/ts/firstModule",
+    "outDir": "../../wwwroot/Checklist2/ts/firstModule",
     "rootDir": "./",
     "allowUnreachableCode": true
     //,"alwaysStrict ": true,

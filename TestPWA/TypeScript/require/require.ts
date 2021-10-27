@@ -188,7 +188,6 @@ function require<T>(name: string): T
                 }
                 else
                 {
-                    // debugger;
                     console.log("require.js: bad match: ", match);
                 }
                 
@@ -239,8 +238,15 @@ function require<T>(name: string): T
         if (fileName.startsWith("./"))
         {
             fileName = fileName.substr(2);
-            fileName = getScriptName(fileName) + fileName;
-            // console.log("doctored", fileName)
+            // fileName = getScriptName(fileName) + fileName;
+            // console.log("fn", fileName);
+
+            // WTF ? filename can be ./http_utility ...
+            if (!(fileName.startsWith("https://") || fileName.startsWith("http://")))
+                fileName = require.paths.mainPath + fileName;
+            // else { console.log("bad file", fileName); }
+            
+            console.log("doctored", fileName);
         }
 
         // Don't TF cache these files...
@@ -298,7 +304,7 @@ function require<T>(name: string): T
         //    return buf;
         //}
 
-        console.log("open " + fileName);
+        // console.log("open " + fileName);
         // open(method, url, async)
         client.open("GET", fileName, false);
         // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType
@@ -335,7 +341,7 @@ function require<T>(name: string): T
 
 
         // console.log(code.text);
-        console.log("contentType", code.contentType, "mimeType:", code.mimeType);
+        // console.log("contentType", code.contentType, "mimeType:", code.mimeType);
         
         // if (["text/html", "text/plain", "text/css"].indexOf(code.mimeType ) > -1) { require.cache[name] = { "exports": code.text }; } else 
         if (code.mimeType.startsWith("text/") && code.mimeType.indexOf("javascript") == -1 && code.mimeType.indexOf("json") == -1)
@@ -352,16 +358,25 @@ function require<T>(name: string): T
             // https://www.typescriptlang.org/tsconfig#baseUrl
             // https://www.typescriptlang.org/docs/handbook/modules.html
             // console.log(code.text);
-            let wrapper = Function("require, exports, module", code.text);
-            wrapper(require, module.exports, module);
 
-            // damn f*ing commonjs default-import
-            // https://basarat.gitbook.io/typescript/main-1/defaultisbad
-            // users who have to const { default} = require('module/foo'); 
-            // instead of const { Foo } = require('module/foo').
-            if((<any>module.exports).default)
+            try
             {
-                module.exports = (<any>module.exports).default;
+                let wrapper = Function("require, exports, module", code.text);
+                wrapper(require, module.exports, module);
+
+                // damn f*ing commonjs default-import
+                // https://basarat.gitbook.io/typescript/main-1/defaultisbad
+                // users who have to const { default} = require('module/foo'); 
+                // instead of const { Foo } = require('module/foo').
+                if ((<any>module.exports).default)
+                {
+                    module.exports = (<any>module.exports).default;
+                }
+            }
+            catch (err)
+            {
+                console.log("Error in require.ts-eval:", err);
+                debugger;
             }
 
         }
@@ -373,6 +388,12 @@ function require<T>(name: string): T
 
 require.cache = Object.create(null);
 require.paths = Object.create(null);
+
+interface IMainModule
+{
+    main(): any;
+}
+
 
 (function ()
 {
@@ -390,7 +411,27 @@ require.paths = Object.create(null);
     {
         require.paths.main = cs.getAttribute("data-main");
         require.paths.src = cs.getAttribute("src");
-        require.paths.html = document.location.href; // cs.baseURI || ;
+        require.paths.html = document.location.href; // cs.baseURI || document.location.href;
+
+        let props = ["hash", "host", "hostname", "origin", "pathname", "port", "protocol", "search", "ancestorOrigins"];
+        for (let i = 0; i < props.length; ++i)
+        {
+            require.paths[props[i]] = (<any>document.location)[props[i]];
+        }
+
+        require.paths.basePath = require.paths.html.substr(0, (<string>require.paths.html).lastIndexOf("/") + 1); 
+        
+        let sanitizedPath = require.paths.main;
+        if (sanitizedPath.startsWith("./"))
+            sanitizedPath = sanitizedPath.substr(2);
+
+        let url: string = require.paths.basePath + sanitizedPath;
+        require.paths.mainPath = url.substr(0, url.lastIndexOf("/") + 1);
+        
+        // console.log("paths:", require.paths); 
+        let ts = require<IMainModule>(url);
+        if (ts && ts.main)
+            ts.main();
     }
 }());
 

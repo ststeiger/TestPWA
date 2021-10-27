@@ -96,7 +96,9 @@ function require(name) {
         var mimeType = null;
         if (fileName.startsWith("./")) {
             fileName = fileName.substr(2);
-            fileName = getScriptName(fileName) + fileName;
+            if (!(fileName.startsWith("https://") || fileName.startsWith("http://")))
+                fileName = require.paths.mainPath + fileName;
+            console.log("doctored", fileName);
         }
         if (fileName.indexOf("?") == -1)
             fileName += "?no_cache=" + (new Date()).getTime().toString();
@@ -121,7 +123,6 @@ function require(name) {
             }
         }
         client.onreadystatechange = hand;
-        console.log("open " + fileName);
         client.open("GET", fileName, false);
         client.send();
         if (client.status === 200) {
@@ -142,15 +143,20 @@ function require(name) {
         var code = readFileSync(name, 'utf8');
         var module = { exports: {} };
         require.cache[name] = module;
-        console.log("contentType", code.contentType, "mimeType:", code.mimeType);
         if (code.mimeType.startsWith("text/") && code.mimeType.indexOf("javascript") == -1 && code.mimeType.indexOf("json") == -1) {
             require.cache[name] = { "exports": code.text };
         }
         else {
-            var wrapper = Function("require, exports, module", code.text);
-            wrapper(require, module.exports, module);
-            if (module.exports.default) {
-                module.exports = module.exports.default;
+            try {
+                var wrapper = Function("require, exports, module", code.text);
+                wrapper(require, module.exports, module);
+                if (module.exports.default) {
+                    module.exports = module.exports.default;
+                }
+            }
+            catch (err) {
+                console.log("Error in require.ts-eval:", err);
+                debugger;
             }
         }
     }
@@ -167,6 +173,19 @@ require.paths = Object.create(null);
         require.paths.main = cs.getAttribute("data-main");
         require.paths.src = cs.getAttribute("src");
         require.paths.html = document.location.href;
+        var props = ["hash", "host", "hostname", "origin", "pathname", "port", "protocol", "search", "ancestorOrigins"];
+        for (var i = 0; i < props.length; ++i) {
+            require.paths[props[i]] = document.location[props[i]];
+        }
+        require.paths.basePath = require.paths.html.substr(0, require.paths.html.lastIndexOf("/") + 1);
+        var sanitizedPath = require.paths.main;
+        if (sanitizedPath.startsWith("./"))
+            sanitizedPath = sanitizedPath.substr(2);
+        var url = require.paths.basePath + sanitizedPath;
+        require.paths.mainPath = url.substr(0, url.lastIndexOf("/") + 1);
+        var ts = require(url);
+        if (ts && ts.main)
+            ts.main();
     }
 }());
 (function () {

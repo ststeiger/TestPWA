@@ -22,7 +22,7 @@
     "noEmitOnError": true,
     "removeComments": true,
     "sourceMap": false,
-    "outDir": "../../wwwroot/ts/require",
+    "outDir": "../../wwwroot/Checklist2/ts/require",
     "rootDir": "./",
     "allowUnreachableCode": true
     //,"alwaysStrict ": true,

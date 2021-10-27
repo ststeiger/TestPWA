@@ -1,0 +1,128 @@
+﻿
+html, body
+{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+*
+{
+    -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
+    color-adjust: exact !important; /*Firefox*/
+}
+
+
+@media print {
+  @page { 
+      margin: 1.5cm; 
+      size: A4;
+  }
+
+  body { margin: 1.5cm; }
+}
+
+@media print
+{
+    tr.page-break
+    {
+        display: block;
+        page-break-after: always;
+        break-after: always;
+    }
+}
+
+
+@keyframes blinker
+{
+    50%
+    {
+        opacity: 0;
+    }
+}
+
+
+@media only screen
+{
+
+    .blink_me
+    {
+        #IE does not support nested queries, so move keyframe out;
+        animation: blinker 1.5s linear infinite;
+    }
+}
+
+
+td.slimBlackBorder
+{
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+}
+
+td.verticalColumn
+{
+    vertical-align: bottom;
+    #width: 40px;
+    #height: 100px;
+    #border: 1px solid white;
+    #background-color: black;
+    text-align: center;
+}
+
+.vert
+{
+    display: inline-block;
+    text-align: left;
+    writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    transform-origin: center;
+    transform: rotate(180deg);
+    padding-top: 1mm;
+    padding-bottom: 2mm;
+    font-family: Arial;
+    #font-size: 11px;
+    #font-weight: 500;
+    line-height: 1.25em;
+    letter-spacing: 0.15mm;
+}
+
+
+.remLines
+{
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+
+.notes
+{
+    display: block;
+    width: 100%;
+    height: 5cm;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    resize: none;
+    #border-radius: 8px;
+    border: none;
+    #border: 1px solid #ccc;
+    #box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-family: Arial, Helvetica, Sans-serif;
+    line-height: 31px;
+    background-image: -webkit-linear-gradient(left, white 0px, transparent 0px), -webkit-linear-gradient(right, white 0px, transparent 0px), -webkit-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+    background-image: -moz-linear-gradient(left, white 0px, transparent 0px), -moz-linear-gradient(right, white 0px, transparent 0px), -moz-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+    background-image: -ms-linear-gradient(left, white 0px, transparent 0px), -ms-linear-gradient(right, white 0px, transparent 0px), -ms-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+    background-image: -o-linear-gradient(left, white 0px, transparent 0px), -o-linear-gradient(right, white 0px, transparent 0px), -o-linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+    background-image: linear-gradient(left, white 0px, transparent 0px), linear-gradient(right, white 0px, transparent 0px), linear-gradient(white 30px, #000 30px, #000 31px, white 31px);
+    background-size: 100% 100%, 100% 100%, 100% 31px;
+    background-attachment: local;
+}
+
+.notes:focus
+{
+    outline: none;
+}
+

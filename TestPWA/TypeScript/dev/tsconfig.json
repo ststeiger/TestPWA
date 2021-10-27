@@ -23,7 +23,7 @@
     "noEmitOnError": true,
     "removeComments": true,
     "sourceMap": false,
-    "outDir": "../../wwwroot/ts/dev",
+    "outDir": "../../wwwroot/Checklist2/ts/dev",
     "rootDir": "./",
     "allowUnreachableCode": true
     //,"alwaysStrict ": true,

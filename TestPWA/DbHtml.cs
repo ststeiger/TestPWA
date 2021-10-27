@@ -192,7 +192,7 @@ namespace TestPWA
             projectPath = System.IO.Path.Combine(projectPath, "..", "..", "..");
             projectPath = System.IO.Path.GetFullPath(projectPath);
 
-            string basePath = System.IO.Path.Combine(projectPath, "wwwroot");
+            string basePath = System.IO.Path.Combine(projectPath, "wwwroot", "Checklist");
             string outputPath = System.IO.Path.Combine(projectPath, "Code", "AutoGen");
             string templatePath = System.IO.Path.Combine(projectPath, "Code", "SQL");
 

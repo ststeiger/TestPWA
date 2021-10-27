@@ -2,11 +2,11 @@
 IF NOT EXISTS(
 	SELECT * FROM INFORMATION_SCHEMA.ROUTINES 
 	WHERE SPECIFIC_SCHEMA = 'dbo' 
-	AND SPECIFIC_NAME = 'PropertiesToKeyValuePair' 
+	AND SPECIFIC_NAME = 'fu_Basic_PropertiesToKeyValuePair' 
 	AND ROUTINE_TYPE = 'FUNCTION' 
 )
 BEGIN
-	EXECUTE('CREATE FUNCTION dbo.PropertiesToKeyValuePair(@Input nvarchar(MAX)) RETURNS national character varying(MAX) AS BEGIN RETURN NULL; END;'); 
+	EXECUTE('CREATE FUNCTION dbo.fu_Basic_PropertiesToKeyValuePair(@Input nvarchar(MAX)) RETURNS national character varying(MAX) AS BEGIN RETURN NULL; END;'); 
 END
 
 
@@ -15,7 +15,7 @@ GO
 
 
 
-ALTER FUNCTION dbo.PropertiesToKeyValuePair(@__inputUUID uniqueidentifier)
+ALTER FUNCTION dbo.fu_Basic_PropertiesToKeyValuePair(@__inputUUID uniqueidentifier)
 	RETURNS national character varying(MAX)
 AS
 BEGIN 
@@ -74,11 +74,11 @@ GO
 IF NOT EXISTS(
 	SELECT * FROM INFORMATION_SCHEMA.ROUTINES 
 	WHERE SPECIFIC_SCHEMA = 'dbo' 
-	AND SPECIFIC_NAME = 'MapGuidAttribute' 
+	AND SPECIFIC_NAME = 'fu_Basic_MapGuidAttribute' 
 	AND ROUTINE_TYPE = 'FUNCTION' 
 )
 BEGIN
-	EXECUTE('CREATE FUNCTION dbo.MapGuidAttribute(@Input nvarchar(MAX)) RETURNS national character varying(MAX) AS BEGIN RETURN NULL; END;'); 
+	EXECUTE('CREATE FUNCTION dbo.fu_Basic_MapGuidAttribute(@Input nvarchar(MAX)) RETURNS national character varying(MAX) AS BEGIN RETURN NULL; END;'); 
 END
 
 
@@ -92,8 +92,8 @@ GO
 -- an ID should start with a letter for compatibility
 -- DECLARE @__prefix national character varying(100) = N'aaa'; 
 -- DECLARE @__uuid uniqueidentifier = @__prefix + REPLACE(CAST(NEWID() AS nvarchar(36)), N'-', N''); 
--- SELECT dbo.MapGuidAttribute(@__uuid, @__prefix) AS mapped 
-ALTER FUNCTION dbo.MapGuidAttribute(@__inputUUID nvarchar(1000), @__prefix nvarchar(1000))
+-- SELECT dbo.fu_Basic_MapGuidAttribute(@__uuid, @__prefix) AS mapped 
+ALTER FUNCTION dbo.fu_Basic_MapGuidAttribute(@__inputUUID nvarchar(1000), @__prefix nvarchar(1000))
 	RETURNS national character varying(36)
 AS
 BEGIN 
@@ -114,18 +114,18 @@ GO
 IF NOT EXISTS(
 	SELECT * FROM INFORMATION_SCHEMA.ROUTINES 
 	WHERE SPECIFIC_SCHEMA = 'dbo' 
-	AND SPECIFIC_NAME = 'LTrimWhitespace' 
+	AND SPECIFIC_NAME = 'fu_Basic_LTRIM' 
 	AND ROUTINE_TYPE = 'FUNCTION' 
 )
 BEGIN
-	EXECUTE('CREATE FUNCTION dbo.LTrimWhitespace(@Input nvarchar(MAX)) RETURNS national character varying(MAX) AS BEGIN RETURN NULL; END;'); 
+	EXECUTE('CREATE FUNCTION dbo.fu_Basic_LTRIM(@Input nvarchar(MAX)) RETURNS national character varying(MAX) AS BEGIN RETURN NULL; END;'); 
 END
 
 
 GO 
 
 
-ALTER FUNCTION dbo.LTrimWhitespace(@Input nvarchar(MAX))
+ALTER FUNCTION dbo.fu_Basic_LTRIM(@Input nvarchar(MAX))
 	RETURNS national character varying(MAX)
 AS
 BEGIN
@@ -153,18 +153,18 @@ GO
 IF NOT EXISTS(
 	SELECT * FROM INFORMATION_SCHEMA.ROUTINES 
 	WHERE SPECIFIC_SCHEMA = 'dbo' 
-	AND SPECIFIC_NAME = 'RTrimWhitespace' 
+	AND SPECIFIC_NAME = 'fu_Basic_RTRIM' 
 	AND ROUTINE_TYPE = 'FUNCTION' 
 )
 BEGIN
-	EXECUTE('CREATE FUNCTION dbo.RTrimWhitespace(@Input nvarchar(MAX)) RETURNS national character varying(MAX) AS BEGIN RETURN NULL; END;'); 
+	EXECUTE('CREATE FUNCTION dbo.fu_Basic_RTRIM(@Input nvarchar(MAX)) RETURNS national character varying(MAX) AS BEGIN RETURN NULL; END;'); 
 END
 
 
 GO
 
 
-ALTER FUNCTION dbo.RTrimWhitespace(@Input national character varying(MAX))
+ALTER FUNCTION dbo.fu_Basic_RTRIM(@Input national character varying(MAX))
 	RETURNS national character varying(MAX)
 AS
 BEGIN
