@@ -7,6 +7,16 @@ html, body
     height: 100%;
 }
 
+
+.content-well-v2.blur
+{
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    margin-bottom: 50px;
+}
+
+
+
 *
 {
     -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */

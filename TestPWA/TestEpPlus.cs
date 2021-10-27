@@ -189,6 +189,121 @@ namespace TestPWA
         }
 
 
+        private static System.Collections.Generic.Dictionary<string, string> MakeAssociativeArray(
+            System.Collections.Generic.List<System.Collections.Generic.List<string>> properties, bool caseSensitive)
+        {
+            System.StringComparer comparer = caseSensitive ? 
+                System.StringComparer.InvariantCulture : System.StringComparer.InvariantCultureIgnoreCase;
+
+            System.Collections.Generic.Dictionary<string, string> obj = 
+                new System.Collections.Generic.Dictionary<string, string>(comparer);
+
+            for (int i = 0; i < properties.Count; ++i)
+            {
+                string key = properties[i][0];
+
+                if (string.IsNullOrEmpty(key))
+                    continue;
+
+                if (!caseSensitive)
+                    key = key.ToLowerInvariant();
+
+                obj[key] = properties[i][1];
+            }
+
+            return obj;
+        }
+
+        private static System.Collections.Generic.Dictionary<string, string> MakeAssociativeArray(
+            System.Collections.Generic.List<System.Collections.Generic.List<string>> properties)
+        {
+            return MakeAssociativeArray(properties, false);
+        }
+
+        public static int GetColumnNumber(string name)
+        {
+            name = name.ToUpperInvariant();
+
+            int number = 0;
+            int pow = 1;
+            for (int i = name.Length - 1; i >= 0; i--)
+            {
+                number += (name[i] - 'A' + 1) * pow;
+                pow *= 26;
+            }
+
+            return number;
+        }
+
+        private string GetExcelColumnName(int columnNumber)
+        {
+            string columnName = "";
+
+            while (columnNumber > 0)
+            {
+                int modulo = (columnNumber - 1) % 26;
+                columnName = (char)('A' + modulo) + columnName;
+                columnNumber = (columnNumber - modulo) / 26;
+            }
+
+            return columnName;
+        }
+
+
+        // https://stackoverflow.com/questions/3932382/traversing-directories-without-using-recursion/30218705#30218705
+        public static void ExcelizeSimple(XmlStructure container, OfficeOpenXml.ExcelPackage package)
+        {
+            System.Collections.Generic.Stack<XmlStructure> stack =
+                new System.Collections.Generic.Stack<XmlStructure>();
+            stack.Push(container);
+
+            long currentRow = 0;
+            long startColumn = 0;
+            long endColumn = 0;
+
+            while (stack.Count != 0)
+            {
+                // n++;
+                XmlStructure element = stack.Pop();
+
+
+                System.Collections.Generic.Dictionary<string, string> properties =
+                    MakeAssociativeArray(element.properties);
+                // console.log(properties);
+
+                if (element.tagName == "tr")
+                {
+                    currentRow += 1;
+                    // console.log(element, currentRow);
+                }
+
+                if (element.tagName == "td")
+                {
+                    int colSpan = 1;
+                    int rowSpan = 1;
+                    int.TryParse(properties["colspan"], out colSpan);
+                    int.TryParse(properties["rowspan"], out rowSpan);
+
+                    startColumn = endColumn + 1;
+                    endColumn = startColumn + colSpan - 1;
+
+                    // console.log(element);
+                    // console.log("y:", currentRow, "x1:", startColumn, "x2", endColumn, "colspan", colSpan, "rowSpan", rowSpan);
+                }
+
+
+                System.Collections.Generic.List<XmlStructure> children = element.children;
+
+                for (int i = children.Count - 1; i > -1; --i)
+                {
+                    stack.Push(children[i]);
+                }
+
+            }
+
+        } // End Function iterateOverStructure 
+
+
         public static void Excelize(XmlStructure data, OfficeOpenXml.ExcelPackage package, ref int? colGroup, ref int? y, ref int? x)
         {
             string tagName = data.tagName.ToLowerInvariant();
@@ -253,9 +368,6 @@ namespace TestPWA
 
                     // cell.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                     // cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
-
-
-                    
 
                     
                     System.Collections.Generic.List<TextItem> ls = Itemize(data.innerHtml);

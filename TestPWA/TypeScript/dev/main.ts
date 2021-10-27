@@ -212,6 +212,12 @@ async function onDocumentReady(): Promise<any>
 
     
     let argh = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
+
+    console.log("starting iteration:");
+    db_html.iterateOverStructure(argh);
+    
+
+
     let arghHtml = <HTMLElement>db_html.assembleStructure(argh);
     // console.log(argh, arghHtml);
     document.body.appendChild(arghHtml);
