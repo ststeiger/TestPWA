@@ -255,80 +255,6 @@ export function collectSaveData(p: Element, cls_uid?:string): ISaveValues[]
 } // End Sub collectSaveData
 
 
-
-export function inter(container: IXmlStructure, parent?: Node)
-{
-    parent = parent || document.createDocumentFragment();
-    let a = _createElement(container);
-
-
-    // container
-
-    // container.children
-
-
-    for (let i = 0; i < container.children.length; ++i)
-    {
-
-
-
-
-        assembleStructure(container.children[i], a);
-    }
-
-    parent.appendChild(a);
-
-    return parent;
-}
-
-
-// FIFO-data-structure 
-class Queue<T>
-{
-
-    protected items: T[];
-
-
-    // Array is used to implement stack
-    constructor()
-    {
-        this.items = [];
-    }
-
-    // add an element from the back of the queue
-    public enqueue(e:T)
-    {
-        this.items.push(e);
-    }
-
-
-    // remove an element from the front of the queue
-    public dequeue()
-    {
-        return this.items.shift();
-    }
-
-    // check if the queue is empty
-    public get isEmpty(): boolean
-    {
-        return this.items.length == 0;
-    }
-
-    // get the element at the front of the queue
-    public peek()
-    {
-        return !this.isEmpty ? this.items[0] : undefined;
-    }
-
-    // get the current length of queue
-    public get length(): number
-    {
-        return this.items.length;
-    }
-
-}
-
-
 // LIFO-data-structure 
 class Stack<T>
 {
@@ -393,115 +319,6 @@ class Stack<T>
 
 }
 
-
-// https://www.geeksforgeeks.org/implementation-stack-javascript/
-// Performs Postfix Evaluation on a given exp
-function postFixEvaluation(exp:string)
-{
-    let stack = new Stack<number>();
-    for (var i = 0; i < exp.length; i++)
-    {
-        let c = exp[i];
-        if (!isNaN(<any>c))
-            stack.push(c.charCodeAt(0) - '0'.charCodeAt(0));
-        else
-        {
-            let val1 = stack.pop();
-            var val2 = stack.pop();
-            // if (val1 == "Underflow" || val2 == "Underflow") return "Can't perform postfix evaluation";
-            switch (c)
-            {
-                case '+':
-                    stack.push(val2 + val1);
-                    break;
-
-                case '-':
-                    stack.push(val2 - val1);
-                    break;
-
-                case '/':
-                    stack.push(val2 / val1);
-                    break;
-
-                case '*':
-                    stack.push(val2 * val1);
-                    break;
-            }
-        }
-    }
-
-    return stack.pop();
-}
-
-
-
-
-
-export function iterateOverStructure_LIFO(container: IXmlStructure)
-{
-    let stack = new Stack<IXmlStructure>();
-    stack.push(container);
-
-    // let n = 0;
-
-    while (!stack.isEmpty)
-    {
-        // n++;
-        let element = stack.pop();
-        console.log(element);
-
-        let children: IXmlStructure[] = element.children;
-
-        for (let i = 0; i < children.length; ++i)
-        {
-
-            // if (children[i].isDirectory())
-            if (true)
-            {
-                stack.push(children[i]);
-                continue;
-            }
-
-            // n++;
-        }
-
-    }
-
-} // End Function iterateOverStructure 
-
-
-
-export function iterateOverStructure_FIFO(container: IXmlStructure)
-{
-    let queue = new Queue<IXmlStructure>();
-    queue.enqueue(container);
-
-    // let n = 0;
-
-    while (!queue.isEmpty)
-    {
-        // n++;
-        let element = queue.dequeue();
-        console.log(element);
-
-        let children: IXmlStructure[] = element.children;
-
-        for (let i = 0; i < children.length; ++i)
-        {
-
-            // if (children[i].isDirectory())
-            if (true)
-            {
-                queue.enqueue(children[i]);
-                continue;
-            }
-
-            // n++;
-        }
-
-    }
-
-} // End Function iterateOverStructure 
 
 
 interface AssociativeArray<T>
@@ -588,13 +405,13 @@ export function iterateOverStructure(container: IXmlStructure)
         let properties: AssociativeArray<string> = makeAssociativeArray(element.properties);
         // console.log(properties);
 
-        if (element.tagName == "tr")
+        if ("tr" === element.tagName)
         {
             currentRow += 1;
             console.log(element, currentRow);
         }
 
-        if (element.tagName == "td")
+        if ("td" === element.tagName)
         {
             let colSpan = parseInt(properties["colspan"] || "1");
             let rowSpan = parseInt(properties["rowspan"] || "1");

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.iterateOverStructure = exports.iterateOverStructure_FIFO = exports.iterateOverStructure_LIFO = exports.inter = exports.collectSaveData = exports.constructRecursiveDataStructure = exports.assembleStructure = exports.collectStructure = void 0;
+exports.iterateOverStructure = exports.collectSaveData = exports.constructRecursiveDataStructure = exports.assembleStructure = exports.collectStructure = void 0;
 var autobind_autotrace = require("./autobind_autotrace.js");
 var uuid = require("./uuid.js");
 var utils = require("./string_utils.js");
@@ -148,45 +148,6 @@ function collectSaveData(p, cls_uid) {
     return checklistData;
 }
 exports.collectSaveData = collectSaveData;
-function inter(container, parent) {
-    parent = parent || document.createDocumentFragment();
-    var a = _createElement(container);
-    for (var i = 0; i < container.children.length; ++i) {
-        assembleStructure(container.children[i], a);
-    }
-    parent.appendChild(a);
-    return parent;
-}
-exports.inter = inter;
-var Queue = (function () {
-    function Queue() {
-        this.items = [];
-    }
-    Queue.prototype.enqueue = function (e) {
-        this.items.push(e);
-    };
-    Queue.prototype.dequeue = function () {
-        return this.items.shift();
-    };
-    Object.defineProperty(Queue.prototype, "isEmpty", {
-        get: function () {
-            return this.items.length == 0;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Queue.prototype.peek = function () {
-        return !this.isEmpty ? this.items[0] : undefined;
-    };
-    Object.defineProperty(Queue.prototype, "length", {
-        get: function () {
-            return this.items.length;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    return Queue;
-}());
 var Stack = (function () {
     function Stack() {
         this.items = [];
@@ -225,65 +186,6 @@ var Stack = (function () {
     };
     return Stack;
 }());
-function postFixEvaluation(exp) {
-    var stack = new Stack();
-    for (var i = 0; i < exp.length; i++) {
-        var c = exp[i];
-        if (!isNaN(c))
-            stack.push(c.charCodeAt(0) - '0'.charCodeAt(0));
-        else {
-            var val1 = stack.pop();
-            var val2 = stack.pop();
-            switch (c) {
-                case '+':
-                    stack.push(val2 + val1);
-                    break;
-                case '-':
-                    stack.push(val2 - val1);
-                    break;
-                case '/':
-                    stack.push(val2 / val1);
-                    break;
-                case '*':
-                    stack.push(val2 * val1);
-                    break;
-            }
-        }
-    }
-    return stack.pop();
-}
-function iterateOverStructure_LIFO(container) {
-    var stack = new Stack();
-    stack.push(container);
-    while (!stack.isEmpty) {
-        var element = stack.pop();
-        console.log(element);
-        var children = element.children;
-        for (var i = 0; i < children.length; ++i) {
-            if (true) {
-                stack.push(children[i]);
-                continue;
-            }
-        }
-    }
-}
-exports.iterateOverStructure_LIFO = iterateOverStructure_LIFO;
-function iterateOverStructure_FIFO(container) {
-    var queue = new Queue();
-    queue.enqueue(container);
-    while (!queue.isEmpty) {
-        var element = queue.dequeue();
-        console.log(element);
-        var children = element.children;
-        for (var i = 0; i < children.length; ++i) {
-            if (true) {
-                queue.enqueue(children[i]);
-                continue;
-            }
-        }
-    }
-}
-exports.iterateOverStructure_FIFO = iterateOverStructure_FIFO;
 function makeAssociativeArray(properties, caseSensitive) {
     caseSensitive = caseSensitive || false;
     var obj = {};
@@ -325,11 +227,11 @@ function iterateOverStructure(container) {
     while (!stack.isEmpty) {
         var element = stack.pop();
         var properties = makeAssociativeArray(element.properties);
-        if (element.tagName == "tr") {
+        if ("tr" === element.tagName) {
             currentRow += 1;
             console.log(element, currentRow);
         }
-        if (element.tagName == "td") {
+        if ("td" === element.tagName) {
             var colSpan = parseInt(properties["colspan"] || "1");
             var rowSpan = parseInt(properties["rowspan"] || "1");
             startColumn = endColumn + 1;
