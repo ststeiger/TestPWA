@@ -221,7 +221,7 @@ namespace TestPWA
                 string file = System.IO.Path.Combine(basePath, files[i] + ".htm");
                 string json = DocumentToJson(file, outputPath);
                 string excelFile = System.IO.Path.Combine(basePath, files[i] + ".xlsx");
-                TestEpPlus.Test2(json, excelFile);
+                TestEpPlus.JsonToExcel(json, excelFile);
 
                 string queryTemplate = System.IO.File.ReadAllText(System.IO.Path.Combine(templatePath, "Template_QueryHtml.sql"), System.Text.Encoding.UTF8);
                 string insertTemplate = System.IO.File.ReadAllText(System.IO.Path.Combine(templatePath, "Template_Checklist_Insert.sql"), System.Text.Encoding.UTF8);

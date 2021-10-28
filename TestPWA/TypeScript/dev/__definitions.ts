@@ -150,6 +150,25 @@ interface IUUID
 }
 
 
+
+
+interface IQueryParseResult
+{
+    url: string;
+    hash: string;
+    query: string;
+
+    dS: any;
+    dI: any;
+    kvps: string[][];
+    containsKey: (key: string) => boolean;
+    get: (key: string) => string;
+    set: (key: string, value: string) => void;
+    remove: (key: string) => string;
+}
+
+
+
 /*
 cd / d "D:\username\Documents\Visual Studio 2017\Projects\TestPWA\TestPWA\wwwroot\ts\firstModule"
 npx - p typescript tsc HttpUtility.js--declaration--allowJs--emitDeclarationOnly--outDir types

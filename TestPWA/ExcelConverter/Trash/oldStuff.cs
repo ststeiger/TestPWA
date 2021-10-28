@@ -124,7 +124,7 @@ namespace TestPWA
                     // cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
 
 
-                    System.Collections.Generic.List<TextItem> ls = TestEpPlus.Itemize(data.innerHtml);
+                    System.Collections.Generic.List<TextItem> ls = ExcelHelper.Itemize(data.innerHtml);
 
                     foreach (TextItem thisTextItem in ls)
                     {

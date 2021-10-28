@@ -11,6 +11,9 @@ import * as linq from "./linq.js";
 import { TableWrapper as tableWrapper, GroupedTableWrapper as groupedTableWrapper, GroupedData } from "./table_wrapper.js";
 import * as db_html from "./db_html.js";
 import * as translations from "./translations.js";
+import * as url_params from "./url_params.js";
+
+
 
 // https://stackoverflow.com/questions/39282253/how-can-i-alias-a-default-import-in-javascript
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
@@ -156,14 +159,16 @@ async function assertSession()
 async function onDocumentReady(): Promise<any>
 {
     let _: any = {
-         "autobind_autotrace": autobind_autotrace
-        ,"autorun": autorun
-        ,"hu": hu
-        ,"linq": linq
-        ,"tr": tableWrapper
-        ,"tra": translations
-        ,"utils": utils
-        ,"uuid": uuid
+          "autobind_autotrace": autobind_autotrace
+        , "autorun": autorun
+        , "hu": hu
+        , "linq": linq
+        , "tr": tableWrapper
+        , "tra": translations
+        , "up": url_params
+        , "utils": utils
+        , "uuid": uuid
+        
         ,"xml": xml
     }; // goddamn, if not used, it's not imported ...
 
@@ -194,6 +199,12 @@ async function onDocumentReady(): Promise<any>
     // let b = hu.htmlEncode("הצü<>[]{}nihao")
     // let c = hu.htmlDecode(b);
     // console.log(c);
+
+
+    let params = url_params.parseQuery(document.location.href)
+    console.log("query params", params);
+    // params.get("uid")
+
 
     await assertSession();
     let checkListData: any = await fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F");

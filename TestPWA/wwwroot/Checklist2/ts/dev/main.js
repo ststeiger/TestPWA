@@ -47,6 +47,7 @@ var linq = require("./linq.js");
 var table_wrapper_js_1 = require("./table_wrapper.js");
 var db_html = require("./db_html.js");
 var translations = require("./translations.js");
+var url_params = require("./url_params.js");
 if (true) {
 }
 function postFetch(url, payload) {
@@ -182,7 +183,7 @@ function assertSession() {
 }
 function onDocumentReady() {
     return __awaiter(this, void 0, void 0, function () {
-        var _, checkListData, checklistName, elements, elemntProps, argh, arghHtml;
+        var _, params, checkListData, checklistName, elements, elemntProps, argh, arghHtml;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -193,11 +194,14 @@ function onDocumentReady() {
                         "linq": linq,
                         "tr": table_wrapper_js_1.TableWrapper,
                         "tra": translations,
+                        "up": url_params,
                         "utils": utils,
                         "uuid": uuid,
                         "xml": xml
                     };
                     console.log("document ready");
+                    params = url_params.parseQuery(document.location.href);
+                    console.log("query params", params);
                     return [4, assertSession()];
                 case 1:
                     _a.sent();
