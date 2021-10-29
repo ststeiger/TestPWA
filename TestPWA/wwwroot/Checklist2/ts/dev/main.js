@@ -136,9 +136,7 @@ function loadChecklistValues(cl_uid) {
         var checkListData, checklistValues, i, ele, type;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    cl_uid = cl_uid || "F1A2DD8A-2D11-496E-9B14-13559405089F";
-                    return [4, fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=" + cl_uid)];
+                case 0: return [4, fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=" + cl_uid)];
                 case 1:
                     checkListData = _a.sent();
                     checklistValues = new table_wrapper_js_1.TableWrapper(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
@@ -183,7 +181,7 @@ function assertSession() {
 }
 function onDocumentReady() {
     return __awaiter(this, void 0, void 0, function () {
-        var _, params, checkListData, checklistName, elements, elemntProps, argh, arghHtml;
+        var _, params, chlist, checkListData, checklistName, elements, elemntProps, checkListHeader, htmlInfo, assembledFragment;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -199,51 +197,60 @@ function onDocumentReady() {
                         "uuid": uuid,
                         "xml": xml
                     };
-                    console.log("document ready");
                     params = url_params.parseQuery(document.location.href);
-                    console.log("query params", params);
+                    chlist = params.get("cl_uid");
                     return [4, assertSession()];
                 case 1:
                     _a.sent();
-                    return [4, fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F")];
+                    return [4, fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=" + chlist)];
                 case 2:
                     checkListData = _a.sent();
                     checklistName = new table_wrapper_js_1.TableWrapper(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
                     elements = new table_wrapper_js_1.TableWrapper(checkListData.tables[1].columns, checkListData.tables[1].rows, false);
                     elemntProps = new table_wrapper_js_1.TableWrapper(checkListData.tables[2].columns, checkListData.tables[2].rows, false);
-                    if (checklistName.rowCount > 0)
+                    checkListHeader = document.getElementById("checkListTitle");
+                    if (checklistName.rowCount > 0) {
                         document.title = checklistName.row(0).CL_Name;
-                    argh = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
-                    console.log("starting iteration:");
-                    db_html.iterateOverStructure(argh);
-                    arghHtml = db_html.assembleStructure(argh);
-                    document.body.appendChild(arghHtml);
+                        checkListHeader.innerText = checklistName.row(0).CL_Title;
+                    }
+                    htmlInfo = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
+                    assembledFragment = db_html.assembleStructure(htmlInfo);
+                    document.body.appendChild(assembledFragment);
                     document.addEventListener('saveChecklist', function (e) {
                         return __awaiter(this, void 0, void 0, function () {
-                            var cls_uid, saveData, saveResult;
+                            var cls_uid, saveData, saveDataSetResult, saveChecklistDataResult;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
                                         cls_uid = uuid.newGuid();
                                         saveData = db_html.collectSaveData(document.querySelector("table"), cls_uid);
-                                        console.log("saveData", saveData);
-                                        console.log("saveData", saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; }));
                                         return [4, assertSession()];
                                     case 1:
                                         _a.sent();
-                                        return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": "F1A2DD8A-2D11-496E-9B14-13559405089F" })];
+                                        return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": chlist })];
                                     case 2:
-                                        _a.sent();
+                                        saveDataSetResult = _a.sent();
+                                        console.log("dataSetResult", saveDataSetResult);
+                                        if (!(saveDataSetResult.hasError === false)) return [3, 4];
                                         return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData)];
                                     case 3:
-                                        saveResult = _a.sent();
-                                        console.log("saveResult", saveResult);
-                                        return [2];
+                                        saveChecklistDataResult = _a.sent();
+                                        if (saveDataSetResult.hasError === false) {
+                                            console.log("saveResult", saveChecklistDataResult);
+                                        }
+                                        else {
+                                            alert(saveChecklistDataResult.error.message);
+                                        }
+                                        return [3, 5];
+                                    case 4:
+                                        alert(saveDataSetResult.error.message);
+                                        _a.label = 5;
+                                    case 5: return [2];
                                 }
                             });
                         });
                     }, false);
-                    return [4, loadChecklistValues()];
+                    return [4, loadChecklistValues(chlist)];
                 case 3:
                     _a.sent();
                     return [2];

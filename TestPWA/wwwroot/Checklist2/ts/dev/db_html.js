@@ -229,15 +229,12 @@ function iterateOverStructure(container) {
         var properties = makeAssociativeArray(element.properties);
         if ("tr" === element.tagName) {
             currentRow += 1;
-            console.log(element, currentRow);
         }
         if ("td" === element.tagName) {
             var colSpan = parseInt(properties["colspan"] || "1");
             var rowSpan = parseInt(properties["rowspan"] || "1");
             startColumn = endColumn + 1;
             endColumn = startColumn + colSpan - 1;
-            console.log(element);
-            console.log("y:", currentRow, "x1:", startColumn, "x2", endColumn, "colspan", colSpan, "rowSpan", rowSpan);
         }
         var children = element.children;
         for (var i = children.length - 1; i > -1; --i) {

@@ -22,6 +22,8 @@ namespace TestPWA
             if (bb == null)
                 return;
 
+            // potentital fix for range: 
+            // https://stackoverflow.com/questions/47680167/get-merged-cell-area-with-epplus
 
             OfficeOpenXml.Style.ExcelBorderStyle px1 = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
             OfficeOpenXml.Style.ExcelBorderStyle px2 = OfficeOpenXml.Style.ExcelBorderStyle.Medium;

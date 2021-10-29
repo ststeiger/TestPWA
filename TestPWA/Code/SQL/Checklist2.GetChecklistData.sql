@@ -11,6 +11,7 @@
 SELECT 
 	 T_Checklist.CL_UID 
 	,T_Checklist.CL_Name 
+	,T_Checklist.CL_Title 
 FROM T_Checklist 
 WHERE (1=1) 
 AND CL_UID = @__cl_uid 

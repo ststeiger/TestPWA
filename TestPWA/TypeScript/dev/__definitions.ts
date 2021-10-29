@@ -189,6 +189,43 @@ npx - p typescript tsc HttpUtility.ts--declaration--allowJs--emitDeclarationOnly
 
 // sobald modul: declare global {
 
+
+
+
+interface IDotNetException
+{
+    Message: string;
+    InnerException: IDotNetException;
+    StackTrace: string;
+    Source: string;
+    HelpLink: string;
+    // TargetSite: any;
+    Data: { [key: string]: any };// IDictionary
+}
+
+
+interface IAjaxException
+{
+    sessionExpired: boolean;
+    message: string;
+    originalMessage: string;
+    source: string;
+    stackTrace: string;
+    innerException: IDotNetException;
+}
+
+// Result of AnyInsert.ashx
+interface IAjaxResult<T>
+{
+    data: T;
+    error: IAjaxException;
+    // hasError(): boolean;
+    hasError: boolean;
+}
+
+
+
+
 interface IXmlStructure
 {
     uuid: string;
@@ -208,6 +245,7 @@ interface IT_Checklist
 {
     CL_UID: string;
     CL_Name: string;
+    CL_Title: string;
 }
 
 

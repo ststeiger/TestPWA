@@ -75,12 +75,23 @@ namespace AnySqlWebAdmin
 
                 System.Exception hasErrors = null;
 
+
+                // how to generate a proper ajax-result here ? 
+                // jsonWriter.WriteStartObject();
+                // jsonWriter.WritePropertyName("tables");
+
+
+                // await WriteStringAsync(context.Response.BodyWriter, "{ data:");
+
                 // https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=EB159A9C-E69F-49F4-B10E-3A4825973E46
                 using (System.Data.Common.DbConnection cnn = this.m_service.Connection)
                 {
                     // System.Exception hasErrors = await cnn.AsJSON(context.Response.Body, sql, format, pars);
                     hasErrors = await cnn.AsSystemTextJson(context.Response.Body, sql, format, pars);
                 }
+
+
+                // await WriteStringAsync(context.Response.BodyWriter, "}");
 
                 if (hasErrors != null)
                     await TransmitError(context, hasErrors, sql, pars);
@@ -127,6 +138,13 @@ namespace AnySqlWebAdmin
                 System.Console.WriteLine(ex2.Message);
                 System.Console.WriteLine(ex2.StackTrace);
             }
+        }
+
+
+        private static async System.Threading.Tasks.Task WriteStringAsync(System.IO.Pipelines.PipeWriter writer, string text)
+        {
+            System.ReadOnlyMemory<byte> utf8Span = new System.ReadOnlyMemory<byte>(new System.Text.UTF8Encoding(false).GetBytes(text));
+            await writer.WriteAsync(utf8Span);
         }
 
 

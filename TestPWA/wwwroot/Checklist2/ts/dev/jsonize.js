@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.constructRecursiveDataStructure = exports.assembleStructure = exports.collectStructure = void 0;
+exports.main = exports.constructRecursiveDataStructure = exports.assembleStructure = exports.collectStructure = void 0;
 var autobind_autotrace = require("./autobind_autotrace.js");
 var uuid = require("./uuid.js");
 function _getProperties(el) {
@@ -112,7 +112,7 @@ function constructRecursiveDataStructure(elements, properties, parentUID, obj, l
     return obj;
 }
 exports.constructRecursiveDataStructure = constructRecursiveDataStructure;
-(function () {
+function main() {
     var _ = {
         "ab": autobind_autotrace
     };
@@ -126,4 +126,5 @@ exports.constructRecursiveDataStructure = constructRecursiveDataStructure;
     document.body.appendChild(div);
     console.log("hello", document.getElementById("abc").childNodes[0].id);
     console.log("finished !");
-}());
+}
+exports.main = main;

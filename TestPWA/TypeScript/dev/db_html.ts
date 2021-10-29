@@ -408,7 +408,7 @@ export function iterateOverStructure(container: IXmlStructure)
         if ("tr" === element.tagName)
         {
             currentRow += 1;
-            console.log(element, currentRow);
+            // console.log(element, currentRow);
         }
 
         if ("td" === element.tagName)
@@ -419,8 +419,8 @@ export function iterateOverStructure(container: IXmlStructure)
             startColumn = endColumn + 1;
             endColumn = startColumn + colSpan - 1;
 
-            console.log(element);
-            console.log("y:", currentRow, "x1:", startColumn, "x2", endColumn, "colspan", colSpan, "rowSpan", rowSpan);
+            // console.log(element);
+            // console.log("y:", currentRow, "x1:", startColumn, "x2", endColumn, "colspan", colSpan, "rowSpan", rowSpan);
         }
 
 

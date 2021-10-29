@@ -49,7 +49,8 @@ if (!String.prototype.trimEnd) {
     };
 }
 function require(name) {
-    console.log("Evaluating file " + name);
+    if (require.debug)
+        console.log("Evaluating file " + name);
     function getErrorObject() {
         try {
             throw Error('');
@@ -98,7 +99,8 @@ function require(name) {
             fileName = fileName.substr(2);
             if (!(fileName.startsWith("https://") || fileName.startsWith("http://")))
                 fileName = require.paths.mainPath + fileName;
-            console.log("doctored", fileName);
+            if (require.debug)
+                console.log("doctored", fileName);
         }
         if (fileName.indexOf("?") == -1)
             fileName += "?no_cache=" + (new Date()).getTime().toString();
@@ -139,7 +141,8 @@ function require(name) {
         };
     }
     if (!(name in require.cache)) {
-        console.log(name + " is not in cache; reading from disk");
+        if (require.debug)
+            console.log(name + " is not in cache; reading from disk");
         var code = readFileSync(name, 'utf8');
         var module = { exports: {} };
         require.cache[name] = module;
@@ -160,11 +163,13 @@ function require(name) {
             }
         }
     }
-    console.log(name + " is in cache. Returning it...");
+    if (require.debug)
+        console.log(name + " is in cache. Returning it...");
     return require.cache[name].exports;
 }
 require.cache = Object.create(null);
 require.paths = Object.create(null);
+require.debug = false;
 (function () {
     window.require = require;
     window.exports = window.exports || Object.create(null);

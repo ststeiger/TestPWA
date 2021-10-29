@@ -106,10 +106,8 @@ async function fetchText(url: string, payload?: any): Promise<string>
 }
 
 
-async function loadChecklistValues(cl_uid?:string)
+async function loadChecklistValues(cl_uid:string)
 {
-    cl_uid = cl_uid || "F1A2DD8A-2D11-496E-9B14-13559405089F";
-
     let checkListData: any = await fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=" + cl_uid)
     let checklistValues = new tableWrapper<IT_Checklist_ZO_ElementValues>(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
     // console.log("checklistValues", checklistValues);
@@ -173,7 +171,7 @@ async function onDocumentReady(): Promise<any>
     }; // goddamn, if not used, it's not imported ...
 
 
-    console.log("document ready");
+    // console.log("document ready");
     // console.log("scriptName", console.trace());
 
     // console.log("translate data", JSON.stringify(translations.getTranslateData(), null, "  "));
@@ -202,12 +200,12 @@ async function onDocumentReady(): Promise<any>
 
 
     let params = url_params.parseQuery(document.location.href)
-    console.log("query params", params);
-    // params.get("uid")
-
+    // console.log("query params", params);
+    let chlist = params.get("cl_uid");
+    // console.log("chlist", chlist);
 
     await assertSession();
-    let checkListData: any = await fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=F1A2DD8A-2D11-496E-9B14-13559405089F");
+    let checkListData: any = await fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=" + chlist);
 
     // console.log(checkListData.tables[0]);
     let checklistName = new tableWrapper<IT_Checklist>(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
@@ -217,42 +215,65 @@ async function onDocumentReady(): Promise<any>
     let elemntProps = new tableWrapper<IT_Checklist_ZO_ElementProperties>(checkListData.tables[2].columns, checkListData.tables[2].rows, false);
     // console.log("elemntProps", elemntProps.columns);
 
+
+    let checkListHeader: HTMLHeadElement = document.getElementById("checkListTitle");
+
     // Schüttgutcontainer
-    if(checklistName.rowCount > 0)
+    if (checklistName.rowCount > 0)
+    { 
         document.title = checklistName.row(0).CL_Name
-
+        checkListHeader.innerText = checklistName.row(0).CL_Title
+    }
     
-    let argh = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
+    let htmlInfo = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
 
-    console.log("starting iteration:");
-    db_html.iterateOverStructure(argh);
+    // console.log("Assess data quality:");
+    // db_html.iterateOverStructure(htmlInfo);
     
 
+    let assembledFragment = <HTMLElement>db_html.assembleStructure(htmlInfo);
+    // console.log("assembledFragment", assembledFragment);
+    document.body.appendChild(assembledFragment);
+    // document.body.insertBefore(assembledFragment, checkListHeader.nextSibling);
 
-    let arghHtml = <HTMLElement>db_html.assembleStructure(argh);
-    // console.log(argh, arghHtml);
-    document.body.appendChild(arghHtml);
 
     // Listen for the event.
     document.addEventListener('saveChecklist',
         async function (e:Event)
         {
             let cls_uid = uuid.newGuid();
-
+            
             // e.target matches elem
             let saveData = db_html.collectSaveData(document.querySelector("table"), cls_uid);
-            console.log("saveData", saveData);
-            console.log("saveData",  saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; })   );
+            // console.log("saveData", saveData);
+            // console.log("saveData",  saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; })   );
 
             await assertSession();
-            await fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": "F1A2DD8A-2D11-496E-9B14-13559405089F" });
-            let saveResult = await fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData);
-            console.log("saveResult", saveResult);
+            let saveDataSetResult = <IAjaxResult<any>>await fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": chlist });
+
+            console.log("dataSetResult", saveDataSetResult);
+            if (saveDataSetResult.hasError === false)
+            {
+                let saveChecklistDataResult = <IAjaxResult<any>>await fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData);
+                
+                if (saveDataSetResult.hasError === false)
+                {
+                    console.log("saveResult", saveChecklistDataResult);
+                }
+                else
+                {
+                    alert(saveChecklistDataResult.error.message);
+                }
+            }
+            else
+            {
+                alert(saveDataSetResult.error.message);
+            }
         }
-        , false
+        ,false
     );
 
-    await loadChecklistValues();
+    await loadChecklistValues(chlist);
 } // End Function onDocumentReady 
 
 

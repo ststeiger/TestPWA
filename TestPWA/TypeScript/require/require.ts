@@ -111,7 +111,8 @@ if (!(<any>String.prototype).trimEnd)
 // https://michelenasti.com/2018/10/02/let-s-write-a-simple-version-of-the-require-function.html
 function require<T>(name: string): T
 {
-    console.log(`Evaluating file ${name}`);
+    if (require.debug)
+        console.log(`Evaluating file ${name}`);
 
     // let cs = document.currentScript || document.scripts[document.scripts.length - 1];
     // console.log("cs", cs);
@@ -245,8 +246,9 @@ function require<T>(name: string): T
             if (!(fileName.startsWith("https://") || fileName.startsWith("http://")))
                 fileName = require.paths.mainPath + fileName;
             // else { console.log("bad file", fileName); }
-            
-            console.log("doctored", fileName);
+
+            if (require.debug)
+                console.log("doctored", fileName);
         }
 
         // Don't TF cache these files...
@@ -333,7 +335,9 @@ function require<T>(name: string): T
     
     if (!(name in require.cache))
     {
-        console.log(`${name} is not in cache; reading from disk`);
+        if (require.debug)
+            console.log(`${name} is not in cache; reading from disk`);
+
         let code = readFileSync(name, 'utf8');
         // let code = await fs.readFileAsync(name, 'utf8');
         let module = { exports: {} };
@@ -382,12 +386,15 @@ function require<T>(name: string): T
         }
     }
 
-    console.log(`${name} is in cache. Returning it...`);
+    if (require.debug)
+        console.log(`${name} is in cache. Returning it...`);
+
     return require.cache[name].exports;
 }
 
 require.cache = Object.create(null);
 require.paths = Object.create(null);
+require.debug = false;
 
 interface IMainModule
 {

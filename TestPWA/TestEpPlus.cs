@@ -106,7 +106,7 @@ namespace TestPWA
             string rowColor = null;
 
 
-            
+            int maxRows = 0;
             int maxColumns = 0;
 
 
@@ -162,7 +162,8 @@ namespace TestPWA
                 }
                 else if ("tr" == element.tagName)
                 {
-                    currentRow += 1;
+                    maxRows++;
+                    currentRow++;
                     startColumn = 0;
                     endColumn = 0;
                     // console.log(element, currentRow);
@@ -233,32 +234,47 @@ namespace TestPWA
                     if (properties.ContainsKey("valign"))
                         valign = properties["valign"];
 
-
-                    CssUnitValue elementHeight = null;
-                    if (properties.ContainsKey("height"))
+                    if (false)
                     {
-                        string h = properties["height"];
-                        elementHeight = CssUnitValue.FromString(h);
+                        CssUnitValue elementHeight = null;
+                        if (properties.ContainsKey("height"))
+                        {
+                            string h = properties["height"];
+                            elementHeight = CssUnitValue.FromString(h);
+                        }
+
+
+                        if (elementHeight != null)
+                        {
+                            for (int i = 0; i < rowSpan; ++i)
+                            {
+                                ww.Row(currentRow + i).Height = elementHeight.Value * 0.8f;
+                            }
+
+                        }
+
+                        CssUnitValue styleHeight = null;
+                        if (style.ContainsKey("height"))
+                        {
+                            string h = style["height"];
+                            styleHeight = CssUnitValue.FromString(h);
+                        } // End if (style.ContainsKey("height"))
+
+
+                        // console.log(element);
+                        // console.log("y:", currentRow, "x1:", startColumn, "x2", endColumn, "colspan", colSpan, "rowSpan", rowSpan);
+
+                        if (styleHeight != null)
+                        {
+                            for (int i = 0; i < rowSpan; ++i)
+                            {
+                                ww.Row(currentRow + i).Height = styleHeight.Value * styleHeight.ExcelFactor;
+                            }
+
+                        } // End if (styleHeight != null)
                     }
 
 
-
-                    CssUnitValue styleHeight = null;
-                    if (style.ContainsKey("height"))
-                    {
-                        string h = style["height"];
-                        styleHeight = CssUnitValue.FromString(h);
-                    } // End if (style.ContainsKey("height"))
-
-
-
-                    // console.log(element);
-                    // console.log("y:", currentRow, "x1:", startColumn, "x2", endColumn, "colspan", colSpan, "rowSpan", rowSpan);
-
-                    if (styleHeight != null)
-                    {
-                        ww.Row(currentRow).Height = styleHeight.Value * styleHeight.ExcelFactor;
-                    } // End if (styleHeight != null)
 
 
                     OfficeOpenXml.ExcelRange cell = ww.Cells[currentRow, startColumn];
@@ -304,10 +320,18 @@ namespace TestPWA
                         cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
                     else if ("right".Equals(align, System.StringComparison.InvariantCultureIgnoreCase))
                         cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+                    else // Default
+                        cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
 
 
                     // valign = "top"
                     if ("top".Equals(valign, System.StringComparison.InvariantCultureIgnoreCase))
+                        cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
+                    else if ("middle".Equals(valign, System.StringComparison.InvariantCultureIgnoreCase))
+                        cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    else if ("bottom".Equals(valign, System.StringComparison.InvariantCultureIgnoreCase))
+                        cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Bottom;
+                    else // Default 
                         cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
 
 
@@ -338,26 +362,31 @@ namespace TestPWA
 
 
                     bool hasSBB = CssHelper.HasClass(classList, "slimBlackBorder");
-                    for (int i = startColumn; i < endColumn + 1; ++i)
+                    for (int j = 0; j < rowSpan; ++j)
                     {
-                        OfficeOpenXml.ExcelRange mergeCellHack = ww.Cells[currentRow, i];
-
-                        // Sequence matters ! 
-                        // first border style of TR, then class of cell, then style of cell 
-                        if (trBorder != null)
+                        for (int i = startColumn; i < endColumn + 1; ++i)
                         {
-                            ExcelHelper.SetBorder(mergeCellHack.Style.Border, trBorder, true, i, maxColumns);
-                        } // End if (trBorder != null) 
+                            OfficeOpenXml.ExcelRange mergeCellHack = ww.Cells[currentRow+j, i];
 
-                        if (hasSBB)
-                            ExcelHelper.SetBorder(mergeCellHack.Style.Border, Border.SlimBlackBorder, false, i, maxColumns);
+                            // Sequence matters ! 
+                            // first border style of TR, then class of cell, then style of cell 
+                            if (trBorder != null)
+                            {
+                                ExcelHelper.SetBorder(mergeCellHack.Style.Border, trBorder, true, i, maxColumns);
+                            } // End if (trBorder != null) 
 
-                        Border bb = CssHelper.GetBorder(style);
-                        ExcelHelper.SetBorder(mergeCellHack.Style.Border, bb, false, i, maxColumns);
-                    } // Next i 
-                    
+                            if (hasSBB)
+                                ExcelHelper.SetBorder(mergeCellHack.Style.Border, Border.SlimBlackBorder, false, i, maxColumns);
+
+                            Border bb = CssHelper.GetBorder(style);
+                            ExcelHelper.SetBorder(mergeCellHack.Style.Border, bb, false, i, maxColumns);
+                        } // Next i 
+                    } // Next j 
+
                     // worksheet.Cells.AutoFitColumns();
                     // cell.AutoFitColumns();
+
+                    
                 }
                 else if ("input" == element.tagName)
                 {
@@ -400,21 +429,136 @@ namespace TestPWA
                 OfficeOpenXml.ExcelWorkbook workbook = package.Workbook;
                 OfficeOpenXml.ExcelWorksheet worksheet = workbook.Worksheets.Add("Checkliste");
 
-                // OfficeOpenXml.ExcelRange cell = worksheet.Cells["A1"];
-
-                // index 0 not allowed for worksheet and cell x&y
-                // OfficeOpenXml.ExcelWorksheet ws = package.Workbook.Worksheets[0];
-                // OfficeOpenXml.ExcelRange cell = ww.Cells[0, 0];
-
                 Excelize(data, package);
 
-                // OfficeOpenXml.ExcelRange cell = worksheet.Cells["A1"];
-                // cell.RichText.Add("hello world");
-                // cell.Style.TextRotation = 180;
+                // Block - Add title and Logo
+                {
+                    // This will insert 15 rows starting at row 10. All the rows under will be shifted down.
+                    // worksheet.InsertRow(10, 15);
+                    worksheet.InsertRow(1, 5);
+
+                    string logoPath = @"D:\Stefan.Steiger\Documents\Visual Studio 2017\Projects\TestPWA\TestPWA\wwwroot\Checklist2\images\SNB-Logo-blau-320px.png";
+                    using (OfficeOpenXml.Drawing.ExcelPicture picture = GetLogo(worksheet, "Logo", logoPath, 135, 150))
+                    {
+                        // picture.SetPosition(0, 0, 5, 0);
+                        picture.From.Row = 0;
+                        picture.From.Column = 5;
+
+                        picture.To.Row = 3;
+                        picture.To.Column = 10;
+                        // picture.Placement = xlMove; //XLPlacement : xlMoveAndSize,xlMove,xlFreeFloating
+
+                        // picture.SetSize(135, 150);
+                        // picture.AdjustPositionAndSize();
+                    }
+
+                    // A3:E4
+                    // 1,1: 5,4
+                    worksheet.Cells["A3:E4"].Merge = true;
+
+                    OfficeOpenXml.ExcelRange cell = worksheet.Cells["A3"];
+                    cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+
+                    cell.IsRichText = true; // Cell contains RichText rather than basic values
+                    cell.Style.WrapText = true; // Required to honor new lines
+
+                    OfficeOpenXml.Style.ExcelRichText title = cell.RichText.Add("Wartungscheckliste MUVE");
+                    title.FontName = "Arial";    // This will be applied to all subsequent sections as well
+                    title.Size = 14;
+                    title.Bold = true;
+                }
+
+
 
                 package.SaveAs(new System.IO.FileInfo(outputFilename));
+
             }
 
+        }
+
+        public static OfficeOpenXml.Drawing.ExcelPicture GetLogo(OfficeOpenXml.ExcelWorksheet worksheet, string pictureName, string path, int width, int height)
+        {
+            OfficeOpenXml.Drawing.ExcelPicture picture = null;
+
+            string logoPath = path;
+            using (System.Drawing.Image img = LoadAndResizeImage(logoPath, width, height))
+            {
+                picture = worksheet.Drawings.AddPicture(pictureName, img);
+            }
+
+            return picture;
+        }
+
+
+        public static OfficeOpenXml.Drawing.ExcelPicture GetLogo(OfficeOpenXml.ExcelWorksheet worksheet, string pictureName, System.Drawing.Image logo, int width, int height)
+        {
+            OfficeOpenXml.Drawing.ExcelPicture picture = null;
+            using (System.Drawing.Image img = LoadAndResizeImage(logo, width, height))
+            {
+                picture = worksheet.Drawings.AddPicture(pictureName, img);
+            }
+
+            return picture;
+        }
+
+
+        private static System.Drawing.Image LoadAndResizeImage(string path, int width, int height)
+        {
+            System.Drawing.Image img;
+
+            using (System.Drawing.Image imgToResize = System.Drawing.Image.FromFile(path))
+            {
+                img = LoadAndResizeImage(imgToResize, width, height);
+            }
+
+            return img;
+        }
+
+
+        private static System.Drawing.Image LoadAndResizeImage(System.Drawing.Image imgToResize, int width, int height)
+        {
+            int sourceWidth = imgToResize.Width;
+            int sourceHeight = imgToResize.Height;
+
+            float nPercent = 0;
+            float nPercentW = 0;
+            float nPercentH = 0;
+
+            nPercentW = ((float)width / (float)sourceWidth);
+            nPercentH = ((float)height / (float)sourceHeight);
+
+            if (nPercentH < nPercentW)
+                nPercent = nPercentH;
+            else
+                nPercent = nPercentW;
+
+            int destWidth = (int)(sourceWidth * nPercent);
+            int destHeight = (int)(sourceHeight * nPercent);
+
+            System.Drawing.Image img;
+
+            using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(destWidth, destHeight))
+            {
+                using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bmp))
+                {
+                    g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                    g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                    g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
+                }
+
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    ms.Position = 0;
+                    img = System.Drawing.Image.FromStream(ms);
+                }
+            }
+
+            return img;
         }
 
 

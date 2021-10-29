@@ -1,6 +1,6 @@
 ﻿
-using Dapper;
 using Microsoft.AspNetCore.Builder;
+
 
 
 // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-2.1&tabs=aspnetcore2x
@@ -14,7 +14,7 @@ namespace AnySqlWebAdmin
 {
 
 
-    public class AnySqlInsertMiddleware
+    public class SessionDataMiddleware
     {
 
         protected SqlFactory m_service;
@@ -22,7 +22,7 @@ namespace AnySqlWebAdmin
         protected readonly string m_sqlRootPath;
 
 
-        public AnySqlInsertMiddleware(Microsoft.AspNetCore.Http.RequestDelegate next, SqlFactory service, Microsoft.Extensions.Hosting.IHostEnvironment env)
+        public SessionDataMiddleware(Microsoft.AspNetCore.Http.RequestDelegate next, SqlFactory service, Microsoft.Extensions.Hosting.IHostEnvironment env)
         {
             this._next = next;
             this.m_service = service;
@@ -39,60 +39,22 @@ namespace AnySqlWebAdmin
             // Do some request logic here.
             // await this._next.Invoke(context).ConfigureAwait(false);
 
-
-
-            // Do some response logic here.
-            // context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-            // throw new Exception("YaY");
-            string sql = null;
-            RequestParameters pars = null;
-            System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, object>> ls = null;
-
-            AjaxResult result = new AjaxResult();
-
             try
             {
-                pars = await SqlServiceHelper.GetParameters(context);
-                pars["BE_Hash"] = 12435;
-                pars["__stichtag"] = System.DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
-
-                // https://stackoverflow.com/questions/3050518/what-http-status-response-code-should-i-use-if-the-request-is-missing-a-required
-                if (!pars.ContainsKey("sql"))
-                    throw new System.Exception("Parameter sql not provided....");
-
-                // throw new System.Exception("foobar!");
-
-                sql = System.Convert.ToString(pars["sql"]);
-                sql = System.IO.Path.Combine(this.m_sqlRootPath, sql);
-                sql = System.IO.File.ReadAllText(sql, System.Text.Encoding.UTF8);
-
-#if false
-                ls = await SqlServiceHelper.Json2List(context.Request.Body);
-#elif false 
-                using (System.IO.TextReader sr = new System.IO.StreamReader(context.Request.Body))
-                {
-
-                    //Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
-                    //using (Newtonsoft.Json.JsonTextReader jsonTextReader = new Newtonsoft.Json.JsonTextReader(sr))
-                    //{
-                    //    T args = (T)serializer.Deserialize(jsonTextReader, typeof(T));
-                    //} // End Using ' jsonTextReader
-
-                    string json = await sr.ReadToEndAsync();
-                    ls = SqlServiceHelper.Json2List(json);
-
-                } // End Using sr 
-#endif
-
-                ls = pars.InputStream;
-
+                System.Text.Json.JsonSerializerOptions options =
+                    new System.Text.Json.JsonSerializerOptions()
+                    {
+                        Converters = {
+                            new TestPWA.HttpContextConverter()
+                        },
+                        IncludeFields = true,
+                        WriteIndented = true
+                        // ,PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase 
+                        // ,ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
+                        // Where has ReferenceLoopHandling.Ignore gone ? 
+                };
                 
-
-                using (System.Data.Common.DbConnection cnn = this.m_service.Connection)
-                {
-                    cnn.Execute(sql, ls);
-                }
-
+                await System.Text.Json.JsonSerializer.SerializeAsync(context.Response.Body, context, context.GetType(), options);
             } // End Try 
             catch (System.Exception ex)
             {
@@ -111,28 +73,42 @@ namespace AnySqlWebAdmin
 
 
                 // context.Response.Headers["HTTP/1.0 500 Internal Server Error"] = "";
-                result.error = new AJAXException(ex);
+                await TransmitError(context, ex, null, null);
             } // End Catch 
 
-
-            context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-
-            // context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-            // context.Response.Headers["X-Error-Message"] = result.error.message;
-
-            context.Response.ContentType = "application/json";
-            await result.ToJSON(context.Response.Body);
         } // End Async Invoke 
 
 
-    } // End Class SqlMiddleware 
+        public async System.Threading.Tasks.Task TransmitError(
+            Microsoft.AspNetCore.Http.HttpContext context,
+            System.Exception exception,
+            string sql,
+            RequestParameters pars = null)
+        {
+            try
+            {
+                context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                context.Response.Headers["X-Error-Message"] = exception.Message;
+                context.Response.ContentType = "application/json";
+                SqlException se = new SqlException(exception.Message, sql, pars, context, exception);
+                await se.ToJSON(context.Response.Body);
+            }
+            catch (System.Exception ex2)
+            {
+                System.Console.WriteLine(ex2.Message);
+                System.Console.WriteLine(ex2.StackTrace);
+            }
+        }
 
-    
-    public static class AnySqlInsertMiddlewareExtensions
+
+    } // End Class SessionDataMiddleware 
+
+
+    public static class SessionDataMiddlewareExtensions
     {
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlInsert(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSessionDataHandler(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app, 
             System.StringComparison comparison, params string[] startSegments
         )
@@ -155,7 +131,7 @@ namespace AnySqlWebAdmin
                 , delegate (Microsoft.AspNetCore.Builder.IApplicationBuilder appBuilder)
                 {
                     // appBuilder.UseStatusCodePagesWithReExecute("/apierror/{0}");
-                    appBuilder.UseMiddleware<AnySqlInsertMiddleware>();
+                    appBuilder.UseMiddleware<SessionDataMiddleware>();
                     //appBuilder.UseExceptionHandler("/apierror/500");
                 }
             );
@@ -164,37 +140,37 @@ namespace AnySqlWebAdmin
         } // End Function UseSqlMiddleware 
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlInsert(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSessionDataHandler(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app, 
             params string[] startSegments
         )
         {
-            return UseAnySqlInsert(app, System.StringComparison.InvariantCultureIgnoreCase, startSegments);
+            return UseSessionDataHandler(app, System.StringComparison.InvariantCultureIgnoreCase, startSegments);
         }
 
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlInsert(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSessionDataHandler(
            this Microsoft.AspNetCore.Builder.IApplicationBuilder app,
            System.Collections.Generic.IEnumerable<string> startSegments,
            System.StringComparison comparison 
        )
         {
             System.Collections.Generic.List<string> ls = new System.Collections.Generic.List<string>(startSegments);
-            return UseAnySqlInsert(app, comparison, ls.ToArray());
+            return UseSessionDataHandler(app, comparison, ls.ToArray());
         }
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlInsert(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSessionDataHandler(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app,
             System.Collections.Generic.IEnumerable<string> startSegments
         )
         {
-            return UseAnySqlInsert(app, startSegments, System.StringComparison.InvariantCultureIgnoreCase);
+            return UseSessionDataHandler(app, startSegments, System.StringComparison.InvariantCultureIgnoreCase);
         }
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlInsert(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSessionDataHandler(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app, string startSegment, System.StringComparison comparison)
         {
             app.UseWhen(
@@ -204,7 +180,7 @@ namespace AnySqlWebAdmin
                 }
                 , delegate (Microsoft.AspNetCore.Builder.IApplicationBuilder appBuilder)
                 {
-                    appBuilder.UseMiddleware<AnySqlInsertMiddleware>();
+                    appBuilder.UseMiddleware<SessionDataMiddleware>();
                 }
             );
 
@@ -212,28 +188,28 @@ namespace AnySqlWebAdmin
         } // End Function UseSqlMiddleware 
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlInsert(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSessionDataHandler(
           this Microsoft.AspNetCore.Builder.IApplicationBuilder app, string startSegment)
         {
-            return UseAnySqlInsert(app, startSegment, System.StringComparison.InvariantCultureIgnoreCase);
+            return UseSessionDataHandler(app, startSegment, System.StringComparison.InvariantCultureIgnoreCase);
         }
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlInsert(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSessionDataHandler(
             this Microsoft.AspNetCore.Builder.IApplicationBuilder app, System.StringComparison comparison)
         {
-            return UseAnySqlInsert(app, comparison, "/sql/insert", "/ajax/anyInsert.ashx");
+            return UseSessionDataHandler(app, comparison, "/session", "/ajax/CurrentSession.ashx");
         } // End Function UseSqlMiddleware 
 
 
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAnySqlInsert(
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseSessionDataHandler(
           this Microsoft.AspNetCore.Builder.IApplicationBuilder app)
         {
-            return UseAnySqlInsert(app, System.StringComparison.InvariantCultureIgnoreCase);
+            return UseSessionDataHandler(app, System.StringComparison.InvariantCultureIgnoreCase);
         } // End Function UseSqlMiddleware 
 
 
-    } // End Class SqlMiddlewareExtensions 
+    } // End Class SessionDataMiddlewareExtensions 
 
 
 } // End Namespace AnySqlWebAdmin 

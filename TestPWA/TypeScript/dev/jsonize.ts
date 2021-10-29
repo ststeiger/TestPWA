@@ -211,12 +211,8 @@ export function constructRecursiveDataStructure(
 }
 
 
-
-
-
-(function ()
+export function main()
 {
-
     let _ = {
         "ab": autobind_autotrace
     };
@@ -238,8 +234,8 @@ export function constructRecursiveDataStructure(
     document.body.appendChild(div);
 
     console.log("hello", (<any>document.getElementById("abc").childNodes[0]).id);
-    
+
 
     // run main here !
     console.log("finished !");
-}());
+}
