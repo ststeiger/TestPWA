@@ -6,7 +6,7 @@ namespace Dapper
     [System.Flags]
     public enum RenderType_t : int
     {
-        Default = 0,
+        Minified = 0, // un-indented
         Indented = 1,
         DataTable = 2,
         Array = 4,
@@ -77,8 +77,9 @@ namespace Dapper
 
 
         private static async System.Threading.Tasks.Task WriteAssociativeColumnsArray(
-            Newtonsoft.Json.JsonTextWriter jsonWriter
-            , System.Data.Common.DbDataReader dr, RenderType_t renderType)
+              Newtonsoft.Json.JsonTextWriter jsonWriter
+            , System.Data.Common.DbDataReader dr
+            , RenderType_t renderType)
         {
             //await jsonWriter.WriteStartObjectAsync();
             await jsonWriter.WriteStartObjectAsync();

@@ -186,15 +186,32 @@ namespace TestPWA
         } // End Function DocumentToJson 
 
 
+        private static string CombinePaths(params string[] paths)
+        {
+            if (paths == null)
+            {
+                return null;
+            }
+            
+            string currentPath = paths[0];
+            for (int i = 1; i < paths.Length; i++)
+            {
+                currentPath = System.IO.Path.Combine(currentPath, paths[i]);
+            }
+
+            return currentPath;
+        }
+
+
         public static void GenerateAllChecklists()
         {
             string projectPath = System.AppDomain.CurrentDomain.BaseDirectory;
-            projectPath = System.IO.Path.Combine(projectPath, "..", "..", "..");
+            projectPath = CombinePaths(projectPath, "..", "..", "..");
             projectPath = System.IO.Path.GetFullPath(projectPath);
 
-            string basePath = System.IO.Path.Combine(projectPath, "wwwroot", "Checklist");
-            string outputPath = System.IO.Path.Combine(projectPath, "Code", "AutoGen");
-            string templatePath = System.IO.Path.Combine(projectPath, "Code", "SQL");
+            string basePath = CombinePaths(projectPath, "wwwroot", "Checklist");
+            string outputPath = CombinePaths(projectPath, "Code", "AutoGen");
+            string templatePath = CombinePaths(projectPath, "Code", "SQL");
 
             string[] files = new string[] {
                 "Schuettgutcontainer",

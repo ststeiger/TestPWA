@@ -86,6 +86,7 @@ CREATE TABLE dbo.T_Checklist
 (
 	 CL_UID uniqueidentifier CONSTRAINT PK_T_Checklist PRIMARY KEY 
 	,CL_Name national character varying(256) 
+	,CL_Title national character varying(256) 
 );
 
 

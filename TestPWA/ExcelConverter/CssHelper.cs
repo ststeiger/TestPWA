@@ -145,7 +145,10 @@ namespace TestPWA
                 if (cssClass != null)
                 {
                     cssClass = System.Text.RegularExpressions.Regex.Replace(cssClass, @"\s+", " ");
-                    return cssClass.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+
+                    // Return cssClass.Split(" "c, System.StringSplitOptions.RemoveEmptyEntries)
+                    // return cssClass.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+                    return cssClass.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
                 } // End if (cssClass != null) 
 
             } // End if (properties.ContainsKey("class")) 

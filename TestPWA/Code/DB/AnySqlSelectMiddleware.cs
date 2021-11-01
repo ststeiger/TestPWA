@@ -127,17 +127,30 @@ namespace AnySqlWebAdmin
         {
             try
             {
-                context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                context.Response.Headers["X-Error-Message"] = exception.Message;
-                context.Response.ContentType = "application/json";
-                SqlException se = new SqlException(exception.Message, sql, pars, context, exception);
-                await se.ToJSON(context.Response.Body);
+
+                if (context.Response.HasStarted)
+                {
+                    System.Console.WriteLine(exception.Message);
+                    System.Console.WriteLine(exception.StackTrace);
+                    context.Abort();
+                    return;
+                }
+                else
+                {
+                    context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                    context.Response.Headers["X-Error-Message"] = exception.Message;
+                    context.Response.ContentType = "application/json";
+                    SqlException se = new SqlException(exception.Message, sql, pars, context, exception);
+                    await se.ToJSON(context.Response.Body);
+                }
+
             }
             catch (System.Exception ex2)
             {
                 System.Console.WriteLine(ex2.Message);
                 System.Console.WriteLine(ex2.StackTrace);
             }
+
         }
 
 

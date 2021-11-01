@@ -297,7 +297,7 @@ END
 
 GO 
 
-
+/*
 
 
 ALTER FUNCTION dbo.fu_Basic_PropertiesToKeyValuePair(@__inputUUID uniqueidentifier)
@@ -349,6 +349,8 @@ BEGIN
 	RETURN @json; 
 END
 
+*/
+
 
 GO 
 
@@ -370,7 +372,7 @@ END
 GO 
 
 
-
+/*
 
 -- id's value must not contain whitespace (spaces, tabs etc.). 
 -- Using characters except ASCII letters, digits, '_', '-' and '.' may cause compatibility problems
@@ -391,7 +393,7 @@ BEGIN
 			+ N'-' + SUBSTRING(@__inputUUID, COALESCE(LEN(@__prefix), 0) + 21, 12) 
 		);
 END
-
+*/
 
 GO 
 
