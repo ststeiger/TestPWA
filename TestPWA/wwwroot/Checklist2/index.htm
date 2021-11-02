@@ -28,6 +28,7 @@
     https://www.w3schools.com/tags/att_style_media.asp
     -->
 
+
     <script src="polyfills/Array.prototype.map.js?v=1"></script>
     <script src="polyfills/classList.js?v=1"></script>
     <script src="polyfills/object-setprototypeof-ie9.js?v=1"></script>
@@ -60,7 +61,8 @@
     <link rel="stylesheet" href="css/checklist.css" />
 
 
-    <style media="screen" type="text/css">
+
+    <style>
 
         body
         {
@@ -72,7 +74,6 @@
     </style>
 
 
-
     <script data-main="./ts/dev/main.js" src="ts/require/require.js?v=1"></script>
     <!--
     <script src="ts/dev/main.js?v=1"></script>
@@ -81,7 +82,6 @@
     <style type="text/css">
     </style>
 
-
     <script type="text/javascript">
 
         function saveChecklist()
@@ -89,6 +89,90 @@
             var event = document.createEvent('Event');
             event.initEvent('saveChecklist', true, true);
             document.dispatchEvent(event);
+        }
+
+
+        function receiveMessage(event)
+        {
+            console.log("receiveMessage", event);
+            if (event == null || event.data == null)
+            {
+                console.log("no event or no data", event);
+                return;
+            }
+
+
+
+            var message;
+
+            //if (event.origin !== "http://robertnyman.com")
+            if (false)
+            {
+                message = 'You ("' + event.origin + '") are not worthy';
+            }
+            else
+            {
+                message = 'I got "' + event.data + '" from "' + event.origin + '"';
+            }
+
+            var tData = null;
+
+            try
+            {
+                tData = (typeof event.data === 'string') ? JSON.parse(event.data) : event.data;
+            }
+            catch (ex)
+            {
+                console.log(ex, event);
+                console.dir(event);
+            }
+
+            var tAction = (tData.Action || '').toLowerCase();
+
+            switch (tAction)
+            {
+                case 'portal.filter.loaded':
+                    // // Nur wenn auf Auswahl geklickt wird.
+
+                    // target: typ (ld, ort, so, gb)
+                    //(tData.Param) && onBaumClick(tData.Param.Data.Value, tData.Param.Data.Type);
+                    console.log("filter.loaded", tAction, event);
+                    break;
+                case 'portal.basic.update':
+                    // Dieses hier brauche ich - auch bei Page Loag - Filter event nur wenn auf Auswahl geklickt wird...
+                    console.log("basic.update", tAction, event);
+                    break
+                default:
+                    // console.log("unhandled event", event);
+                    var tData = (typeof event.data === 'string') ? JSON.parse(event.data) : event.data
+                    // console.log(JSON.stringify(tData, null, 2));
+                    break;
+            }
+
+            // event.source.postMessage("thanks, got it ;)", event.origin);
+        } // End Function ReceiveMessage
+
+
+        if (window.removeEventListener)
+            window.removeEventListener("message", receiveMessage, false);
+        else
+            window.detachEvent("onmessage", receiveMessage);
+
+
+        if (!window['postMessage'])
+            alert("oh crap");
+        else
+        {
+            if (window.addEventListener)
+            {
+                // console.log("listening for message...");
+                window.addEventListener("message", receiveMessage, false);
+            }
+            else
+            {
+                // console.log("listening for IE message...");
+                window.attachEvent("onmessage", receiveMessage);
+            }
         }
 
     </script>

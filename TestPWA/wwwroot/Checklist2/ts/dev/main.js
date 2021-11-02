@@ -131,15 +131,27 @@ function fetchText(url, payload) {
         });
     });
 }
+function concat() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var a = [];
+    for (var i = 0; i < args.length; i++) {
+        if (args[i] != null)
+            a.push(String(args[i]));
+    }
+    return a.join("");
+}
 function loadChecklistValues(cl_uid) {
     return __awaiter(this, void 0, void 0, function () {
         var checkListData, checklistValues, i, ele, type;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4, fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=" + cl_uid)];
+                case 0: return [4, fetchJSON(concat("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=", cl_uid))];
                 case 1:
                     checkListData = _a.sent();
-                    checklistValues = new table_wrapper_js_1.TableWrapper(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
+                    checklistValues = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
                     for (i = 0; i < checklistValues.rowCount; ++i) {
                         ele = document.getElementById(checklistValues.row(i).CLV_ELE_UID);
                         if (!ele)
@@ -202,12 +214,16 @@ function onDocumentReady() {
                     return [4, assertSession()];
                 case 1:
                     _a.sent();
-                    return [4, fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=" + chlist)];
+                    return [4, fetchJSON(concat("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=", chlist))];
                 case 2:
                     checkListData = _a.sent();
-                    checklistName = new table_wrapper_js_1.TableWrapper(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
-                    elements = new table_wrapper_js_1.TableWrapper(checkListData.tables[1].columns, checkListData.tables[1].rows, false);
-                    elemntProps = new table_wrapper_js_1.TableWrapper(checkListData.tables[2].columns, checkListData.tables[2].rows, false);
+                    if (checkListData.hasError) {
+                        alert("Error loading checklist-data:\r\n" + checkListData.error.message);
+                        return [2];
+                    }
+                    checklistName = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
+                    elements = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[1].columns, checkListData.data.tables[1].rows, false);
+                    elemntProps = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[2].columns, checkListData.data.tables[2].rows, false);
                     checkListHeader = document.getElementById("checkListTitle");
                     if (checklistName.rowCount > 0) {
                         document.title = checklistName.row(0).CL_Name;

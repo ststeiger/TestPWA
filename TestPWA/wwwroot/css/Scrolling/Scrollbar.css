@@ -1,0 +1,70 @@
+﻿* {
+	scrollbar-arrow-color: #FFA500;
+	scrollbar-base-color: black;
+	scrollbar-dark-shadow-color: #aaaaaa;
+	scrollbar-track-color: black;
+	scrollbar-face-color: #3d3d3d;
+	scrollbar-shadow-color: gray;
+	scrollbar-highlight-color: silver;
+	scrollbar-3d-light-color: black;}
+
+::-webkit-scrollbar{width: 13px; height: 13px}
+::-webkit-scrollbar:hover{height: 18px}
+ 
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment{
+    height: 15px;
+    width: 13px;
+    display: block;
+    background: #101211;
+    background-repeat: no-repeat}
+ 
+::-webkit-scrollbar-button:horizontal:decrement{
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADlQTFRFEBIREhQSHSAWIiUYJioZNz0gPkQjQEcjRUwlSVAnXWYuaHIyanQziJY/mKdFq7xMssRPw9dVyt5YQCZ/wAAAACtJREFUCB0FwQECgBAQALBFlKi4/z/WBlKD45kJ1x8DdUXccL7RgfJlQLEBGtwA6QSuDq4AAAAASUVORK5CYII=');
+    background-position: 4px 3px}
+ 
+::-webkit-scrollbar-button:horizontal:increment{
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADNQTFRFEBIREhQSHSAWJioZNz0gPEIiQkkkRUwlR04mYWswanQziJY/mKdFq7xMssRPw9dVyt5Ye+rBnQAAACpJREFUCB0FwYkBgCAQACD8U9Nu/2kDKqC8FVixC4yIr2HF6ch3JqQnww8VPADN4gkr7wAAAABJRU5ErkJggg==');
+    background-position: 3px 3px}
+ 
+::-webkit-scrollbar-button:vertical:decrement{
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAIAAABLMMCEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHFJREFUeNpiFBASZAADPSOhS+feQdhMEEpEjKN5gpGRuTCKaEqeGicXc2q+OhMTI1RUx0DQyUMSyFBW4/UOkgEyWICSCVkqS2bfvX/ns7wST3C0woFdLxiNLeQ+fvj95tUPiFHcPCxAaxnhbkAGAAEGAAxaGY5HzMiTAAAAAElFTkSuQmCC');
+    background-position: 3px 4px}
+ 
+::-webkit-scrollbar-button:vertical:increment{
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADlQTFRFEBIREhQSGx4VHSAWIiUYJCgZMTYePEIiPkQjRUwlSVAnXWYuanQziJY/nKxGp7hLsMFOwdRVyt5YRs1JvwAAACxJREFUCB0FwQsCQCAUALCl6CPi3f+wbQDGgXLJ3xzzTdwRUZFWPKD/J9CwARrSAPmqOpeUAAAAAElFTkSuQmCC');
+    background-position: 3px 4px}
+ 
+/*
+REM: Konnte ich nicht finden
+::-webkit-scrollbar-button:horizontal:decrement:active {background-image: url(../images/Scrolling/black/horizontal-decrement-arrow-active.png); }
+::-webkit-scrollbar-button:horizontal:increment:active {background-image: url(../images/Scrolling/black/horizontal-increment-arrow-active.png); }
+::-webkit-scrollbar-button:vertical:decrement:active {background-image: url(../images/Scrolling/black/vertical-decrement-arrow-active.png); }
+::-webkit-scrollbar-button:vertical:increment:active {background-image: url(../images/Scrolling/black/vertical-increment-arrow-active.png); }
+*/
+
+::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px}
+
+::-webkit-scrollbar-track-piece{background-color: #151716;}
+ 
+::-webkit-scrollbar-thumb:vertical{
+    height: 50px;
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #4d4d4d), color-stop(100%, #333333));
+    border: 1px solid #0d0d0d;
+    border-top: 1px solid #666666;
+    border-left: 1px solid #666666; 
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5)}
+ 
+::-webkit-scrollbar-thumb:horizontal{
+    width: 50px;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4d4d4d), color-stop(100%, #333333));
+    border: 1px solid #1f1f1f;
+    border-top: 1px solid #666666;
+    border-left: 1px solid #666666; 
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5)}
+
+::-webkit-scrollbar-corner{background-color: #3D3D3D;}

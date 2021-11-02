@@ -179,6 +179,9 @@ namespace Dapper
                         // context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                         // context.Response.ContentType = "application/json";
 
+                        await jsonWriter.WriteStartObjectAsync();
+                        await jsonWriter.WritePropertyNameAsync("data");
+
 
                         await jsonWriter.WriteStartObjectAsync();
 
@@ -264,6 +267,8 @@ namespace Dapper
 
                         await jsonWriter.WriteEndArrayAsync();
                         await jsonWriter.WriteEndObjectAsync();
+
+                        await jsonWriter.WriteEndObjectAsync(); // data
 
                         await jsonWriter.FlushAsync();
                         await output.FlushAsync();

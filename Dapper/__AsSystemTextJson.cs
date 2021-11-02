@@ -359,6 +359,11 @@ namespace Dapper
 
                     using (System.Text.Json.Utf8JsonWriter jsonWriter = new System.Text.Json.Utf8JsonWriter(outputStream, writerOptions))
                     {
+
+                        jsonWriter.WriteStartObject();
+                        jsonWriter.WritePropertyName("data");
+
+
                         // https://stackoverflow.com/questions/15305203/what-to-do-with-errors-when-streaming-the-body-of-an-http-request
                         // https://tools.ietf.org/html/rfc2616#section-14.40
                         // https://stackoverflow.com/questions/50299300/how-to-write-malformed-http-response-to-guarantee-something-akin-to-http-500
@@ -372,6 +377,7 @@ namespace Dapper
                         jsonWriter.WritePropertyName("tables");
 
                         jsonWriter.WriteStartArray();
+
 
                         do
                         {
@@ -452,6 +458,8 @@ namespace Dapper
 
                         jsonWriter.WriteEndArray();
                         jsonWriter.WriteEndObject();
+
+                        jsonWriter.WriteEndObject(); // data
 
                         await jsonWriter.FlushAsync();
                         await outputStream.FlushAsync();

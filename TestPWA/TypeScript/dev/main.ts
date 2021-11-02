@@ -74,6 +74,7 @@ async function postFetch(url: string, payload?: any): Promise<Response>
 
 async function fetchJSON(url: string, payload?: any): Promise<any>
 {
+
     if (url.indexOf("?") != -1)
     {
         url += "&"
@@ -106,10 +107,34 @@ async function fetchText(url: string, payload?: any): Promise<string>
 }
 
 
+//function foo()
+//{
+//    for (var i = 0; i < arguments.length; i++)
+//    {
+//        console.log(arguments[i]);
+//    }
+//}
+
+
+function concat(...args: any[]):string
+{
+    let a:string[] = [];
+
+    for (let i = 0; i < args.length; i++)
+    {
+        if(args[i] != null)
+            a.push(String(args[i])); // warning: String(null) yields "null" + dito for undefined ...
+    }
+
+    return a.join("");
+}
+
+
+
 async function loadChecklistValues(cl_uid:string)
 {
-    let checkListData: any = await fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=" + cl_uid)
-    let checklistValues = new tableWrapper<IT_Checklist_ZO_ElementValues>(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
+    let checkListData = <IAjaxResult<any>>await fetchJSON(concat("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=", cl_uid))
+    let checklistValues = new tableWrapper<IT_Checklist_ZO_ElementValues>(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
     // console.log("checklistValues", checklistValues);
 
     for (let i = 0; i < checklistValues.rowCount; ++i)
@@ -201,18 +226,28 @@ async function onDocumentReady(): Promise<any>
 
     let params = url_params.parseQuery(document.location.href)
     // console.log("query params", params);
+    
     let chlist = params.get("cl_uid");
     // console.log("chlist", chlist);
 
     await assertSession();
-    let checkListData: any = await fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=" + chlist);
+
+    // let checkListData = <IAjaxResult<any>>await fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1", {"__cl_uid": chlist} );
+    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
+    let checkListData = <IAjaxResult<any>>await fetchJSON(concat("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=", chlist));
+    if (checkListData.hasError)
+    {
+        alert("Error loading checklist-data:\r\n" + checkListData.error.message);
+        return;
+    }
+
 
     // console.log(checkListData.tables[0]);
-    let checklistName = new tableWrapper<IT_Checklist>(checkListData.tables[0].columns, checkListData.tables[0].rows, false);
+    let checklistName = new tableWrapper<IT_Checklist>(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
     // console.log("checklistName", checklistName.columns);
-    let elements = new tableWrapper<IT_ChecklistElements>(checkListData.tables[1].columns, checkListData.tables[1].rows, false);
+    let elements = new tableWrapper<IT_ChecklistElements>(checkListData.data.tables[1].columns, checkListData.data.tables[1].rows, false);
     // console.log("elements", elements.columns);
-    let elemntProps = new tableWrapper<IT_Checklist_ZO_ElementProperties>(checkListData.tables[2].columns, checkListData.tables[2].rows, false);
+    let elemntProps = new tableWrapper<IT_Checklist_ZO_ElementProperties>(checkListData.data.tables[2].columns, checkListData.data.tables[2].rows, false);
     // console.log("elemntProps", elemntProps.columns);
 
 

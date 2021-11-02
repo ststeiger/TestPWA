@@ -86,7 +86,7 @@ namespace AnySqlWebAdmin
                 // https://localhost:44314/ajax/AnySelect.ashx?sql=GetChecklistData.sql&format=1&__cl_uid=EB159A9C-E69F-49F4-B10E-3A4825973E46
                 using (System.Data.Common.DbConnection cnn = this.m_service.Connection)
                 {
-                    // System.Exception hasErrors = await cnn.AsJSON(context.Response.Body, sql, format, pars);
+                    // hasErrors = await cnn.AsJSON(context.Response.Body, sql, format, pars);
                     hasErrors = await cnn.AsSystemTextJson(context.Response.Body, sql, format, pars);
                 }
 
@@ -140,8 +140,11 @@ namespace AnySqlWebAdmin
                     context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                     context.Response.Headers["X-Error-Message"] = exception.Message;
                     context.Response.ContentType = "application/json";
-                    SqlException se = new SqlException(exception.Message, sql, pars, context, exception);
-                    await se.ToJSON(context.Response.Body);
+                    // SqlException se = new SqlException(exception.Message, sql, pars, context, exception);
+                    // await se.ToJSON(context.Response.Body);
+
+                    AJAXException ae = new AJAXException(exception);
+                    await ae.ToJSON(context.Response.Body);
                 }
 
             }

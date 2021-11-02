@@ -192,7 +192,9 @@ namespace Dapper
                     CheckAsyncTaskInProgress();
 
                     //if(this.Exception == null)
-                        Flush(flushStream: true, flushEncoder: true);
+                    // Flush(flushStream: true, flushEncoder: true);
+                    
+                    FlushAsyncInternal(true, true, _charBuffer, _charPos).Wait();
                 }
             }
             finally
