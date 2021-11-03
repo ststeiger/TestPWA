@@ -1,4 +1,4 @@
-
+﻿
 "use strict";
 
 import * as autobind_autotrace from "./autobind_autotrace.js";
@@ -174,13 +174,156 @@ async function assertSession()
     { } // Do nothing 
 }
 
+async function startWaiting(timeout?: number)
+{
+    if (window.top.Portal && window.top.Portal.Global && window.top.Portal.Global.Waiting && window.top.Portal.Global.Waiting.Start)
+    {
+        window.setTimeout(function ()
+        {
+            window.top.Portal.Global.Waiting.Start();
+        }, timeout || 20);
+    }
+}
+
+
+async function stopWaiting(timeout?:number)
+{
+    if (window.top.Portal && window.top.Portal.Global && window.top.Portal.Global.Waiting && window.top.Portal.Global.Waiting.Stop)
+    {
+        window.setTimeout(function ()
+        {
+            window.top.Portal.Global.Waiting.Stop();
+        }, timeout || 1500);
+    }
+
+}
+
+
+
+function saveChecklist(cl_uid?:string)
+{
+    startWaiting();
+    
+    // alert("saving CL: " + cl_uid);
+    // let evt = document.createEvent('Event');
+    // evt.initEvent('saveChecklist', true, true);
+
+    // https://caniuse.com/?search=CustomEvent
+    // https://stackoverflow.com/questions/9417121/is-there-any-way-of-passing-additional-data-via-custom-events
+    let evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent('saveChecklist', false, false, { "cl_uid": cl_uid });
+
+    // Dispatch an event
+    // window.dispatchEvent(evt);
+    document.dispatchEvent(evt);
+}
+
+
+function setText(el: HTMLElement, text:string)
+{
+    if (!el)
+        return;
+
+    el.appendChild(document.createTextNode(text));
+}
+
+
+function setUser(foot: HTMLDivElement, proc: string, chlist: string)
+{
+    if (!foot)
+        return;
+    
+    let old = document.getElementById("usr");
+    if (old != null)
+        old.parentNode.removeChild(old);
+
+    let span = document.createElement("span");
+    span.setAttribute("id", "usr");
+    span.setAttribute("class", "username");
+
+    if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Name)
+    {
+        setText(span, window.top.Portal.Session.Name());
+    }
+    else
+        // setText("привет мир 你好世界");
+        setText(span, "Albert Rösti");
+
+    foot.appendChild(span);
+}
+
+
+function setButtons(foot:HTMLDivElement, proc: string, chlist: string)
+{
+    if (!foot)
+        return;
+
+    let footer = [
+        , '<span id="usr" class="username">&nbsp;</span>'
+    ];
+
+
+    // if (window.parent.parent.Redirects && typeof(window.parent.parent.Redirects.closePage) == 'function')
+    if(true)
+    {
+        // footer.push('<input id="btn_ftrCancel" name="btn_ftrCancel"  onclick="document.querySelector(\'[id$=\\\'ifrmFormTemplate\\\']\').contentWindow.BD.footer.cancel(); return false;" type="submit" style="float:right; margin-right: 1px;" value="Abbrechen">');
+        // footer.push('<input id="btn_ftrNew" name="btn_ftrNew" onclick="document.querySelector(\'[id$=\\\'ifrmFormTemplate\\\']\').contentWindow.COR.Basic.SIBE.footer.save(); return false;" type="submit" style="float:right; margin-right: 1px;" value="Speichern">');
+        footer.push('<input id="btn_ftrNew" name="btn_ftrNew" onclick="document.querySelector(\'[id$=\\\'ifrmFormTemplate\\\']\').contentWindow.COR.Basic.SIBE.footer.save(); return false;" type="submit" style="float:right; margin-right: 1px;" value="Speichern">');
+    }
+
+
+    let oldButton = document.getElementById("btn_ftrNew");
+    if (oldButton != null)
+        oldButton.parentNode.removeChild(oldButton);
+
+    // foot.insertAdjacentHTML('beforeend', footer.join(""));
+    
+
+
+
+    let ele = document.createElement("INPUT");
+    ele.setAttribute("id", "btn_ftrNew");
+    ele.setAttribute("name", "btn_ftrNew");
+    ele.setAttribute("onclick", "saveChecklist();");
+    ele.setAttribute("type", "submit");
+    ele.setAttribute("style", "float:right; margin-right: 1px;");
+    ele.setAttribute("value", "Speichern");
+
+    (<any>window).saveChecklist = saveChecklist.bind(ele, chlist);
+    foot.appendChild(ele);
+
+    // let fB = document.getElementById.bind(foot.ownerDocument);
+    // fB("btn_ftrSave").value = "Speichern";
+    // fB("btn_ftrCancel").value = "Abbrechen";
+    // fB("btn_ftrNew").value = "Newly";
+}
+
+
+function setFooter(proc: string, chlist: string)
+{
+    let foot = <HTMLDivElement>document.getElementById("buttonFrame");
+    setUser(foot, proc, chlist);
+    setButtons(foot, proc, chlist);
+}
+
+
+function clearHtmlElementContents(el:HTMLElement)
+{
+    while (el.lastChild)
+    {
+        el.removeChild(el.lastChild);
+    }
+}
+
 
 
 // https://localhost:44314/ts/require/require.js?v=1
 // https://localhost:44314/vertical_text.htm
 // https://localhost:44314/Schuettgutcontainer.htm
-async function onDocumentReady(): Promise<any>
+async function onChecklistChanged(proc:string, chlist:string): Promise<void>
 {
+    startWaiting();
+
     let _: any = {
           "autobind_autotrace": autobind_autotrace
         , "autorun": autorun
@@ -219,16 +362,12 @@ async function onDocumentReady(): Promise<any>
     // let XML = require<IXmlBeautifier>("./xml_beautifier.js");
     // let hu = require<IHttpUtility>("./http_utility.js");
 
-    // let b = hu.htmlEncode("���<>[]{}nihao")
+    // let b = hu.htmlEncode("äöü<>[]{}nihao")
     // let c = hu.htmlDecode(b);
     // console.log(c);
 
-
-    let params = url_params.parseQuery(document.location.href)
-    // console.log("query params", params);
+    setFooter(proc, chlist);
     
-    let chlist = params.get("cl_uid");
-    // console.log("chlist", chlist);
 
     await assertSession();
 
@@ -253,7 +392,7 @@ async function onDocumentReady(): Promise<any>
 
     let checkListHeader: HTMLHeadElement = document.getElementById("checkListTitle");
 
-    // Sch�ttgutcontainer
+    // Schüttgutcontainer
     if (checklistName.rowCount > 0)
     { 
         document.title = checklistName.row(0).CL_Name
@@ -268,23 +407,37 @@ async function onDocumentReady(): Promise<any>
 
     let assembledFragment = <HTMLElement>db_html.assembleStructure(htmlInfo);
     // console.log("assembledFragment", assembledFragment);
-    document.body.appendChild(assembledFragment);
+    // document.body.appendChild(assembledFragment);
+
+
+    
+    let tChecklist = document.getElementById("tChecklist")
+    clearHtmlElementContents(tChecklist);
+    tChecklist.appendChild(assembledFragment);
+    
+
     // document.body.insertBefore(assembledFragment, checkListHeader.nextSibling);
 
+    
+    
 
     // Listen for the event.
+    if (!(<any>document).listensForSave)
     document.addEventListener('saveChecklist',
-        async function (e:Event)
+        async function (e:CustomEvent)
         {
             let cls_uid = uuid.newGuid();
-            
+            // console.log("saveChecklist->e.detail.cl_uid: ", e.detail.cl_uid);
+
             // e.target matches elem
             let saveData = db_html.collectSaveData(document.querySelector("table"), cls_uid);
             // console.log("saveData", saveData);
             // console.log("saveData",  saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; })   );
 
             await assertSession();
-            let saveDataSetResult = <IAjaxResult<any>>await fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": chlist });
+            let saveDataSetResult = <IAjaxResult<any>>await fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql",
+                { "__cls_uid": cls_uid, "__cls_cl_uid": e.detail.cl_uid }
+            );
 
             console.log("dataSetResult", saveDataSetResult);
             if (saveDataSetResult.hasError === false)
@@ -304,15 +457,178 @@ async function onDocumentReady(): Promise<any>
             {
                 alert(saveDataSetResult.error.message);
             }
+
+            stopWaiting();
         }
         ,false
     );
 
+    (<any>document).listensForSave = true;
     await loadChecklistValues(chlist);
+
+    stopWaiting(400);
 } // End Function onDocumentReady 
+
+function checkOrigin(event: MessageEvent):boolean
+{
+    let ret = false;;
+    let message;
+
+    if (!origin.toLowerCase().startsWith("https://localhost:") && !origin.toLowerCase().startsWith("https://localhost/"))
+    {
+        message = 'You ("' + event.origin + '") are not worthy';
+        ret = true;
+    }
+    else
+    {
+        message = 'I got "' + event.data + '" from "' + event.origin + '"';
+    }
+
+    console.log(message);
+    return ret;
+}
+
+
+async function receiveMessage(event: MessageEvent)
+{
+    // console.log("receiveMessage", event);
+    if (event == null || event.data == null)
+    {
+        console.log("no event or no data", event);
+        return;
+    }
+
+    let tData = null;
+    // if (!checkOrigin(event)) return;
+
+    try
+    {
+        tData = (typeof event.data === 'string') ? JSON.parse(event.data) : event.data;
+    }
+    catch (ex)
+    {
+        console.log(ex, event);
+        console.dir(event);
+    }
+
+    let tAction = (tData.Action || '').toLowerCase();
+    
+    // console.log(tData.Action + "->", event); 
+    console.log(tData.Action + "->", JSON.stringify(tData, null, "  "));
+    switch (tAction)
+    {
+        case 'portal.filter.loaded':
+            // // Nur wenn auf Auswahl geklickt wird.
+            //(tData.Param) && onBaumClick(tData.Param.Data.Value, tData.Param.Data.Type);
+            break;
+        case 'portal.basic.update':
+            // Dieses hier brauche ich - auch bei Page Load - Filter event nur wenn auf Auswahl geklickt wird...
+            console.log("Link-Target:", tData.Link);
+
+            let urlInfo = url_params.parseQuery(tData.Link)
+            // console.log("portal.basic.update->proc", urlInfo.get("proc"));
+            // console.log("portal.basic.update->cl_uid", urlInfo.get("cl_uid"));
+            onChecklistChanged(urlInfo.get("proc"), urlInfo.get("cl_uid"));
+            break
+        default:
+            // console.log("unhandled event", event);
+            console.log("Unhandled event->", tData.Action);
+            break;
+    }
+
+    // event.source.postMessage("thanks, got it ;)", event.origin);
+} // End Function ReceiveMessage
+
+
+
+function spreadMessage(object: any)
+{
+    if (inFrame)
+    {
+        window.top.Portal.Global.spreadMessage(object);
+    }
+    else
+    {
+        window.postMessage(JSON.stringify(object), '*');
+    }
+}
+
+
+function setMessageListener()
+{
+    if (window.removeEventListener)
+        window.removeEventListener("message", receiveMessage, false);
+    else
+        window.detachEvent("onmessage", receiveMessage);
+
+
+    if (!window['postMessage'])
+        alert("oh crap");
+    else
+    {
+        if (window.addEventListener)
+        {
+            // console.log("listening for message...");
+            window.addEventListener("message", receiveMessage, false);
+        }
+        else
+        {
+            // console.log("listening for IE message...");
+            window.attachEvent("onmessage", receiveMessage);
+        }
+    }
+
+}
+
+
+function isInlineFrame():boolean
+{
+    try
+    {
+        return window.self !== window.top;
+    }
+    catch (e)
+    {
+        return true;
+    }
+}
+
+
+async function onDocumentReady(): Promise<void>
+{
+    let params = url_params.parseQuery(document.location.href)
+    // console.log("query params", params);
+
+    let chlist = params.get("cl_uid");
+    // console.log("chlist", chlist);
+
+    onChecklistChanged(null, chlist);
+}
+
+
+let inFrame = isInlineFrame();
+setMessageListener(); // Execute immediately 
+
+
+function dispatchBasicUpdate()
+{
+    let msg =
+    {
+        "Action": "Portal.Basic.Update",
+        "Link": document.location.href
+    };
+
+    spreadMessage(msg);
+}
 
 
 export function main()
 {
-    autorun.documentReady(onDocumentReady);
+    if(!isInlineFrame())
+    {
+        // console.log("dispatching event");
+        dispatchBasicUpdate();
+    }
+
+    // autorun.documentReady(onDocumentReady);
 }

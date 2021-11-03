@@ -191,12 +191,97 @@ function assertSession() {
         });
     });
 }
-function onDocumentReady() {
+function startWaiting(timeout) {
     return __awaiter(this, void 0, void 0, function () {
-        var _, params, chlist, checkListData, checklistName, elements, elemntProps, checkListHeader, htmlInfo, assembledFragment;
+        return __generator(this, function (_a) {
+            if (window.top.Portal && window.top.Portal.Global && window.top.Portal.Global.Waiting && window.top.Portal.Global.Waiting.Start) {
+                window.setTimeout(function () {
+                    window.top.Portal.Global.Waiting.Start();
+                }, timeout || 20);
+            }
+            return [2];
+        });
+    });
+}
+function stopWaiting(timeout) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            if (window.top.Portal && window.top.Portal.Global && window.top.Portal.Global.Waiting && window.top.Portal.Global.Waiting.Stop) {
+                window.setTimeout(function () {
+                    window.top.Portal.Global.Waiting.Stop();
+                }, timeout || 1500);
+            }
+            return [2];
+        });
+    });
+}
+function saveChecklist(cl_uid) {
+    startWaiting();
+    var evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent('saveChecklist', false, false, { "cl_uid": cl_uid });
+    document.dispatchEvent(evt);
+}
+function setText(el, text) {
+    if (!el)
+        return;
+    el.appendChild(document.createTextNode(text));
+}
+function setUser(foot, proc, chlist) {
+    if (!foot)
+        return;
+    var old = document.getElementById("usr");
+    if (old != null)
+        old.parentNode.removeChild(old);
+    var span = document.createElement("span");
+    span.setAttribute("id", "usr");
+    span.setAttribute("class", "username");
+    if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Name) {
+        setText(span, window.top.Portal.Session.Name());
+    }
+    else
+        setText(span, "Albert Rösti");
+    foot.appendChild(span);
+}
+function setButtons(foot, proc, chlist) {
+    if (!foot)
+        return;
+    var footer = [
+        ,
+        '<span id="usr" class="username">&nbsp;</span>'
+    ];
+    if (true) {
+        footer.push('<input id="btn_ftrNew" name="btn_ftrNew" onclick="document.querySelector(\'[id$=\\\'ifrmFormTemplate\\\']\').contentWindow.COR.Basic.SIBE.footer.save(); return false;" type="submit" style="float:right; margin-right: 1px;" value="Speichern">');
+    }
+    var oldButton = document.getElementById("btn_ftrNew");
+    if (oldButton != null)
+        oldButton.parentNode.removeChild(oldButton);
+    var ele = document.createElement("INPUT");
+    ele.setAttribute("id", "btn_ftrNew");
+    ele.setAttribute("name", "btn_ftrNew");
+    ele.setAttribute("onclick", "saveChecklist();");
+    ele.setAttribute("type", "submit");
+    ele.setAttribute("style", "float:right; margin-right: 1px;");
+    ele.setAttribute("value", "Speichern");
+    window.saveChecklist = saveChecklist.bind(ele, chlist);
+    foot.appendChild(ele);
+}
+function setFooter(proc, chlist) {
+    var foot = document.getElementById("buttonFrame");
+    setUser(foot, proc, chlist);
+    setButtons(foot, proc, chlist);
+}
+function clearHtmlElementContents(el) {
+    while (el.lastChild) {
+        el.removeChild(el.lastChild);
+    }
+}
+function onChecklistChanged(proc, chlist) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _, checkListData, checklistName, elements, elemntProps, checkListHeader, htmlInfo, assembledFragment, tChecklist;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    startWaiting();
                     _ = {
                         "autobind_autotrace": autobind_autotrace,
                         "autorun": autorun,
@@ -209,8 +294,7 @@ function onDocumentReady() {
                         "uuid": uuid,
                         "xml": xml
                     };
-                    params = url_params.parseQuery(document.location.href);
-                    chlist = params.get("cl_uid");
+                    setFooter(proc, chlist);
                     return [4, assertSession()];
                 case 1:
                     _a.sent();
@@ -231,50 +315,159 @@ function onDocumentReady() {
                     }
                     htmlInfo = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
                     assembledFragment = db_html.assembleStructure(htmlInfo);
-                    document.body.appendChild(assembledFragment);
-                    document.addEventListener('saveChecklist', function (e) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            var cls_uid, saveData, saveDataSetResult, saveChecklistDataResult;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        cls_uid = uuid.newGuid();
-                                        saveData = db_html.collectSaveData(document.querySelector("table"), cls_uid);
-                                        return [4, assertSession()];
-                                    case 1:
-                                        _a.sent();
-                                        return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": chlist })];
-                                    case 2:
-                                        saveDataSetResult = _a.sent();
-                                        console.log("dataSetResult", saveDataSetResult);
-                                        if (!(saveDataSetResult.hasError === false)) return [3, 4];
-                                        return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData)];
-                                    case 3:
-                                        saveChecklistDataResult = _a.sent();
-                                        if (saveDataSetResult.hasError === false) {
-                                            console.log("saveResult", saveChecklistDataResult);
-                                        }
-                                        else {
-                                            alert(saveChecklistDataResult.error.message);
-                                        }
-                                        return [3, 5];
-                                    case 4:
-                                        alert(saveDataSetResult.error.message);
-                                        _a.label = 5;
-                                    case 5: return [2];
-                                }
+                    tChecklist = document.getElementById("tChecklist");
+                    clearHtmlElementContents(tChecklist);
+                    tChecklist.appendChild(assembledFragment);
+                    if (!document.listensForSave)
+                        document.addEventListener('saveChecklist', function (e) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var cls_uid, saveData, saveDataSetResult, saveChecklistDataResult;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            cls_uid = uuid.newGuid();
+                                            saveData = db_html.collectSaveData(document.querySelector("table"), cls_uid);
+                                            return [4, assertSession()];
+                                        case 1:
+                                            _a.sent();
+                                            return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": e.detail.cl_uid })];
+                                        case 2:
+                                            saveDataSetResult = _a.sent();
+                                            console.log("dataSetResult", saveDataSetResult);
+                                            if (!(saveDataSetResult.hasError === false)) return [3, 4];
+                                            return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData)];
+                                        case 3:
+                                            saveChecklistDataResult = _a.sent();
+                                            if (saveDataSetResult.hasError === false) {
+                                                console.log("saveResult", saveChecklistDataResult);
+                                            }
+                                            else {
+                                                alert(saveChecklistDataResult.error.message);
+                                            }
+                                            return [3, 5];
+                                        case 4:
+                                            alert(saveDataSetResult.error.message);
+                                            _a.label = 5;
+                                        case 5:
+                                            stopWaiting();
+                                            return [2];
+                                    }
+                                });
                             });
-                        });
-                    }, false);
+                        }, false);
+                    document.listensForSave = true;
                     return [4, loadChecklistValues(chlist)];
                 case 3:
                     _a.sent();
+                    stopWaiting(400);
                     return [2];
             }
         });
     });
 }
+function checkOrigin(event) {
+    var ret = false;
+    ;
+    var message;
+    if (!origin.toLowerCase().startsWith("https://localhost:") && !origin.toLowerCase().startsWith("https://localhost/")) {
+        message = 'You ("' + event.origin + '") are not worthy';
+        ret = true;
+    }
+    else {
+        message = 'I got "' + event.data + '" from "' + event.origin + '"';
+    }
+    console.log(message);
+    return ret;
+}
+function receiveMessage(event) {
+    return __awaiter(this, void 0, void 0, function () {
+        var tData, tAction, urlInfo;
+        return __generator(this, function (_a) {
+            if (event == null || event.data == null) {
+                console.log("no event or no data", event);
+                return [2];
+            }
+            tData = null;
+            try {
+                tData = (typeof event.data === 'string') ? JSON.parse(event.data) : event.data;
+            }
+            catch (ex) {
+                console.log(ex, event);
+                console.dir(event);
+            }
+            tAction = (tData.Action || '').toLowerCase();
+            console.log(tData.Action + "->", JSON.stringify(tData, null, "  "));
+            switch (tAction) {
+                case 'portal.filter.loaded':
+                    break;
+                case 'portal.basic.update':
+                    console.log("Link-Target:", tData.Link);
+                    urlInfo = url_params.parseQuery(tData.Link);
+                    onChecklistChanged(urlInfo.get("proc"), urlInfo.get("cl_uid"));
+                    break;
+                default:
+                    console.log("Unhandled event->", tData.Action);
+                    break;
+            }
+            return [2];
+        });
+    });
+}
+function spreadMessage(object) {
+    if (inFrame) {
+        window.top.Portal.Global.spreadMessage(object);
+    }
+    else {
+        window.postMessage(JSON.stringify(object), '*');
+    }
+}
+function setMessageListener() {
+    if (window.removeEventListener)
+        window.removeEventListener("message", receiveMessage, false);
+    else
+        window.detachEvent("onmessage", receiveMessage);
+    if (!window['postMessage'])
+        alert("oh crap");
+    else {
+        if (window.addEventListener) {
+            window.addEventListener("message", receiveMessage, false);
+        }
+        else {
+            window.attachEvent("onmessage", receiveMessage);
+        }
+    }
+}
+function isInlineFrame() {
+    try {
+        return window.self !== window.top;
+    }
+    catch (e) {
+        return true;
+    }
+}
+function onDocumentReady() {
+    return __awaiter(this, void 0, void 0, function () {
+        var params, chlist;
+        return __generator(this, function (_a) {
+            params = url_params.parseQuery(document.location.href);
+            chlist = params.get("cl_uid");
+            onChecklistChanged(null, chlist);
+            return [2];
+        });
+    });
+}
+var inFrame = isInlineFrame();
+setMessageListener();
+function dispatchBasicUpdate() {
+    var msg = {
+        "Action": "Portal.Basic.Update",
+        "Link": document.location.href
+    };
+    spreadMessage(msg);
+}
 function main() {
-    autorun.documentReady(onDocumentReady);
+    if (!isInlineFrame()) {
+        dispatchBasicUpdate();
+    }
 }
 exports.main = main;

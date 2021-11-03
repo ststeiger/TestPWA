@@ -40,25 +40,140 @@ https://www.typescriptlang.org/docs/handbook/modules.html
 
 */
 
+// window.top.Portal.Session.Name()
 
-interface Window
+interface IAjax
 {
-    // require: (fileName: string) => any;
-    // require_async: (name: string) => Promise<any>;
-    require<T>(fileName: string): T;
-    require_async<T>(name: string): Promise<T>;
-    msCrypto: Crypto;
+    
+    Get(url: string, callback: Function, param_to_pass_to_callback:any): void;
+    Post(url: string, posted_data: any, callback: Function, param_to_pass_to_callback:any, contentType:string, responseType:string): void;
+    getData(sql: string, params: any, callback: Function, param_to_pass_to_callback: any): void;
+    getEval(url: string, callback: Function, param_to_pass_to_callback:any): void;
+    getXmlDoc(): XMLHttpRequest;
+    
+    postData(sql: string, params: any, callback: Function, param_to_pass_to_callback: any): void;
+    postEval(url: string, posted_data: any, callback: Function, param_to_pass_to_callback:any): void;
+}
+
+interface IAdmin
+{
+    // https://www.codegrepper.com/code-examples/javascript/keyCode+%3D%3D+123
+    // https://keycode.info/
+    Init(): void; // CTRL+F12 event.ctrlKey && (event.which || event.keyCode) === 123){
+    Remove(): void;
+}
+
+interface IFeedback
+{
+    Send(header: string, message: string):void;
+}
+
+interface IDebug
+{
+    Log(namespace: string, objectToLog: any): void;
+    Trace(message: string, args: any): void;
+    Feedback: IFeedback;
+    hasError(response: any, call_feedback: any, container_element_for_Waiting: any):boolean;
+}
+
+
+interface ISession
+{
+    ID(): string;
+    Language(): string;
+    Name(): string;
+    
+    supportsCookies(): boolean;
+    hasCookie(cookieName: string): boolean;
+    getCookie(cookieName: string): string;
+    setCookie(cookieName: string, value:string): string|boolean;
+}
+
+interface IPortalBox
+{
+    fontsize: number;
+    height: number;
+    width: number;
+}
+
+
+interface ISettings
+{
+    Boxes: IPortalBox;
+    Connection: boolean;
+    Culture: string; // "de-ch"
+    Debug: boolean;
+    Footer: string; //  "COR cafm | suite V4"
+    VWS_Any: string;
+    Version: string;
+    alwaysShowSubnavigation: boolean;
+    appMandant: number;
+    basicLink: string; // "https://cordemo.cor-asp.ch/COR_Basic_Demo_V4/"
+    locationsLevel: number;
+    loginName: string;
+    loginPassword: string;
+    loginType: number;
+    portalLink: string; // "https://cordemo.cor-asp.ch/FM_COR_Demo_V4/"
+    rootLink: string; // "/FM_COR_Demo_V4/"
+}
+
+interface IGlobalWaiting
+{
+    Start: () => void;
+    Stop: () => void;
+}
+
+
+
+interface IGlobal
+{
+    spreadMessage(object: any, win?: Window): void;
+    receiveMessage: (event: MessageEvent) => void;
+
+    rootLink(): string;
+    Settings(): ISettings;
+
+    Waiting: IGlobalWaiting;
+}
+
+
+interface IFrameset
+{
+    focusFrameByWindow: (window: any) => void;
+}
+
+
+
+interface IPortal
+{
+    Frameset: IFrameset;
+    Global: IGlobal;
+    Session: ISession;
+
+    AJAX: IAjax;
+    Admin: IAdmin;
+    Debug: IDebug;
 }
 
 
 
 interface Window
 {
+    Portal: IPortal;
+    Settings: ISettings;
+    
     CustomEvent: any;
     // attachEvent: any;
     // detachEvent: any;
     attachEvent(eventName: string, callback: (event: any) => void): void;
     detachEvent(eventName: string, callback: (event: any) => void): void;
+    // console: any;
+
+    // require: (fileName: string) => any;
+    // require_async: (name: string) => Promise<any>;
+    require<T>(fileName: string): T;
+    require_async<T>(name: string): Promise<T>;
+    msCrypto: Crypto;
 }
 
 interface Document
