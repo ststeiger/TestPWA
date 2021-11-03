@@ -437,7 +437,11 @@ namespace TestPWA
                     // worksheet.InsertRow(10, 15);
                     worksheet.InsertRow(1, 5);
 
-                    string logoPath = @"D:\Stefan.Steiger\Documents\Visual Studio 2017\Projects\TestPWA\TestPWA\wwwroot\Checklist2\images\SNB-Logo-blau-320px.png";
+
+                    string logoPath = System.AppDomain.CurrentDomain.BaseDirectory;
+                    logoPath = System.IO.Path.Combine(logoPath, "..", "..","..", "wwwroot", "Checklist2", "images", "SNB-Logo-blau-320px.png");
+                    logoPath = System.IO.Path.GetFullPath(logoPath);
+
                     using (OfficeOpenXml.Drawing.ExcelPicture picture = GetLogo(worksheet, "Logo", logoPath, 135, 150))
                     {
                         // picture.SetPosition(0, 0, 5, 0);
