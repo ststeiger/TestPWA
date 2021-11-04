@@ -197,7 +197,7 @@ window.require_async = require_async;
 function foobar(key) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            return [2, ""];
+            return [2, "hello" + key];
         });
     });
 }
@@ -213,16 +213,24 @@ function removeAll() {
 }
 function removeAll2() {
     return __awaiter(this, void 0, void 0, function () {
-        var boo;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var boo, _a, a, b, c;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0: return [4, Promise.all([
                         foobar("key1"),
                         foobar("key2"),
                         foobar("key3")
                     ])];
                 case 1:
-                    boo = _a.sent();
+                    boo = _b.sent();
+                    return [4, Promise.all([
+                            foobar("key1"),
+                            foobar("key2"),
+                            foobar("key3")
+                        ])];
+                case 2:
+                    _a = _b.sent(), a = _a[0], b = _a[1], c = _a[2];
+                    console.log("ciao", a, b, c);
                     doSomething();
                     return [2];
             }

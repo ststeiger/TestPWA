@@ -248,7 +248,7 @@ interface IMainModule
 
 async function foobar(key: string)
 {
-    return "";
+    return "hello" + key;
 }
 
 function doSomething()
@@ -274,11 +274,20 @@ function removeAll()
 
 async function removeAll2()
 {
-    let boo:string[] = await Promise.all([
+    let boo: string[] = await Promise.all([
         foobar("key1"),
         foobar("key2"),
         foobar("key3")
     ]);
+
+
+    let [a, b, c] = await Promise.all([
+        foobar("key1"),
+        foobar("key2"),
+        foobar("key3")
+    ]);
+
+    console.log("ciao", a, b, c);
 
     doSomething();
 }
