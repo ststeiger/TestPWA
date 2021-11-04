@@ -351,13 +351,13 @@ namespace Dapper
         {
             try
             {
-                using (System.Data.Common.DbDataReader dr = cnn.ExecuteDbReader(sql, param, transaction, commandTimeout, commandType))
+                await using (System.Data.Common.DbDataReader dr = cnn.ExecuteDbReader(sql, param, transaction, commandTimeout, commandType))
                 {
                     System.Text.Json.JsonWriterOptions writerOptions = new System.Text.Json.JsonWriterOptions();
                     if (format.HasFlag(RenderType_t.Indented))
                         writerOptions.Indented = true;
 
-                    using (System.Text.Json.Utf8JsonWriter jsonWriter = new System.Text.Json.Utf8JsonWriter(outputStream, writerOptions))
+                    await using (System.Text.Json.Utf8JsonWriter jsonWriter = new System.Text.Json.Utf8JsonWriter(outputStream, writerOptions))
                     {
 
                         jsonWriter.WriteStartObject();

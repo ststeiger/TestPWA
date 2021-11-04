@@ -28,11 +28,35 @@ import * as url_params from "./url_params.js";
 
 
 
+function addStylesheet(url:string)
+{
+    let h = document.getElementsByTagName("head")[0];
+
+    if (url.indexOf("?") != -1)
+    {
+        url += "&"
+    }
+    else
+        url += "?"
+
+    url += "no_cache=" + (new Date()).getTime().toString();
+
+    let ss = document.createElement("LINK");
+    ss.setAttribute("rel", "stylesheet");
+    ss.setAttribute("href", url);
+
+    h.appendChild(ss);
+}
+
+
 
 // do polyfills immediately on script-load
 if (true)
 {
     // aff = require<IHttpUtility>("./http_utility.js")
+
+    addStylesheet("css/checklist.css");
+    addStylesheet("../css/Scrolling/Scrollbar.css?v=1");
 }
 
 

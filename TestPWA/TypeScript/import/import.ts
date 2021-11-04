@@ -36,6 +36,7 @@ interface IFoo
 
 async function main()
 {
+    
     let bar = await requisite<IFoo>("./foo.js");
     // let foo = await import("./foo.js");
     bar.foo();

@@ -48,7 +48,22 @@ var table_wrapper_js_1 = require("./table_wrapper.js");
 var db_html = require("./db_html.js");
 var translations = require("./translations.js");
 var url_params = require("./url_params.js");
+function addStylesheet(url) {
+    var h = document.getElementsByTagName("head")[0];
+    if (url.indexOf("?") != -1) {
+        url += "&";
+    }
+    else
+        url += "?";
+    url += "no_cache=" + (new Date()).getTime().toString();
+    var ss = document.createElement("LINK");
+    ss.setAttribute("rel", "stylesheet");
+    ss.setAttribute("href", url);
+    h.appendChild(ss);
+}
 if (true) {
+    addStylesheet("css/checklist.css");
+    addStylesheet("../css/Scrolling/Scrollbar.css?v=1");
 }
 function postFetch(url, payload) {
     return __awaiter(this, void 0, void 0, function () {

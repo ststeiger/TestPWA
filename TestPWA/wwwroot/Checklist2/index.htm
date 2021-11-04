@@ -36,6 +36,21 @@
     <script src="polyfills/fetch.js?v=1"></script>
 
 
+    <style type="text/css" media="all">
+
+        *
+        {
+            #font-family: 'Malgun Gothic' !important;
+            font-family: 'Comic Sans MS' !important;
+            #font-family: Calibri !important;
+            #font-family: 'Noto Sans' !important;
+            #font-family: Bahnschrift !important;
+            #font-family: Verdana !important;
+            #font-family: 'Algerian Regular' !important;
+        }
+
+    </style>
+
     <!--
         https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
         <script type="text/javascript" src="javascript.js"></script>
@@ -51,22 +66,6 @@
 
 </head>
 <body class="Black">
-    <link rel="stylesheet" href="css/checklist.css" />
-    <link rel="stylesheet" href="../css/Scrolling/Scrollbar.css?v=1" />
-
-    <script data-main="./ts/dev/main.js" src="ts/require/require.js?v=1"></script>
-    <!--
-    <script src="ts/dev/main.js?v=1"></script>
-    -->
-
-    <style type="text/css" media="all">
-
-        *
-        {
-            font-family: Arial;
-        }
-
-    </style>
 
 
     <div class="contentWrapper">
@@ -88,10 +87,9 @@
     <div id="buttonFrame" class="buttonFrame">
     </div>
 
-
-    <input type="button" onclick="saveChecklist();" value="Speichern" />
     <br />
     <br />
     <br />
+    <script data-main="./ts/dev/main.js" src="ts/require/require.js?v=1"></script>
 </body>
 </html>

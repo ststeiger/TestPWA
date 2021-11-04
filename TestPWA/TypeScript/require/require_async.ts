@@ -8,6 +8,7 @@ interface Window
 {
     // require_async: (name: string) => Promise<any>;
     require_async<T>(name: string): Promise<T>;
+    exports: any;
 }
 
 // }
@@ -64,6 +65,47 @@ if (!String.prototype.startsWith)
             return this.substring(pos, pos + search.length) === search;
         }
     });
+}
+
+if (!String.prototype.endsWith)
+{
+    String.prototype.endsWith = function (search: string, this_len: number)
+    {
+        if (this_len === undefined || this_len > this.length)
+        {
+            this_len = this.length;
+        }
+        return this.substring(this_len - search.length, this_len) === search;
+    };
+}
+
+
+// for IE8
+if (!String.prototype.trim)
+{
+    String.prototype.trim = function ()
+    {
+        // return this.replace(/^\s+|\s+$/g, '');
+        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    };
+}
+
+if (!(<any>String.prototype).trimStart)
+{
+    (<any>String.prototype).trimStart = function ()
+    {
+        // return this.replace(/^\s+/g, '');
+        return this.replace(/^[\s\uFEFF\xA0]+/g, '');
+    };
+}
+
+if (!(<any>String.prototype).trimEnd)
+{
+    (<any>String.prototype).trimEnd = function ()
+    {
+        // return this.replace(/\s+$/g, '');
+        return this.replace(/[\s\uFEFF\xA0]+$/g, '');
+    };
 }
 
 
@@ -144,12 +186,99 @@ async function require_async<T>(name: string)
 }
 
 require_async.cache = Object.create(null);
+require_async.paths = Object.create(null);
+require_async.debug = false;
+
 window.require_async = require_async;
 
 
 
-(async function () 
+interface IMainModule
+{
+    main(): Promise<any>;
+}
+
+
+
+
+(async function ()
 {
     const asyncStuff = await require_async<string>("https://stackoverflow.com/questions/9901082/what-is-this-javascript-require/63070817#63070817")
     console.log(asyncStuff);
+
+    window.require_async = require_async;
+    // https://nodejs.org/api/globals.html
+    // __dirname: This variable may appear to be global but is not. The directory name of the current module. This is the same as the path.dirname() of the __filename.
+    // __filename: This variable may appear to be global but is not. The file name of the current module. This is the current module file's absolute path with symlinks resolved.
+    // jep, it's a global-object: __dirname, __filename, exports, module, require()
+    window.exports = window.exports || Object.create(null);
+
+    let cs = document.currentScript || document.scripts[document.scripts.length - 1];
+
+    // console.log("cs", cs);
+    if (cs != null)
+    {
+        require_async.paths.main = cs.getAttribute("data-main");
+        require_async.paths.src = cs.getAttribute("src");
+        require_async.paths.html = document.location.href; // cs.baseURI || document.location.href;
+
+        let props = ["hash", "host", "hostname", "origin", "pathname", "port", "protocol", "search", "ancestorOrigins"];
+        for (let i = 0; i < props.length; ++i)
+        {
+            require_async.paths[props[i]] = (<any>document.location)[props[i]];
+        }
+
+        require_async.paths.basePath = require_async.paths.html.substr(0, (<string>require_async.paths.html).lastIndexOf("/") + 1);
+
+        let sanitizedPath = require_async.paths.main;
+        if (sanitizedPath.startsWith("./"))
+            sanitizedPath = sanitizedPath.substr(2);
+
+        let url: string = require_async.paths.basePath + sanitizedPath;
+        require_async.paths.mainPath = url.substr(0, url.lastIndexOf("/") + 1);
+        
+        // console.log("paths:", require_async.paths);
+        let ts = await require_async<IMainModule>(url);
+        if (ts && ts.main)
+            await ts.main();
+    }
 }());
+
+
+
+async function foobar(key: string)
+{
+    return "";
+}
+
+function doSomething()
+{ }
+
+
+function removeAll()
+{
+    Promise.all([
+        foobar("key1"),
+        foobar("key2"),
+        foobar("key3")
+    ]).then(
+        function (value: string[])
+        {
+            doSomething();
+        }
+    );
+
+
+}
+
+
+async function removeAll2()
+{
+    let boo:string[] = await Promise.all([
+        foobar("key1"),
+        foobar("key2"),
+        foobar("key3")
+    ]);
+
+    doSomething();
+}

@@ -61,6 +61,29 @@ if (!String.prototype.startsWith) {
         }
     });
 }
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function (search, this_len) {
+        if (this_len === undefined || this_len > this.length) {
+            this_len = this.length;
+        }
+        return this.substring(this_len - search.length, this_len) === search;
+    };
+}
+if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    };
+}
+if (!String.prototype.trimStart) {
+    String.prototype.trimStart = function () {
+        return this.replace(/^[\s\uFEFF\xA0]+/g, '');
+    };
+}
+if (!String.prototype.trimEnd) {
+    String.prototype.trimEnd = function () {
+        return this.replace(/[\s\uFEFF\xA0]+$/g, '');
+    };
+}
 function require_async(name) {
     return __awaiter(this, void 0, void 0, function () {
         function readFileAsync(fileName, encoding) {
@@ -129,18 +152,80 @@ function require_async(name) {
     });
 }
 require_async.cache = Object.create(null);
+require_async.paths = Object.create(null);
+require_async.debug = false;
 window.require_async = require_async;
 (function () {
     return __awaiter(this, void 0, void 0, function () {
-        var asyncStuff;
+        var asyncStuff, cs, props, i, sanitizedPath, url, ts;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, require_async("https://stackoverflow.com/questions/9901082/what-is-this-javascript-require/63070817#63070817")];
                 case 1:
                     asyncStuff = _a.sent();
                     console.log(asyncStuff);
-                    return [2];
+                    window.require_async = require_async;
+                    window.exports = window.exports || Object.create(null);
+                    cs = document.currentScript || document.scripts[document.scripts.length - 1];
+                    if (!(cs != null)) return [3, 4];
+                    require_async.paths.main = cs.getAttribute("data-main");
+                    require_async.paths.src = cs.getAttribute("src");
+                    require_async.paths.html = document.location.href;
+                    props = ["hash", "host", "hostname", "origin", "pathname", "port", "protocol", "search", "ancestorOrigins"];
+                    for (i = 0; i < props.length; ++i) {
+                        require_async.paths[props[i]] = document.location[props[i]];
+                    }
+                    require_async.paths.basePath = require_async.paths.html.substr(0, require_async.paths.html.lastIndexOf("/") + 1);
+                    sanitizedPath = require_async.paths.main;
+                    if (sanitizedPath.startsWith("./"))
+                        sanitizedPath = sanitizedPath.substr(2);
+                    url = require_async.paths.basePath + sanitizedPath;
+                    require_async.paths.mainPath = url.substr(0, url.lastIndexOf("/") + 1);
+                    return [4, require_async(url)];
+                case 2:
+                    ts = _a.sent();
+                    if (!(ts && ts.main)) return [3, 4];
+                    return [4, ts.main()];
+                case 3:
+                    _a.sent();
+                    _a.label = 4;
+                case 4: return [2];
             }
         });
     });
 }());
+function foobar(key) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2, ""];
+        });
+    });
+}
+function doSomething() { }
+function removeAll() {
+    Promise.all([
+        foobar("key1"),
+        foobar("key2"),
+        foobar("key3")
+    ]).then(function (value) {
+        doSomething();
+    });
+}
+function removeAll2() {
+    return __awaiter(this, void 0, void 0, function () {
+        var boo;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, Promise.all([
+                        foobar("key1"),
+                        foobar("key2"),
+                        foobar("key3")
+                    ])];
+                case 1:
+                    boo = _a.sent();
+                    doSomething();
+                    return [2];
+            }
+        });
+    });
+}
