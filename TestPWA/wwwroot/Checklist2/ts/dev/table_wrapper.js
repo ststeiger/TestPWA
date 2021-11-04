@@ -5,7 +5,7 @@ var linq_js_1 = require("./linq.js");
 var autobind_autotrace_js_1 = require("./autobind_autotrace.js");
 var GroupedData = (function () {
     function GroupedData(key, columns, columnMap, data) {
-        (0, autobind_autotrace_js_1.autoBind)(this);
+        autobind_autotrace_js_1.autoBind(this);
         var that = this;
         this.m_accessor = {};
         this.m_key = key;
@@ -88,11 +88,11 @@ exports.GroupedData = GroupedData;
 var GroupedTableWrapper = (function () {
     function GroupedTableWrapper(tw, propertyToGroupBy) {
         var that = this;
-        (0, autobind_autotrace_js_1.autoBind)(this);
+        autobind_autotrace_js_1.autoBind(this);
         this.m_columnMap = tw.columnMap;
         this.m_columns = tw.columns;
         this.m_columnLength = tw.columns.length;
-        this.m_groupedData = (0, linq_js_1.groupBy)(tw.rows, function (item) {
+        this.m_groupedData = linq_js_1.groupBy(tw.rows, function (item) {
             return item[tw.getIndex(propertyToGroupBy)];
         });
         this.m_accessor = {};
@@ -143,7 +143,7 @@ exports.GroupedTableWrapper = GroupedTableWrapper;
 var TableWrapper = (function () {
     function TableWrapper(columns, data, ignoreCase) {
         var that = this;
-        (0, autobind_autotrace_js_1.autoBind)(this);
+        autobind_autotrace_js_1.autoBind(this);
         if (ignoreCase == null)
             ignoreCase = true;
         for (var i = 0; i < columns.length; ++i) {

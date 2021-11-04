@@ -3,8 +3,8 @@
 
   "compilerOptions": {
     "target": "ES5", //"target": "es5",
-    "module": "amd", // define, export, like playground
-    //"module": "commonjs", // require
+    //"module": "amd", // define, export, like playground
+    "module": "commonjs", // require
     // "module": "ES2020", // just like typescript
     // "module": "system", // System.register
     // "module": "umd", // factory, require, exports

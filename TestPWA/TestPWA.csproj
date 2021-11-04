@@ -19,4 +19,9 @@
     <ProjectReference Include="..\EPPlus.NetStandard2\EPPlus.NetStandard2.csproj" />
   </ItemGroup>
   
+  <ItemGroup>
+    <Folder Include="wwwroot\Checklist2\ts\" />
+    <Folder Include="wwwroot\ts\" />
+  </ItemGroup>
+  
 </Project>

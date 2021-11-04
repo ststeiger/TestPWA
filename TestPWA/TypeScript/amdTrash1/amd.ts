@@ -14,40 +14,38 @@ interface IOptions
 }
 
 
+declare let exports: any;
+declare let amdLiteConfig: IOptions;
+
+
+
 /**
  * Do not pollute public scope by default
  */
-(function (root)
+(function (root:any)
 {
-	/**
-	 * Public scope
-	 */
+	// Public scope
 	let that = {
-
+		strict:false,
 		// --------------------------------------------------------------------- LOCAL PROPERTIES
 
-		/**
-		 * Modules that are already required and initialised.
-		 */
-		readyModules: <any[]>[],
+		// Modules that are already required and initialised.
+		readyModules: <{ [key: string]: any }>{},
 
-		/**
-		 * Modules defined but never required yet.
-		 * Every item contains a callback and dependency list.
-		 * Required modules are removed from this list and added to the readyModules list.
-		 */
-		waitingModules: <any[]>[],
+		// Modules defined but never required yet.
+		// Every item contains a callback and dependency list.
+		// Required modules are removed from this list and added to the readyModules list.
+		waitingModules: <{ [key: string]: any }>{},
 
 		// that.waitingModules[name] = { dependencies: dependencies, callback: callback };
 
 
 		// --------------------------------------------------------------------- CONFIG PROPERTIES
 
-		/**
-		 * Public scope where require API is injected and where from global dependencies are retrieved.
-		 * Can be changed if you work in a Node or specific environment.
-		 * Default is self or this (window in browsers).
-		 */
+		
+		 // Public scope where require API is injected and where from global dependencies are retrieved.
+		 // Can be changed if you work in a Node or specific environment.
+		 // Default is self or this (window in browsers).
 		publicScope: root,
 
 		/**
@@ -60,10 +58,8 @@ interface IOptions
 		 */
 		ignoreNotOptimized: false,
 
-		/**
-		 * Allow an AMD module to override another one if it has the same path.
-		 * Default is strict so an error will be thrown.
-		 */
+		// Allow an AMD module to override another one if it has the same path.
+		// Default is strict so an error will be thrown.
 		allowOverride: false,
 
 		/**
@@ -95,7 +91,7 @@ interface IOptions
 		 *
 		 * Really handy for non AMD compatible libraries or not optimised modules.
 		 */
-		globalDependencies: {},
+		globalDependencies: <{ [key: string]: any }>{},
 
 		/**
 		 * Namespaces are useful to map globally available libraries to another name.
@@ -108,7 +104,7 @@ interface IOptions
 		 * "gsap" : "GreenSockGlobals"
 		 * and "gsap" will be added to global scope, pointing to "GreenSockGlobals"
 		 */
-		namespaces: {},
+		namespaces: <{ [key: string]: any }>{},
 
 		/**
 		 * AMD Object injected onto define method.
@@ -352,7 +348,7 @@ interface IOptions
 		 * @param from Original path from where to require.
 		 * @return an array of defined modules.
 		 */
-		resolveDependencies: function (dependencyNames:string[], from:string)
+		resolveDependencies: function (dependencyNames:string[], from:string):any 
 		{
 			// Browse dependency names
 			return dependencyNames.map(function (dependencyName)
@@ -403,7 +399,7 @@ interface IOptions
 			// Special case : require
 			if (dependencyPath == 'require')
 			{
-				return require;
+				return that.require;
 			}
 
 			// Special case : exports statement
@@ -479,11 +475,11 @@ interface IOptions
 			else return null;
 		}
 	};
-
+	
 	// ------------------------------------------------------------------------- UMD & AUTO INIT
 
 	// If we have an exports object (Node env for example)
-	if (typeof exports === 'object' && typeof exports.nodeName !== 'string')
+	if (typeof (exports) === 'object' && typeof (exports.nodeName) !== 'string')
 	{
 		// Do not pollute global scope and add public API on exports object
 		exports.amdLite = that;
@@ -497,7 +493,7 @@ interface IOptions
 	}
 
 	// Auto init if we have an amdLiteConfig object available in global scope
-	if (typeof amdLiteConfig === 'object')
+	if (typeof (amdLiteConfig) === 'object')
 	{
 		that.init(amdLiteConfig);
 	}
