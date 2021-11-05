@@ -291,3 +291,14 @@ async function removeAll2()
 
     doSomething();
 }
+
+
+
+function removeAll3()
+{
+    let [a, b, c] = ["key1", "key2", "key3"];
+
+    console.log("ciao", a, b, c);
+
+    doSomething();
+}

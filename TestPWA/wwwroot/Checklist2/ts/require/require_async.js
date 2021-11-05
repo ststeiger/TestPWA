@@ -237,3 +237,8 @@ function removeAll2() {
         });
     });
 }
+function removeAll3() {
+    var _a = ["key1", "key2", "key3"], a = _a[0], b = _a[1], c = _a[2];
+    console.log("ciao", a, b, c);
+    doSomething();
+}

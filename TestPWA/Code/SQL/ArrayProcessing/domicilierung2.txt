@@ -1,0 +1,19 @@
+Eigentümer: auf Gebäude  - Gebäude auf Kommission oder Task (ggf. via Raum etc)
+
+Interne Verrechnung: Häkchen auf Task 
+
+
+Mitarbeiter aus GebäudeA wascht Hintern von Bewohner aus Gebäude B. 
+Bewohner aus Gebäude B bekommt Rechnung für WC-Papier. (siehe was Nando versendet) 
+Gebäude B bekommt Rechnung von Gebäude A (interne Verrechnung - Häkchen auf Task)
+
+
+
+Link in Chrome aufrufen.
+JavaScript einfügen
+JavaScript ausführen
+JSON erhalten.
+JSON deserialisieren
+in Tabelle schreiben - datentyp erstelln
+updatescript über alles laufen lassen
+FERTIG
