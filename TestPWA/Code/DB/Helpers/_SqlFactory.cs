@@ -11,10 +11,17 @@ namespace AnySqlWebAdmin
 
         private static string GetMsConnectionString()
         {
+            return GetMsConnectionString("server_mail");
+        }
+
+
+        private static string GetMsConnectionString(string database)
+        {
             System.Data.SqlClient.SqlConnectionStringBuilder csb = new System.Data.SqlClient.SqlConnectionStringBuilder();
 
             csb.DataSource = System.Environment.MachineName; // SecretManager.GetSecret<string>("DataSource");
-            csb.InitialCatalog = "server_mail";
+            csb.InitialCatalog = database;
+
 
             csb.IntegratedSecurity = true;
             if (!csb.IntegratedSecurity)
@@ -38,11 +45,17 @@ namespace AnySqlWebAdmin
 
         private static string GetPgConnectionString()
         {
+            string defaultDB = SecretManager.GetSecret<string>("DefaultDb"); // "server_mail"
+            return GetPgConnectionString(defaultDB);
+        }
+
+        private static string GetPgConnectionString(string database)
+        {
             Npgsql.NpgsqlConnectionStringBuilder csb = new Npgsql.NpgsqlConnectionStringBuilder();
 
             csb.Host = SecretManager.GetSecret<string>("DefaultDbHost"); ;
             csb.Port = 5432;
-            csb.Database = SecretManager.GetSecret<string>("DefaultDb"); // "server_mail"
+            csb.Database = database;
 
             csb.IntegratedSecurity = false;
             if (!csb.IntegratedSecurity)
@@ -107,6 +120,25 @@ namespace AnySqlWebAdmin
                 return con;
             }
         }
+
+
+        public System.Data.Common.DbConnection GetConnection(string database)
+        {
+            System.Data.Common.DbConnection con = s_Factory.CreateConnection();
+
+            if (object.ReferenceEquals(s_Factory.GetType(), typeof(System.Data.SqlClient.SqlClientFactory)))
+                con.ConnectionString = GetMsConnectionString(database);
+            else if (object.ReferenceEquals(s_Factory.GetType(), typeof(Npgsql.NpgsqlFactory)))
+                con.ConnectionString = GetPgConnectionString(database);
+            else
+                con.ConnectionString = s_ConnectionString;
+
+            if (con.State != System.Data.ConnectionState.Open)
+                con.Open();
+
+            return con;
+        }
+
 
 
         public SqlFactory()
