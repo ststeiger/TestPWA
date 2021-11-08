@@ -15,7 +15,7 @@ namespace TestPWA
 
         public static void Main(string[] args)
         {
-            DbHtml.GenerateAllChecklists();
+            // DbHtml.GenerateAllChecklists();
             // TestEpPlus.Test(); return;
             CreateHostBuilder(args).Build().Run();
         } // End Sub Main 
