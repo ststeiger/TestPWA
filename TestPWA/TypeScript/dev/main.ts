@@ -28,10 +28,39 @@ import * as url_params from "./url_params.js";
 
 
 
+enum FontStyle
+{
+    Regular = 0,
+    Bold = 1,
+    Italic = 2,
+    Underline = 4,
+    Strikeout = 8
+}
+
+// https://cordemo.cor-asp.ch/COR_Basic_Demo_V4/cgi-bin/GenerateImage.ashx?no_cache=1636308667021&bgcolor=%23FFF&rotate=true&text=COR_ObjektRechte%0D%0ASchreiben
+// <div style="background-image: url(&quot;cgi-bin/GenerateImage.ashx?no_cache=1636450422429&amp;bgcolor=%233D3D3D&amp;rotate=true&amp;text=COR_PortfolioRechte_Alle&quot;);"></div>
+// Create the Font object for the image text drawing.
+// using(System.Drawing.Font fntThisFont = new System.Drawing.Font(strFontFamily, fontSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel))
+enum GraphicsUnit
+{
+    World = 0,
+    Display = 1,
+    Pixel = 2,
+    Point = 3,
+    Inch = 4,
+    Document = 5,
+    Millimeter = 6
+}
+
+
+
+
+
+
 function addStylesheet(url:string)
 {
     let h = document.getElementsByTagName("head")[0];
-
+    
     if (url.indexOf("?") != -1)
     {
         url += "&"

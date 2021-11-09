@@ -48,6 +48,24 @@ var table_wrapper_js_1 = require("./table_wrapper.js");
 var db_html = require("./db_html.js");
 var translations = require("./translations.js");
 var url_params = require("./url_params.js");
+var FontStyle;
+(function (FontStyle) {
+    FontStyle[FontStyle["Regular"] = 0] = "Regular";
+    FontStyle[FontStyle["Bold"] = 1] = "Bold";
+    FontStyle[FontStyle["Italic"] = 2] = "Italic";
+    FontStyle[FontStyle["Underline"] = 4] = "Underline";
+    FontStyle[FontStyle["Strikeout"] = 8] = "Strikeout";
+})(FontStyle || (FontStyle = {}));
+var GraphicsUnit;
+(function (GraphicsUnit) {
+    GraphicsUnit[GraphicsUnit["World"] = 0] = "World";
+    GraphicsUnit[GraphicsUnit["Display"] = 1] = "Display";
+    GraphicsUnit[GraphicsUnit["Pixel"] = 2] = "Pixel";
+    GraphicsUnit[GraphicsUnit["Point"] = 3] = "Point";
+    GraphicsUnit[GraphicsUnit["Inch"] = 4] = "Inch";
+    GraphicsUnit[GraphicsUnit["Document"] = 5] = "Document";
+    GraphicsUnit[GraphicsUnit["Millimeter"] = 6] = "Millimeter";
+})(GraphicsUnit || (GraphicsUnit = {}));
 function addStylesheet(url) {
     var h = document.getElementsByTagName("head")[0];
     if (url.indexOf("?") != -1) {

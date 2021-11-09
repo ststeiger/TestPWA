@@ -29,6 +29,9 @@ namespace AnySqlWebAdmin
             string strRotate = null;
             string strBGcolor = null;
             string strFGcolor = null;
+            string strFontFamily = null;
+            int fontSize = 11;
+            int fontStyle = (int)System.Drawing.FontStyle.Regular;
 
             if (context.Request.QueryString.HasValue)
             {
@@ -36,6 +39,18 @@ namespace AnySqlWebAdmin
                 strRotate = context.Request.Query["rotate"].ToString();
                 strBGcolor = context.Request.Query["bgcolor"].ToString();
                 strFGcolor = context.Request.Query["fgcolor"].ToString();
+
+                strFontFamily = context.Request.Query["fontFamily"].ToString();
+                if (string.IsNullOrWhiteSpace(strFontFamily))
+                    strFontFamily = "Arial";
+
+                string strFontSize = context.Request.Query["fontSize"].ToString();
+                if(!string.IsNullOrWhiteSpace(strFontSize))
+                    int.TryParse(strFontSize, out fontSize);
+
+                string strFontStyle = context.Request.Query["fontStyle"].ToString();
+                if (!string.IsNullOrWhiteSpace(strFontStyle))
+                    int.TryParse(strFontStyle, out fontStyle);
             } // End if (context.Request.QueryString.HasValue) 
 
             bool bRotate = true;
@@ -49,7 +64,7 @@ namespace AnySqlWebAdmin
             using (System.IO.MemoryStream msTempOutputStream = new System.IO.MemoryStream())
             {
                 // Dim img As System.Drawing.Image = GenerateImage(strText, "Arial", bRotate)
-                using (System.Drawing.Image img = CreateBitmapImage(strText, bRotate, strBGcolor, strFGcolor))
+                using (System.Drawing.Image img = CreateBitmapImage(strFontFamily, fontSize, fontStyle, strText, bRotate, strBGcolor, strFGcolor))
                 {
                     img.Save(msTempOutputStream, System.Drawing.Imaging.ImageFormat.Png);
                     msTempOutputStream.Flush();
@@ -65,18 +80,6 @@ namespace AnySqlWebAdmin
         } // End Task Invoke 
 
 
-        private System.Drawing.Image CreateBitmapImage(string strImageText)
-        {
-            return CreateBitmapImage(strImageText, true);
-        } // CreateBitmapImage
-
-
-        private System.Drawing.Image CreateBitmapImage(string strImageText, bool bRotate)
-        {
-            return CreateBitmapImage(strImageText, bRotate, null, null);
-        } // CreateBitmapImage
-
-
         private System.Drawing.Color InvertMeAColour(System.Drawing.Color ColourToInvert)
         {
             const int RGBMAX = 255;
@@ -84,7 +87,7 @@ namespace AnySqlWebAdmin
         } // InvertMeAColour
 
 
-        private System.Drawing.Image CreateBitmapImage(string strImageText, bool bRotate, string strBackgroundColor, string strForegroundColor)
+        private System.Drawing.Image CreateBitmapImage(string fontFamily, int fontSize, int fontStyle, string strImageText, bool bRotate, string strBackgroundColor, string strForegroundColor)
         {
             System.Drawing.Bitmap bmpEndImage = null/* TODO Change to default(_) if this is not a reference type */;
 
@@ -104,13 +107,10 @@ namespace AnySqlWebAdmin
             else
                 TextColor = System.Drawing.ColorTranslator.FromHtml(strForegroundColor);
 
-
             // TextColor = Color.FromArgb(102, 102, 102)
 
-
-
             // Create the Font object for the image text drawing.
-            using (System.Drawing.Font fntThisFont = new System.Drawing.Font("Arial", 11, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel))
+            using (System.Drawing.Font fntThisFont = new System.Drawing.Font(fontFamily, fontSize, (System.Drawing.FontStyle)fontStyle, System.Drawing.GraphicsUnit.Pixel))
             {
 
                 // Create a graphics object to measure the text's width and height.

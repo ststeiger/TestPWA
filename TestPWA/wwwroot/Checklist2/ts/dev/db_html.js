@@ -61,20 +61,40 @@ function _createElement(data) {
             el.setAttribute("name", el.id);
         }
     }
-    for (var i = 0; i < data.properties.length; ++i) {
-        el.setAttribute(data.properties[i][0], data.properties[i][1]);
+    var isVertical = false;
+    if (data.properties) {
+        for (var i = 0; i < data.properties.length; ++i) {
+            if ("class" == data.properties[i][0] && String(data.properties[i][1]).indexOf("verticalColumn") != -1) {
+                isVertical = true;
+            }
+            if (null != data.properties[i][0])
+                el.setAttribute(data.properties[i][0], data.properties[i][1]);
+        }
     }
-    if (data.innerHtml)
+    if (data.innerHtml) {
         el.innerHTML = data.innerHtml;
+        var iPAD = String(navigator.userAgent).toLowerCase().indexOf("ipad") != -1;
+        if (isVertical && iPAD) {
+            var font = "Arial";
+            var txt = el.textContent || el.innerText;
+            el.innerHTML = "";
+            if ("Wartungs oder Prüfintervall [Jahr]" === txt)
+                txt = "Wartungs oder\r\nPrüfintervall [Jahr]";
+            var img = document.createElement("IMG");
+            img.setAttribute("src", "../cgi-bin/GenerateImage.ashx?no_cache=1636450422429&bgcolor=%23FFF&fontFamily=" + encodeURIComponent(font) + "&fontSize=15&rotate=true&text=" + encodeURIComponent(txt));
+            img.setAttribute("alt", txt);
+            el.appendChild(img);
+        }
+    }
     return el;
 }
 function assembleStructure(container, parent) {
     parent = parent || document.createDocumentFragment();
-    var a = _createElement(container);
+    var newParentElement = _createElement(container);
     for (var i = 0; i < container.children.length; ++i) {
-        assembleStructure(container.children[i], a);
+        assembleStructure(container.children[i], newParentElement);
     }
-    parent.appendChild(a);
+    parent.appendChild(newParentElement);
     return parent;
 }
 exports.assembleStructure = assembleStructure;
@@ -89,8 +109,8 @@ function constructRecursiveDataStructure(elements, properties, parentUID, obj, l
         var thisRow = childElements.row(i);
         var props = [];
         var propArray = properties.getGroup(thisRow.ELE_UID);
-        for (var i_1 = 0; i_1 < propArray.rowCount; ++i_1) {
-            var currentItem = propArray.row(i_1);
+        for (var j = 0; j < propArray.rowCount; ++j) {
+            var currentItem = propArray.row(j);
             props.push([currentItem.PRO_Name, currentItem.PRO_Value]);
         }
         var childData = {
@@ -208,12 +228,12 @@ function getExcelColumnName(columnNumber) {
     }
     return columnName;
 }
-function GetColumnNumber(name) {
-    name = name.toUpperCase();
+function getExcelColumnNumber(excelColumnName) {
+    excelColumnName = excelColumnName.toUpperCase();
     var number = 0;
     var pow = 1;
-    for (var i = name.length - 1; i >= 0; i--) {
-        number += (name.charCodeAt(i) - 'A'.charCodeAt(0) + 1) * pow;
+    for (var i = excelColumnName.length - 1; i >= 0; i--) {
+        number += (excelColumnName.charCodeAt(i) - 'A'.charCodeAt(0) + 1) * pow;
         pow *= 26;
     }
     return number;

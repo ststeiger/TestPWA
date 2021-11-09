@@ -31,6 +31,9 @@ namespace AnySqlWebAdmin
             string strRotate = null;
             string strBGcolor = null;
             string strFGcolor = null;
+            string strFontFamily = null;
+            int fontSize = 11;
+            int fontStyle = (int)System.Drawing.FontStyle.Regular;
 
             if (context.Request.QueryString.HasValue)
             {
@@ -38,6 +41,15 @@ namespace AnySqlWebAdmin
                 strRotate = context.Request.Query["rotate"].ToString();
                 strBGcolor = context.Request.Query["bgcolor"].ToString();
                 strFGcolor = context.Request.Query["fgcolor"].ToString();
+                strFontFamily = context.Request.Query["fontFamily"].ToString();
+
+                string strFontSize= context.Request.Query["fontSize"].ToString();
+                if (!string.IsNullOrWhiteSpace(strFontSize))
+                    int.TryParse(strFontSize, out fontSize);
+
+                string strFontStyle = context.Request.Query["fontStyle"].ToString();
+                if (!string.IsNullOrWhiteSpace(strFontStyle))
+                    int.TryParse(strFontStyle, out fontStyle);
             } // End if (context.Request.QueryString.HasValue) 
 
             bool bRotate = true;
@@ -45,12 +57,15 @@ namespace AnySqlWebAdmin
             if (string.IsNullOrEmpty(strText))
                 strText = " ";
 
+            if (string.IsNullOrEmpty(strFontFamily))
+                strFontFamily = "Arial";
+
             if (!string.IsNullOrEmpty(strRotate))
                 bool.TryParse(strRotate, out bRotate);
 
             context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
             context.Response.ContentType = "image/png";
-            byte[] buffer = RenderPNG(strText, bRotate, strBGcolor, strFGcolor);
+            byte[] buffer = RenderPNG(strFontFamily, fontSize, fontStyle, strText, bRotate, strBGcolor, strFGcolor);
             await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
         } // End Task Invoke 
 
@@ -63,7 +78,7 @@ namespace AnySqlWebAdmin
 
 
         // https://github.com/SixLabors/Samples/blob/master/ImageSharp/DrawingTextAlongAPath/Program.cs
-        public static byte[] RenderPNG(string text, bool bRotate, string strBackgroundColor, string strForegroundColor)
+        public static byte[] RenderPNG(string fontFamily, int fontSize, int fontStyle, string text, bool bRotate, string strBackgroundColor, string strForegroundColor)
         {
             byte[] data = null;
 
@@ -76,8 +91,8 @@ namespace AnySqlWebAdmin
             if (!string.IsNullOrWhiteSpace(strForegroundColor))
                 SixLabors.ImageSharp.Color.TryParseHex(strForegroundColor, out fgColor);
 
-            SixLabors.Fonts.FontFamily fo = SixLabors.Fonts.SystemFonts.Find("Arial");
-            SixLabors.Fonts.Font font = new SixLabors.Fonts.Font(fo, 12, SixLabors.Fonts.FontStyle.Regular);
+            SixLabors.Fonts.FontFamily fo = SixLabors.Fonts.SystemFonts.Find(fontFamily);
+            SixLabors.Fonts.Font font = new SixLabors.Fonts.Font(fo, fontSize, (SixLabors.Fonts.FontStyle)fontStyle);
 
             SixLabors.Fonts.FontRectangle size = SixLabors.Fonts.TextMeasurer.Measure(text, new SixLabors.Fonts.RendererOptions(font));
 

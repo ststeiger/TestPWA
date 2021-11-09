@@ -14,16 +14,16 @@ let _ = {
 
 function _getProperties(el: Element)
 {
-    let arr = []
+    let arr = []; 
 
     for (let i = 0, atts = el.attributes, n = atts.length; i < n; i++)
     {
         let a = atts[i].nodeName;
         arr.push([a, el.getAttribute(a)]);
-    }
+    } // Next i 
 
     return arr;
-}
+} // End Function _getProperties 
 
 
 export function collectStructure(p: Node, parent?: string, sort?: number)
@@ -50,42 +50,41 @@ export function collectStructure(p: Node, parent?: string, sort?: number)
     {
         checklistData.innerHtml = (<Element>p).innerHTML;
     }
-    else
-        if (children.length)
+    else if (children.length)
+    {
+
+        let childSort = 0;
+
+        for (let i = 0; i < children.length; i++)
         {
+            let cur: Node = children[i];
 
-            let childSort = 0;
-
-            for (let i = 0; i < children.length; i++)
+            // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+            if (cur.nodeType === Node.TEXT_NODE) 
             {
-                let cur: Node = children[i];
+                // this.checkAndReplace(cur);
+                // console.log(cur.textContent);
+            }
+            else if (cur.nodeType === Node.ELEMENT_NODE) 
+            {
+                // console.log("cur", cur);
+                // console.log("cur.nodeName", cur.nodeName);
+                // console.log("cur.nodeValue", cur.nodeValue);
+                // console.log("cur.getProperties", getProperties(<Element>cur));
+                let ret = collectStructure(cur, guid, childSort++);
+                checklistData.children.push(ret);
+            }
+            else
+            {
+                console.log("unhandeld node", cur.nodeType);
+            }
 
-                // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
-                if (cur.nodeType === Node.TEXT_NODE) 
-                {
-                    // this.checkAndReplace(cur);
-                    // console.log(cur.textContent);
-                }
-                else if (cur.nodeType === Node.ELEMENT_NODE) 
-                {
-                    // console.log("cur", cur);
-                    // console.log("cur.nodeName", cur.nodeName);
-                    // console.log("cur.nodeValue", cur.nodeValue);
-                    // console.log("cur.getProperties", getProperties(<Element>cur));
-                    let ret = collectStructure(cur, guid, childSort++);
-                    checklistData.children.push(ret);
-                }
-                else
-                {
-                    console.log("unhandeld node", cur.nodeType);
-                }
+        } // Next i 
 
-            } // Next i 
-
-        } // End if (children.length) 
+    } // End if (children.length) 
 
     return checklistData;
-} // End Sub collectStructure
+} // End Function collectStructure
 
 
 
@@ -102,37 +101,76 @@ function _createElement(data: IXmlStructure)
         if (tagName === "input" || tagName === "textarea")
         {
             el.setAttribute("name", el.id);
-        }
-    }
+        } // End if (tagName === "input" || tagName === "textarea") 
+
+    } // End if (data.uuid != null) 
 
 
-    for (let i = 0; i < data.properties.length; ++i)
+    let isVertical = false;
+
+    if (data.properties)
     {
-        el.setAttribute(data.properties[i][0], data.properties[i][1]);
-    }
+
+        for (let i = 0; i < data.properties.length; ++i)
+        {
+
+            if ("class" == data.properties[i][0] && String(data.properties[i][1]).indexOf("verticalColumn") != -1)
+            {
+                isVertical = true;
+            } // End if ("class" == data.properties[i][0]) 
+
+            if (null != data.properties[i][0])
+                el.setAttribute(data.properties[i][0], data.properties[i][1]);
+        } // Next i 
+
+    } // End if (data.properties) 
 
     if (data.innerHtml)
+    {
         el.innerHTML = data.innerHtml;
 
+        let iPAD = String(navigator.userAgent).toLowerCase().indexOf("ipad") != -1;
+        // iPAD = true;
+
+        if (isVertical && iPAD)
+        {
+            // https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight
+            let font = "Arial";
+            let txt = el.textContent || el.innerText;
+            el.innerHTML = "";
+
+            if ("Wartungs oder Prüfintervall [Jahr]" === txt)
+                txt = "Wartungs oder\r\nPrüfintervall [Jahr]";
+
+            let img = document.createElement("IMG");
+            // div.setAttribute("style", "background-image: url(\"../cgi-bin/GenerateImage.ashx?no_cache=1636450422429&bgcolor=%23FFF&rotate=true&text=" + encodeURIComponent(txt) + "\");");
+
+            img.setAttribute("src", "../cgi-bin/GenerateImage.ashx?no_cache=1636450422429&bgcolor=%23FFF&fontFamily=" + encodeURIComponent(font) + "&fontSize=15&rotate=true&text=" + encodeURIComponent(txt) );
+            img.setAttribute("alt", txt);
+            el.appendChild(img);
+        } // End if (isVertical && iPAD) 
+
+    } // End if (data.innerHtml) 
+    
     return el;
-}
+} // End Function _createElement 
 
 
 
 export function assembleStructure(container: IXmlStructure, parent?: Node)
 {
     parent = parent || document.createDocumentFragment();
-    let a = _createElement(container);
+    let newParentElement = _createElement(container);
 
     for (let i = 0; i < container.children.length; ++i)
     {
-        assembleStructure(container.children[i], a);
-    }
+        assembleStructure(container.children[i], newParentElement);
+    } // Next i 
 
-    parent.appendChild(a);
+    parent.appendChild(newParentElement);
 
     return parent;
-}
+} // End Function assembleStructure 
 
 
 
@@ -152,21 +190,19 @@ export function constructRecursiveDataStructure(
     let groupedElements = elements.groupBy("ELE_Parent_UID");
     let childElements: GroupedData<IT_ChecklistElements> = groupedElements.getGroup(parentUID);
 
-
     for (let i = 0; i < childElements.rowCount; ++i)
     {
-        let thisRow = childElements.row(i);
-        // console.log("thisRow", thisRow);
+        let thisRow = childElements.row(i); 
+        // console.log("thisRow", thisRow); 
 
-        let props: string[][] = [];
+        let props: string[][] = []; 
+        let propArray = properties.getGroup(thisRow.ELE_UID); 
 
-        let propArray = properties.getGroup(thisRow.ELE_UID);
-
-        for (let i = 0; i < propArray.rowCount; ++i)
+        for (let j = 0; j < propArray.rowCount; ++j)
         {
-            let currentItem = propArray.row(i);
-            props.push([currentItem.PRO_Name, currentItem.PRO_Value]);
-        }
+            let currentItem = propArray.row(j); 
+            props.push([currentItem.PRO_Name, currentItem.PRO_Value]); 
+        } // Next i 
 
         let childData = <IXmlStructure>{
             "uuid": thisRow.ELE_UID
@@ -180,13 +216,13 @@ export function constructRecursiveDataStructure(
 
         let child = constructRecursiveDataStructure(elements, properties, thisRow.ELE_UID, childData, lvl + 1);
         obj.children.push(child);
-    }
+    } // Next i 
 
     if (lvl === 0 && obj.children.length === 1)
         return obj.children[0];
 
     return obj;
-}
+} // End Function constructRecursiveDataStructure 
 
 
 interface ISaveValues
@@ -245,7 +281,7 @@ export function collectSaveData(p: Element, cls_uid?:string): ISaveValues[]
             for (let j = 0; j < ret.length; ++j)
             {
                 checklistData.push(ret[j]);
-            }
+            } // Next j 
             
         } // Next i 
 
@@ -317,7 +353,7 @@ class Stack<T>
         return str.join(" ");
     }
 
-}
+} // End Class Stack<T> 
 
 
 
@@ -346,7 +382,8 @@ function makeAssociativeArray(properties: string[][], caseSensitive?: boolean): 
     }
 
     return obj;
-}
+} // End Function makeAssociativeArray 
+
 
 // https://stackoverflow.com/questions/181596/how-to-convert-a-column-number-e-g-127-into-an-excel-column-e-g-aa
 //  It assumes Column A is columnNumber 1
@@ -361,29 +398,29 @@ function getExcelColumnName(columnNumber:number):string
 
         // https://stackoverflow.com/questions/4228356/how-to-perform-an-integer-division-and-separately-get-the-remainder-in-javascr
         columnNumber = Math.floor((columnNumber - modulo) / 26);
-    }
+    } // Whend 
 
     return columnName;
-}
+} // End Function getExcelColumnName 
 
 
 // https://stackoverflow.com/questions/848147/how-to-convert-excel-sheet-column-names-into-numbers
-// GetColumnNumber("AA")
+// getExcelColumnNumber("AA")
 // This function should work for an arbitrary length column name.
-function GetColumnNumber(name: string)
+function getExcelColumnNumber(excelColumnName: string)
 {
-    name = name.toUpperCase();
+    excelColumnName = excelColumnName.toUpperCase();
 
     let number = 0;
     let pow = 1;
-    for (let i = name.length - 1; i >= 0; i--)
+    for (let i = excelColumnName.length - 1; i >= 0; i--)
     {
-        number += (name.charCodeAt(i) - 'A'.charCodeAt(0) + 1) * pow;
+        number += (excelColumnName.charCodeAt(i) - 'A'.charCodeAt(0) + 1) * pow;
         pow *= 26;
     }
 
     return number;
-}
+} // End Function getExcelColumnNumber 
 
 
 // https://stackoverflow.com/questions/3932382/traversing-directories-without-using-recursion/30218705#30218705
@@ -398,10 +435,8 @@ export function iterateOverStructure(container: IXmlStructure)
     
     while (!stack.isEmpty)
     {
-        // n++;
         let element = stack.pop();
         
-
         let properties: AssociativeArray<string> = makeAssociativeArray(element.properties);
         // console.log(properties);
 
@@ -409,7 +444,7 @@ export function iterateOverStructure(container: IXmlStructure)
         {
             currentRow += 1;
             // console.log(element, currentRow);
-        }
+        } // End if ("tr" === element.tagName) 
 
         if ("td" === element.tagName)
         {
@@ -421,7 +456,7 @@ export function iterateOverStructure(container: IXmlStructure)
 
             // console.log(element);
             // console.log("y:", currentRow, "x1:", startColumn, "x2", endColumn, "colspan", colSpan, "rowSpan", rowSpan);
-        }
+        } // End if ("td" === element.tagName) 
 
 
         let children: IXmlStructure[] = element.children;
@@ -429,8 +464,8 @@ export function iterateOverStructure(container: IXmlStructure)
         for (let i = children.length-1; i > -1 ; --i)
         {
             stack.push(children[i]);
-        }
+        } // Next i 
 
-    }
+    } // Whend 
 
 } // End Function iterateOverStructure 

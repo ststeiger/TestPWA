@@ -44,11 +44,11 @@ input[type=submit]
     height: 22px;
 }
 
-    input[type=submit].Right
-    {
-        float: right;
-        margin-left: 5px;
-    }
+input[type=submit].Right
+{
+    float: right;
+    margin-left: 5px;
+}
 
 input
 {
@@ -193,6 +193,8 @@ td.verticalColumn
     #border: 1px solid white;
     #background-color: black;
     text-align: center;
+    padding-top: 1mm;
+    padding-bottom: 0.5mm;
 }
 
 .vert
@@ -203,13 +205,14 @@ td.verticalColumn
     -ms-writing-mode: tb-rl;
     transform-origin: center;
     transform: rotate(180deg);
-    padding-top: 1mm;
-    padding-bottom: 2mm;
     font-family: Arial;
     #font-size: 11px;
     #font-weight: 500;
     line-height: 1.25em;
     letter-spacing: 0.15mm;
+    font-size: 15px;
+    #font-weight: bold;
+    font-weight: 550;
 }
 
 
