@@ -432,14 +432,17 @@ function receiveMessage(event) {
             console.log(tData.Action + "->", JSON.stringify(tData, null, "  "));
             switch (tAction) {
                 case 'portal.filter.loaded':
+                    spreadMessage({ "Action": "Portal.Filter.Enable" });
                     break;
                 case 'portal.basic.update':
                     console.log("Link-Target:", tData.Link);
                     urlInfo = url_params.parseQuery(tData.Link);
                     onChecklistChanged(urlInfo.get("proc"), urlInfo.get("cl_uid"));
+                    spreadMessage({ "Action": "Portal.Filter.Enable" });
                     break;
                 default:
                     console.log("Unhandled event->", tData.Action);
+                    spreadMessage({ "Action": "Portal.Filter.Enable" });
                     break;
             }
             return [2];

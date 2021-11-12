@@ -10,6 +10,13 @@ namespace TestPWA
 
 
 
+
+    // openmaptiles without docker
+    // https://stackoverflow.com/questions/52844592/installation-process-for-openmaptiles-server-without-docker
+    // https://stackoverflow.com/questions/57739204/openmaptiles-beginner-questions
+    // https://www.techidiots.net/notes/mapbox-gl-tileserver-gl/create-an-open-map-tiles-map-without-docker
+    // https://github.com/Oslandia/postile-openmaptiles
+    // https://github.com/Oslandia/postile
     public class Program
     {
 

@@ -12,9 +12,9 @@ let _ = {
     "ab": autobind_autotrace
 };
 
-function _getProperties(el: Element)
+function _getProperties(el: Element):string[][]
 {
-    let arr = []; 
+    let arr:string[][] = []; 
 
     for (let i = 0, atts = el.attributes, n = atts.length; i < n; i++)
     {
@@ -26,7 +26,7 @@ function _getProperties(el: Element)
 } // End Function _getProperties 
 
 
-export function collectStructure(p: Node, parent?: string, sort?: number)
+export function collectStructure(p: Node, parent?: string, sort?: number):IXmlStructure 
 {
     if (p == null)
         return null;
@@ -88,7 +88,7 @@ export function collectStructure(p: Node, parent?: string, sort?: number)
 
 
 
-function _createElement(data: IXmlStructure)
+function _createElement(data: IXmlStructure):Element 
 {
     let el = document.createElement(data.tagName);
 
@@ -157,7 +157,7 @@ function _createElement(data: IXmlStructure)
 
 
 
-export function assembleStructure(container: IXmlStructure, parent?: Node)
+export function assembleStructure(container: IXmlStructure, parent?: Node):Node 
 {
     parent = parent || document.createDocumentFragment();
     let newParentElement = _createElement(container);

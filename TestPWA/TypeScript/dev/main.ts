@@ -573,6 +573,7 @@ async function receiveMessage(event: MessageEvent)
         case 'portal.filter.loaded':
             // // Nur wenn auf Auswahl geklickt wird.
             //(tData.Param) && onBaumClick(tData.Param.Data.Value, tData.Param.Data.Type);
+            spreadMessage({ "Action": "Portal.Filter.Enable" });
             break;
         case 'portal.basic.update':
             // Dieses hier brauche ich - auch bei Page Load - Filter event nur wenn auf Auswahl geklickt wird...
@@ -582,10 +583,12 @@ async function receiveMessage(event: MessageEvent)
             // console.log("portal.basic.update->proc", urlInfo.get("proc"));
             // console.log("portal.basic.update->cl_uid", urlInfo.get("cl_uid"));
             onChecklistChanged(urlInfo.get("proc"), urlInfo.get("cl_uid"));
+            spreadMessage({ "Action": "Portal.Filter.Enable" });
             break
         default:
             // console.log("unhandled event", event);
             console.log("Unhandled event->", tData.Action);
+            spreadMessage({ "Action": "Portal.Filter.Enable" });
             break;
     }
 
