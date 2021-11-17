@@ -105,22 +105,23 @@ function _createElement(data: IXmlStructure):Element
 
     } // End if (data.uuid != null) 
 
-
     let isVertical = false;
-
+    
     if (data.properties)
     {
 
         for (let i = 0; i < data.properties.length; ++i)
         {
-
+            
             if ("class" == data.properties[i][0] && String(data.properties[i][1]).indexOf("verticalColumn") != -1)
             {
                 isVertical = true;
             } // End if ("class" == data.properties[i][0]) 
 
             if (null != data.properties[i][0])
+            {
                 el.setAttribute(data.properties[i][0], data.properties[i][1]);
+            }
         } // Next i 
 
     } // End if (data.properties) 
@@ -128,7 +129,6 @@ function _createElement(data: IXmlStructure):Element
     if (data.innerHtml)
     {
         el.innerHTML = data.innerHtml;
-
         let iPAD = String(navigator.userAgent).toLowerCase().indexOf("ipad") != -1;
         // iPAD = true;
 

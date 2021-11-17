@@ -570,25 +570,29 @@ async function receiveMessage(event: MessageEvent)
     console.log(tData.Action + "->", JSON.stringify(tData, null, "  "));
     switch (tAction)
     {
-        case 'portal.filter.loaded':
-            // // Nur wenn auf Auswahl geklickt wird.
-            //(tData.Param) && onBaumClick(tData.Param.Data.Value, tData.Param.Data.Type);
+        case 'portal.filter.loaded': // tab-gewechselt
+            // REM: hat mich nicht zu interessieren, muss aber aus unerfindlichem Grund gesendet werden.
             spreadMessage({ "Action": "Portal.Filter.Enable" });
             break;
-        case 'portal.basic.update':
-            // Dieses hier brauche ich - auch bei Page Load - Filter event nur wenn auf Auswahl geklickt wird...
-            console.log("Link-Target:", tData.Link);
+        case 'portal.basic.update': // tab-geladen oder gewechselt
+            // console.log("Link-Target:", tData.Link);
 
             let urlInfo = url_params.parseQuery(tData.Link)
             // console.log("portal.basic.update->proc", urlInfo.get("proc"));
             // console.log("portal.basic.update->cl_uid", urlInfo.get("cl_uid"));
             onChecklistChanged(urlInfo.get("proc"), urlInfo.get("cl_uid"));
             spreadMessage({ "Action": "Portal.Filter.Enable" });
-            break
+            break;
+        case 'portal.filter.inprocess': // in-bearbeitung - Filter wurde gewechselt 
+            // TODO: Aktion notwendig
+            spreadMessage({ "Action": "Portal.Filter.Enable" });
+            break;
+        case 'portal.filter.enable':
+            // REM: Vorsicht - Eintritt in "default" verhindern- Unendlich-Rekursion ! 
+            break;
         default:
             // console.log("unhandled event", event);
             console.log("Unhandled event->", tData.Action);
-            spreadMessage({ "Action": "Portal.Filter.Enable" });
             break;
     }
 

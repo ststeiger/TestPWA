@@ -67,8 +67,9 @@ function _createElement(data) {
             if ("class" == data.properties[i][0] && String(data.properties[i][1]).indexOf("verticalColumn") != -1) {
                 isVertical = true;
             }
-            if (null != data.properties[i][0])
+            if (null != data.properties[i][0]) {
                 el.setAttribute(data.properties[i][0], data.properties[i][1]);
+            }
         }
     }
     if (data.innerHtml) {
