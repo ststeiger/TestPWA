@@ -79,8 +79,8 @@ function _createElement(data) {
             var font = "Arial";
             var txt = el.textContent || el.innerText;
             el.innerHTML = "";
-            if ("Wartungs oder Prüfintervall [Jahr]" === txt)
-                txt = "Wartungs oder\r\nPrüfintervall [Jahr]";
+            if ("Wartungs oder Pr�fintervall [Jahr]" === txt)
+                txt = "Wartungs oder\r\nPr�fintervall [Jahr]";
             var img = document.createElement("IMG");
             img.setAttribute("src", "../cgi-bin/GenerateImage.ashx?no_cache=1636450422429&bgcolor=%23FFF&fontFamily=" + encodeURIComponent(font) + "&fontSize=15&rotate=true&text=" + encodeURIComponent(txt));
             img.setAttribute("alt", txt);

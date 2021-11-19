@@ -1,0 +1,49 @@
+body{
+	background-color: #ffffff;
+	color: #ffffff !important;
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+}
+
+#iHelp{display: none}
+#iHelpClose{display: none}
+
+#clTitle{color: #000}
+
+.Checklist p{box-shadow: none}
+.checklistRemoved{display: none}
+.checklistWrapper{page-break-after: always}
+.Context{display: none !important}
+.Table_Settings{display: none}
+
+img.Background{
+	bottom: 0px;
+	display: block !important;
+	height: 100%;
+	left: 0px;
+	position: absolute;
+	width: 100%;
+	z-index: 0
+}
+
+/*.Checklist td*/ img.Background{display: none !important}
+
+.Checklist td, .Checklist th{position: relative}
+
+.Checklist th p,
+.Checklist td p,
+.Checklist td input,
+.Checklist td textarea,
+.Checklist td label,
+.Checklist td select{
+	position: relative;
+	z-index: 1
+}
+
+.Checklist td textarea{
+	overflow: hidden;
+	resize: none;
+}
+
+.Checklist td{background-color: #ffffff !important; color: #000000 !important}
+.Checklist th{background-color: #cecece !important; color: #000000 !important; font-weight: normal !important}
