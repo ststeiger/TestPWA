@@ -45,7 +45,7 @@ function onChecklistClose(ev) {
 }
 function openChecklistDialogue() {
     return __awaiter(this, void 0, void 0, function () {
-        var checkListsData, checklists, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, i, color, checklistRow, node_8, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, spanNewChecklist, spanNewChecklist;
+        var checkListsData, checklists, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, useActiveInactive, useDelete, useLoad, subtract, i, color, checklistRow, node_8, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, spanNewChecklist, spanNewChecklist;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1")];
@@ -80,6 +80,13 @@ function openChecklistDialogue() {
                     checklistContainer.setAttribute("class", "Content");
                     checklistContainer.setAttribute("style", "margin-top: 0px; overflow: hidden scroll; width: 100%; max-height: 695px;");
                     colors = ["rgb(118, 118, 118)", "rgb(102, 102, 102)"];
+                    useActiveInactive = false;
+                    useDelete = false;
+                    useLoad = true;
+                    subtract = 0;
+                    subtract += (useActiveInactive ? 41 : 0);
+                    subtract += (useDelete ? 41 : 0);
+                    subtract += (useLoad ? 41 : 0);
                     for (i = 0; i < checklists.rowCount; ++i) {
                         console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
                         color = colors[i % 2];
@@ -90,32 +97,34 @@ function openChecklistDialogue() {
                         node_8 = document.createElement("DIV");
                         node_8.setAttribute("class", "CL_Lang");
                         node_8.setAttribute("title", "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert");
-                        node_8.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - 41px) / 1);");
+                        node_8.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - " + subtract.toString() + "px) / 1);");
                         lblChecklistDesignation = document.createElement("P");
                         lblChecklistDesignation.setAttribute("contenteditable", "true");
                         lblChecklistDesignation.appendChild(document.createTextNode(checklists.row(i).CL_Name));
                         node_8.appendChild(lblChecklistDesignation);
                         checklistRow.appendChild(node_8);
-                        if (false) {
+                        if (useActiveInactive) {
                             btnActiveInactive = document.createElement("DIV");
                             btnActiveInactive.setAttribute("class", "_STATUS");
                             btnActiveInactive.setAttribute("title", "Status (aktiv | inaktiv)\n    Inaktive Checklisten sind nicht zuweisbar");
-                            btnActiveInactive.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGHRFWHRTb2Z0d2FyZQBQYWludC5ORVQgdjMuMzap5+IlAAABH0lEQVQ4T2NgGHFA8QRDFQhTxeNypxkkFU4yHAYauI4qBiocZ/ADGngLiOdgGCgT2PCfVCxbE/hf8STDf6wGgmwAGUgKaH1YAjZQfo3cf5xeJsXQ8rvJYANDr9qAfUexoVOetoINdLyg+v/ut5uUG7ru9WKwgSC8+91GcGhR5NLjH/fDDQS5FgYIGgrSCAqn9FuBKHH25c9nsHdh4YgsiddQ2cw0uEtAmkGxCwMgS2Dh+PLnMxQLCboUOcxALgMZsPDFFLhlIDY6IGgoSAMs/YFcBnIhLm8THaYwhTCDYDENokHhjQ0Q5VKQRljihhmKHnFERxRyjgKFJcy1sESOKwsT7VKQASDXgVwMSk74AEFDUUqppByiSy2qlKHEGAIAeYG2SZ7gzdMAAAAASUVORK5CYII='); cursor: pointer;");
+                            btnActiveInactive.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGHRFWHRTb2Z0d2FyZQBQYWludC5ORVQgdjMuMzap5+IlAAABH0lEQVQ4T2NgGHFA8QRDFQhTxeNypxkkFU4yHAYauI4qBiocZ/ADGngLiOdgGCgT2PCfVCxbE/hf8STDf6wGgmwAGUgKaH1YAjZQfo3cf5xeJsXQ8rvJYANDr9qAfUexoVOetoINdLyg+v/ut5uUG7ru9WKwgSC8+91GcGhR5NLjH/fDDQS5FgYIGgrSCAqn9FuBKHH25c9nsHdh4YgsiddQ2cw0uEtAmkGxCwMgS2Dh+PLnMxQLCboUOcxALgMZsPDFFLhlIDY6IGgoSAMs/YFcBnIhLm8THaYwhTCDYDENokHhjQ0Q5VKQRljihhmKHnFERxRyjgKFJcy1sESOKwsT7VKQASDXgVwMSk74AEFDUUqppByiSy2qlKHEGAIAeYG2SZ7gzdMAAAAASUVORK5CYII='); cursor: pointer;");
                             checklistRow.appendChild(btnActiveInactive);
                         }
-                        if (false) {
+                        if (useDelete) {
                             btnDelete = document.createElement("DIV");
                             btnDelete.setAttribute("class", "_REMOVE");
                             btnDelete.setAttribute("title", "Löschen\n    Gelöschte Checklisten erscheinen nach dem Schliessen des Fensters nicht mehr");
                             btnDelete.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhDwAPAOccAAAAAIAAAACAAICAAAAAgIAAgACAgMDAwMDcwKbK8P+EhP8ICP8QEP8YGP8hIf85Of9CQv9SUv9jY/9zc/+EhP+lpf+trf+1tf/Gxv/Ozv/v7//39//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////78KCgpICAgP8AAP///////////////////////yH5BAEKAP8ALAAAAAAPAA8AAAgxAP8JHEiwoMGDCBMqXMjwn4MFAhs4UOjAAYOJC/NBXOggXz6MCC1GBNmwpMmTKAUGBAA7'); cursor: pointer;");
                             checklistRow.appendChild(btnDelete);
                         }
-                        btnLoad = document.createElement("DIV");
-                        btnLoad.setAttribute("class", "_SELECT");
-                        btnLoad.setAttribute("title", "Laden\n    Gewählte Checkliste zum Bearbeiten Laden");
-                        btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
-                        checklistRow.appendChild(btnLoad);
-                        checklistContainer.appendChild(checklistRow);
+                        if (useLoad) {
+                            btnLoad = document.createElement("DIV");
+                            btnLoad.setAttribute("class", "_SELECT");
+                            btnLoad.setAttribute("title", "Laden\n    Gewählte Checkliste zum Bearbeiten Laden");
+                            btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
+                            checklistRow.appendChild(btnLoad);
+                            checklistContainer.appendChild(checklistRow);
+                        }
                     }
                     checklistBody.appendChild(checklistContainer);
                     divChecklistsPopup.appendChild(checklistBody);
