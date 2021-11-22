@@ -45,6 +45,7 @@ var xml = require("./xml_beautifier.js");
 var uuid = require("./uuid.js");
 var linq = require("./linq.js");
 var table_wrapper_js_1 = require("./table_wrapper.js");
+var ajax = require("./ajax.js");
 var db_html = require("./db_html.js");
 var translations = require("./translations.js");
 var url_params = require("./url_params.js");
@@ -83,105 +84,12 @@ if (true) {
     addStylesheet("css/checklist.css");
     addStylesheet("../css/Scrolling/Scrollbar.css?v=1");
 }
-function postFetch(url, payload) {
-    return __awaiter(this, void 0, void 0, function () {
-        var bdy, result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    bdy = null;
-                    if (typeof (payload) === 'string' || payload instanceof String)
-                        bdy = payload;
-                    if (typeof (payload) === 'object')
-                        bdy = JSON.stringify(payload);
-                    if (url.indexOf("?") != -1) {
-                        url += "&";
-                    }
-                    else
-                        url += "?";
-                    url += "no_cache=" + (new Date()).getTime().toString();
-                    return [4, fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                "Accept": "application/json",
-                                "Content-Type": "application/json",
-                                "credentials": "same-origin",
-                                "pragma": "no-cache",
-                                "cache-control": "no-cache"
-                            },
-                            body: bdy
-                        })];
-                case 1:
-                    result = _a.sent();
-                    return [2, result];
-            }
-        });
-    });
-}
-function fetchJSON(url, payload) {
-    return __awaiter(this, void 0, void 0, function () {
-        var result, data;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (url.indexOf("?") != -1) {
-                        url += "&";
-                    }
-                    else
-                        url += "?";
-                    url += "no_cache=" + (new Date()).getTime().toString();
-                    return [4, postFetch(url, payload)];
-                case 1:
-                    result = _a.sent();
-                    return [4, result.json()];
-                case 2:
-                    data = _a.sent();
-                    return [2, data];
-            }
-        });
-    });
-}
-function fetchText(url, payload) {
-    return __awaiter(this, void 0, void 0, function () {
-        var result, data;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (url.indexOf("?") != -1) {
-                        url += "&";
-                    }
-                    else
-                        url += "?";
-                    url += "no_cache=" + (new Date()).getTime().toString();
-                    return [4, postFetch(url, payload)];
-                case 1:
-                    result = _a.sent();
-                    return [4, result.text()];
-                case 2:
-                    data = _a.sent();
-                    return [2, data];
-            }
-        });
-    });
-}
-function concat() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    var a = [];
-    for (var i = 0; i < args.length; i++) {
-        if (args[i] != null)
-            a.push(String(args[i]));
-    }
-    return a.join("");
-}
 function loadChecklistValues(cl_uid) {
     return __awaiter(this, void 0, void 0, function () {
         var checkListData, checklistValues, i, ele, type;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4, fetchJSON(concat("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=", cl_uid))];
+                case 0: return [4, ajax.fetchJSON(utils.concat("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=", cl_uid))];
                 case 1:
                     checkListData = _a.sent();
                     checklistValues = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
@@ -212,7 +120,7 @@ function assertSession() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4, fetchText("../ajax/CurrentSession.ashx")];
+                    return [4, ajax.fetchText("../ajax/CurrentSession.ashx")];
                 case 1:
                     txt = _a.sent();
                     return [3, 3];
@@ -331,7 +239,7 @@ function onChecklistChanged(proc, chlist) {
                     return [4, assertSession()];
                 case 1:
                     _a.sent();
-                    return [4, fetchJSON(concat("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=", chlist))];
+                    return [4, ajax.fetchJSON(utils.concat("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=", chlist))];
                 case 2:
                     checkListData = _a.sent();
                     if (checkListData.hasError) {
@@ -363,12 +271,12 @@ function onChecklistChanged(proc, chlist) {
                                             return [4, assertSession()];
                                         case 1:
                                             _a.sent();
-                                            return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": e.detail.cl_uid })];
+                                            return [4, ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", { "__cls_uid": cls_uid, "__cls_cl_uid": e.detail.cl_uid })];
                                         case 2:
                                             saveDataSetResult = _a.sent();
                                             console.log("dataSetResult", saveDataSetResult);
                                             if (!(saveDataSetResult.hasError === false)) return [3, 4];
-                                            return [4, fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData)];
+                                            return [4, ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData)];
                                         case 3:
                                             saveChecklistDataResult = _a.sent();
                                             if (saveDataSetResult.hasError === false) {

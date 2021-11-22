@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.normalizeNewLines = exports.toUnixNewLines = exports.replace = exports.isNullOrWhiteSpace = exports.trim = exports.rtrim = exports.ltrim = exports.right = exports.left = void 0;
+exports.concat = exports.normalizeNewLines = exports.toUnixNewLines = exports.replace = exports.isNullOrWhiteSpace = exports.trim = exports.rtrim = exports.ltrim = exports.right = exports.left = void 0;
 function left(str, length) {
     if (!str)
         return str;
@@ -71,3 +71,16 @@ function normalizeNewLines(str) {
     return replace(toUnixNewLines(str), "\n", "\r\n", false);
 }
 exports.normalizeNewLines = normalizeNewLines;
+function concat() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var a = [];
+    for (var i = 0; i < args.length; i++) {
+        if (args[i] != null)
+            a.push(String(args[i]));
+    }
+    return a.join("");
+}
+exports.concat = concat;

@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,8 +34,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createFooter = void 0;
 function postFetch(url, payload) {
     return __awaiter(this, void 0, void 0, function () {
         var bdy, result;
@@ -130,40 +127,3 @@ function concat() {
     }
     return a.join("");
 }
-function createFooter() {
-    var doc = window.parent.document;
-    var main = doc.getElementById("Main");
-    var html = "<div class=\"buttonFrame\" id=\"buttonFrame\">\n  <span class=\"bfUsername\">D. Administrator&nbsp;</span>\n\n  <div class=\"Right\">\n    <input type=\"submit\" name=\"btn_Speichern\" value=\"Speichern\" onclick=\"javascript:console.log('hello');\" style=\"box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;\">\n  </div>\n\n  <div class=\"Left\">\n    <input type=\"submit\" name=\"btn_Abbrechen\" value=\"Abbrechen\" id=\"btn_Abbrechen\" class=\"validate-skip\" style=\"box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;\">\n  </div>\n</div>\n";
-    var fragment = doc.createDocumentFragment();
-    var buttonFrame = doc.createElement("DIV");
-    buttonFrame.setAttribute("class", "buttonFrame");
-    buttonFrame.setAttribute("id", "buttonFrame");
-    var spanUsername = doc.createElement("SPAN");
-    spanUsername.setAttribute("class", "bfUsername");
-    spanUsername.appendChild(doc.createTextNode("D. Administrator "));
-    buttonFrame.appendChild(spanUsername);
-    var divRight = doc.createElement("DIV");
-    divRight.setAttribute("class", "Right");
-    var btnSave = doc.createElement("INPUT");
-    btnSave.setAttribute("type", "submit");
-    btnSave.setAttribute("name", "btn_Speichern");
-    btnSave.setAttribute("value", "Speichern");
-    btnSave.setAttribute("onclick", "javascript:console.log('hello');");
-    btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
-    divRight.appendChild(btnSave);
-    buttonFrame.appendChild(divRight);
-    var divLeft = doc.createElement("DIV");
-    divLeft.setAttribute("class", "Left");
-    var btnCancel = doc.createElement("INPUT");
-    btnCancel.setAttribute("type", "submit");
-    btnCancel.setAttribute("name", "btn_Abbrechen");
-    btnCancel.setAttribute("value", "Abbrechen");
-    btnCancel.setAttribute("id", "btn_Abbrechen");
-    btnCancel.setAttribute("class", "validate-skip");
-    btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
-    divLeft.appendChild(btnCancel);
-    buttonFrame.appendChild(divLeft);
-    fragment.appendChild(buttonFrame);
-    main.appendChild(fragment);
-}
-exports.createFooter = createFooter;

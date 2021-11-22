@@ -91,3 +91,17 @@ export function normalizeNewLines(str: string):string
 
     return replace(toUnixNewLines(str), "\n", "\r\n", false);
 }
+
+
+export function concat(...args: any[]): string
+{
+    let a: string[] = [];
+
+    for (let i = 0; i < args.length; i++)
+    {
+        if (args[i] != null)
+            a.push(String(args[i])); // warning: String(null) yields "null" + dito for undefined ...
+    }
+
+    return a.join("");
+}

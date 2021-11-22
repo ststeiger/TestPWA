@@ -39,8 +39,8 @@ namespace TestPWA
 
         public static string MatchEvaluator(System.Text.RegularExpressions.Match match)
         {
-            string basePath = @"D:\Stefan.Steiger\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\images";
-            // basePath = @"D:\Stefan.Steiger\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist\images";
+            string basePath = @"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\images";
+            // basePath = @"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist\images";
             
             string url = match.Groups[1].Value;
 
@@ -63,15 +63,15 @@ namespace TestPWA
         public static void ReplaceCssImages()
         {
             string pattern = @"url\((.*?)\)";
-            // string contents = System.IO.File.ReadAllText(@"D:\Stefan.Steiger\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\css\Layout.css", System.Text.Encoding.UTF8);
-            string contents = System.IO.File.ReadAllText(@"D:\Stefan.Steiger\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\debug.htm", System.Text.Encoding.UTF8);
+            // string contents = System.IO.File.ReadAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\css\Layout.css", System.Text.Encoding.UTF8);
+            string contents = System.IO.File.ReadAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\debug.htm", System.Text.Encoding.UTF8);
             
 
 
             contents = System.Text.RegularExpressions.Regex.Replace(contents, pattern, new System.Text.RegularExpressions.MatchEvaluator(MatchEvaluator));
 
-            // System.IO.File.WriteAllText(@"D:\Stefan.Steiger\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\css\LayoutNew.css", contents, System.Text.Encoding.UTF8);
-            System.IO.File.WriteAllText(@"D:\Stefan.Steiger\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\debug2.htm", contents, System.Text.Encoding.UTF8);
+            // System.IO.File.WriteAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\css\LayoutNew.css", contents, System.Text.Encoding.UTF8);
+            System.IO.File.WriteAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\debug2.htm", contents, System.Text.Encoding.UTF8);
 
         }
 
@@ -79,8 +79,8 @@ namespace TestPWA
 
         public static void Main(string[] args)
         {
-            ReplaceCssImages();
-            DbHtml.GenerateAllChecklists();
+            // ReplaceCssImages();
+            // DbHtml.GenerateAllChecklists();
             // TestEpPlus.Test(); return;
             CreateHostBuilder(args).Build().Run();
         } // End Sub Main 

@@ -3,12 +3,14 @@
 
 import * as autobind_autotrace from "./autobind_autotrace.js";
 import * as autorun from "./autorun.js";
+
 import * as utils from "./string_utils.js";
 import * as hu from "./http_utility.js";
 import * as xml from "./xml_beautifier.js";
 import * as uuid from "./uuid.js";
 import * as linq from "./linq.js";
 import { TableWrapper as tableWrapper, GroupedTableWrapper as groupedTableWrapper, GroupedData } from "./table_wrapper.js";
+import * as ajax from "./ajax.js";
 import * as db_html from "./db_html.js";
 import * as translations from "./translations.js";
 import * as url_params from "./url_params.js";
@@ -89,104 +91,10 @@ if (true)
 }
 
 
-async function postFetch(url: string, payload?: any): Promise<Response>
-{
-    let bdy: string = null;
-
-    if (typeof (payload) === 'string' || payload instanceof String)
-        bdy = <string>payload;
-
-    if (typeof (payload) === 'object')
-        bdy = JSON.stringify(payload);
-
-    if (url.indexOf("?") != -1)
-    {
-        url += "&"
-    }
-    else
-        url += "?"
-
-    url += "no_cache=" + (new Date()).getTime().toString();
-
-    let result = await fetch(url, {
-        method: 'POST',
-        headers: {
-            "Accept": "application/json"
-            , "Content-Type": "application/json"
-            , "credentials": "same-origin" // the default would be same-origin, but there's an exciting Edge-bug ... 
-            , "pragma": "no-cache"
-            , "cache-control": "no-cache"
-        }
-        , body: bdy
-    });
-
-    return result;
-}
-
-
-
-async function fetchJSON(url: string, payload?: any): Promise<any>
-{
-
-    if (url.indexOf("?") != -1)
-    {
-        url += "&"
-    }
-    else
-        url += "?"
-
-    url += "no_cache=" + (new Date()).getTime().toString();
-
-    let result = await postFetch(url, payload);
-    let data: any = await result.json();
-    return data;
-}
-
-
-async function fetchText(url: string, payload?: any): Promise<string>
-{
-    if (url.indexOf("?") != -1)
-    {
-        url += "&"
-    }
-    else
-        url += "?"
-
-    url += "no_cache=" + (new Date()).getTime().toString();
-
-    let result = await postFetch(url, payload);
-    let data: string = await result.text();
-    return data;
-}
-
-
-//function foo()
-//{
-//    for (var i = 0; i < arguments.length; i++)
-//    {
-//        console.log(arguments[i]);
-//    }
-//}
-
-
-function concat(...args: any[]):string
-{
-    let a:string[] = [];
-
-    for (let i = 0; i < args.length; i++)
-    {
-        if(args[i] != null)
-            a.push(String(args[i])); // warning: String(null) yields "null" + dito for undefined ...
-    }
-
-    return a.join("");
-}
-
-
 
 async function loadChecklistValues(cl_uid:string)
 {
-    let checkListData = <IAjaxResult<any>>await fetchJSON(concat("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=", cl_uid))
+    let checkListData = <IAjaxResult<any>>await ajax.fetchJSON(utils.concat("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1&__cl_uid=", cl_uid))
     let checklistValues = new tableWrapper<IT_Checklist_ZO_ElementValues>(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
     // console.log("checklistValues", checklistValues);
 
@@ -221,7 +129,7 @@ async function assertSession()
     {
         // this sets the session cookie if it isn't there. 
         // this prevents bug in ASP.NET framework 
-        let txt = await fetchText("../ajax/CurrentSession.ashx");
+        let txt = await ajax.fetchText("../ajax/CurrentSession.ashx");
     }
     catch (err: any)
     { } // Do nothing 
@@ -426,7 +334,7 @@ async function onChecklistChanged(proc:string, chlist:string): Promise<void>
 
     // let checkListData = <IAjaxResult<any>>await fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1", {"__cl_uid": chlist} );
     // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
-    let checkListData = <IAjaxResult<any>>await fetchJSON(concat("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=", chlist));
+    let checkListData = <IAjaxResult<any>>await ajax.fetchJSON(utils.concat("../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1&__cl_uid=", chlist));
     if (checkListData.hasError)
     {
         alert("Error loading checklist-data:\r\n" + checkListData.error.message);
@@ -488,14 +396,14 @@ async function onChecklistChanged(proc:string, chlist:string): Promise<void>
             // console.log("saveData",  saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; })   );
 
             await assertSession();
-            let saveDataSetResult = <IAjaxResult<any>>await fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql",
+            let saveDataSetResult = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql",
                 { "__cls_uid": cls_uid, "__cls_cl_uid": e.detail.cl_uid }
             );
 
             console.log("dataSetResult", saveDataSetResult);
             if (saveDataSetResult.hasError === false)
             {
-                let saveChecklistDataResult = <IAjaxResult<any>>await fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData);
+                let saveChecklistDataResult = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData);
                 
                 if (saveDataSetResult.hasError === false)
                 {
