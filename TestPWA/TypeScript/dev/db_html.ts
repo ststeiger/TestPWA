@@ -87,6 +87,14 @@ export function collectStructure(p: Node, parent?: string, sort?: number):IXmlSt
 } // End Function collectStructure
 
 
+function encodeRfc3986(str)
+{
+    return encodeURIComponent(str).replace(/[!'()*]/g, function (c)
+    {
+        return '%' + c.charCodeAt(0).toString(16);
+    });
+}
+
 
 function _createElement(data: IXmlStructure):Element 
 {
@@ -145,7 +153,7 @@ function _createElement(data: IXmlStructure):Element
             let img = document.createElement("IMG");
             // div.setAttribute("style", "background-image: url(\"../cgi-bin/GenerateImage.ashx?no_cache=1636450422429&bgcolor=%23FFF&rotate=true&text=" + encodeURIComponent(txt) + "\");");
 
-            img.setAttribute("src", "../cgi-bin/GenerateImage.ashx?no_cache=1636450422429&bgcolor=%23FFF&fontFamily=" + encodeURIComponent(font) + "&fontSize=15&rotate=true&text=" + encodeURIComponent(txt) );
+            img.setAttribute("src", "../cgi-bin/GenerateImage.ashx?no_cache=" + (new Date()).getTime().toString() + "&bgcolor=" + encodeRfc3986('#CCC') + "&fontFamily=" + encodeRfc3986(font) + "&fontSize=15&rotate=true&text=" + encodeRfc3986(txt) );
             img.setAttribute("alt", txt);
             el.appendChild(img);
         } // End if (isVertical && iPAD) 
