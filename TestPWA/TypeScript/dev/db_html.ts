@@ -87,7 +87,7 @@ export function collectStructure(p: Node, parent?: string, sort?: number):IXmlSt
 } // End Function collectStructure
 
 
-function encodeRfc3986(str)
+function encodeRfc3986(str:string):string 
 {
     return encodeURIComponent(str).replace(/[!'()*]/g, function (c)
     {

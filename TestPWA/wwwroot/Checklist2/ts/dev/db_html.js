@@ -51,6 +51,11 @@ function collectStructure(p, parent, sort) {
     return checklistData;
 }
 exports.collectStructure = collectStructure;
+function encodeRfc3986(str) {
+    return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+        return '%' + c.charCodeAt(0).toString(16);
+    });
+}
 function _createElement(data) {
     var el = document.createElement(data.tagName);
     if (data.uuid != null) {
@@ -79,10 +84,10 @@ function _createElement(data) {
             var font = "Arial";
             var txt = el.textContent || el.innerText;
             el.innerHTML = "";
-            if ("Wartungs oder Prüfintervall [Jahr]" === txt)
-                txt = "Wartungs oder\r\nPrüfintervall [Jahr]";
+            if ("Wartungs oder Pr�fintervall [Jahr]" === txt)
+                txt = "Wartungs oder\r\nPr�fintervall [Jahr]";
             var img = document.createElement("IMG");
-            img.setAttribute("src", "../cgi-bin/GenerateImage.ashx?no_cache=" + (new Date()).getTime().toString() + "&bgcolor=" + encodeURIComponent('#CCC') + "&fontFamily=" + encodeURIComponent(font) + "&fontSize=15&rotate=true&text=" + encodeURIComponent(txt));
+            img.setAttribute("src", "../cgi-bin/GenerateImage.ashx?no_cache=" + (new Date()).getTime().toString() + "&bgcolor=" + encodeRfc3986('#CCC') + "&fontFamily=" + encodeRfc3986(font) + "&fontSize=15&rotate=true&text=" + encodeRfc3986(txt));
             img.setAttribute("alt", txt);
             el.appendChild(img);
         }

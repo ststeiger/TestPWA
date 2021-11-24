@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -79,6 +79,15 @@ namespace TestPWA
 
         public static void Main(string[] args)
         {
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/global_objects/encodeURIComponent
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/global_objects/decodeUriComponent
+            // string enc = GlobalObj.encodeURIComponent("hello(world) give me five+six 2%3=2&");
+            // string enc = URLEncoder.encode("hello(world) give me five+six 2%3=2&");
+            // string enc = gogo2.escape("hello(world) give me five+six 2%3=2&");
+            // string enc = gogo2.encodeURIComponent("hello(world) give me five+six 2%3=2& 你好，世界");
+            // System.Console.WriteLine(enc);
+
+
             // ReplaceCssImages();
             // DbHtml.GenerateAllChecklists();
             // TestEpPlus.Test(); return;
