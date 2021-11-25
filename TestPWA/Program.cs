@@ -65,13 +65,38 @@ namespace TestPWA
             string pattern = @"url\((.*?)\)";
             // string contents = System.IO.File.ReadAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\css\Layout.css", System.Text.Encoding.UTF8);
             string contents = System.IO.File.ReadAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\debug.htm", System.Text.Encoding.UTF8);
-            
+
 
 
             contents = System.Text.RegularExpressions.Regex.Replace(contents, pattern, new System.Text.RegularExpressions.MatchEvaluator(MatchEvaluator));
 
             // System.IO.File.WriteAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\css\LayoutNew.css", contents, System.Text.Encoding.UTF8);
             System.IO.File.WriteAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\debug2.htm", contents, System.Text.Encoding.UTF8);
+
+        }
+
+
+
+        public static void GetTranslations()
+        {
+            // translateEncapsulateString('Export12', 'Papierformat')}
+            // translateEncapsulateString('Export13', 'Massstabsgetreu')}
+            string pattern = @"translateEncapsulateString\s*\((.*?)\)";
+            string contents = System.IO.File.ReadAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic-V4\Portal\Portal_Visualiser\0\VWS.Plugin.Export.js", System.Text.Encoding.UTF8);
+            string saveValues = "[\r\n";
+
+            System.Text.RegularExpressions.Regex.Replace(contents, pattern,
+                delegate(System.Text.RegularExpressions.Match match)
+                {
+                    saveValues += "[" + match.Groups[1]+ "],\r\n";
+                    return match.Value;
+                }
+            );
+
+            saveValues += "]\r\n";
+
+            // System.IO.File.WriteAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\css\LayoutNew.css", contents, System.Text.Encoding.UTF8);
+            System.IO.File.WriteAllText(@"D:\matchValues.txt", saveValues, System.Text.Encoding.UTF8);
 
         }
 
@@ -87,6 +112,7 @@ namespace TestPWA
             // string enc = gogo2.encodeURIComponent("hello(world) give me five+six 2%3=2& 你好，世界");
             // System.Console.WriteLine(enc);
 
+            GetTranslations();
 
             // ReplaceCssImages();
             // DbHtml.GenerateAllChecklists();
