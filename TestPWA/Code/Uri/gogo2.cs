@@ -25,40 +25,6 @@ namespace TestPWA
         // https://gist.github.com/arthurafarias/56fec2cd49a32f374c02d1df2b6c350f
 
 
-        // encodeURIComponent 
-        // https://tc39.es/ecma262/multipage/global-object.html#sec-encode
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/global_objects/encodeURIComponent
-        // 1. Let componentString be? ToString(uriComponent).
-        // 2. Let unescapedURIComponentSet be a String containing one instance of each code unit valid in uriUnescaped.
-        // 3. Return? Encode(componentString, unescapedURIComponentSet).
-
-        // This syntax of Uniform Resource Identifiers is based upon RFC 2396
-        // and does not reflect the more recent RFC 3986 which replaces RFC 2396.
-        // A formal description and implementation of UTF-8 is given in RFC 3629.
-        // RFC 3629 prohibits the decoding of invalid UTF-8 octet sequences.
-        // For example, the invalid sequence C0 80 must not decode into the code unit 0x0000.
-        // Implementations of the Decode algorithm are required to throw a URIError when encountering such invalid sequences.
-
-
-        public static bool IsInSet(char c, string unescapedSet)
-        {
-            foreach (char cc in unescapedSet)
-            {
-                if (c == cc)
-                    return true;
-            }
-
-            return false;
-        }
-
-
-        // 2. Let unescapedURIComponentSet be a String containing one instance of each code unit valid in uriUnescaped.
-
-        public static string encodeURIComponent(string mystring)
-        {
-            string unescapedSet="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.!~*'()";
-            return encodeURIComponent(mystring, unescapedSet);
-        }
 
 
         // https://stackoverflow.com/questions/687359/how-would-you-get-an-array-of-unicode-code-points-from-a-net-string
@@ -108,6 +74,41 @@ namespace TestPWA
             return ls;
         }
 
+
+
+        public static bool IsInSet(char c, string unescapedSet)
+        {
+            foreach (char cc in unescapedSet)
+            {
+                if (c == cc)
+                    return true;
+            }
+
+            return false;
+        }
+
+
+        public static string encodeURIComponent(string mystring)
+        {
+            // 2. Let unescapedURIComponentSet be a String containing one instance of each code unit valid in uriUnescaped.
+            const string unescapedSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.!~*'()";
+            return encodeURIComponent(mystring, unescapedSet);
+        }
+
+
+        // encodeURIComponent 
+        // https://tc39.es/ecma262/multipage/global-object.html#sec-encode
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/global_objects/encodeURIComponent
+        // 1. Let componentString be? ToString(uriComponent).
+        // 2. Let unescapedURIComponentSet be a String containing one instance of each code unit valid in uriUnescaped.
+        // 3. Return? Encode(componentString, unescapedURIComponentSet).
+
+        // This syntax of Uniform Resource Identifiers is based upon RFC 2396
+        // and does not reflect the more recent RFC 3986 which replaces RFC 2396.
+        // A formal description and implementation of UTF-8 is given in RFC 3629.
+        // RFC 3629 prohibits the decoding of invalid UTF-8 octet sequences.
+        // For example, the invalid sequence C0 80 must not decode into the code unit 0x0000.
+        // Implementations of the Decode algorithm are required to throw a URIError when encountering such invalid sequences.
 
         public static string encodeURIComponent(string mystring, string unescapedSet)
         {
@@ -161,26 +162,35 @@ namespace TestPWA
         }
 
 
+        private static bool NeedsNoEscaping(char c)
+        {
+            foreach (char cc in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@*_+-./")
+            {
+                if (c == cc) return true;
+            }
+
+            return false;
+        }
+
+
         public static string escape(string mystring)
         {
-            string R = "";
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
             int k = 0;
             int length = mystring.Length;
             while (k < length)
             {
                 System.UInt16 n = mystring[k];
 
-                string S = null;
-
-                if(Character.NeedsNoEscaping(mystring[k]))
+                if(NeedsNoEscaping(mystring[k]))
                 {
-                    S = mystring[k].ToString();
+                    sb.Append(mystring[k].ToString());
                 }
                 else if (n >= 256)
                 {
                     //the String representation of n, formatted as a four-digit uppercase hexadecimal number, padded to the left with zeroes if necessary
-                    // S = "%u" + Character.ForDigit(n, 16).ToString().PadLeft(4, '0');
-                    S = "%u" + n.ToString("X4", System.Globalization.CultureInfo.InvariantCulture);
+                    sb.Append("%u");
+                    sb.Append(n.ToString("X4", System.Globalization.CultureInfo.InvariantCulture));
                 }
                 else
                 {
@@ -188,18 +198,14 @@ namespace TestPWA
                         throw new System.InvalidOperationException("Assert char < 256");
 
                     // the String representation of n, formatted as a two - digit uppercase hexadecimal number, padded to the left with a zero if necessary
-
-                    // S = "%" + Character.ForDigit(n, 16).ToString().PadLeft(2, '0');
-                    S = "%" + n.ToString("X2", System.Globalization.CultureInfo.InvariantCulture);
+                    sb.Append("%");
+                    sb.Append(n.ToString("X2", System.Globalization.CultureInfo.InvariantCulture));
                 }
 
-
-                // Set R to the string-concatenation of R and S.
-                R += S;
                 k++;
             }
 
-            return R;
+            return sb.ToString();
         }
 
 
