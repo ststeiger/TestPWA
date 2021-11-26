@@ -74,32 +74,96 @@ namespace TestPWA
             System.IO.File.WriteAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\debug2.htm", contents, System.Text.Encoding.UTF8);
 
         }
+        
+
+        public static string[] GetArguments(string file, Jint.Engine eng , string input)
+        {
+            string[] arguments = null;
+            if (string.IsNullOrEmpty(input))
+                return arguments;
+
+            try
+            {
+                input = input.Trim();
+
+                if (input.StartsWith('('))
+                    input = input.Substring(1);
+
+                if (input.EndsWith(')'))
+                    input = input.Substring(0, input.Length - 1);
+
+                input = "[" + input + "]";
+
+                object[] args = (object[])eng.Evaluate(input).ToObject(); // converts the value to .NET
+                arguments = new string[args.Length];
+
+                for (int i = 0; i < args.Length; ++i)
+                {
+                    arguments[i] = System.Convert.ToString(args[i], System.Globalization.CultureInfo.InvariantCulture);
+                    arguments[i] = System.Web.HttpUtility.JavaScriptStringEncode(arguments[i]);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(file, input);
+            }
+
+            return arguments;
+        } // End Function GetArguments 
 
 
 
         public static void GetTranslations()
         {
+            string basePath = @"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic-V4\Portal\Portal_Visualiser\0\";
+            string[] files = System.IO.Directory.GetFiles(basePath, "*.js");
+
             // translateEncapsulateString('Export12', 'Papierformat')}
             // translateEncapsulateString('Export13', 'Massstabsgetreu')}
-            string pattern = @"translateEncapsulateString\s*\((.*?)\)";
-            string contents = System.IO.File.ReadAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic-V4\Portal\Portal_Visualiser\0\VWS.Plugin.Export.js", System.Text.Encoding.UTF8);
+            // string pattern = @"translateEncapsulateString\s*\((.*?)\)";
+            // Argh ! There are braces in the strings !
+            // https://stackoverflow.com/questions/7679818/regex-to-extract-function-name-its-parameters
+            // https://stackoverflow.com/questions/18906514/regex-for-matching-functions-and-capturing-their-arguments
+            string pattern = @"(translateEncapsulateString\s*((?:\((?>[^()]+|\((?<open>)|\)(?<-open>))*\)))*)+";
             string saveValues = "[\r\n";
 
-            System.Text.RegularExpressions.Regex.Replace(contents, pattern,
-                delegate(System.Text.RegularExpressions.Match match)
-                {
-                    saveValues += "[" + match.Groups[1]+ "],\r\n";
-                    return match.Value;
-                }
-            );
+            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex(pattern, System.Text.RegularExpressions.RegexOptions.Compiled);
+
+            Jint.Engine eng = new Jint.Engine();
+            foreach (string file in files)
+            {
+                // string file2 = @"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic-V4\Portal\Portal_Visualiser\0\VWS.Plugin.Export.js";
+                string contents = System.IO.File.ReadAllText(file, System.Text.Encoding.UTF8);
+
+                // System.Text.RegularExpressions.Regex.Replace(contents, pattern, delegate (System.Text.RegularExpressions.Match match){ saveValues += "[" + match.Groups[1] + "],\r\n"; return match.Value; } );
+                re.Replace(contents, 
+                    delegate (System.Text.RegularExpressions.Match match)
+                    {
+                        // ["Dimensionlines11", "Länge:"],
+                        string[] arguments = GetArguments(file, eng, match.Groups[2].Value);
+                        if (arguments != null)
+                        {
+                            saveValues += "[\"" + arguments[0] + "\", \"" + arguments[1] + "\"" + "],\r\n";
+                            // System.Console.WriteLine(saveValues);
+                        } // End if (arguments != null) 
+
+                        return match.Value;
+                    } // End Delegate 
+                );
+
+            } // Next  file 
+
+            if (saveValues.EndsWith(",\r\n"))
+            {
+                saveValues = saveValues.Substring(0, saveValues.Length - 3);
+                saveValues += "\r\n";
+            } // End if (saveValues.EndsWith(",\r\n")) 
 
             saveValues += "]\r\n";
 
             // System.IO.File.WriteAllText(@"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic\COR-Basic\Basic\Basic\Checklist2\css\LayoutNew.css", contents, System.Text.Encoding.UTF8);
             System.IO.File.WriteAllText(@"D:\matchValues.txt", saveValues, System.Text.Encoding.UTF8);
-
-        }
-
+        } // End Sub GetTranslations 
 
 
         public static void Main(string[] args)
@@ -113,6 +177,7 @@ namespace TestPWA
             // System.Console.WriteLine(enc);
 
             GetTranslations();
+
 
             // ReplaceCssImages();
             // DbHtml.GenerateAllChecklists();
