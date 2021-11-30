@@ -13,7 +13,7 @@ namespace TestPWA
     // https://github.com/openjdk-mirror/jdk7u-jdk/blob/master/src/share/classes/java/net/URLEncoder.java
     // https://github.com/akamai/BlazeDS/blob/master/modules/core/src/java/flex/messaging/util/URLDecoder.java
     // https://github.com/akamai/BlazeDS/blob/master/modules/core/src/java/flex/messaging/util/URLEncoder.java
-    public class gogo2
+    public class EcmaEncodeDecode
     {
         // decodeUriComponent
         // https://tc39.es/ecma262/multipage/global-object.html#sec-decode
@@ -33,7 +33,7 @@ namespace TestPWA
             if (str == null)
                 throw new System.ArgumentNullException("str");
 
-            System.Collections.Generic.List<int> codePoints = 
+            System.Collections.Generic.List<int> codePoints =
                 new System.Collections.Generic.List<int>(str.Length);
 
             for (int i = 0; i < str.Length; i++)
@@ -118,13 +118,12 @@ namespace TestPWA
 
             while (k != strLen)
             {
-
                 char c = mystring[k];
 
                 if (IsInSet(c, unescapedSet))
                 {
-                    k += 1;
                     R += c.ToString();
+                    ++k;
                 }
                 else
                 {
@@ -141,10 +140,7 @@ namespace TestPWA
                     if (isSurrogate && !char.IsSurrogatePair(mystring, k))
                         throw new System.Exception("URIError");
 
-                    int codepointLength = 1;
-                    if (isSurrogate)
-                        codepointLength++;
-
+                    int codepointLength = isSurrogate ? 2 : 1;
                     byte[] octets = System.Text.Encoding.UTF8.GetBytes(mystring.Substring(k, codepointLength));
                     foreach (byte octet in octets)
                     {
@@ -152,14 +148,13 @@ namespace TestPWA
                         // R "%" the String representation of octet, formatted as a two - digit uppercase hexadecimal number, padded to the left with a zero if necessary
                     }
 
-                    k++;
-                    if (isSurrogate) k++;
+                    k += codepointLength;
                 }
 
-            }
+            } // Whend 
 
             return R;
-        }
+        } // End Function encodeURIComponent 
 
 
         private static bool NeedsNoEscaping(char c)
@@ -182,7 +177,7 @@ namespace TestPWA
             {
                 System.UInt16 n = mystring[k];
 
-                if(NeedsNoEscaping(mystring[k]))
+                if (NeedsNoEscaping(mystring[k]))
                 {
                     sb.Append(mystring[k].ToString());
                 }
