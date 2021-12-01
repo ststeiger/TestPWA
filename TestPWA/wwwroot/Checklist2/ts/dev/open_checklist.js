@@ -43,9 +43,29 @@ function onChecklistClose(ev) {
     var divChecklistsPopup = ev.currentTarget.parentNode;
     divChecklistsPopup.parentNode.removeChild(divChecklistsPopup);
 }
+function onChecklistLoad(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        var btnLoad, popup, row, cl_uid;
+        return __generator(this, function (_a) {
+            btnLoad = ev.currentTarget;
+            popup = btnLoad;
+            row = btnLoad;
+            while (row && !row.classList.contains("pu_content")) {
+                row = row.parentElement;
+            }
+            cl_uid = row.getAttribute("name");
+            while (popup && !popup.classList.contains("Popup")) {
+                popup = popup.parentElement;
+            }
+            popup.parentNode.removeChild(popup);
+            console.log("cl_uid", cl_uid);
+            return [2];
+        });
+    });
+}
 function openChecklistDialogue() {
     return __awaiter(this, void 0, void 0, function () {
-        var checkListsData, checklists, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, useActiveInactive, useDelete, useLoad, subtract, i, color, checklistRow, node_8, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, spanNewChecklist, spanNewChecklist;
+        var checkListsData, checklists, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, useActiveInactive, useDelete, useLoad, subtract, i, color, checklistRow, lblContainer, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, spanNewChecklist, spanNewChecklist;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1")];
@@ -60,7 +80,7 @@ function openChecklistDialogue() {
                     fragment = document.createDocumentFragment();
                     divChecklistsPopup = document.createElement("DIV");
                     divChecklistsPopup.setAttribute("id", "Checklists_Popup");
-                    divChecklistsPopup.setAttribute("class", "Popup");
+                    divChecklistsPopup.setAttribute("class", "Popup noselect");
                     divChecklistsPopup.setAttribute("tabindex", "1");
                     divChecklistsPopup.setAttribute("style", "border: 1px solid black; background-color: rgb(102, 102, 102); box-sizing: border-box; box-shadow: rgb(0, 0, 0) 5px 5px 6px 0px; color: rgb(255, 255, 255); display: block; font-family: Arial, Helvetica, sans-serif; font-size: 11px; height: auto; left: 50%; margin-left: 0px; margin-right: 0px; max-height: 75%; max-width: 75%; min-width: 25%; overflow: hidden; position: absolute; top: 50%; width: 480px; z-index: 2000000000; transform: translate(-50%, -50%);");
                     closeChecklistButton = document.createElement("DIV");
@@ -94,15 +114,15 @@ function openChecklistDialogue() {
                         checklistRow.setAttribute("name", checklists.row(i).CL_UID);
                         checklistRow.setAttribute("class", "pu_content");
                         checklistRow.setAttribute("style", "background-color: " + color + "; clear: both; overflow: hidden; position: relative; width: 100%; white-space: nowrap;");
-                        node_8 = document.createElement("DIV");
-                        node_8.setAttribute("class", "CL_Lang");
-                        node_8.setAttribute("title", "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert");
-                        node_8.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - " + subtract.toString() + "px) / 1);");
+                        lblContainer = document.createElement("DIV");
+                        lblContainer.setAttribute("class", "CL_Lang");
+                        lblContainer.setAttribute("title", "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert");
+                        lblContainer.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - " + subtract.toString() + "px) / 1);");
                         lblChecklistDesignation = document.createElement("P");
-                        lblChecklistDesignation.setAttribute("contenteditable", "true");
+                        lblChecklistDesignation.setAttribute("style", "box-shadow: none;");
                         lblChecklistDesignation.appendChild(document.createTextNode(checklists.row(i).CL_Name));
-                        node_8.appendChild(lblChecklistDesignation);
-                        checklistRow.appendChild(node_8);
+                        lblContainer.appendChild(lblChecklistDesignation);
+                        checklistRow.appendChild(lblContainer);
                         if (useActiveInactive) {
                             btnActiveInactive = document.createElement("DIV");
                             btnActiveInactive.setAttribute("class", "_STATUS");
@@ -122,6 +142,7 @@ function openChecklistDialogue() {
                             btnLoad.setAttribute("class", "_SELECT");
                             btnLoad.setAttribute("title", "Laden\n    Gewählte Checkliste zum Bearbeiten Laden");
                             btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
+                            btnLoad.onclick = onChecklistLoad;
                             checklistRow.appendChild(btnLoad);
                             checklistContainer.appendChild(checklistRow);
                         }

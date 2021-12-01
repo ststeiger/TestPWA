@@ -35,6 +35,31 @@ function onChecklistClose(ev: MouseEvent)
 }
 
 
+async function onChecklistLoad(ev: MouseEvent)
+{
+    let btnLoad = (<Element>ev.currentTarget);
+    let popup = btnLoad; //.parentElement.parentElement.parentElement.parentElement;
+    let row = btnLoad;
+
+    while (row && !row.classList.contains("pu_content"))
+    {
+        row = row.parentElement;
+    }
+    
+    let cl_uid = row.getAttribute("name");
+    
+
+    while (popup && !popup.classList.contains("Popup"))
+    {
+        popup = popup.parentElement;
+    }
+    
+    popup.parentNode.removeChild(popup);
+
+    console.log("cl_uid", cl_uid);
+}
+
+
 
 
 async function openChecklistDialogue():Promise<DocumentFragment>
@@ -60,7 +85,7 @@ async function openChecklistDialogue():Promise<DocumentFragment>
 
     let divChecklistsPopup = document.createElement("DIV");
     divChecklistsPopup.setAttribute("id", "Checklists_Popup");
-    divChecklistsPopup.setAttribute("class", "Popup");
+    divChecklistsPopup.setAttribute("class", "Popup noselect");
     divChecklistsPopup.setAttribute("tabindex", "1");
     divChecklistsPopup.setAttribute("style", "border: 1px solid black; background-color: rgb(102, 102, 102); box-sizing: border-box; box-shadow: rgb(0, 0, 0) 5px 5px 6px 0px; color: rgb(255, 255, 255); display: block; font-family: Arial, Helvetica, sans-serif; font-size: 11px; height: auto; left: 50%; margin-left: 0px; margin-right: 0px; max-height: 75%; max-width: 75%; min-width: 25%; overflow: hidden; position: absolute; top: 50%; width: 480px; z-index: 2000000000; transform: translate(-50%, -50%);");
 
@@ -116,16 +141,18 @@ async function openChecklistDialogue():Promise<DocumentFragment>
         checklistRow.setAttribute("class", "pu_content");
         checklistRow.setAttribute("style", "background-color: " + color + "; clear: both; overflow: hidden; position: relative; width: 100%; white-space: nowrap;");
 
-        let node_8 = document.createElement("DIV");
-        node_8.setAttribute("class", "CL_Lang");
-        node_8.setAttribute("title", "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert");
-        node_8.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - " + subtract.toString() + "px) / 1);");
+        let lblContainer = document.createElement("DIV");
+        lblContainer.setAttribute("class", "CL_Lang");
+        lblContainer.setAttribute("title", "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert");
+        lblContainer.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - " + subtract.toString() + "px) / 1);");
 
         let lblChecklistDesignation = document.createElement("P");
-        lblChecklistDesignation.setAttribute("contenteditable", "true");
+        // lblChecklistDesignation.setAttribute("contenteditable", "true");
+        lblChecklistDesignation.setAttribute("style", "box-shadow: none;");
+
         lblChecklistDesignation.appendChild(document.createTextNode(checklists.row(i).CL_Name)); // "Budgetprozess Baulicher Unterhalt"
-        node_8.appendChild(lblChecklistDesignation);
-        checklistRow.appendChild(node_8);
+        lblContainer.appendChild(lblChecklistDesignation);
+        checklistRow.appendChild(lblContainer);
 
         if (useActiveInactive)
         {
@@ -153,6 +180,7 @@ async function openChecklistDialogue():Promise<DocumentFragment>
             btnLoad.setAttribute("title", "Laden\n    Gewählte Checkliste zum Bearbeiten Laden");
 
             btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
+            btnLoad.onclick = onChecklistLoad;
             checklistRow.appendChild(btnLoad);
             checklistContainer.appendChild(checklistRow);
         }
@@ -212,6 +240,69 @@ function addStylesheet(url: string)
 }
 
 
+
+
+
+async function autorun()
+{
+    let doc = window.parent.document;
+    let main = doc.getElementById("Main");
+    // main.insertAdjacentHTML("afterbegin", ccc);
+
+    let fragment = doc.createDocumentFragment();
+
+    let buttonFrame = doc.createElement("DIV");
+    buttonFrame.setAttribute("class", "buttonFrame");
+    buttonFrame.setAttribute("id", "buttonFrame");
+
+    let spanUsername = doc.createElement("SPAN");
+    spanUsername.setAttribute("class", "bfUsername");
+    spanUsername.appendChild(doc.createTextNode("D. Administrator "));
+    buttonFrame.appendChild(spanUsername);
+
+    let divRight = doc.createElement("DIV");
+    divRight.setAttribute("class", "Right");
+
+    let btnSave = doc.createElement("INPUT");
+    btnSave.setAttribute("type", "submit");
+    btnSave.setAttribute("name", "btn_Speichern");
+    btnSave.setAttribute("value", "Speichern");
+    btnSave.setAttribute("onclick", "javascript:console.log('hello');");
+    btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+    divRight.appendChild(btnSave);
+    buttonFrame.appendChild(divRight);
+
+    let divLeft = doc.createElement("DIV");
+    divLeft.setAttribute("class", "Left");
+
+    let btnCancel = doc.createElement("INPUT");
+    btnCancel.setAttribute("type", "submit");
+    btnCancel.setAttribute("name", "btn_Abbrechen");
+    btnCancel.setAttribute("value", "Abbrechen");
+    btnCancel.setAttribute("id", "btn_Abbrechen");
+    btnCancel.setAttribute("class", "validate-skip");
+    btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+
+    divLeft.appendChild(btnCancel);
+    buttonFrame.appendChild(divLeft);
+
+    fragment.appendChild(buttonFrame);
+
+    if (main != null)
+        main.appendChild(fragment);
+
+
+    let dialog = await openChecklistDialogue();
+    document.getElementById("mainContainer").appendChild(dialog);
+}
+
+
+
+        // if (window.addEventListener) window.addEventListener("load", autorun, false);
+        // else if (window.attachEvent) window.attachEvent("onload", autorun);
+        // else window.onload = autorun;
+
+
 export async function main()
 {
     // do polyfills immediately on script-load
@@ -223,6 +314,7 @@ export async function main()
         addStylesheet("./css/Layout.css?v=1");
     }
 
-    let dialog = await openChecklistDialogue();
-    document.getElementById("mainContainer").appendChild(dialog);
+    if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+    else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+    else window.onload = autorun;
 }

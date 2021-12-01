@@ -41,20 +41,33 @@ namespace AnySqlWebAdmin
 
             try
             {
+
+
+
+                DummySession ds = new DummySession();
+
+
                 System.Text.Json.JsonSerializerOptions options =
                     new System.Text.Json.JsonSerializerOptions()
                     {
+#if false
                         Converters = {
                             new TestPWA.HttpContextConverter()
                         },
+#endif
                         IncludeFields = true,
                         WriteIndented = true
                         // ,PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase 
                         // ,ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
                         // Where has ReferenceLoopHandling.Ignore gone ? 
                 };
-                
+
+#if false
                 await System.Text.Json.JsonSerializer.SerializeAsync(context.Response.Body, context, context.GetType(), options);
+#else
+                await System.Text.Json.JsonSerializer.SerializeAsync(context.Response.Body, ds, ds.GetType(), options);
+#endif
+
             } // End Try 
             catch (System.Exception ex)
             {
