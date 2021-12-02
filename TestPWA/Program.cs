@@ -112,7 +112,6 @@ namespace TestPWA
         } // End Function GetArguments 
 
 
-
         public static void GetTranslations()
         {
             string basePath = @"D:\username\Documents\Visual Studio 2017\TFS\COR-Basic-V4\Portal\Portal_Visualiser\0\";

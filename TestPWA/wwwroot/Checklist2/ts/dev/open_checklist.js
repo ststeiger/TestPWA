@@ -183,21 +183,97 @@ function addStylesheet(url) {
     ss.setAttribute("href", url);
     h.appendChild(ss);
 }
-function main() {
+function getObj(sess) {
+    var obj = sess.mainDS.main[0];
+    var SO_UID = obj.SO_UID;
+    var GB_UID = obj.GB_UID;
+    var GS_UID = obj.GS_UID;
+    var TK_UID = obj.TK_UID;
+    var RM_UID = obj.RM_UID;
+    var TSK_UID = obj.TSK_UID;
+    var OBJ_UID = SO_UID || GB_UID || GS_UID || TK_UID || RM_UID || TSK_UID;
+    var OBJT_Code = "";
+    if (SO_UID)
+        OBJT_Code = "SO";
+    else if (GB_UID)
+        OBJT_Code = "GB";
+    else if (GS_UID)
+        OBJT_Code = "GS";
+    else if (TK_UID)
+        OBJT_Code = "TK";
+    else if (RM_UID)
+        OBJT_Code = "RM";
+    else if (TSK_UID)
+        OBJT_Code = "TSK";
+    return { "OBJ_UID": OBJ_UID, "OBJT_Code": OBJT_Code };
+}
+function onDocumentReady() {
     return __awaiter(this, void 0, void 0, function () {
-        var dialog;
+        var doc, main, fragment, buttonFrame, spanUsername, divRight, btnSave, divLeft, btnCancel, dialog, sess, obj;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (true) {
-                        addStylesheet("./css/Layout.css?v=1");
-                    }
+                    doc = window.parent.document;
+                    main = doc.getElementById("Main");
+                    fragment = doc.createDocumentFragment();
+                    buttonFrame = doc.createElement("DIV");
+                    buttonFrame.setAttribute("class", "buttonFrame");
+                    buttonFrame.setAttribute("id", "buttonFrame");
+                    spanUsername = doc.createElement("SPAN");
+                    spanUsername.setAttribute("class", "bfUsername");
+                    spanUsername.appendChild(doc.createTextNode("D. Administrator "));
+                    buttonFrame.appendChild(spanUsername);
+                    divRight = doc.createElement("DIV");
+                    divRight.setAttribute("class", "Right");
+                    btnSave = doc.createElement("INPUT");
+                    btnSave.setAttribute("type", "submit");
+                    btnSave.setAttribute("name", "btn_Speichern");
+                    btnSave.setAttribute("value", "Speichern");
+                    btnSave.setAttribute("onclick", "javascript:console.log('hello');");
+                    btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+                    divRight.appendChild(btnSave);
+                    buttonFrame.appendChild(divRight);
+                    divLeft = doc.createElement("DIV");
+                    divLeft.setAttribute("class", "Left");
+                    btnCancel = doc.createElement("INPUT");
+                    btnCancel.setAttribute("type", "submit");
+                    btnCancel.setAttribute("name", "btn_Abbrechen");
+                    btnCancel.setAttribute("value", "Abbrechen");
+                    btnCancel.setAttribute("id", "btn_Abbrechen");
+                    btnCancel.setAttribute("class", "validate-skip");
+                    btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+                    divLeft.appendChild(btnCancel);
+                    buttonFrame.appendChild(divLeft);
+                    fragment.appendChild(buttonFrame);
+                    if (main != null)
+                        main.appendChild(fragment);
                     return [4, openChecklistDialogue()];
                 case 1:
                     dialog = _a.sent();
                     document.getElementById("mainContainer").appendChild(dialog);
+                    return [4, ajax.fetchJSON("../ajax/CurrentSession.ashx")];
+                case 2:
+                    sess = _a.sent();
+                    obj = getObj(sess);
+                    console.log(obj);
                     return [2];
             }
+        });
+    });
+}
+function main() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            if (true) {
+                addStylesheet("./css/Layout.css?v=1");
+            }
+            if (document.addEventListener)
+                document.addEventListener("DOMContentLoaded", onDocumentReady, false);
+            else if (document.attachEvent)
+                document.attachEvent("onreadystatechange", onDocumentReady);
+            else
+                window.onload = onDocumentReady;
+            return [2];
         });
     });
 }

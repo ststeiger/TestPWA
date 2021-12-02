@@ -45,15 +45,15 @@ async function onChecklistLoad(ev: MouseEvent)
     {
         row = row.parentElement;
     }
-    
+
     let cl_uid = row.getAttribute("name");
-    
+
 
     while (popup && !popup.classList.contains("Popup"))
     {
         popup = popup.parentElement;
     }
-    
+
     popup.parentNode.removeChild(popup);
 
     console.log("cl_uid", cl_uid);
@@ -62,7 +62,7 @@ async function onChecklistLoad(ev: MouseEvent)
 
 
 
-async function openChecklistDialogue():Promise<DocumentFragment>
+async function openChecklistDialogue(): Promise<DocumentFragment>
 {
     // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
     let checkListsData = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1");
@@ -117,9 +117,9 @@ async function openChecklistDialogue():Promise<DocumentFragment>
 
 
 
-    let colors:string[] = ["rgb(118, 118, 118)", "rgb(102, 102, 102)"];
+    let colors: string[] = ["rgb(118, 118, 118)", "rgb(102, 102, 102)"];
 
-    
+
     let useActiveInactive = false;
     let useDelete = false;
     let useLoad = true;
@@ -135,7 +135,7 @@ async function openChecklistDialogue():Promise<DocumentFragment>
         console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
 
         let color = colors[i % 2];
-        
+
         let checklistRow = document.createElement("DIV");
         checklistRow.setAttribute("name", checklists.row(i).CL_UID);
         checklistRow.setAttribute("class", "pu_content");
@@ -174,7 +174,7 @@ async function openChecklistDialogue():Promise<DocumentFragment>
         }
 
         if (useLoad)
-        { 
+        {
             let btnLoad = document.createElement("DIV");
             btnLoad.setAttribute("class", "_SELECT");
             btnLoad.setAttribute("title", "Laden\n    Gewählte Checkliste zum Bearbeiten Laden");
@@ -242,8 +242,31 @@ function addStylesheet(url: string)
 
 
 
+function getObj(sess: IBasicSession): IBasicObject
+{
+    let obj = sess.mainDS.main[0];
+    let SO_UID = (<IT_AP_Standort>obj).SO_UID;
+    let GB_UID = (<IT_AP_Gebaeude>obj).GB_UID;
+    let GS_UID = (<IT_AP_Geschoss>obj).GS_UID;
+    let TK_UID = (<IT_AP_Trakt>obj).TK_UID;
+    let RM_UID = (<IT_AP_Raum>obj).RM_UID;
+    let TSK_UID = (<IT_TM_Tasks>obj).TSK_UID;
 
-async function autorun()
+    let OBJ_UID = SO_UID || GB_UID || GS_UID || TK_UID || RM_UID || TSK_UID;
+    let OBJT_Code = "";
+    if (SO_UID) OBJT_Code = "SO";
+    else if (GB_UID) OBJT_Code = "GB";
+    else if (GS_UID) OBJT_Code = "GS";
+    else if (TK_UID) OBJT_Code = "TK";
+    else if (RM_UID) OBJT_Code = "RM";
+    else if (TSK_UID) OBJT_Code = "TSK";
+
+    return { "OBJ_UID": OBJ_UID, "OBJT_Code": OBJT_Code };
+}
+
+
+
+async function onDocumentReady()
 {
     let doc = window.parent.document;
     let main = doc.getElementById("Main");
@@ -294,13 +317,17 @@ async function autorun()
 
     let dialog = await openChecklistDialogue();
     document.getElementById("mainContainer").appendChild(dialog);
+
+    let sess = <IBasicSession>await ajax.fetchJSON("../ajax/CurrentSession.ashx")
+    let obj: IBasicObject = getObj(sess);
+    console.log(obj);
 }
 
 
 
-        // if (window.addEventListener) window.addEventListener("load", autorun, false);
-        // else if (window.attachEvent) window.attachEvent("onload", autorun);
-        // else window.onload = autorun;
+// if (window.addEventListener) window.addEventListener("load", autorun, false);
+// else if (window.attachEvent) window.attachEvent("onload", autorun);
+// else window.onload = autorun;
 
 
 export async function main()
@@ -314,7 +341,7 @@ export async function main()
         addStylesheet("./css/Layout.css?v=1");
     }
 
-    if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
-    else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
-    else window.onload = autorun;
+    if (document.addEventListener) document.addEventListener("DOMContentLoaded", onDocumentReady, false);
+    else if (document.attachEvent) document.attachEvent("onreadystatechange", onDocumentReady);
+    else window.onload = onDocumentReady;
 }
