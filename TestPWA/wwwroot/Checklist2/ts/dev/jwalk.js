@@ -22,7 +22,7 @@ function createVisibleListNodesFilter() {
     return createFilter(acceptNode);
 }
 function jWalk(container, documentName) {
-    var ni = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT, createVisibleListNodesFilter(), false);
+    var ni = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT, createVisibleListNodesFilter());
     ni.currentNode = container;
     var currentNode;
     while (currentNode = ni.nextNode()) {

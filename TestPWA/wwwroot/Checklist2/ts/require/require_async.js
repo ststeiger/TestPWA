@@ -126,9 +126,9 @@ function require_async(name) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log("Evaluating file " + name);
+                    console.log("Evaluating file ".concat(name));
                     if (!!(name in require_async.cache)) return [3, 4];
-                    console.log(name + " is not in cache; reading from disk");
+                    console.log("".concat(name, " is not in cache; reading from disk"));
                     return [4, readFileAsync(name, 'utf8')];
                 case 1:
                     code = _a.sent();
@@ -145,7 +145,7 @@ function require_async(name) {
                     _a.sent();
                     _a.label = 4;
                 case 4:
-                    console.log(name + " is in cache. Returning it...");
+                    console.log("".concat(name, " is in cache. Returning it..."));
                     return [2, require_async.cache[name].exports];
             }
         });

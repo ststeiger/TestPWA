@@ -50,7 +50,7 @@ if (!String.prototype.trimEnd) {
 }
 function require(name) {
     if (require.debug)
-        console.log("Evaluating file " + name);
+        console.log("Evaluating file ".concat(name));
     function readFileSync(fileName, encoding) {
         var client = new XMLHttpRequest();
         var contentType = null;
@@ -102,7 +102,7 @@ function require(name) {
     }
     if (!(name in require.cache)) {
         if (require.debug)
-            console.log(name + " is not in cache; reading from disk");
+            console.log("".concat(name, " is not in cache; reading from disk"));
         var code = readFileSync(name, 'utf8');
         var module = { exports: {} };
         require.cache[name] = module;
@@ -124,7 +124,7 @@ function require(name) {
         }
     }
     if (require.debug)
-        console.log(name + " is in cache. Returning it...");
+        console.log("".concat(name, " is in cache. Returning it..."));
     return require.cache[name].exports;
 }
 require.cache = Object.create(null);

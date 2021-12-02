@@ -233,6 +233,19 @@ namespace TestPWA
                 "DDADA097-1BB4-46D5-9EE5-7BB28DD3201B",
             };
 
+            string[] fileVersionUids = new string[] {
+            "08796354-F7AA-4EDF-B943-A51F7AFDAD1D",
+"11109E12-7B76-4B60-9168-42FC41D28383",
+"7F973E2D-5BEB-4E0F-932E-642CB936E7B6",
+"E4FD4412-523C-41F0-9CDF-FFB3E5638C3C",
+"6A3210F8-161F-4DF5-9566-1C66BF41D61D",
+"26456198-0699-4718-AAF7-B8119BE9D705",
+"FA28E4D1-E505-4C54-9305-52D526DD0D70",
+            };
+
+
+
+
             for (int i = 0; i < files.Length; ++i)
             {
                 string file = System.IO.Path.Combine(basePath, files[i] + ".htm");
@@ -245,9 +258,9 @@ namespace TestPWA
 
                 string queryFile = System.IO.Path.Combine(outputPath, "Query_" + files[i] + ".sql");
                 string insertFile = System.IO.Path.Combine(outputPath, "Insert_" + files[i] + ".sql");
-
+                
                 System.IO.File.WriteAllText(queryFile, string.Format(queryTemplate, json.Replace("'", "''")), System.Text.Encoding.UTF8);
-                System.IO.File.WriteAllText(insertFile, string.Format(insertTemplate, json.Replace("'", "''"), fileUids[i]), System.Text.Encoding.UTF8);
+                System.IO.File.WriteAllText(insertFile, string.Format(insertTemplate, json.Replace("'", "''"), fileUids[i], fileVersionUids[i]), System.Text.Encoding.UTF8);
             } // Next i 
             
         } // End Sub GenerateAllChecklists 

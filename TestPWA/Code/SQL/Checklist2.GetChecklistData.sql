@@ -23,7 +23,7 @@ ORDER BY CL_Name
 SELECT 
 	 T_ChecklistElements.ELE_UID 
 	,T_ChecklistElements.ELE_Parent_UID 
-	,T_ChecklistElements.ELE_CL_UID 
+	,T_ChecklistElements.ELE_CLV_UID 
 	,T_ChecklistElements.ELE_TagName 
 	,T_ChecklistElements.ELE_Level 
 	,T_ChecklistElements.ELE_Sort 
@@ -36,7 +36,7 @@ SELECT
 	 END AS ELE_InnerHtml2 
 FROM T_ChecklistElements 
 WHERE (1=1) 
-AND T_ChecklistElements.ELE_CL_UID = @__cl_uid 
+AND T_ChecklistElements.ELE_CLV_UID IN (SELECT TOP 1 CLV_UID FROM T_ChecklistVersion WHERE CLV_CL_UID = @__cl_uid ORDER BY CLV_Created  DESC )
 -- AND T_ChecklistElements.ELE_Level = 3 
 ORDER BY ELE_Level, ELE_Sort 
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
@@ -50,7 +50,13 @@ SELECT
 	,T_Checklist_ZO_ElementProperties.PRO_ELE_UID 
 FROM T_Checklist_ZO_ElementProperties 
 WHERE (1=1) 
-AND T_Checklist_ZO_ElementProperties.PRO_ELE_UID IN (SELECT T_ChecklistElements.ELE_UID FROM T_ChecklistElements WHERE T_ChecklistElements.ELE_CL_UID = @__cl_uid) 
+AND T_Checklist_ZO_ElementProperties.PRO_ELE_UID IN 
+(
+	SELECT T_ChecklistElements.ELE_UID FROM T_ChecklistElements 
+	-- WHERE T_ChecklistElements.ELE_CL_UID = @__cl_uid
+	WHERE T_ChecklistElements.ELE_CLV_UID IN (SELECT TOP 1 CLV_UID FROM T_ChecklistVersion WHERE CLV_CL_UID = @__cl_uid ORDER BY CLV_Created  DESC )
+) 
 ORDER BY PRO_ELE_UID, PRO_Name 
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
 ; 
+

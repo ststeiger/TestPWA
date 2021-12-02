@@ -28,10 +28,10 @@ function toString(node, pretty, level, singleton) {
         return (singleton ? '' : tabs) + node.textContent.trim() + (singleton ? '' : newLine);
     if (!node.nodeName)
         return toString(node.firstChild, pretty);
-    var output = tabs + ("<" + node.nodeName.toLowerCase());
+    var output = tabs + "<".concat(node.nodeName.toLowerCase());
     if (node.attributes) {
         for (var i = 0; i < node.attributes.length; i++)
-            output += " " + node.attributes[i].name + "=\"" + node.attributes[i].value + "\"";
+            output += " ".concat(node.attributes[i].name, "=\"").concat(node.attributes[i].value, "\"");
     }
     if (node.childNodes.length == 0)
         return output + ' />' + newLine;
@@ -42,7 +42,7 @@ function toString(node, pretty, level, singleton) {
         output += newLine;
     for (var i = 0; i < node.childNodes.length; i++)
         output += toString(node.childNodes[i], pretty, level + 1, onlyOneTextChild);
-    return output + (onlyOneTextChild ? '' : tabs) + ("</" + node.nodeName.toLowerCase() + ">") + newLine;
+    return output + (onlyOneTextChild ? '' : tabs) + "</".concat(node.nodeName.toLowerCase(), ">") + newLine;
 }
 function minify(node) {
     return toString(node, false);

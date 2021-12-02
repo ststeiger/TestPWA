@@ -44,7 +44,7 @@ var DoublyLinkedList = (function () {
     };
     DoublyLinkedList.prototype.insert = function (index, value) {
         if (!Number.isInteger(index) || index < 0 || index > this.length + 1) {
-            console.log("Invalid index. Current length is " + this.length + ".");
+            console.log("Invalid index. Current length is ".concat(this.length, "."));
             return this;
         }
         if (index === 0) {
@@ -70,7 +70,7 @@ var DoublyLinkedList = (function () {
     };
     DoublyLinkedList.prototype.remove = function (index) {
         if (!Number.isInteger(index) || index < 0 || index > this.length) {
-            console.log("Invalid index. Current length is " + this.length + ".");
+            console.log("Invalid index. Current length is ".concat(this.length, "."));
             return this;
         }
         if (index === 0) {

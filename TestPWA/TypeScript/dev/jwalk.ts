@@ -41,7 +41,8 @@ function createVisibleListNodesFilter(): NodeFilter
 
 export function jWalk(container: Node, documentName?: string)
 {
-    let ni = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT, createVisibleListNodesFilter(), false);
+    //let ni = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT, createVisibleListNodesFilter(), false);
+    let ni = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT, createVisibleListNodesFilter());
 
     ni.currentNode = container;
 
