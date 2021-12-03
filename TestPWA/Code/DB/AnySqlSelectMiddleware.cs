@@ -143,7 +143,7 @@ namespace AnySqlWebAdmin
                     // SqlException se = new SqlException(exception.Message, sql, pars, context, exception);
                     // await se.ToJSON(context.Response.Body);
 
-                    AJAXException ae = new AJAXException(exception);
+                    AJAXException ae = new AJAXException(exception, pars);
                     await ae.ToJSON(context.Response.Body);
                 }
 

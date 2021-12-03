@@ -36,7 +36,7 @@ namespace TestPWA
             // InfoExtraction.GetTranslations();
             // InfoExtraction.ReplaceCssImages();
 
-            DbHtml.GenerateAllChecklists();
+            // DbHtml.GenerateAllChecklists();
             // TestEpPlus.Test(); return;
             CreateHostBuilder(args).Build().Run();
         } // End Sub Main 

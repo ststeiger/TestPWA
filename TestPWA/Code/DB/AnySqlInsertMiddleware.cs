@@ -111,7 +111,7 @@ namespace AnySqlWebAdmin
 
 
                 // context.Response.Headers["HTTP/1.0 500 Internal Server Error"] = "";
-                result.error = new AJAXException(ex);
+                result.error = new AJAXException(ex, pars);
             } // End Catch 
 
 

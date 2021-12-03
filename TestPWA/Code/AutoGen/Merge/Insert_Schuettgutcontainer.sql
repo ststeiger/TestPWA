@@ -20,7 +20,7 @@ SET @numSortDigits = 10;
 
 
 DECLARE @json nvarchar(max) = N'{
-  "uuid": "45788b65-8bcb-4dc7-8804-13ed7662d386",
+  "uuid": "80209acd-d628-4fd9-9cd0-4ad620977d1c",
   "tagName": "table",
   "properties": [
     [
@@ -38,8 +38,8 @@ DECLARE @json nvarchar(max) = N'{
   ],
   "children": [
     {
-      "uuid": "daa84cdd-1553-4030-a710-55b6ace23708",
-      "parent_uuid": "45788b65-8bcb-4dc7-8804-13ed7662d386",
+      "uuid": "3b78333b-8f36-4723-a95c-aba870aab2b2",
+      "parent_uuid": "80209acd-d628-4fd9-9cd0-4ad620977d1c",
       "tagName": "colgroup",
       "properties": [
         [
@@ -56,8 +56,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "7fee809e-7397-4c4e-8c3e-751e9ef0d1f1",
-      "parent_uuid": "45788b65-8bcb-4dc7-8804-13ed7662d386",
+      "uuid": "b845851d-3f2e-48f4-9ee9-406eded1f2b2",
+      "parent_uuid": "80209acd-d628-4fd9-9cd0-4ad620977d1c",
       "tagName": "colgroup",
       "properties": [
         [
@@ -70,8 +70,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "5cb34fef-fadf-4e60-8537-72dd17a319b6",
-      "parent_uuid": "45788b65-8bcb-4dc7-8804-13ed7662d386",
+      "uuid": "b366889d-bfce-4f60-8bb7-b051f91c2f40",
+      "parent_uuid": "80209acd-d628-4fd9-9cd0-4ad620977d1c",
       "tagName": "colgroup",
       "properties": [
         [
@@ -84,8 +84,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "52f8a7cc-4ebd-4e90-be22-f505afea93a1",
-      "parent_uuid": "45788b65-8bcb-4dc7-8804-13ed7662d386",
+      "uuid": "a23aa533-2e1c-48f2-a20d-57f83ade35c5",
+      "parent_uuid": "80209acd-d628-4fd9-9cd0-4ad620977d1c",
       "tagName": "colgroup",
       "properties": [
         [
@@ -98,8 +98,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "0b5ff55a-0945-4516-a6bd-91ce7e3d5531",
-      "parent_uuid": "45788b65-8bcb-4dc7-8804-13ed7662d386",
+      "uuid": "d1e6af4a-bf37-46b9-87c8-2734f9fdede3",
+      "parent_uuid": "80209acd-d628-4fd9-9cd0-4ad620977d1c",
       "tagName": "colgroup",
       "properties": [
         [
@@ -112,8 +112,8 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "643b6e61-f9c8-454d-b8d4-81f2715ae1d8",
-      "parent_uuid": "45788b65-8bcb-4dc7-8804-13ed7662d386",
+      "uuid": "88911775-b1a4-486c-90c6-ec8ec7a5f7f0",
+      "parent_uuid": "80209acd-d628-4fd9-9cd0-4ad620977d1c",
       "tagName": "colgroup",
       "properties": [
         [
@@ -130,14 +130,14 @@ DECLARE @json nvarchar(max) = N'{
       "lvl": 0
     },
     {
-      "uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
-      "parent_uuid": "45788b65-8bcb-4dc7-8804-13ed7662d386",
+      "uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
+      "parent_uuid": "80209acd-d628-4fd9-9cd0-4ad620977d1c",
       "tagName": "tbody",
       "properties": [],
       "children": [
         {
-          "uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [
             [
@@ -147,8 +147,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "f1cab29c-f0ed-4404-87c6-e5b1283e9a5c",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "c719b2bc-9a4e-4f18-8a6b-26e2f3e0ca07",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -170,8 +170,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "6ec9750c-191d-4c08-a1dd-8fdb43ac3fd9",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "ac3c5500-7213-428b-893a-1828a53315c2",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -189,8 +189,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c5d11601-efc0-4803-b1e6-31bf85e55114",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "284f2360-09c4-48e9-b9d1-746c9cf0ee83",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -208,8 +208,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "32b6b2b5-80e0-4bb1-94ef-299ade35c899",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "e5976f29-795c-4358-a808-e62d8c3a4417",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -223,8 +223,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "59018b11-051a-4ebc-bb69-49bed674eae2",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "ef5ece27-2f6d-426d-9728-59e06b342656",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -238,8 +238,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "34ae3aa6-1de6-43b5-b408-8ed0789c7f27",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "4571b82c-2b5d-4b89-b9ef-395d1a4cb937",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -253,8 +253,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "dba0e772-e116-4ace-965b-7c2277fae08c",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "52ce3d5b-20fc-4f72-8073-8d1ca3326829",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -272,8 +272,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "fa03519d-db06-46fe-9bec-8f76b2349f9d",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "06822d2d-e9e7-4997-84e3-17547dc6d575",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -291,8 +291,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e021c902-7e4a-4347-aa29-824c8f8df19f",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "3917b137-a442-4b19-8df4-f3cf48a94932",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -310,8 +310,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "b34a46cb-847c-43cd-84f8-59134d23b828",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "a59a6eea-af68-44e7-b567-4b18f170ba61",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -329,8 +329,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c5812875-ce49-4d43-a606-b47a3896feca",
-              "parent_uuid": "6a3f5e6c-6f39-4eba-96a0-67a8fbf45d6c",
+              "uuid": "47d2e88d-b2ac-4228-ba01-787615b05643",
+              "parent_uuid": "a56a9323-be3a-4a3b-9bd8-ccc473adc8e6",
               "tagName": "td",
               "properties": [
                 [
@@ -352,8 +352,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "314e0331-cb63-46a2-ae2f-bc8a901b1558",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "62ae835a-e6f5-4714-a65f-73e32bb26262",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [
             [
@@ -363,8 +363,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "bf2eecf6-7c4a-4453-a376-0c3d243f3ea8",
-              "parent_uuid": "314e0331-cb63-46a2-ae2f-bc8a901b1558",
+              "uuid": "8b7a5fca-e624-4ea2-8426-798f4241d49d",
+              "parent_uuid": "62ae835a-e6f5-4714-a65f-73e32bb26262",
               "tagName": "td",
               "properties": [
                 [
@@ -386,8 +386,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "45aafa1d-4419-44c1-bc87-bd27893a49bd",
-              "parent_uuid": "314e0331-cb63-46a2-ae2f-bc8a901b1558",
+              "uuid": "c80d3b59-6c35-483d-8e02-449bd092fa59",
+              "parent_uuid": "62ae835a-e6f5-4714-a65f-73e32bb26262",
               "tagName": "td",
               "properties": [
                 [
@@ -405,8 +405,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "7dd144e8-399e-4a0c-9614-73cb2e5d0d00",
-              "parent_uuid": "314e0331-cb63-46a2-ae2f-bc8a901b1558",
+              "uuid": "d47b6053-1bb9-4e0a-a0b4-a87dc8d24b61",
+              "parent_uuid": "62ae835a-e6f5-4714-a65f-73e32bb26262",
               "tagName": "td",
               "properties": [
                 [
@@ -424,8 +424,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ddd4702e-3ebe-433f-ab61-b5ee6de4991e",
-              "parent_uuid": "314e0331-cb63-46a2-ae2f-bc8a901b1558",
+              "uuid": "dd90960f-f794-4713-a6b1-62a15be3f02a",
+              "parent_uuid": "62ae835a-e6f5-4714-a65f-73e32bb26262",
               "tagName": "td",
               "properties": [
                 [
@@ -451,14 +451,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "fc3fbebc-8442-4261-8de3-7a432aa65b01",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "1ca5b63c-4def-49f7-8a0f-df6cc51dd336",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "cfca3ecb-7d5c-432b-82f4-eaf459ebb43f",
-              "parent_uuid": "fc3fbebc-8442-4261-8de3-7a432aa65b01",
+              "uuid": "836118f8-950a-403e-b7fa-8ce66c5e26d3",
+              "parent_uuid": "1ca5b63c-4def-49f7-8a0f-df6cc51dd336",
               "tagName": "td",
               "properties": [
                 [
@@ -484,8 +484,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "bfbc7d8e-1632-44c1-b7e9-155af2b36ef2",
-              "parent_uuid": "fc3fbebc-8442-4261-8de3-7a432aa65b01",
+              "uuid": "4a1fe0fc-d73a-4066-a3ce-dbffc6641518",
+              "parent_uuid": "1ca5b63c-4def-49f7-8a0f-df6cc51dd336",
               "tagName": "td",
               "properties": [
                 [
@@ -503,8 +503,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "a5fbd603-bdad-4b98-8b37-60db198870cc",
-              "parent_uuid": "fc3fbebc-8442-4261-8de3-7a432aa65b01",
+              "uuid": "5004586b-edaf-41f6-821b-4631e53e05ef",
+              "parent_uuid": "1ca5b63c-4def-49f7-8a0f-df6cc51dd336",
               "tagName": "td",
               "properties": [
                 [
@@ -518,8 +518,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "854d013c-7910-472b-b708-9faa3f8dc5a6",
-              "parent_uuid": "fc3fbebc-8442-4261-8de3-7a432aa65b01",
+              "uuid": "ac7502c3-994f-415a-a01a-7f379df502d5",
+              "parent_uuid": "1ca5b63c-4def-49f7-8a0f-df6cc51dd336",
               "tagName": "td",
               "properties": [
                 [
@@ -533,8 +533,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "1e619426-bda9-44ad-ad6a-5d68d3af6520",
-              "parent_uuid": "fc3fbebc-8442-4261-8de3-7a432aa65b01",
+              "uuid": "0158ff89-58a2-467b-beeb-028c54971e9e",
+              "parent_uuid": "1ca5b63c-4def-49f7-8a0f-df6cc51dd336",
               "tagName": "td",
               "properties": [
                 [
@@ -548,8 +548,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c3ecfefb-646a-4b8d-b3ff-77a2a4f9a320",
-              "parent_uuid": "fc3fbebc-8442-4261-8de3-7a432aa65b01",
+              "uuid": "ab1733a2-f235-4ccc-9913-a416b0277fa0",
+              "parent_uuid": "1ca5b63c-4def-49f7-8a0f-df6cc51dd336",
               "tagName": "td",
               "properties": [
                 [
@@ -567,8 +567,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [
             [
@@ -578,8 +578,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "b89d04c0-42cf-43c0-b369-a80db95ca334",
-              "parent_uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
+              "uuid": "d1e72549-c827-4f8b-8faf-67d6a410ef5f",
+              "parent_uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
               "tagName": "td",
               "properties": [
                 [
@@ -597,8 +597,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e5097825-b24b-4a4d-8612-d6993feeb9aa",
-              "parent_uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
+              "uuid": "32d39e97-8ee4-422a-8bf0-9ee8a54138a4",
+              "parent_uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
               "tagName": "td",
               "properties": [
                 [
@@ -612,8 +612,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "f0ad719a-a0a8-4452-8b43-5c2de0974eaf",
-              "parent_uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
+              "uuid": "279b27bc-4cbf-41ff-9b27-4b237a75b84e",
+              "parent_uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
               "tagName": "td",
               "properties": [
                 [
@@ -627,8 +627,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "01bbb63a-8029-45ae-8f91-6a245b74f503",
-              "parent_uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
+              "uuid": "25d9b1b1-cda3-415b-b447-7b3c19bbcf0b",
+              "parent_uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
               "tagName": "td",
               "properties": [
                 [
@@ -642,8 +642,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e5da49db-1c12-4028-a646-e4a02069578e",
-              "parent_uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
+              "uuid": "a57fe66a-1bf1-4cde-96cc-fe605e696c9a",
+              "parent_uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
               "tagName": "td",
               "properties": [
                 [
@@ -657,8 +657,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "461c724a-5ab1-41fd-8a28-2b30b1eef2c1",
-              "parent_uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
+              "uuid": "0459f999-6807-4770-972a-3c9fecc6f7f4",
+              "parent_uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
               "tagName": "td",
               "properties": [
                 [
@@ -672,8 +672,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "bd0efa28-733e-483e-b1ac-e4233b023171",
-              "parent_uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
+              "uuid": "2a9e7e82-d4b5-440f-a4e7-283ce5abf493",
+              "parent_uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
               "tagName": "td",
               "properties": [
                 [
@@ -687,8 +687,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "59ce50c9-3a5a-49d0-890f-00a93c2997cc",
-              "parent_uuid": "f7698227-5d92-4a1b-866d-5665f67e824c",
+              "uuid": "49b18156-2494-43ee-bcdd-1208a64ffe38",
+              "parent_uuid": "310bdcbc-e38b-4ae1-873c-778cf2c03e30",
               "tagName": "td",
               "properties": [
                 [
@@ -706,14 +706,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "3ef6c7c5-aecd-41ba-be4a-0caa235d7b4a",
-              "parent_uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
+              "uuid": "178d2512-a19f-4864-b5d3-0993b4093d39",
+              "parent_uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
               "tagName": "td",
               "properties": [
                 [
@@ -735,8 +735,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "9f28267e-aa42-4ae8-8bf7-0f7931e6cda4",
-              "parent_uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
+              "uuid": "cc6b87a3-7f22-4b65-9936-696a4526f941",
+              "parent_uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
               "tagName": "td",
               "properties": [
                 [
@@ -758,8 +758,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "a3a5b76b-8a95-4488-9ba5-0710d46213df",
-              "parent_uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
+              "uuid": "6cb4c02b-e82a-46c7-870f-8d440ff58a37",
+              "parent_uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
               "tagName": "td",
               "properties": [
                 [
@@ -777,8 +777,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "baab13ef-e115-410d-95d0-eeaa937a034d",
-                  "parent_uuid": "a3a5b76b-8a95-4488-9ba5-0710d46213df",
+                  "uuid": "4c67321d-1f87-41ab-8d16-527dc55d8256",
+                  "parent_uuid": "6cb4c02b-e82a-46c7-870f-8d440ff58a37",
                   "tagName": "input",
                   "properties": [
                     [
@@ -799,8 +799,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "2343503d-aa65-44ff-baa1-c2bad4d209a7",
-              "parent_uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
+              "uuid": "522d5fda-45ad-4a7c-ba7a-f037fbec58c7",
+              "parent_uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
               "tagName": "td",
               "properties": [
                 [
@@ -818,8 +818,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "20d57ff6-7e7d-4d44-bcea-a018e77eb527",
-              "parent_uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
+              "uuid": "ffa1551b-3d3c-4936-95c4-4da6b5ee496b",
+              "parent_uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
               "tagName": "td",
               "properties": [
                 [
@@ -837,8 +837,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "aea6b22e-889a-4d2c-8d07-1b40630cb8c7",
-              "parent_uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
+              "uuid": "0d890f7f-b324-49da-bde8-51e742e4c2ef",
+              "parent_uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
               "tagName": "td",
               "properties": [
                 [
@@ -856,8 +856,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "5d2c144c-8081-49a1-8ea5-5f8efefb49a4",
-              "parent_uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
+              "uuid": "b21f58fc-92bf-49e6-a87c-2f64eccdbe06",
+              "parent_uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
               "tagName": "td",
               "properties": [
                 [
@@ -875,8 +875,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e2460f19-5493-4d4c-9ae8-bea622a7eda3",
-              "parent_uuid": "bf6c8e2c-02c9-4420-81d2-74602885eb2f",
+              "uuid": "494ee969-02e0-47f1-8cfd-6019ab2dd34d",
+              "parent_uuid": "3a29ca23-2842-404c-a866-83a7b2af5171",
               "tagName": "td",
               "properties": [
                 [
@@ -898,14 +898,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "04d3545a-4353-46ac-9041-ded31a2a01b0",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "81a92ac0-b56f-4131-a4e9-357c3b66d966",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "fe4dbd7c-2e2a-4037-ae93-d491d805d4e1",
-              "parent_uuid": "04d3545a-4353-46ac-9041-ded31a2a01b0",
+              "uuid": "f837db28-76e4-440c-8bd8-7da0d5f99af3",
+              "parent_uuid": "81a92ac0-b56f-4131-a4e9-357c3b66d966",
               "tagName": "td",
               "properties": [
                 [
@@ -931,8 +931,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "17fc9e07-92fb-4f94-8d89-e72fbb478eea",
-              "parent_uuid": "04d3545a-4353-46ac-9041-ded31a2a01b0",
+              "uuid": "b30cbead-bf36-4baa-a90d-cb4a269e7ab7",
+              "parent_uuid": "81a92ac0-b56f-4131-a4e9-357c3b66d966",
               "tagName": "td",
               "properties": [
                 [
@@ -954,8 +954,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "8f4ee505-4eca-4679-acb1-210196507995",
-              "parent_uuid": "04d3545a-4353-46ac-9041-ded31a2a01b0",
+              "uuid": "e23988b8-ee3f-41ca-acea-7e8109e7798f",
+              "parent_uuid": "81a92ac0-b56f-4131-a4e9-357c3b66d966",
               "tagName": "td",
               "properties": [
                 [
@@ -973,8 +973,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "15d4654f-066a-488b-afe1-034ea42efb08",
-                  "parent_uuid": "8f4ee505-4eca-4679-acb1-210196507995",
+                  "uuid": "437e16ae-857d-4fc9-80b1-af4708f091e8",
+                  "parent_uuid": "e23988b8-ee3f-41ca-acea-7e8109e7798f",
                   "tagName": "input",
                   "properties": [
                     [
@@ -991,8 +991,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "e8385aef-de92-4ac3-a7e1-e84c55f81b41",
-              "parent_uuid": "04d3545a-4353-46ac-9041-ded31a2a01b0",
+              "uuid": "d241db47-5ed7-4512-b272-782446aee762",
+              "parent_uuid": "81a92ac0-b56f-4131-a4e9-357c3b66d966",
               "tagName": "td",
               "properties": [
                 [
@@ -1010,8 +1010,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "ad4a4705-0114-4336-aa44-a1932fbf3eda",
-                  "parent_uuid": "e8385aef-de92-4ac3-a7e1-e84c55f81b41",
+                  "uuid": "915451b2-ecf8-48f0-804b-387ee54e1d32",
+                  "parent_uuid": "d241db47-5ed7-4512-b272-782446aee762",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1028,8 +1028,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "14cf95f4-a09b-4955-b679-34babca18af7",
-              "parent_uuid": "04d3545a-4353-46ac-9041-ded31a2a01b0",
+              "uuid": "1f320a84-ef4d-4b19-bd19-4bd2b570d944",
+              "parent_uuid": "81a92ac0-b56f-4131-a4e9-357c3b66d966",
               "tagName": "td",
               "properties": [
                 [
@@ -1047,8 +1047,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "91633c77-a20b-4c75-8235-9df1cd0b94ff",
-                  "parent_uuid": "14cf95f4-a09b-4955-b679-34babca18af7",
+                  "uuid": "05416543-3a82-4482-83a8-f17a8932b8fb",
+                  "parent_uuid": "1f320a84-ef4d-4b19-bd19-4bd2b570d944",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1065,8 +1065,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "a912dd12-1ff4-4d38-8eb6-445616bfc882",
-              "parent_uuid": "04d3545a-4353-46ac-9041-ded31a2a01b0",
+              "uuid": "38bff6bb-7e0e-4f8c-8b7f-ba1909566c0e",
+              "parent_uuid": "81a92ac0-b56f-4131-a4e9-357c3b66d966",
               "tagName": "td",
               "properties": [
                 [
@@ -1084,8 +1084,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "57a596c8-435a-4552-8c08-686360dc9825",
-                  "parent_uuid": "a912dd12-1ff4-4d38-8eb6-445616bfc882",
+                  "uuid": "2bf28837-a720-4a4d-a631-d5b8204f6acb",
+                  "parent_uuid": "38bff6bb-7e0e-4f8c-8b7f-ba1909566c0e",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1106,14 +1106,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "e38b4345-2bbb-483a-9727-748e99313c99",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "b3d733fb-933d-4e79-941e-49ca87b380f3",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "d426c3b4-9dfd-43fc-8a35-f5f8afc84e05",
-              "parent_uuid": "e38b4345-2bbb-483a-9727-748e99313c99",
+              "uuid": "6d5025ed-1828-46fc-8c46-7d21dbe4aae0",
+              "parent_uuid": "b3d733fb-933d-4e79-941e-49ca87b380f3",
               "tagName": "td",
               "properties": [
                 [
@@ -1139,8 +1139,8 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "c7fcdf78-f09b-4c7d-9385-a933325d7942",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "c8e075ab-a8ec-4534-8da1-1037ed7f58d0",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [
             [
@@ -1150,8 +1150,8 @@ DECLARE @json nvarchar(max) = N'{
           ],
           "children": [
             {
-              "uuid": "c0928b21-185c-4c4d-81b7-ae09c8077f05",
-              "parent_uuid": "c7fcdf78-f09b-4c7d-9385-a933325d7942",
+              "uuid": "eb234d68-dba9-4a94-9b69-894c58ea02d9",
+              "parent_uuid": "c8e075ab-a8ec-4534-8da1-1037ed7f58d0",
               "tagName": "td",
               "properties": [
                 [
@@ -1173,14 +1173,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "dee06779-04dd-44e5-8fa9-298c1f634beb",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "dd80cfd5-5b53-4ce0-a181-57c2633dfba5",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "956a4d5d-421b-4ad1-b11b-07bd89503d0b",
-              "parent_uuid": "dee06779-04dd-44e5-8fa9-298c1f634beb",
+              "uuid": "d91dcf64-7aa3-4be2-97cb-8380db867897",
+              "parent_uuid": "dd80cfd5-5b53-4ce0-a181-57c2633dfba5",
               "tagName": "td",
               "properties": [
                 [
@@ -1202,8 +1202,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "8cecb121-6e0e-4430-ad69-e31cc3f4a45f",
-              "parent_uuid": "dee06779-04dd-44e5-8fa9-298c1f634beb",
+              "uuid": "5842ba14-56f6-4063-9919-1c27c8b62343",
+              "parent_uuid": "dd80cfd5-5b53-4ce0-a181-57c2633dfba5",
               "tagName": "td",
               "properties": [
                 [
@@ -1221,8 +1221,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "63d81433-b071-41a8-a1e4-3eb925ca3ef2",
-              "parent_uuid": "dee06779-04dd-44e5-8fa9-298c1f634beb",
+              "uuid": "05e9140b-5687-417f-a5ea-1593b0aa0400",
+              "parent_uuid": "dd80cfd5-5b53-4ce0-a181-57c2633dfba5",
               "tagName": "td",
               "properties": [
                 [
@@ -1240,8 +1240,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "86051535-db54-4389-88f9-3cacb1001f15",
-                  "parent_uuid": "63d81433-b071-41a8-a1e4-3eb925ca3ef2",
+                  "uuid": "36a53fff-9935-480e-a903-548d7adb4fa8",
+                  "parent_uuid": "05e9140b-5687-417f-a5ea-1593b0aa0400",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1258,8 +1258,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "1d3daeeb-5af7-4691-bae3-1bcae4315f0b",
-              "parent_uuid": "dee06779-04dd-44e5-8fa9-298c1f634beb",
+              "uuid": "c1b15721-ce95-4665-b68c-71f554e97235",
+              "parent_uuid": "dd80cfd5-5b53-4ce0-a181-57c2633dfba5",
               "tagName": "td",
               "properties": [
                 [
@@ -1277,8 +1277,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "75729877-2f42-4508-9ab5-6b873a43963b",
-                  "parent_uuid": "1d3daeeb-5af7-4691-bae3-1bcae4315f0b",
+                  "uuid": "ddd6ee44-b9df-4ec4-9035-ca0f8abb79e0",
+                  "parent_uuid": "c1b15721-ce95-4665-b68c-71f554e97235",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1295,8 +1295,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "bc3968d1-3c73-43c7-b331-a5006dae9639",
-              "parent_uuid": "dee06779-04dd-44e5-8fa9-298c1f634beb",
+              "uuid": "b1d7dcc7-8d0b-4538-adc0-db80abed34c3",
+              "parent_uuid": "dd80cfd5-5b53-4ce0-a181-57c2633dfba5",
               "tagName": "td",
               "properties": [
                 [
@@ -1314,8 +1314,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "951b5e12-9361-434d-a9f7-34fadab01967",
-                  "parent_uuid": "bc3968d1-3c73-43c7-b331-a5006dae9639",
+                  "uuid": "7e5c85d2-f64e-4b08-a514-31a4b8a3f9a0",
+                  "parent_uuid": "b1d7dcc7-8d0b-4538-adc0-db80abed34c3",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1332,8 +1332,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "ecfc9534-0c04-4e1a-9346-d160a973a6b5",
-              "parent_uuid": "dee06779-04dd-44e5-8fa9-298c1f634beb",
+              "uuid": "8e428e4f-72fd-4efe-9292-76f9a6838603",
+              "parent_uuid": "dd80cfd5-5b53-4ce0-a181-57c2633dfba5",
               "tagName": "td",
               "properties": [
                 [
@@ -1351,8 +1351,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "42195c42-ba11-42f4-a31e-26e97cbba99b",
-                  "parent_uuid": "ecfc9534-0c04-4e1a-9346-d160a973a6b5",
+                  "uuid": "9e8a03e7-69d7-428b-aa23-14aa6961f07a",
+                  "parent_uuid": "8e428e4f-72fd-4efe-9292-76f9a6838603",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1373,14 +1373,14 @@ DECLARE @json nvarchar(max) = N'{
           "lvl": 0
         },
         {
-          "uuid": "5959b6a8-58f4-4746-b45f-1272e85d64c3",
-          "parent_uuid": "bc12331e-0bf9-407b-b81b-ef73b4f9abe1",
+          "uuid": "c815a926-36f5-4bfb-9de3-85161f50cec0",
+          "parent_uuid": "48798cd4-7991-466d-8dea-fdc64fd6a990",
           "tagName": "tr",
           "properties": [],
           "children": [
             {
-              "uuid": "75df3032-4acb-4d00-a02e-cab0f36dee5a",
-              "parent_uuid": "5959b6a8-58f4-4746-b45f-1272e85d64c3",
+              "uuid": "4464351f-94ea-47b3-988b-df774c3c6732",
+              "parent_uuid": "c815a926-36f5-4bfb-9de3-85161f50cec0",
               "tagName": "td",
               "properties": [
                 [
@@ -1402,8 +1402,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "07ac1880-32fe-4015-af17-effaf902e1d6",
-              "parent_uuid": "5959b6a8-58f4-4746-b45f-1272e85d64c3",
+              "uuid": "fdfe1500-4aa0-4efd-9083-4692f12582ec",
+              "parent_uuid": "c815a926-36f5-4bfb-9de3-85161f50cec0",
               "tagName": "td",
               "properties": [
                 [
@@ -1421,8 +1421,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "c91b4a9c-3709-495b-bd3b-2838043836b8",
-              "parent_uuid": "5959b6a8-58f4-4746-b45f-1272e85d64c3",
+              "uuid": "838651e4-c4a4-45aa-b953-39a2d0433374",
+              "parent_uuid": "c815a926-36f5-4bfb-9de3-85161f50cec0",
               "tagName": "td",
               "properties": [
                 [
@@ -1440,8 +1440,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "ba32a789-a508-48d9-ab93-d14027a4e189",
-                  "parent_uuid": "c91b4a9c-3709-495b-bd3b-2838043836b8",
+                  "uuid": "db54cde5-ca09-47bb-a8c3-851e186a3d73",
+                  "parent_uuid": "838651e4-c4a4-45aa-b953-39a2d0433374",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1458,8 +1458,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "cb31ceba-27a4-4308-94e3-7fb2638d0fe6",
-              "parent_uuid": "5959b6a8-58f4-4746-b45f-1272e85d64c3",
+              "uuid": "896c7aef-6eac-4ee3-bc3c-d679cd8d2fae",
+              "parent_uuid": "c815a926-36f5-4bfb-9de3-85161f50cec0",
               "tagName": "td",
               "properties": [
                 [
@@ -1477,8 +1477,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "257157b8-a951-4c16-8765-9c9fe832c224",
-                  "parent_uuid": "cb31ceba-27a4-4308-94e3-7fb2638d0fe6",
+                  "uuid": "3ee7e455-7b82-452d-92c2-20122040aea1",
+                  "parent_uuid": "896c7aef-6eac-4ee3-bc3c-d679cd8d2fae",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1495,8 +1495,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "f3277259-a566-4610-81ed-9a161a8127b3",
-              "parent_uuid": "5959b6a8-58f4-4746-b45f-1272e85d64c3",
+              "uuid": "1d9a017a-714f-475f-9fd5-72eaa4b0bed3",
+              "parent_uuid": "c815a926-36f5-4bfb-9de3-85161f50cec0",
               "tagName": "td",
               "properties": [
                 [
@@ -1514,8 +1514,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "3e8d2568-b123-44ab-8089-c539735dfac8",
-                  "parent_uuid": "f3277259-a566-4610-81ed-9a161a8127b3",
+                  "uuid": "6bb0a8ed-e62e-4591-93af-26f032824d14",
+                  "parent_uuid": "1d9a017a-714f-475f-9fd5-72eaa4b0bed3",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1532,8 +1532,8 @@ DECLARE @json nvarchar(max) = N'{
               "lvl": 0
             },
             {
-              "uuid": "0e875217-05b2-46bf-8b44-446c23a7eade",
-              "parent_uuid": "5959b6a8-58f4-4746-b45f-1272e85d64c3",
+              "uuid": "1e6230e4-ee17-4f71-94c2-9bfc5940019c",
+              "parent_uuid": "c815a926-36f5-4bfb-9de3-85161f50cec0",
               "tagName": "td",
               "properties": [
                 [
@@ -1551,8 +1551,8 @@ DECLARE @json nvarchar(max) = N'{
               ],
               "children": [
                 {
-                  "uuid": "0ffd372b-e7f8-4db9-9c92-c80d1a5a9c84",
-                  "parent_uuid": "0e875217-05b2-46bf-8b44-446c23a7eade",
+                  "uuid": "6687d488-2ebd-4b80-8d7e-e2cb8966175b",
+                  "parent_uuid": "1e6230e4-ee17-4f71-94c2-9bfc5940019c",
                   "tagName": "input",
                   "properties": [
                     [
@@ -1705,6 +1705,63 @@ WHEN NOT MATCHED BY TARGET THEN
 
 
 
+DECLARE @allChecklistsVersions TABLE ( CL_UID uniqueidentifier NOT NULL PRIMARY KEY(CL_UID), CL_Name nvarchar(256) NULL, CLV_UID uniqueidentifier NOT NULL, CLV_Sort int); 
+
+INSERT INTO @allChecklistsVersions(CL_UID, CL_Name, CLV_UID, CLV_Sort) VALUES (N'eb159a9c-e69f-49f4-b10e-3a4825973e46', N'Schüttgutcontainer', '08796354-F7AA-4EDF-B943-A51F7AFDAD1D', 1); 
+INSERT INTO @allChecklistsVersions(CL_UID, CL_Name, CLV_UID, CLV_Sort) VALUES (N'1f6bee57-38a8-4b29-9986-bfad7d107215', N'EVA', '11109E12-7B76-4B60-9168-42FC41D28383', 2); 
+INSERT INTO @allChecklistsVersions(CL_UID, CL_Name, CLV_UID, CLV_Sort) VALUES (N'58a6d34c-2d4b-4f8a-b831-60488591aedc', N'CIS', '7F973E2D-5BEB-4E0F-932E-642CB936E7B6', 3); 
+INSERT INTO @allChecklistsVersions(CL_UID, CL_Name, CLV_UID, CLV_Sort) VALUES (N'da19d272-9439-47a7-9749-153dafab2b69', N'VHP', 'E4FD4412-523C-41F0-9CDF-FFB3E5638C3C', 4); 
+INSERT INTO @allChecklistsVersions(CL_UID, CL_Name, CLV_UID, CLV_Sort) VALUES (N'698ea23d-485a-4cee-9b06-2e130a3a5626', N'NPL', '6A3210F8-161F-4DF5-9566-1C66BF41D61D', 5); 
+INSERT INTO @allChecklistsVersions(CL_UID, CL_Name, CLV_UID, CLV_Sort) VALUES (N'f1a2dd8a-2d11-496e-9b14-13559405089f', N'BPS_M7', '26456198-0699-4718-AAF7-B8119BE9D705', 6); 
+INSERT INTO @allChecklistsVersions(CL_UID, CL_Name, CLV_UID, CLV_Sort) VALUES (N'ddada097-1bb4-46d5-9ee5-7bb28dd3201b', N'BPS_1020', 'FA28E4D1-E505-4C54-9305-52D526DD0D70', 7); 
+
+
+
+;WITH CTE AS 
+(
+	SELECT 
+		 CLV_UID AS CLV_UID -- uniqueidentifier 
+		,CL_UID CLV_CL_UID -- uniqueidentifier 
+		,(SELECT TOP 1 BE_ID FROM T_Benutzer WHERE BE_User IN ('noob.mcnoobington', 'administrator') ) AS CLV_Owner_BE_ID -- int 
+		,CURRENT_TIMESTAMP AS CLV_Created -- datetime 
+		,CAST('29991231' AS datetime) AS CLV_Obsoleted -- datetime 
+	FROM @allChecklistsVersions 
+)
+-- SELECT * FROM CTE 
+
+
+MERGE INTO dbo.T_ChecklistVersion AS A 
+USING CTE ON CTE.CLV_UID = A.CLV_UID 
+WHEN MATCHED THEN 
+    UPDATE 
+        SET  A.CLV_CL_UID = CTE.CLV_CL_UID 
+            ,A.CLV_Owner_BE_ID = CTE.CLV_Owner_BE_ID 
+			,A.CLV_Created = CTE.CLV_Created 
+			,A.CLV_Obsoleted = CTE.CLV_Obsoleted 
+
+
+WHEN NOT MATCHED BY TARGET THEN 
+    INSERT 
+    ( 
+		 CLV_UID 
+		,CLV_CL_UID 
+		,CLV_Owner_BE_ID 
+		,CLV_Created 
+		,CLV_Obsoleted 
+    ) 
+    VALUES 
+    ( 
+		 CTE.CLV_UID 
+		,CTE.CLV_CL_UID 
+		,CTE.CLV_Owner_BE_ID 
+		,CTE.CLV_Created 
+		,CTE.CLV_Obsoleted 
+    ) 
+ -- WHEN NOT MATCHED BY SOURCE THEN DELETE 
+;
+
+
+SELECT * FROM T_ChecklistVersion;
 
 
 -- DELETE FROM T_Checklist_ZO_ElementProperties WHERE PRO_ELE_UID IN (SELECT ELE_UID FROM T_ChecklistElements WHERE ELE_CL_UID = 'EB159A9C-E69F-49F4-B10E-3A4825973E46'); 
@@ -1721,14 +1778,13 @@ WHEN NOT MATCHED BY TARGET THEN
 	SELECT 
 		 uuid AS ELE_UID -- uniqueidentifier
 		,parent_uuid AS ELE_Parent_UID -- uniqueidentifier
-		,'EB159A9C-E69F-49F4-B10E-3A4825973E46' AS ELE_CL_UID -- uniqueidentifier
+		,'08796354-F7AA-4EDF-B943-A51F7AFDAD1D' AS ELE_CLV_UID -- uniqueidentifier
 		,tagName AS ELE_TagName -- nvarchar(256)
 		,lvl AS ELE_Level -- int 
 		,sort AS ELE_Sort -- int 
 		,recsort AS ELE_RecSort -- varchar(max) 
 		,innerHtml AS ELE_InnerHtml -- nvarchar(max) 
 	FROM #CheckListNodes 
-
 ) -- End CTE 
 -- SELECT * FROM CTE 
 
@@ -1739,7 +1795,7 @@ USING CTE ON CTE.ELE_UID = A.ELE_UID
 WHEN MATCHED THEN 
     UPDATE 
         SET  A.ELE_Parent_UID = CTE.ELE_Parent_UID 
-            ,A.ELE_CL_UID = CTE.ELE_CL_UID 
+            ,A.ELE_CLV_UID = CTE.ELE_CLV_UID 
             ,A.ELE_TagName = CTE.ELE_TagName 
             ,A.ELE_Level = CTE.ELE_Level 
             ,A.ELE_Sort = CTE.ELE_Sort 
@@ -1751,7 +1807,7 @@ WHEN NOT MATCHED BY TARGET THEN
     ( 
          ELE_UID 
         ,ELE_Parent_UID 
-        ,ELE_CL_UID 
+        ,ELE_CLV_UID 
         ,ELE_TagName 
         ,ELE_Level 
         ,ELE_Sort 
@@ -1762,7 +1818,7 @@ WHEN NOT MATCHED BY TARGET THEN
     ( 
          CTE.ELE_UID 
         ,CTE.ELE_Parent_UID 
-        ,CTE.ELE_CL_UID 
+        ,CTE.ELE_CLV_UID 
         ,CTE.ELE_TagName 
         ,CTE.ELE_Level 
         ,CTE.ELE_Sort 
@@ -1770,7 +1826,7 @@ WHEN NOT MATCHED BY TARGET THEN
         ,CTE.ELE_InnerHtml 
     ) 
  -- WHEN NOT MATCHED BY SOURCE THEN DELETE 
- WHEN NOT MATCHED BY SOURCE AND A.ELE_CL_UID IN(SELECT ELE_CL_UID FROM CTE WHERE ELE_CL_UID IS NOT NULL GROUP BY ELE_CL_UID) THEN DELETE;
+ WHEN NOT MATCHED BY SOURCE AND A.ELE_CLV_UID IN(SELECT ELE_CLV_UID FROM CTE WHERE ELE_CLV_UID IS NOT NULL GROUP BY ELE_CLV_UID) THEN DELETE;
 ;
 
 
@@ -1851,12 +1907,15 @@ SELECT CL_UID, CL_Name FROM T_Checklist WHERE CL_UID = @__cl_uid
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
 ; 
 
-SELECT ELE_UID, ELE_Parent_UID, ELE_CL_UID, ELE_TagName, ELE_Sort, ELE_InnerHtml FROM T_ChecklistElements WHERE ELE_CL_UID = @__cl_uid
+SELECT ELE_UID, ELE_Parent_UID, ELE_CLV_UID, ELE_TagName, ELE_Sort, ELE_InnerHtml FROM T_ChecklistElements WHERE ELE_CLV_UID IN (SELECT TOP 1 CLV_UID FROM T_ChecklistVersion WHERE CLV_CL_UID = @__cl_uid ORDER BY CLV_Created  DESC )
+
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
 ; 
 
 
 
-SELECT PRO_UID, PRO_Name, PRO_Value, PRO_ELE_UID FROM T_Checklist_ZO_ElementProperties WHERE PRO_ELE_UID IN (SELECT ELE_UID FROM T_ChecklistElements WHERE ELE_CL_UID = @__cl_uid) ORDER BY PRO_ELE_UID, PRO_Name
+SELECT PRO_UID, PRO_Name, PRO_Value, PRO_ELE_UID FROM T_Checklist_ZO_ElementProperties 
+WHERE PRO_ELE_UID IN ( SELECT ELE_UID FROM T_ChecklistElements WHERE ELE_CLV_UID IN (SELECT TOP 1 CLV_UID FROM T_ChecklistVersion WHERE CLV_CL_UID = @__cl_uid ORDER BY CLV_Created  DESC ) 
+) ORDER BY PRO_ELE_UID, PRO_Name 
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
 ; 

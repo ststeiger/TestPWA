@@ -15,8 +15,23 @@ namespace AnySqlWebAdmin
     {
 
 
+        
         protected System.Exception m_Exception = null;
         protected string m_Message = null;
+        protected RequestParameters m_parameters;
+
+        public string sql
+        {
+            get 
+            {
+                if (this.m_parameters != null && this.m_parameters.ContainsKey("sql"))
+                {
+                    return System.Convert.ToString(this.m_parameters["sql"]);
+                }
+
+                return null;
+            }
+        }
 
 
         public bool sessionExpired
@@ -111,11 +126,19 @@ namespace AnySqlWebAdmin
         } // innerException
 
 
+        
+
         public AJAXException(System.Exception exBaseException)
+            :this(exBaseException, null)
+        { }
+
+
+        public AJAXException(System.Exception exBaseException, RequestParameters requestParameters)
         {
             // MyBase.New(exBaseException.Message, exBaseException)
             // Me.m_RealStackTrace = New StackTrace(exBaseException)
             this.m_Exception = exBaseException;
+            this.m_parameters = requestParameters;
         } // Constructor
 
 
@@ -180,6 +203,12 @@ namespace AnySqlWebAdmin
                 writer.WritePropertyName("stackTrace");
                 writer.WriteStringValue(this.stackTrace);
 
+
+                if (this.m_parameters != null && this.m_parameters.ContainsKey("sql"))
+                {
+                    writer.WritePropertyName("sql");
+                    writer.WriteStringValue(System.Convert.ToString(this.m_parameters["sql"]));
+                }
 
 
                 writer.WritePropertyName("innerException");
