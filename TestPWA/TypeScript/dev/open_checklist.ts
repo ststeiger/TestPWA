@@ -60,10 +60,87 @@ async function onChecklistLoad(ev: MouseEvent)
 }
 
 
+// interface ITranslationData { [key: string]: { [lang: string]: string }  }
 
+//type Languages = Record<"de" | "fr" | "it" | "en", string>
+
+//interface IReadings
+//{
+//    [key: string]: Languages
+//}
+
+
+// https://stackoverflow.com/questions/26855423/how-to-require-a-specific-string-in-typescript-interface
+// https://dmitripavlutin.com/typescript-index-signatures/
+// export type AvailableLanguages = "de" | "DE" | "fr" | "FR" | "it" | "IT" | "en" | "EN";
+export type AvailableLanguages = "de" | "fr" | "it" | "en";
+export type ChecklistTranslationItems = "OpenChecklist" | "NewChecklist" | "OverrideChecklistName" | "ChecklistStatus" | "LoadChecklistForEditing" | "DeleteEntry" | "Empty";
+// type TranslationEntries = Record<TranslationItems, Record<AvailableLanguages, string>>;
+type TranslationEntries<T extends string> = Record<T, Record<AvailableLanguages, string>>;
+
+
+function getTranslation(item: ChecklistTranslationItems, language?: AvailableLanguages):string
+{
+    if (!item)
+        return "";
+
+    if (!language)
+        language = "de";
+
+    language = <AvailableLanguages>language.toLowerCase();
+
+
+
+    let i18n: TranslationEntries<ChecklistTranslationItems> = {
+          "OpenChecklist": { "de": "Checkliste öffnen", "fr": "Ouvrir liste de contrôle", "it": "Apri lista di controllo", "en": "Open checklist" }
+        , "NewChecklist": { "de": "Neue Checkliste", "fr": "Nouvelle liste de contrôle", "it": "Nuova lista di controllo", "en": "New checklist" }
+        , "OverrideChecklistName": {
+              "de": "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert"
+            , "fr": "Nom\n    L'écrasement du nom dans la liste modifie le nom de la liste de contrôle"
+            , "it": "Nome\n    Sovrascrivendo il nome nella lista cambia il nome della checklist"
+            , "en": "Name\n    Overwriting the name in the list changes the name of the checklist"
+        }
+        , "ChecklistStatus": {
+              "de": "Status (aktiv | inaktiv)\n    Inaktive Checklisten sind nicht zuweisbar"
+            , "fr": "Statut (actif | inactif)\n    Les listes de contrôle inactives ne peuvent pas être attribuées"
+            , "it": "Stato (attivo | inattivo)\n    Non è possibile assegnare liste di controllo inattive"
+            , "en": "Status (active | inactive)\n    Inactive checklists cannot be assigned"
+        }
+        , "LoadChecklistForEditing": {
+              "de": "Laden\n    Gewählte Checkliste zum Bearbeiten Laden"
+            , "fr": "Charger\n    Charger la liste de contrôle sélectionnée pour l'édition"
+            , "it": "Carica\n    Carica la lista di controllo selezionata per la modifica"
+            , "en": "Load\n    Load selected checklist for editing"
+        }
+        , "DeleteEntry": {
+              "de": "Löschen\n    Gelöschte Checklisten erscheinen nach dem Schliessen des Fensters nicht mehr"
+            , "fr": "Supprimer\n    Les listes de contrôle supprimées n'apparaissent plus après la fermeture de la fenêtre"
+            , "it": "Elimina\n    Gli elenchi di controllo eliminati non vengono più visualizzati dopo la chiusura della finestra"
+            , "en": "Delete\n    Deleted checklists no longer appear after the window is closed"
+        }
+
+        , "Empty": { "de": "", "fr": "", "it": "", "en": "" }
+    };
+
+
+    if (!i18n[item])
+        return item;
+
+    if (!i18n[item][language])
+    {
+        if (i18n[item]["de"])
+            return i18n[item]["de"];
+
+        return "";
+    }
+    
+    return i18n[item][language]
+}
 
 async function openChecklistDialogue(): Promise<DocumentFragment>
 {
+    let userLanguage: AvailableLanguages = "de";
+
     // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
     let checkListsData = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1");
 
@@ -104,7 +181,11 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
     let dialogueTitle = document.createElement("DIV");
     dialogueTitle.setAttribute("class", "Title");
     dialogueTitle.setAttribute("style", "background: rgb(61, 61, 61); border-top: none; border-right: none; border-bottom: 1px solid black; border-left: none; border-image: initial; color: orange; line-height: 25px; height: 25px; text-indent: 5px;");
-    dialogueTitle.appendChild(document.createTextNode("Checkliste öffnen"));
+    dialogueTitle.appendChild(document.createTextNode(getTranslation("OpenChecklist", userLanguage)));
+    // dialogueTitle.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
+
+
+
     divChecklistsPopup.appendChild(dialogueTitle);
 
     let checklistBody = document.createElement("DIV");
@@ -143,7 +224,7 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
 
         let lblContainer = document.createElement("DIV");
         lblContainer.setAttribute("class", "CL_Lang");
-        lblContainer.setAttribute("title", "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert");
+        lblContainer.setAttribute("title", getTranslation("OverrideChecklistName", userLanguage));
         lblContainer.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - " + subtract.toString() + "px) / 1);");
 
         let lblChecklistDesignation = document.createElement("P");
@@ -158,7 +239,7 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
         {
             let btnActiveInactive = document.createElement("DIV");
             btnActiveInactive.setAttribute("class", "_STATUS");
-            btnActiveInactive.setAttribute("title", "Status (aktiv | inaktiv)\n    Inaktive Checklisten sind nicht zuweisbar");
+            btnActiveInactive.setAttribute("title", getTranslation("ChecklistStatus", userLanguage));
             btnActiveInactive.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGHRFWHRTb2Z0d2FyZQBQYWludC5ORVQgdjMuMzap5+IlAAABH0lEQVQ4T2NgGHFA8QRDFQhTxeNypxkkFU4yHAYauI4qBiocZ/ADGngLiOdgGCgT2PCfVCxbE/hf8STDf6wGgmwAGUgKaH1YAjZQfo3cf5xeJsXQ8rvJYANDr9qAfUexoVOetoINdLyg+v/ut5uUG7ru9WKwgSC8+91GcGhR5NLjH/fDDQS5FgYIGgrSCAqn9FuBKHH25c9nsHdh4YgsiddQ2cw0uEtAmkGxCwMgS2Dh+PLnMxQLCboUOcxALgMZsPDFFLhlIDY6IGgoSAMs/YFcBnIhLm8THaYwhTCDYDENokHhjQ0Q5VKQRljihhmKHnFERxRyjgKFJcy1sESOKwsT7VKQASDXgVwMSk74AEFDUUqppByiSy2qlKHEGAIAeYG2SZ7gzdMAAAAASUVORK5CYII='); cursor: pointer;");
             checklistRow.appendChild(btnActiveInactive);
         }
@@ -168,7 +249,7 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
         {
             let btnDelete = document.createElement("DIV");
             btnDelete.setAttribute("class", "_REMOVE");
-            btnDelete.setAttribute("title", "Löschen\n    Gelöschte Checklisten erscheinen nach dem Schliessen des Fensters nicht mehr");
+            btnDelete.setAttribute("title", getTranslation("DeleteEntry", userLanguage));
             btnDelete.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhDwAPAOccAAAAAIAAAACAAICAAAAAgIAAgACAgMDAwMDcwKbK8P+EhP8ICP8QEP8YGP8hIf85Of9CQv9SUv9jY/9zc/+EhP+lpf+trf+1tf/Gxv/Ozv/v7//39//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////78KCgpICAgP8AAP///////////////////////yH5BAEKAP8ALAAAAAAPAA8AAAgxAP8JHEiwoMGDCBMqXMjwn4MFAhs4UOjAAYOJC/NBXOggXz6MCC1GBNmwpMmTKAUGBAA7'); cursor: pointer;");
             checklistRow.appendChild(btnDelete);
         }
@@ -177,7 +258,7 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
         {
             let btnLoad = document.createElement("DIV");
             btnLoad.setAttribute("class", "_SELECT");
-            btnLoad.setAttribute("title", "Laden\n    Gewählte Checkliste zum Bearbeiten Laden");
+            btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
 
             btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
             btnLoad.onclick = onChecklistLoad;
@@ -196,11 +277,15 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
     footerRow.setAttribute("class", "EmptyRow");
     footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
 
-    if (false)
+
+    let showNewChecklistOption = false;
+
+    if (showNewChecklistOption)
     {
         let spanNewChecklist = document.createElement("SPAN");
         spanNewChecklist.setAttribute("class", "tableAdd");
-        spanNewChecklist.appendChild(document.createTextNode("Neue Checkliste"));
+
+        spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
         footerRow.appendChild(spanNewChecklist);
     }
     else
