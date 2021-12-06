@@ -60,6 +60,20 @@ async function onChecklistLoad(ev: MouseEvent)
 }
 
 
+interface IAvailableLanguages
+{
+    de: string;
+    fr?: string;
+    it?: string;
+    en?: string;
+}
+
+
+
+
+// interface ITranslationData { [key: string]: IAvailableLanguages }
+
+
 // interface ITranslationData { [key: string]: { [lang: string]: string }  }
 
 //type Languages = Record<"de" | "fr" | "it" | "en", string>
@@ -69,14 +83,20 @@ async function onChecklistLoad(ev: MouseEvent)
 //    [key: string]: Languages
 //}
 
+type PartialRecord<K extends keyof any, T> = { [P in K]?: T; };
+// type List = PartialRecord<'a' | 'b' | 'c', string>
+
 
 // https://stackoverflow.com/questions/26855423/how-to-require-a-specific-string-in-typescript-interface
 // https://dmitripavlutin.com/typescript-index-signatures/
-// export type AvailableLanguages = "de" | "DE" | "fr" | "FR" | "it" | "IT" | "en" | "EN";
+
 export type AvailableLanguages = "de" | "fr" | "it" | "en";
 export type ChecklistTranslationItems = "OpenChecklist" | "NewChecklist" | "OverrideChecklistName" | "ChecklistStatus" | "LoadChecklistForEditing" | "DeleteEntry" | "Empty";
-// type TranslationEntries = Record<TranslationItems, Record<AvailableLanguages, string>>;
 type TranslationEntries<T extends string> = Record<T, Record<AvailableLanguages, string>>;
+
+
+// export type AvailableLanguages = "de" | "DE" | "fr" | "FR" | "it" | "IT" | "en" | "EN";
+// type TranslationEntries<T extends string> = Record<T, PartialRecord<AvailableLanguages, string>>;
 
 
 function getTranslation(item: ChecklistTranslationItems, language?: AvailableLanguages):string
@@ -122,7 +142,6 @@ function getTranslation(item: ChecklistTranslationItems, language?: AvailableLan
         , "Empty": { "de": "", "fr": "", "it": "", "en": "" }
     };
 
-
     if (!i18n[item])
         return item;
 
@@ -136,6 +155,15 @@ function getTranslation(item: ChecklistTranslationItems, language?: AvailableLan
     
     return i18n[item][language]
 }
+
+
+function onCreateNewChecklist(me: MouseEvent)
+{
+    alert(me.currentTarget);
+
+}
+
+
 
 async function openChecklistDialogue(): Promise<DocumentFragment>
 {
@@ -278,7 +306,7 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
     footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
 
 
-    let showNewChecklistOption = false;
+    let showNewChecklistOption = true;
 
     if (showNewChecklistOption)
     {
@@ -287,6 +315,8 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
 
         spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
         footerRow.appendChild(spanNewChecklist);
+
+        footerRow.onclick = onCreateNewChecklist;
     }
     else
     {

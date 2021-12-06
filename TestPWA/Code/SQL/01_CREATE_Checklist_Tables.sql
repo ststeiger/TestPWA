@@ -222,12 +222,14 @@ CREATE TABLE dbo.T_Checklist_ZO_SavedDataSet
 	 CLS_UID uniqueidentifier CONSTRAINT PK_T_Checklist_ZO_SavedDataSet PRIMARY KEY 
 	,CLS_CLV_UID uniqueidentifier 
 	,CLS_Date datetime 
+	,CLS_BE_ID int  
 	,CLS_OBJ_UID uniqueidentifier 
 	,CLS_OBJT_Code character varying(50) 
 	,CLS_TSK_UID uniqueidentifier 
 	,CONSTRAINT FK_T_Checklist_ZO_SavedDataSet_T_ChecklistVersion FOREIGN KEY(CLS_CLV_UID) REFERENCES dbo.T_ChecklistVersion(CLV_UID) ON DELETE CASCADE ON UPDATE CASCADE 
 	,CONSTRAINT FK_T_Checklist_ZO_SavedDataSet_T_COR_Objekte FOREIGN KEY(CLS_OBJ_UID, CLS_OBJT_Code) REFERENCES dbo.T_COR_Objekte(OBJ_UID, OBJ_OBJT_Code) ON DELETE CASCADE ON UPDATE CASCADE 
 	,CONSTRAINT FK_T_Checklist_ZO_SavedDataSet_T_TM_Tasks FOREIGN KEY(CLS_TSK_UID) REFERENCES dbo.T_TM_Tasks(TSK_UID) ON DELETE CASCADE ON UPDATE CASCADE 
+	,CONSTRAINT FK_T_Checklist_ZO_SavedDataSet_T_Benutzer FOREIGN KEY(CLS_BE_ID) REFERENCES dbo.T_Benutzer(BE_ID) ON DELETE NO ACTION ON UPDATE NO ACTION 
 );
 
 GO

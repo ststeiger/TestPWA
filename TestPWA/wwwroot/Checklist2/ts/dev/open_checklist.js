@@ -107,6 +107,9 @@ function getTranslation(item, language) {
     }
     return i18n[item][language];
 }
+function onCreateNewChecklist(me) {
+    alert(me.currentTarget);
+}
 function openChecklistDialogue() {
     return __awaiter(this, void 0, void 0, function () {
         var userLanguage, checkListsData, checklists, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, useActiveInactive, useDelete, useLoad, subtract, i, color, checklistRow, lblContainer, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, showNewChecklistOption, spanNewChecklist, spanNewChecklist;
@@ -198,12 +201,13 @@ function openChecklistDialogue() {
                     footerRow = document.createElement("DIV");
                     footerRow.setAttribute("class", "EmptyRow");
                     footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
-                    showNewChecklistOption = false;
+                    showNewChecklistOption = true;
                     if (showNewChecklistOption) {
                         spanNewChecklist = document.createElement("SPAN");
                         spanNewChecklist.setAttribute("class", "tableAdd");
                         spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
                         footerRow.appendChild(spanNewChecklist);
+                        footerRow.onclick = onCreateNewChecklist;
                     }
                     else {
                         spanNewChecklist = document.createElement("SPAN");
