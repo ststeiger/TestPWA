@@ -146,10 +146,13 @@ GO
 
 -- ALTER TABLE dbo.T_Benutzer DROP COLUMN BE_Hash; 
 -- ALTER TABLE dbo.T_Benutzer DROP COLUMN BE_IsCOR_Hash; 
+-- ALTER TABLE dbo.T_Benutzer DROP COLUMN _BE_Label; 
+-- ALTER TABLE dbo.T_Benutzer DROP COLUMN _BE_LCID; 
 
 -- ALTER TABLE dbo.T_Benutzer ADD BE_Hash AS ( LOWER(CONVERT(varchar(32), HashBytes('MD5', LOWER(CAST(BE_User AS varchar(50)))), 2)) ) PERSISTED 
 -- ALTER TABLE dbo.T_Benutzer ADD BE_IsCOR_Hash AS (LOWER(CONVERT(varchar(32), HashBytes('MD5','IsCorUser' + LOWER(CAST(BE_User AS varchar(50)))),(2)))) PERSISTED 
-
+-- ALTER TABLE dbo.T_Benutzer ADD _BE_Label AS (CASE WHEN BE_Name LIKE BE_Vorname THEN Be_Name WHEN BE_Vorname LIKE '' THEN BE_Name ELSE ISNULL(UPPER(LEFT(BE_Vorname, 1)) + '. ', '') + BE_Name END) PERSISTED 
+-- ALTER TABLE dbo.T_Benutzer ADD _BE_LCID AS (CASE T_Benutzer.BE_Language WHEN 'FR' THEN 4108 WHEN 'IT' THEN 2064 WHEN 'EN' THEN 1033 ELSE 2055 END) PERSISTED NOT NULL 
 
 
 
