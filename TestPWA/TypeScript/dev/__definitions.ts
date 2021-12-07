@@ -361,6 +361,17 @@ interface IT_Checklist
     CL_UID: string;
     CL_Name: string;
     CL_Title: string;
+    CL_SavedCount: number;
+}
+
+
+
+
+interface IDropDown
+{
+    k: string;
+    v: string;
+    s?: boolean;
 }
 
 

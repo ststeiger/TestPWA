@@ -165,23 +165,14 @@ function onCreateNewChecklist(me: MouseEvent)
 
 
 
-async function openChecklistDialogue(): Promise<DocumentFragment>
+
+async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDown>): Promise<DocumentFragment>
 {
     let userLanguage: AvailableLanguages = "de";
-
-    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
-    let checkListsData = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1");
-
-    if (checkListsData.hasError)
-    {
-        alert("Error loading checklist-data:\r\n" + checkListsData.error.message);
-        return;
-    }
-
-
-    let checklists = new tableWrapper<IT_Checklist>(checkListsData.data.tables[0].columns, checkListsData.data.tables[0].rows, false);
-    // console.log(checklists);
-
+    let useClose: boolean = false;
+    let useActiveInactive = false;
+    let useDelete = false;
+    let useLoad = true;
 
 
     let ce = document.createElement;
@@ -194,17 +185,16 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
     divChecklistsPopup.setAttribute("tabindex", "1");
     divChecklistsPopup.setAttribute("style", "border: 1px solid black; background-color: rgb(102, 102, 102); box-sizing: border-box; box-shadow: rgb(0, 0, 0) 5px 5px 6px 0px; color: rgb(255, 255, 255); display: block; font-family: Arial, Helvetica, sans-serif; font-size: 11px; height: auto; left: 50%; margin-left: 0px; margin-right: 0px; max-height: 75%; max-width: 75%; min-width: 25%; overflow: hidden; position: absolute; top: 50%; width: 480px; z-index: 2000000000; transform: translate(-50%, -50%);");
 
-    let closeChecklistButton = document.createElement("DIV");
-    closeChecklistButton.setAttribute("class", "closeImage");
-    closeChecklistButton.setAttribute("style", "background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHMSURBVHjapFO/S0JRFP4UIUJIqMWgLQzalAyKIN4TxNXJoZaGIPwHXNMt/A+C1pZabKgQQd9kQ4pS0KBUi4MNNgT+ev54nXPeVTRoqQvfu+ee7zvnnnPvfQ7LsvCf4ZLvSZi/ScIpQScYv+g1QoGQEv15zk4wHo0k2BmJYJzNskB3XuTnkoyPQxKsNLwRnJTEycZwOJRgDAbgmdYF82hfmwSzzb4fGkni4DPoHu5K9sVw2I5wu9HNZKDagXDRKNBuy6Kbywm3ePlgSAUD0zQI+tftLdDrAa0WOIB8BYYEk4851rCWY1Qb1IJpYum6bNCsf97f0xZdoNHAUiwmYJt9zLFGaTFNMOj3ZbF882yQrX9ks0CnA9RqNshmH3OsmY1xqRampz21PR6g2bRtr3dOM6ubq+B9b1Uju7AWjwNvb3YVDLLZxxxrZmPkFurbK9NH4kskgHxeyHqpJLMvGLS3DYVQT6cnt2P4HluY3ILGpy3Bd3dy2i/F4uS0dbbldohjjbod+51wBU+bC5Z1dWZZBzsCXhM05hSviUbxrJU1cdJCZcMlTzng96NSrUqJZM89ZfJLizOaVKA2TEqC8rrjTz/T1quq4D/jW4ABAF7lQOO4C9PnAAAAAElFTkSuQmCC'); background-repeat: no-repeat; background-position: 50% 50%; cursor: pointer; height: 25px; position: absolute; right: 0px; top: 0px; width: 25px; z-index: 1;");
-
-
-    closeChecklistButton.onclick = onChecklistClose;
-
-    divChecklistsPopup.appendChild(closeChecklistButton);
-
-
-
+    
+    if (useClose)
+    {
+        let closeChecklistButton = document.createElement("DIV");
+        closeChecklistButton.setAttribute("class", "closeImage");
+        closeChecklistButton.setAttribute("style", "background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHMSURBVHjapFO/S0JRFP4UIUJIqMWgLQzalAyKIN4TxNXJoZaGIPwHXNMt/A+C1pZabKgQQd9kQ4pS0KBUi4MNNgT+ev54nXPeVTRoqQvfu+ee7zvnnnPvfQ7LsvCf4ZLvSZi/ScIpQScYv+g1QoGQEv15zk4wHo0k2BmJYJzNskB3XuTnkoyPQxKsNLwRnJTEycZwOJRgDAbgmdYF82hfmwSzzb4fGkni4DPoHu5K9sVw2I5wu9HNZKDagXDRKNBuy6Kbywm3ePlgSAUD0zQI+tftLdDrAa0WOIB8BYYEk4851rCWY1Qb1IJpYum6bNCsf97f0xZdoNHAUiwmYJt9zLFGaTFNMOj3ZbF882yQrX9ks0CnA9RqNshmH3OsmY1xqRampz21PR6g2bRtr3dOM6ubq+B9b1Uju7AWjwNvb3YVDLLZxxxrZmPkFurbK9NH4kskgHxeyHqpJLMvGLS3DYVQT6cnt2P4HluY3ILGpy3Bd3dy2i/F4uS0dbbldohjjbod+51wBU+bC5Z1dWZZBzsCXhM05hSviUbxrJU1cdJCZcMlTzng96NSrUqJZM89ZfJLizOaVKA2TEqC8rrjTz/T1quq4D/jW4ABAF7lQOO4C9PnAAAAAElFTkSuQmCC'); background-repeat: no-repeat; background-position: 50% 50%; cursor: pointer; height: 25px; position: absolute; right: 0px; top: 0px; width: 25px; z-index: 1;");
+        closeChecklistButton.onclick = onChecklistClose;
+        divChecklistsPopup.appendChild(closeChecklistButton);
+    }
+    
 
     let dialogueTitle = document.createElement("DIV");
     dialogueTitle.setAttribute("class", "Title");
@@ -228,10 +218,307 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
 
     let colors: string[] = ["rgb(118, 118, 118)", "rgb(102, 102, 102)"];
 
+    let subtract = 0;
+    subtract += (useActiveInactive ? 41 : 0);
+    subtract += (useDelete ? 41 : 0);
+    subtract += (useLoad ? 41 : 0);
 
+
+    for (let i = 0; i < checkListSets.rowCount; ++i)
+    {
+        console.log(i, checkListSets.row(i).k, checkListSets.row(i).v, checkListSets.row(i).s);
+
+        let color = colors[i % 2];
+
+        let checklistRow = document.createElement("DIV");
+        checklistRow.setAttribute("name", checkListSets.row(i).k);
+        checklistRow.setAttribute("class", "pu_content");
+        checklistRow.setAttribute("style", "background-color: " + color + "; clear: both; overflow: hidden; position: relative; width: 100%; white-space: nowrap;");
+
+        let lblContainer = document.createElement("DIV");
+        lblContainer.setAttribute("class", "CL_Lang");
+        lblContainer.setAttribute("title", getTranslation("OverrideChecklistName", userLanguage));
+        lblContainer.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - " + subtract.toString() + "px) / 1);");
+
+        let lblChecklistDesignation = document.createElement("P");
+        // lblChecklistDesignation.setAttribute("contenteditable", "true");
+        lblChecklistDesignation.setAttribute("style", "box-shadow: none;");
+
+        lblChecklistDesignation.appendChild(document.createTextNode(checkListSets.row(i).v)); // "Budgetprozess Baulicher Unterhalt"
+        lblContainer.appendChild(lblChecklistDesignation);
+        checklistRow.appendChild(lblContainer);
+
+        if (useActiveInactive)
+        {
+            let btnActiveInactive = document.createElement("DIV");
+            btnActiveInactive.setAttribute("class", "_STATUS");
+            btnActiveInactive.setAttribute("title", getTranslation("ChecklistStatus", userLanguage));
+            btnActiveInactive.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGHRFWHRTb2Z0d2FyZQBQYWludC5ORVQgdjMuMzap5+IlAAABH0lEQVQ4T2NgGHFA8QRDFQhTxeNypxkkFU4yHAYauI4qBiocZ/ADGngLiOdgGCgT2PCfVCxbE/hf8STDf6wGgmwAGUgKaH1YAjZQfo3cf5xeJsXQ8rvJYANDr9qAfUexoVOetoINdLyg+v/ut5uUG7ru9WKwgSC8+91GcGhR5NLjH/fDDQS5FgYIGgrSCAqn9FuBKHH25c9nsHdh4YgsiddQ2cw0uEtAmkGxCwMgS2Dh+PLnMxQLCboUOcxALgMZsPDFFLhlIDY6IGgoSAMs/YFcBnIhLm8THaYwhTCDYDENokHhjQ0Q5VKQRljihhmKHnFERxRyjgKFJcy1sESOKwsT7VKQASDXgVwMSk74AEFDUUqppByiSy2qlKHEGAIAeYG2SZ7gzdMAAAAASUVORK5CYII='); cursor: pointer;");
+            checklistRow.appendChild(btnActiveInactive);
+        }
+
+
+        if (useDelete)
+        {
+            let btnDelete = document.createElement("DIV");
+            btnDelete.setAttribute("class", "_REMOVE");
+            btnDelete.setAttribute("title", getTranslation("DeleteEntry", userLanguage));
+            btnDelete.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhDwAPAOccAAAAAIAAAACAAICAAAAAgIAAgACAgMDAwMDcwKbK8P+EhP8ICP8QEP8YGP8hIf85Of9CQv9SUv9jY/9zc/+EhP+lpf+trf+1tf/Gxv/Ozv/v7//39//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////78KCgpICAgP8AAP///////////////////////yH5BAEKAP8ALAAAAAAPAA8AAAgxAP8JHEiwoMGDCBMqXMjwn4MFAhs4UOjAAYOJC/NBXOggXz6MCC1GBNmwpMmTKAUGBAA7'); cursor: pointer;");
+            checklistRow.appendChild(btnDelete);
+        }
+
+        if (useLoad)
+        {
+            let btnLoad = document.createElement("DIV");
+            btnLoad.setAttribute("class", "_SELECT");
+            btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
+
+            btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
+            btnLoad.onclick = onChecklistLoad;
+            checklistRow.appendChild(btnLoad);
+            checklistContainer.appendChild(checklistRow);
+        }
+    }
+
+
+
+    checklistBody.appendChild(checklistContainer);
+    divChecklistsPopup.appendChild(checklistBody);
+
+
+    let footerRow = document.createElement("DIV");
+    footerRow.setAttribute("class", "EmptyRow");
+    footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
+
+
+    let showNewChecklistOption = false;
+
+    if (showNewChecklistOption)
+    {
+        let spanNewChecklist = document.createElement("SPAN");
+        spanNewChecklist.setAttribute("class", "tableAdd");
+
+        spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
+        footerRow.appendChild(spanNewChecklist);
+
+        footerRow.onclick = onCreateNewChecklist;
+    }
+    else
+    {
+        let spanNewChecklist = document.createElement("SPAN");
+        spanNewChecklist.appendChild(document.createTextNode("\xa0"));
+        footerRow.appendChild(spanNewChecklist);
+    }
+
+    divChecklistsPopup.appendChild(footerRow);
+
+
+    fragment.appendChild(divChecklistsPopup);
+    return fragment;
+}
+
+
+
+async function openChecklistDialogue(checklists: tableWrapper<IT_Checklist>, userLanguage: AvailableLanguages): Promise<DocumentFragment>
+{
+    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL
+    let useClose: boolean = false;
     let useActiveInactive = false;
     let useDelete = false;
     let useLoad = true;
+    let useNew = true;
+
+    let ce = document.createElement;
+
+    let fragment = document.createDocumentFragment();
+
+    let divChecklistsPopup = document.createElement("DIV");
+    divChecklistsPopup.setAttribute("id", "Checklists_Popup");
+    divChecklistsPopup.setAttribute("class", "Popup noselect");
+    divChecklistsPopup.setAttribute("tabindex", "1");
+    divChecklistsPopup.setAttribute("style", "border: 1px solid black; background-color: rgb(102, 102, 102); box-sizing: border-box; box-shadow: rgb(0, 0, 0) 5px 5px 6px 0px; color: rgb(255, 255, 255); display: block; font-family: Arial, Helvetica, sans-serif; font-size: 11px; height: auto; left: 50%; margin-left: 0px; margin-right: 0px; max-height: 75%; max-width: 75%; min-width: 25%; overflow: hidden; position: absolute; top: 50%; width: 480px; z-index: 2000000000; transform: translate(-50%, -50%);");
+
+    if (useClose)
+    {
+        let closeChecklistButton = document.createElement("DIV");
+        closeChecklistButton.setAttribute("class", "closeImage");
+        closeChecklistButton.setAttribute("style", "background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHMSURBVHjapFO/S0JRFP4UIUJIqMWgLQzalAyKIN4TxNXJoZaGIPwHXNMt/A+C1pZabKgQQd9kQ4pS0KBUi4MNNgT+ev54nXPeVTRoqQvfu+ee7zvnnnPvfQ7LsvCf4ZLvSZi/ScIpQScYv+g1QoGQEv15zk4wHo0k2BmJYJzNskB3XuTnkoyPQxKsNLwRnJTEycZwOJRgDAbgmdYF82hfmwSzzb4fGkni4DPoHu5K9sVw2I5wu9HNZKDagXDRKNBuy6Kbywm3ePlgSAUD0zQI+tftLdDrAa0WOIB8BYYEk4851rCWY1Qb1IJpYum6bNCsf97f0xZdoNHAUiwmYJt9zLFGaTFNMOj3ZbF882yQrX9ks0CnA9RqNshmH3OsmY1xqRampz21PR6g2bRtr3dOM6ubq+B9b1Uju7AWjwNvb3YVDLLZxxxrZmPkFurbK9NH4kskgHxeyHqpJLMvGLS3DYVQT6cnt2P4HluY3ILGpy3Bd3dy2i/F4uS0dbbldohjjbod+51wBU+bC5Z1dWZZBzsCXhM05hSviUbxrJU1cdJCZcMlTzng96NSrUqJZM89ZfJLizOaVKA2TEqC8rrjTz/T1quq4D/jW4ABAF7lQOO4C9PnAAAAAElFTkSuQmCC'); background-repeat: no-repeat; background-position: 50% 50%; cursor: pointer; height: 25px; position: absolute; right: 0px; top: 0px; width: 25px; z-index: 1;");
+        closeChecklistButton.onclick = onChecklistClose;
+        divChecklistsPopup.appendChild(closeChecklistButton);
+    }
+
+
+    let dialogueTitle = document.createElement("DIV");
+    dialogueTitle.setAttribute("class", "Title");
+    dialogueTitle.setAttribute("style", "background: rgb(61, 61, 61); border-top: none; border-right: none; border-bottom: 1px solid black; border-left: none; border-image: initial; color: orange; line-height: 25px; height: 25px; text-indent: 5px;");
+    dialogueTitle.appendChild(document.createTextNode(getTranslation("OpenChecklist", userLanguage)));
+
+
+
+    divChecklistsPopup.appendChild(dialogueTitle);
+
+    let checklistBody = document.createElement("DIV");
+    checklistBody.setAttribute("class", "Body");
+    checklistBody.setAttribute("style", "margin-top: 0px; position: relative; width: 100%;");
+
+    let checklistContainer = document.createElement("DIV");
+    checklistContainer.setAttribute("class", "Content");
+    checklistContainer.setAttribute("style", "margin-top: 0px; overflow: hidden scroll; width: 100%; max-height: 695px;");
+
+
+
+    let colors: string[] = ["rgb(118, 118, 118)", "rgb(102, 102, 102)"];
+
+    let subtract = 0;
+    subtract += (useActiveInactive ? 41 : 0);
+    subtract += (useDelete ? 41 : 0);
+    subtract += (useLoad ? 41 : 0);
+
+
+    for (let i = 0; i < checklists.rowCount; ++i)
+    {
+        console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
+
+        let color = colors[i % 2];
+
+        let checklistRow = document.createElement("DIV");
+        checklistRow.setAttribute("name", checklists.row(i).CL_UID);
+        checklistRow.setAttribute("class", "pu_content");
+        checklistRow.setAttribute("style", "background-color: " + color + "; clear: both; overflow: hidden; position: relative; width: 100%; white-space: nowrap;");
+
+        let lblContainer = document.createElement("DIV");
+        lblContainer.setAttribute("class", "CL_Lang");
+        lblContainer.setAttribute("title", getTranslation("OverrideChecklistName", userLanguage));
+        lblContainer.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: calc((100% - " + subtract.toString() + "px) / 1);");
+
+        let lblChecklistDesignation = document.createElement("P");
+        // lblChecklistDesignation.setAttribute("contenteditable", "true");
+        lblChecklistDesignation.setAttribute("style", "box-shadow: none;");
+
+        lblChecklistDesignation.appendChild(document.createTextNode(checklists.row(i).CL_Name)); // "Budgetprozess Baulicher Unterhalt"
+        lblContainer.appendChild(lblChecklistDesignation);
+        checklistRow.appendChild(lblContainer);
+
+        if (useActiveInactive)
+        {
+            let btnActiveInactive = document.createElement("DIV");
+            btnActiveInactive.setAttribute("class", "_STATUS");
+            btnActiveInactive.setAttribute("title", getTranslation("ChecklistStatus", userLanguage));
+            btnActiveInactive.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGHRFWHRTb2Z0d2FyZQBQYWludC5ORVQgdjMuMzap5+IlAAABH0lEQVQ4T2NgGHFA8QRDFQhTxeNypxkkFU4yHAYauI4qBiocZ/ADGngLiOdgGCgT2PCfVCxbE/hf8STDf6wGgmwAGUgKaH1YAjZQfo3cf5xeJsXQ8rvJYANDr9qAfUexoVOetoINdLyg+v/ut5uUG7ru9WKwgSC8+91GcGhR5NLjH/fDDQS5FgYIGgrSCAqn9FuBKHH25c9nsHdh4YgsiddQ2cw0uEtAmkGxCwMgS2Dh+PLnMxQLCboUOcxALgMZsPDFFLhlIDY6IGgoSAMs/YFcBnIhLm8THaYwhTCDYDENokHhjQ0Q5VKQRljihhmKHnFERxRyjgKFJcy1sESOKwsT7VKQASDXgVwMSk74AEFDUUqppByiSy2qlKHEGAIAeYG2SZ7gzdMAAAAASUVORK5CYII='); cursor: pointer;");
+            checklistRow.appendChild(btnActiveInactive);
+        }
+
+
+        if (useDelete)
+        {
+            let btnDelete = document.createElement("DIV");
+            btnDelete.setAttribute("class", "_REMOVE");
+            btnDelete.setAttribute("title", getTranslation("DeleteEntry", userLanguage));
+            btnDelete.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhDwAPAOccAAAAAIAAAACAAICAAAAAgIAAgACAgMDAwMDcwKbK8P+EhP8ICP8QEP8YGP8hIf85Of9CQv9SUv9jY/9zc/+EhP+lpf+trf+1tf/Gxv/Ozv/v7//39//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////78KCgpICAgP8AAP///////////////////////yH5BAEKAP8ALAAAAAAPAA8AAAgxAP8JHEiwoMGDCBMqXMjwn4MFAhs4UOjAAYOJC/NBXOggXz6MCC1GBNmwpMmTKAUGBAA7'); cursor: pointer;");
+            checklistRow.appendChild(btnDelete);
+        }
+
+        if (useLoad)
+        {
+            let btnLoad = document.createElement("DIV");
+            btnLoad.setAttribute("class", "_SELECT");
+            btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
+
+            btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
+            btnLoad.onclick = onChecklistLoad;
+            checklistRow.appendChild(btnLoad);
+            checklistContainer.appendChild(checklistRow);
+        }
+    }
+
+
+
+    checklistBody.appendChild(checklistContainer);
+    divChecklistsPopup.appendChild(checklistBody);
+
+
+    let footerRow = document.createElement("DIV");
+    footerRow.setAttribute("class", "EmptyRow");
+    footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
+
+    if (useNew)
+    {
+        let spanNewChecklist = document.createElement("SPAN");
+        spanNewChecklist.setAttribute("class", "tableAdd");
+
+        spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
+        footerRow.appendChild(spanNewChecklist);
+
+        footerRow.onclick = onCreateNewChecklist;
+    }
+    else
+    {
+        let spanNewChecklist = document.createElement("SPAN");
+        spanNewChecklist.appendChild(document.createTextNode("\xa0"));
+        footerRow.appendChild(spanNewChecklist);
+    }
+
+    divChecklistsPopup.appendChild(footerRow);
+
+
+    fragment.appendChild(divChecklistsPopup);
+    return fragment;
+}
+
+
+
+
+
+
+async function newChecklistDialogue(checklists: tableWrapper<IT_Checklist>, userLanguage: AvailableLanguages): Promise<DocumentFragment>
+{
+    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL
+    let useClose: boolean = false;
+    let useActiveInactive = false;
+    let useDelete = false;
+    let useLoad = true;
+
+
+    let ce = document.createElement;
+
+    let fragment = document.createDocumentFragment();
+
+    let divChecklistsPopup = document.createElement("DIV");
+    divChecklistsPopup.setAttribute("id", "Checklists_Popup");
+    divChecklistsPopup.setAttribute("class", "Popup noselect");
+    divChecklistsPopup.setAttribute("tabindex", "1");
+    divChecklistsPopup.setAttribute("style", "border: 1px solid black; background-color: rgb(102, 102, 102); box-sizing: border-box; box-shadow: rgb(0, 0, 0) 5px 5px 6px 0px; color: rgb(255, 255, 255); display: block; font-family: Arial, Helvetica, sans-serif; font-size: 11px; height: auto; left: 50%; margin-left: 0px; margin-right: 0px; max-height: 75%; max-width: 75%; min-width: 25%; overflow: hidden; position: absolute; top: 50%; width: 480px; z-index: 2000000000; transform: translate(-50%, -50%);");
+
+    if (useClose)
+    { 
+        let closeChecklistButton = document.createElement("DIV");
+        closeChecklistButton.setAttribute("class", "closeImage");
+        closeChecklistButton.setAttribute("style", "background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHMSURBVHjapFO/S0JRFP4UIUJIqMWgLQzalAyKIN4TxNXJoZaGIPwHXNMt/A+C1pZabKgQQd9kQ4pS0KBUi4MNNgT+ev54nXPeVTRoqQvfu+ee7zvnnnPvfQ7LsvCf4ZLvSZi/ScIpQScYv+g1QoGQEv15zk4wHo0k2BmJYJzNskB3XuTnkoyPQxKsNLwRnJTEycZwOJRgDAbgmdYF82hfmwSzzb4fGkni4DPoHu5K9sVw2I5wu9HNZKDagXDRKNBuy6Kbywm3ePlgSAUD0zQI+tftLdDrAa0WOIB8BYYEk4851rCWY1Qb1IJpYum6bNCsf97f0xZdoNHAUiwmYJt9zLFGaTFNMOj3ZbF882yQrX9ks0CnA9RqNshmH3OsmY1xqRampz21PR6g2bRtr3dOM6ubq+B9b1Uju7AWjwNvb3YVDLLZxxxrZmPkFurbK9NH4kskgHxeyHqpJLMvGLS3DYVQT6cnt2P4HluY3ILGpy3Bd3dy2i/F4uS0dbbldohjjbod+51wBU+bC5Z1dWZZBzsCXhM05hSviUbxrJU1cdJCZcMlTzng96NSrUqJZM89ZfJLizOaVKA2TEqC8rrjTz/T1quq4D/jW4ABAF7lQOO4C9PnAAAAAElFTkSuQmCC'); background-repeat: no-repeat; background-position: 50% 50%; cursor: pointer; height: 25px; position: absolute; right: 0px; top: 0px; width: 25px; z-index: 1;");
+        closeChecklistButton.onclick = onChecklistClose;
+        divChecklistsPopup.appendChild(closeChecklistButton);
+    }
+
+
+    let dialogueTitle = document.createElement("DIV");
+    dialogueTitle.setAttribute("class", "Title");
+    dialogueTitle.setAttribute("style", "background: rgb(61, 61, 61); border-top: none; border-right: none; border-bottom: 1px solid black; border-left: none; border-image: initial; color: orange; line-height: 25px; height: 25px; text-indent: 5px;");
+    dialogueTitle.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
+
+
+
+    divChecklistsPopup.appendChild(dialogueTitle);
+
+    let checklistBody = document.createElement("DIV");
+    checklistBody.setAttribute("class", "Body");
+    checklistBody.setAttribute("style", "margin-top: 0px; position: relative; width: 100%;");
+
+    let checklistContainer = document.createElement("DIV");
+    checklistContainer.setAttribute("class", "Content");
+    checklistContainer.setAttribute("style", "margin-top: 0px; overflow: hidden scroll; width: 100%; max-height: 695px;");
+
+
+
+    let colors: string[] = ["rgb(118, 118, 118)", "rgb(102, 102, 102)"];
 
     let subtract = 0;
     subtract += (useActiveInactive ? 41 : 0);
@@ -306,7 +593,7 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
     footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
 
 
-    let showNewChecklistOption = true;
+    let showNewChecklistOption = false;
 
     if (showNewChecklistOption)
     {
@@ -334,7 +621,7 @@ async function openChecklistDialogue(): Promise<DocumentFragment>
 
 
 
-function addStylesheet(url: string)
+function addStylesheet(url: string, id?:string)
 {
     let h = document.getElementsByTagName("head")[0];
 
@@ -348,6 +635,9 @@ function addStylesheet(url: string)
     url += "no_cache=" + (new Date()).getTime().toString();
 
     let ss = document.createElement("LINK");
+    if(id)
+        ss.setAttribute("id", id);
+
     ss.setAttribute("rel", "stylesheet");
     ss.setAttribute("href", url);
 
@@ -367,21 +657,23 @@ function getObj(sess: IBasicSession): IBasicObject
     let RM_UID = (<IT_AP_Raum>obj).RM_UID;
     let TSK_UID = (<IT_TM_Tasks>obj).TSK_UID;
 
-    let OBJ_UID = SO_UID || GB_UID || GS_UID || TK_UID || RM_UID || TSK_UID;
+    let OBJ_UID = TSK_UID || SO_UID || GB_UID || GS_UID || TK_UID || RM_UID;
     let OBJT_Code = "";
-    if (SO_UID) OBJT_Code = "SO";
+    if (TSK_UID) OBJT_Code = "TSK";
+    else if (SO_UID) OBJT_Code = "SO";
     else if (GB_UID) OBJT_Code = "GB";
     else if (GS_UID) OBJT_Code = "GS";
     else if (TK_UID) OBJT_Code = "TK";
     else if (RM_UID) OBJT_Code = "RM";
-    else if (TSK_UID) OBJT_Code = "TSK";
+
+    if (OBJT_Code)
+        OBJT_Code = OBJT_Code.toUpperCase();
 
     return { "OBJ_UID": OBJ_UID, "OBJT_Code": OBJT_Code };
 }
 
 
-
-async function onDocumentReady()
+async function createFooter(username:string)
 {
     let doc = window.parent.document;
     let main = doc.getElementById("Main");
@@ -395,7 +687,7 @@ async function onDocumentReady()
 
     let spanUsername = doc.createElement("SPAN");
     spanUsername.setAttribute("class", "bfUsername");
-    spanUsername.appendChild(doc.createTextNode("D. Administrator "));
+    spanUsername.appendChild(doc.createTextNode(username));
     buttonFrame.appendChild(spanUsername);
 
     let divRight = doc.createElement("DIV");
@@ -428,14 +720,126 @@ async function onDocumentReady()
 
     if (main != null)
         main.appendChild(fragment);
+}
 
 
-    let dialog = await openChecklistDialogue();
-    document.getElementById("mainContainer").appendChild(dialog);
+async function openVersionSelection(cl_uid: string, tsk_uid:string)
+{
+    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
+    let params: any = {
+        "__cl_uid": null,
+        "__obj_uid": null,
+        "__objt_code": null,
+        "__tsk_uid": null,
+    };
+    params.__cl_uid = cl_uid;
+    params.__tsk_uid = tsk_uid;
+
+    console.log("openVersionSelection params", params);
+    let checkListsData = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.SelectSavedDataset.sql&format=1", params);
+
+    if (checkListsData.hasError)
+    {
+        alert("Error loading checklist-data:\r\n" + checkListsData.error.message);
+        return;
+    }
+
+    let checkListSets = new tableWrapper<IDropDown>(checkListsData.data.tables[0].columns, checkListsData.data.tables[0].rows, false);
+    // console.log(checklists);
+    let df = await loadDataSetSelectionDialogue(checkListSets);
+
+    return df;
+}
+
+
+
+async function onDocumentReady()
+{
+    let userLanguage: AvailableLanguages = "de";
+    if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Language)
+        userLanguage = <AvailableLanguages>window.top.Portal.Session.Language().toLowerCase();
 
     let sess = <IBasicSession>await ajax.fetchJSON("../ajax/CurrentSession.ashx")
     let obj: IBasicObject = getObj(sess);
     console.log(obj);
+
+    await createFooter("D. Administrator");
+
+    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
+    let params: any = {
+        "__obj_uid": null,
+        "__objt_code": null, 
+        "__tsk_uid": null
+    };
+
+    
+    let urlAvailable = "../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1";
+    console.log(params);
+    let allChecklistsData = <IAjaxResult<any>>await ajax.fetchJSON(urlAvailable, params);
+
+    if (obj.OBJT_Code === "TSK")
+    {
+        params.__tsk_uid = obj.OBJ_UID;
+        params.__obj_uid = null;
+        params.__objt_code = null;
+    }
+    else
+    {
+        params.__tsk_uid = null;
+        params.__obj_uid = obj.OBJ_UID;
+        params.__objt_code = obj.OBJT_Code;
+    }
+    
+    console.log("obj", obj);
+    let availableChecklistsData = <IAjaxResult<any>>await ajax.fetchJSON(urlAvailable, params);
+
+    if (allChecklistsData.hasError)
+    {
+        alert("Error loading checklist-data1:\r\n" + allChecklistsData.error.message);
+        return;
+    }
+
+    if (availableChecklistsData.hasError)
+    {
+        alert("Error loading checklist-data2:\r\n" + availableChecklistsData.error.message);
+        return;
+    }
+
+    let allChecklists = new tableWrapper<IT_Checklist>(allChecklistsData.data.tables[0].columns, allChecklistsData.data.tables[0].rows, false);
+    let availableChecklists = new tableWrapper<IT_Checklist>(availableChecklistsData.data.tables[0].columns, availableChecklistsData.data.tables[0].rows, false);
+
+    // IT_Checklist, IDropDown
+    // checkListSets.row(0).CL_SavedCount
+    console.log("allChecklists", allChecklists.rowCount, allChecklists);
+    console.log("availableChecklists", availableChecklists.rowCount, availableChecklists);
+
+    
+    // let openDialogue = await openChecklistDialogue(availableChecklists, userLanguage);
+    // document.getElementById("mainContainer").appendChild(openDialogue);
+
+
+    // if(false)
+    if (availableChecklists.rowCount > 0)
+    {
+
+        if (availableChecklists.rowCount == 1)
+        {
+            let cl_uid = availableChecklists.row(0).CL_UID
+            let versionDialogue = await openVersionSelection(cl_uid, null);
+            document.getElementById("mainContainer").appendChild(versionDialogue);
+        }
+        else
+        {
+            let openDialogue = await openChecklistDialogue(availableChecklists, userLanguage);
+            document.getElementById("mainContainer").appendChild(openDialogue);
+        }
+    }
+    else
+    {
+        let newDialogue = await newChecklistDialogue(allChecklists, userLanguage);
+        document.getElementById("mainContainer").appendChild(newDialogue);
+    }
+
 }
 
 
@@ -445,15 +849,30 @@ async function onDocumentReady()
 // else window.onload = autorun;
 
 
+function saveOnFrameSwitching(iframe: HTMLIFrameElement)
+{
+    // $iframe.load(function (){});
+
+    iframe.contentWindow.onbeforeunload = function ()
+    {
+        debugger;
+    };
+}
+
+
+
+
+
+
 export async function main()
 {
     // do polyfills immediately on script-load
     if (true)
     {
-        // addStylesheet("../css/Scrolling/Scrollbar.css?v=1");
-
         // <link href="css/Layout.css" rel = "stylesheet" type = "text/css" >
-        addStylesheet("./css/Layout.css?v=1");
+        addStylesheet("./css/Layout.css?v=1", "dialogueCSS");
+        addStylesheet("../css/Scrolling/Scrollbar.css?v=1", "scrollbarCSS");
+        // addStylesheet("css/checklist.css?v=1", "checklistCSS");
     }
 
     if (document.addEventListener) document.addEventListener("DOMContentLoaded", onDocumentReady, false);

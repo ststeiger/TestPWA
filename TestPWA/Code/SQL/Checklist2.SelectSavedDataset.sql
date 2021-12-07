@@ -1,11 +1,14 @@
 
-DECLARE @__obj_uid uniqueidentifier 
-DECLARE @__tsk_uid uniqueidentifier 
-DECLARE @__objt_code character varying(50)  
-SET @__obj_uid = NULL 
-SET @__objt_code = NULL 
-SET @__tsk_uid = NULL 
+-- Checklist2.SelectSavedDataset.sql
+-- DECLARE @__cl_uid uniqueidentifier; 
+-- DECLARE @__tsk_uid uniqueidentifier; 
+-- DECLARE @__obj_uid uniqueidentifier; 
+-- DECLARE @__objt_code character varying(50); 
 
+-- SET @__cl_uid = 'F1A2DD8A-2D11-496E-9B14-13559405089F'; 
+-- SET @__tsk_uid = NULL; 
+-- SET @__obj_uid = NULL; 
+-- SET @__objt_code = NULL; 
 
 
 
@@ -18,11 +21,10 @@ SELECT
 	+ ISNULL(N' (' + T_Benutzer._BE_Label + N')', N'') 
 	AS v 
 	
-	--,T_COR_Objekte.OBJ_Label 
-	--,T_TM_Tasks._TSK_Nr 
-	--,T_Checklist.CL_UID 
-	
-	--,T_Checklist.CL_Title 
+	-- ,T_COR_Objekte.OBJ_Label 
+	-- ,T_TM_Tasks._TSK_Nr 
+	-- ,T_Checklist.CL_UID 
+	-- ,T_Checklist.CL_Title 
 FROM T_Checklist_ZO_SavedDataSet 
 
 LEFT JOIN T_ChecklistVersion 
@@ -42,7 +44,7 @@ LEFT JOIN T_TM_Tasks
 	ON T_TM_Tasks.TSK_UID = T_Checklist_ZO_SavedDataSet.CLS_TSK_UID 
 
 WHERE (1=1) 
-AND T_ChecklistVersion.CLV_CL_UID = 'EB159A9C-E69F-49F4-B10E-3A4825973E46' 
+AND T_ChecklistVersion.CLV_CL_UID = @__cl_uid 
 
 AND 
 ( 
