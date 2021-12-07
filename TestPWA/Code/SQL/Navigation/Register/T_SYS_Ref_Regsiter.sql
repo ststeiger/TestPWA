@@ -33,7 +33,7 @@
 				-- ,'~/templates/forms/iframe.ascx?src=BuildingData/BuildingData.htm' AS REG_Control 
 				,1 AS REG_Show 
 				,1 AS REG_Status 
-				,600 AS REG_Sort 
+				,31 AS REG_Sort 
 				,0 AS REG_usesMetadata 
 		) AS tSource 
     
