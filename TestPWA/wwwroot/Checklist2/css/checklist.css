@@ -79,10 +79,10 @@ html, body
 }
 
 
-    body.Black
-    {
-        background-color: #000;
-    }
+body.Black
+{
+    #background-color: #000;
+}
 
 
 div.Main
@@ -251,4 +251,3 @@ td.verticalColumn
 {
     outline: none;
 }
-

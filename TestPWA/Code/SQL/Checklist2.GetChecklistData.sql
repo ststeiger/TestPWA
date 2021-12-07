@@ -1,11 +1,55 @@
 ﻿
 -- Checklist2.GetChecklistData.sql
 -- DECLARE @__cl_uid uniqueidentifier; 
+-- DECLARE @__cls_uid uniqueidentifier; 
 -- SET @__cl_uid = 'EB159A9C-E69F-49F4-B10E-3A4825973E46'; 
+-- SET @__cls_uid = '70B427DB-2F7C-4DA3-83CF-BAEBFD4AB0D0'; 
 
 
--- CREATE SCHEMA smtp; 
--- ALTER SCHEMA smtp TRANSFER dbo.messages
+IF @__cl_uid IS NULL 
+BEGIN
+	SET @__cl_uid = (
+		SELECT TOP 1 T_ChecklistVersion.CLV_CL_UID 
+		FROM T_Checklist_ZO_SavedDataSet 
+		LEFT JOIN T_ChecklistVersion ON T_ChecklistVersion.CLV_UID = T_Checklist_ZO_SavedDataSet.CLS_CLV_UID 
+		WHERE T_Checklist_ZO_SavedDataSet.CLS_UID = @__cls_uid 
+	)
+END 
+
+
+IF @__cls_uid IS NULL 
+BEGIN
+	SET @__cls_uid = (
+		SELECT TOP 1 T_Checklist_ZO_SavedDataSet.CLS_UID 
+		FROM T_Checklist_ZO_SavedDataSet 
+		LEFT JOIN T_ChecklistVersion ON T_ChecklistVersion.CLV_UID = T_Checklist_ZO_SavedDataSet.CLS_CLV_UID 
+		WHERE T_ChecklistVersion.CLV_CL_UID = @__cl_uid 
+	)
+END 
+
+
+
+
+DECLARE @internal_clv_uid uniqueidentifier; 
+SET @internal_clv_uid = ( 
+	SELECT TOP 1 CLV_UID 
+	FROM T_ChecklistVersion 
+	LEFT JOIN T_Checklist_ZO_SavedDataSet ON T_Checklist_ZO_SavedDataSet.CLS_CLV_UID = T_ChecklistVersion.CLV_UID 
+	WHERE (1=1) 
+	AND 
+	(
+		T_Checklist_ZO_SavedDataSet.CLS_UID = @__cls_uid 
+		OR 
+		( 
+			@__cls_uid IS NULL 
+			AND 
+			CLV_CL_UID = @__cl_uid 
+		) 
+	) 
+	ORDER BY CLV_Created  DESC
+); 
+
+
 
 
 
@@ -37,7 +81,7 @@ SELECT
 	 END AS ELE_InnerHtml2 
 FROM T_ChecklistElements 
 WHERE (1=1) 
-AND T_ChecklistElements.ELE_CLV_UID IN (SELECT TOP 1 CLV_UID FROM T_ChecklistVersion WHERE CLV_CL_UID = @__cl_uid ORDER BY CLV_Created  DESC )
+AND T_ChecklistElements.ELE_CLV_UID = @internal_clv_uid 
 -- AND T_ChecklistElements.ELE_Level = 3 
 ORDER BY ELE_Level, ELE_Sort 
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
@@ -54,10 +98,8 @@ WHERE (1=1)
 AND T_Checklist_ZO_ElementProperties.PRO_ELE_UID IN 
 (
 	SELECT T_ChecklistElements.ELE_UID FROM T_ChecklistElements 
-	-- WHERE T_ChecklistElements.ELE_CL_UID = @__cl_uid
-	WHERE T_ChecklistElements.ELE_CLV_UID IN (SELECT TOP 1 CLV_UID FROM T_ChecklistVersion WHERE CLV_CL_UID = @__cl_uid ORDER BY CLV_Created  DESC )
+	WHERE T_ChecklistElements.ELE_CLV_UID = @internal_clv_uid 
 ) 
 ORDER BY PRO_ELE_UID, PRO_Name 
 -- FOR JSON AUTO, INCLUDE_NULL_VALUES 
 ; 
-

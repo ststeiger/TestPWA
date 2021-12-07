@@ -16,6 +16,350 @@ import * as url_params from "./url_params.js";
 
 
 
+let _: any = {
+    "autobind_autotrace": autobind_autotrace
+    , "autorun": autorun
+    , "hu": hu
+    , "linq": linq
+    , "tr": tableWrapper
+    , "tra": translations
+    , "up": url_params
+    , "utils": utils
+    , "uuid": uuid
+
+    , "xml": xml
+}; // goddamn, if not used, it's not imported ...
+
+
+let onSaveChecklist: () => void;
+
+
+async function assertSession()
+{
+    try
+    {
+        // this sets the session cookie if it isn't there. 
+        // this prevents bug in ASP.NET framework 
+        let txt = await ajax.fetchText("../ajax/CurrentSession.ashx");
+    }
+    catch (err: any)
+    { } // Do nothing 
+}
+
+
+function getPortalData(): IPortalSessionData
+{
+    let userLanguage: AvailableLanguages = "de";
+    let proc = "200CEB26807D6BF99FD6F4F0D1CA54D4";
+    let userName = "A. Rösti";
+
+    if (window.top.Portal && window.top.Portal.Session)
+    {
+        if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.ID)
+            proc = <AvailableLanguages>window.top.Portal.Session.ID();
+
+        if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Language)
+            userLanguage = <AvailableLanguages>window.top.Portal.Session.Language().toLowerCase();
+
+        if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Name)
+            userName = <AvailableLanguages>window.top.Portal.Session.Name();
+    }
+
+    return {
+        userLanguage: userLanguage,
+        proc: proc,
+        userName: userName
+    };
+}
+
+async function startWaiting(timeout?: number)
+{
+    if (window.top.Portal && window.top.Portal.Global && window.top.Portal.Global.Waiting && window.top.Portal.Global.Waiting.Start)
+    {
+        window.setTimeout(function ()
+        {
+            window.top.Portal.Global.Waiting.Start();
+        }, timeout || 20);
+    }
+}
+
+
+async function stopWaiting(timeout?: number)
+{
+    if (window.top.Portal && window.top.Portal.Global && window.top.Portal.Global.Waiting && window.top.Portal.Global.Waiting.Stop)
+    {
+        window.setTimeout(function ()
+        {
+            window.top.Portal.Global.Waiting.Stop();
+        }, timeout || 1500);
+    }
+
+}
+
+
+function clearHtmlElementContents(el: HTMLElement)
+{
+    while (el.lastChild)
+    {
+        el.removeChild(el.lastChild);
+    }
+}
+
+
+function getSelectedRow(ev: MouseEvent)
+{
+    let row = (<Element>ev.currentTarget);
+    
+    while (row && !row.classList.contains("pu_content"))
+    {
+        row = row.parentElement;
+    }
+
+    return row;
+}
+
+
+
+function getPopopContainer(el:Element): Element 
+{
+    let popup = el;
+
+    while (popup && !popup.classList.contains("Popup"))
+    {
+        popup = popup.parentElement;
+    }
+
+    return popup;
+}
+
+
+
+
+async function loadChecklistValues(cl_uid: string, cls_uid: string)
+{
+    let params = {
+         "__cl_uid": cl_uid 
+        ,"__cls_uid": cls_uid 
+    };
+
+    let checkListData = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1", params);
+    let checklistValues = new tableWrapper<IT_Checklist_ZO_ElementValues>(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
+    // console.log("checklistValues", checklistValues);
+
+    for (let i = 0; i < checklistValues.rowCount; ++i)
+    {
+        let ele = document.getElementById(checklistValues.row(i).CLV_ELE_UID);
+        if (!ele)
+            continue;
+
+        let type = (ele.getAttribute("type") || "").toLowerCase();
+        if ("checkbox" === type)
+        {
+            (<HTMLInputElement>ele).checked = (checklistValues.row(i).CLV_Value === 'true');
+        }
+        else if ("text" === type)
+        {
+            (<HTMLInputElement>ele).value = checklistValues.row(i).CLV_Value;
+        }
+        else if ("textarea" === ele.nodeName.toLowerCase())
+        {
+            (<HTMLInputElement>ele).value = checklistValues.row(i).CLV_Value;
+        }
+    }
+
+
+}
+
+
+// If the background suddenly turns black and the font has to be switched to white for this, 
+// you can no-longer see the text well, because the visibility of white on an almost-white background ...
+function QuickFix_SNB_2021_FIXME()
+{
+    let badForegrounds: HTMLTableCellElement[] = Array.prototype.slice.call(document.querySelectorAll('td[bgcolor="#E7E6E6"]'));
+    let badBackgrounds: HTMLTableCellElement[] = Array.prototype.slice.call(document.querySelectorAll('td[bgcolor="#EDEDED"]'));
+    for (let i = 0; i < badBackgrounds.length; ++i)
+    {
+        badBackgrounds[i].setAttribute("bgcolor", "#5F5F5F");
+    }
+
+    for (let i = 0; i < badForegrounds.length; ++i)
+    {
+        let oldStyle = badForegrounds[i].getAttribute("style") || "";
+        badForegrounds[i].setAttribute("style", oldStyle + "; color: #000;");
+    }
+
+}
+
+
+// https://localhost:44314/ts/require/require.js?v=1
+// https://localhost:44314/vertical_text.htm
+// https://localhost:44314/Schuettgutcontainer.htm
+async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, withData: boolean): Promise<void>
+{
+    console.log("loadChecklist", proc, cl_uid);
+
+    let mainContain = document.getElementById("mainContainer");
+    if (!mainContain)
+        return;
+
+    clearHtmlElementContents(mainContain)
+
+    let divOverview = document.createElement("DIV");
+    divOverview.setAttribute("id", "tOverview");
+    divOverview.setAttribute("style", "padding-top: 20px; max-width: 100%; height: calc(100% - 40px); overflow: auto;");
+
+    let logo = document.createElement("IMG");
+    logo.setAttribute("src", "images/SNB-Logo-blau.svg");
+    logo.setAttribute("style", "fontwidth: 6cm;");
+    // divOverview.appendChild(logo);   
+
+    let checkListTitle = document.createElement("H2");
+    checkListTitle.setAttribute("id", "checkListTitle");
+    checkListTitle.setAttribute("style", "font-family: Arial; font-size: 14pt;");
+    divOverview.appendChild(checkListTitle);   
+
+    let br1 = document.createElement("BR");
+    let br2 = document.createElement("BR");
+    divOverview.appendChild(br1);
+    divOverview.appendChild(br2);
+
+    let divChecklist = document.createElement("DIV");
+    divChecklist.setAttribute("id", "tChecklist");
+    divOverview.appendChild(divChecklist);
+
+    mainContain.appendChild(divOverview);
+
+
+    startWaiting();
+
+
+    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
+    let clUrl = "../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1"; //&__cl_uid=", cl_uid;
+    let checkListData = <IAjaxResult<any>>await ajax.fetchJSON(clUrl, { "__cl_uid": cl_uid, "__cls_uid": cls_uid});
+    if (checkListData.hasError)
+    {
+        alert("Error loading checklist-data:\r\n" + checkListData.error.message);
+        return;
+    }
+
+
+    // console.log(checkListData.tables[0]);
+    let checklistName = new tableWrapper<IT_Checklist>(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
+    // console.log("checklistName", checklistName.columns);
+    let elements = new tableWrapper<IT_ChecklistElements>(checkListData.data.tables[1].columns, checkListData.data.tables[1].rows, false);
+    // console.log("elements", elements.columns);
+    let elemntProps = new tableWrapper<IT_Checklist_ZO_ElementProperties>(checkListData.data.tables[2].columns, checkListData.data.tables[2].rows, false);
+    // console.log("elemntProps", elemntProps.columns);
+
+    console.log("checklistName", checklistName);
+
+
+    let checkListHeader: HTMLHeadElement = document.getElementById("checkListTitle");
+
+    // Schüttgutcontainer
+    if (checklistName.rowCount > 0)
+    {
+        document.title = checklistName.row(0).CL_Name
+        if (checkListHeader)
+            checkListHeader.innerText = checklistName.row(0).CL_Title
+    }
+
+    let htmlInfo = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
+
+    // console.log("Assess data quality:");
+    // db_html.iterateOverStructure(htmlInfo);
+
+
+    let assembledFragment = <HTMLElement>db_html.assembleStructure(htmlInfo);
+    // console.log("assembledFragment", assembledFragment);
+    // document.body.appendChild(assembledFragment);
+
+
+
+    let tChecklist = document.getElementById("tChecklist")
+    clearHtmlElementContents(tChecklist);
+    tChecklist.appendChild(assembledFragment);
+
+
+    // document.body.insertBefore(assembledFragment, checkListHeader.nextSibling);
+
+
+    // Listen for the event.
+    onSaveChecklist =
+        async function ()
+        {
+            let sess = <IBasicSession>await ajax.fetchJSON("../ajax/CurrentSession.ashx"); 
+            let obj: IBasicObject = getObj(sess); 
+            console.log(obj); 
+
+            // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
+            let params: any = {
+                  "__cls_uid": uuid.newGuid() 
+                , "__cls_cl_uid": cl_uid 
+                , "__cls_be_hash": proc
+                , "__cls_obj_uid": ""
+                , "__cls_objt_code": ""
+                , "__cls_tsk_uid": ""
+            };
+
+
+            if (obj.OBJT_Code === "TSK")
+            {
+                params.__cls_tsk_uid = obj.OBJ_UID;
+                params.__cls_obj_uid = null;
+                params.__cls_objt_code = null;
+            }
+            else
+            {
+                params.__cls_tsk_uid = null;
+                params.__cls_obj_uid = obj.OBJ_UID;
+                params.__cls_objt_code = obj.OBJT_Code;
+            }
+
+
+            let cls_uid:string = params.__cls_uid;
+            // console.log("saveChecklist->e.detail.cl_uid: ", e.detail.cl_uid);
+
+            // e.target matches elem
+            let saveData = db_html.collectSaveData(document.querySelector("table"), params.__cls_uid);
+            // console.log("saveData", saveData);
+            // console.log("saveData",  saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; })   );
+
+            let saveDataSetResult = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", params);
+
+            console.log("dataSetResult", saveDataSetResult);
+            if (saveDataSetResult.hasError === false)
+            {
+                let saveChecklistDataResult = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData);
+
+                if (saveDataSetResult.hasError === false)
+                {
+                    console.log("saveResult", saveChecklistDataResult);
+                }
+                else
+                {
+                    alert(saveChecklistDataResult.error.message);
+                }
+            }
+            else
+            {
+                alert(saveDataSetResult.error.message);
+            }
+
+            stopWaiting();
+        };
+
+
+    // Win32_QuickFixEngineering ...
+    QuickFix_SNB_2021_FIXME();
+
+    if (withData)
+        await loadChecklistValues(cl_uid, cls_uid);
+
+    stopWaiting(400);
+} // End Function loadChecklist 
+
+
 
 
 function onChecklistClose(ev: MouseEvent)
@@ -35,68 +379,12 @@ function onChecklistClose(ev: MouseEvent)
 }
 
 
-async function onChecklistLoad(ev: MouseEvent)
-{
-    let btnLoad = (<Element>ev.currentTarget);
-    let popup = btnLoad; //.parentElement.parentElement.parentElement.parentElement;
-    let row = btnLoad;
-
-    while (row && !row.classList.contains("pu_content"))
-    {
-        row = row.parentElement;
-    }
-
-    let cl_uid = row.getAttribute("name");
-
-
-    while (popup && !popup.classList.contains("Popup"))
-    {
-        popup = popup.parentElement;
-    }
-
-    popup.parentNode.removeChild(popup);
-
-    console.log("cl_uid", cl_uid);
-}
-
-
-interface IAvailableLanguages
-{
-    de: string;
-    fr?: string;
-    it?: string;
-    en?: string;
-}
-
-
-
-
-// interface ITranslationData { [key: string]: IAvailableLanguages }
-
-
-// interface ITranslationData { [key: string]: { [lang: string]: string }  }
-
-//type Languages = Record<"de" | "fr" | "it" | "en", string>
-
-//interface IReadings
-//{
-//    [key: string]: Languages
-//}
-
-type PartialRecord<K extends keyof any, T> = { [P in K]?: T; };
-// type List = PartialRecord<'a' | 'b' | 'c', string>
-
-
 // https://stackoverflow.com/questions/26855423/how-to-require-a-specific-string-in-typescript-interface
 // https://dmitripavlutin.com/typescript-index-signatures/
 
-export type AvailableLanguages = "de" | "fr" | "it" | "en";
-export type ChecklistTranslationItems = "OpenChecklist" | "NewChecklist" | "OverrideChecklistName" | "ChecklistStatus" | "LoadChecklistForEditing" | "DeleteEntry" | "Empty";
-type TranslationEntries<T extends string> = Record<T, Record<AvailableLanguages, string>>;
 
-
-// export type AvailableLanguages = "de" | "DE" | "fr" | "FR" | "it" | "IT" | "en" | "EN";
-// type TranslationEntries<T extends string> = Record<T, PartialRecord<AvailableLanguages, string>>;
+type ChecklistTranslationItems = "OpenChecklist" | "NewChecklist" | "OverrideChecklistName" | "ChecklistStatus"
+    | "LoadChecklistForEditing" | "DeleteEntry" | "Empty" | "SelectVersion";
 
 
 function getTranslation(item: ChecklistTranslationItems, language?: AvailableLanguages):string
@@ -114,6 +402,7 @@ function getTranslation(item: ChecklistTranslationItems, language?: AvailableLan
     let i18n: TranslationEntries<ChecklistTranslationItems> = {
           "OpenChecklist": { "de": "Checkliste öffnen", "fr": "Ouvrir liste de contrôle", "it": "Apri lista di controllo", "en": "Open checklist" }
         , "NewChecklist": { "de": "Neue Checkliste", "fr": "Nouvelle liste de contrôle", "it": "Nuova lista di controllo", "en": "New checklist" }
+        , "SelectVersion": { "de": "Version auswählen", "fr": "Sélectionnez version", "it": "Seleziona versione", "en": "Select version" }
         , "OverrideChecklistName": {
               "de": "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert"
             , "fr": "Nom\n    L'écrasement du nom dans la liste modifie le nom de la liste de contrôle"
@@ -157,22 +446,59 @@ function getTranslation(item: ChecklistTranslationItems, language?: AvailableLan
 }
 
 
-function onCreateNewChecklist(me: MouseEvent)
+async function onLoadNewChecklistDialogue(ev: MouseEvent)
 {
-    alert(me.currentTarget);
+    let popup = getPopopContainer(<Element>ev.currentTarget);
+    popup.parentNode.removeChild(popup);
+    //alert(ev.currentTarget);
 
+    let pd: IPortalSessionData = getPortalData();
+
+    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
+    let params: any = {
+        "__obj_uid": null,
+        "__objt_code": null,
+        "__tsk_uid": null
+    };
+
+
+    let urlAvailable = "../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1";
+    // console.log(params);
+    let allChecklistsData = <IAjaxResult<any>>await ajax.fetchJSON(urlAvailable, params);
+
+    let allChecklists = new tableWrapper<IT_Checklist>(allChecklistsData.data.tables[0].columns, allChecklistsData.data.tables[0].rows, false);
+
+    let openDialogue = await newChecklistDialogue(allChecklists, pd.userLanguage);
+    document.getElementById("mainContainer").appendChild(openDialogue);
 }
 
 
 
 
-async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDown>): Promise<DocumentFragment>
+async function onDataSetSelected(ev: MouseEvent)
+{
+    let row = getSelectedRow(ev);
+    let cls_uid = row.getAttribute("name");
+
+    let popup = getPopopContainer(<Element>ev.currentTarget);
+    popup.parentNode.removeChild(popup);
+
+    let pd: IPortalSessionData = getPortalData();
+
+    console.log("cls_uid", cls_uid);
+    loadChecklist(pd.proc, null, cls_uid, true);
+}
+
+
+
+async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDown>, cl_name:string): Promise<DocumentFragment>
 {
     let userLanguage: AvailableLanguages = "de";
     let useClose: boolean = false;
     let useActiveInactive = false;
     let useDelete = false;
     let useLoad = true;
+    let useNew = true;
 
 
     let ce = document.createElement;
@@ -199,9 +525,8 @@ async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDow
     let dialogueTitle = document.createElement("DIV");
     dialogueTitle.setAttribute("class", "Title");
     dialogueTitle.setAttribute("style", "background: rgb(61, 61, 61); border-top: none; border-right: none; border-bottom: 1px solid black; border-left: none; border-image: initial; color: orange; line-height: 25px; height: 25px; text-indent: 5px;");
-    dialogueTitle.appendChild(document.createTextNode(getTranslation("OpenChecklist", userLanguage)));
-    // dialogueTitle.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
-
+    dialogueTitle.appendChild(document.createTextNode(getTranslation("SelectVersion", userLanguage) + " (" + cl_name + ")"));
+    
 
 
     divChecklistsPopup.appendChild(dialogueTitle);
@@ -274,7 +599,7 @@ async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDow
             btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
 
             btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
-            btnLoad.onclick = onChecklistLoad;
+            btnLoad.onclick = onDataSetSelected;
             checklistRow.appendChild(btnLoad);
             checklistContainer.appendChild(checklistRow);
         }
@@ -290,10 +615,7 @@ async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDow
     footerRow.setAttribute("class", "EmptyRow");
     footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
 
-
-    let showNewChecklistOption = false;
-
-    if (showNewChecklistOption)
+    if (useNew)
     {
         let spanNewChecklist = document.createElement("SPAN");
         spanNewChecklist.setAttribute("class", "tableAdd");
@@ -301,7 +623,7 @@ async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDow
         spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
         footerRow.appendChild(spanNewChecklist);
 
-        footerRow.onclick = onCreateNewChecklist;
+        footerRow.onclick = onLoadNewChecklistDialogue;
     }
     else
     {
@@ -315,6 +637,24 @@ async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDow
 
     fragment.appendChild(divChecklistsPopup);
     return fragment;
+}
+
+
+async function onExistingChecklistSelected(ev: MouseEvent)
+{
+    console.log("onExistingChecklistSelected");
+    
+    // let row = (<Element>ev.currentTarget);
+    let row = getSelectedRow(ev);
+    let cl_uid = row.getAttribute("data-cl_uid");
+    let cl_name = row.getAttribute("data-cl_name");
+
+    let popup = getPopopContainer(<Element>ev.currentTarget);
+    popup.parentNode.removeChild(popup);
+
+    console.log("onExistingChecklistSelected", cl_uid, cl_name);
+    let versionDialogue = await openVersionSelection(cl_uid, cl_name, null);
+    document.getElementById("mainContainer").appendChild(versionDialogue);
 }
 
 
@@ -377,12 +717,12 @@ async function openChecklistDialogue(checklists: tableWrapper<IT_Checklist>, use
 
     for (let i = 0; i < checklists.rowCount; ++i)
     {
-        console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
-
+        // console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
         let color = colors[i % 2];
 
         let checklistRow = document.createElement("DIV");
-        checklistRow.setAttribute("name", checklists.row(i).CL_UID);
+        checklistRow.setAttribute("data-cl_uid", checklists.row(i).CL_UID);
+        checklistRow.setAttribute("data-cl_name", checklists.row(i).CL_Name);
         checklistRow.setAttribute("class", "pu_content");
         checklistRow.setAttribute("style", "background-color: " + color + "; clear: both; overflow: hidden; position: relative; width: 100%; white-space: nowrap;");
 
@@ -425,7 +765,7 @@ async function openChecklistDialogue(checklists: tableWrapper<IT_Checklist>, use
             btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
 
             btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
-            btnLoad.onclick = onChecklistLoad;
+            btnLoad.onclick = onExistingChecklistSelected;
             checklistRow.appendChild(btnLoad);
             checklistContainer.appendChild(checklistRow);
         }
@@ -449,7 +789,7 @@ async function openChecklistDialogue(checklists: tableWrapper<IT_Checklist>, use
         spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
         footerRow.appendChild(spanNewChecklist);
 
-        footerRow.onclick = onCreateNewChecklist;
+        footerRow.onclick = onLoadNewChecklistDialogue;
     }
     else
     {
@@ -468,6 +808,19 @@ async function openChecklistDialogue(checklists: tableWrapper<IT_Checklist>, use
 
 
 
+async function onNewChecklistSelected(ev: MouseEvent)
+{
+    let row = getSelectedRow(ev);
+    let cl_uid = row.getAttribute("name");
+
+    let popup = getPopopContainer(<Element>ev.currentTarget);
+    popup.parentNode.removeChild(popup);
+
+    let pd: IPortalSessionData = getPortalData();
+
+    console.log("cl_uid", cl_uid);
+    loadChecklist(pd.proc, cl_uid, null, false);
+}
 
 
 async function newChecklistDialogue(checklists: tableWrapper<IT_Checklist>, userLanguage: AvailableLanguages): Promise<DocumentFragment>
@@ -477,6 +830,8 @@ async function newChecklistDialogue(checklists: tableWrapper<IT_Checklist>, user
     let useActiveInactive = false;
     let useDelete = false;
     let useLoad = true;
+    let useNew = false;
+
 
 
     let ce = document.createElement;
@@ -576,7 +931,7 @@ async function newChecklistDialogue(checklists: tableWrapper<IT_Checklist>, user
             btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
 
             btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
-            btnLoad.onclick = onChecklistLoad;
+            btnLoad.onclick = onNewChecklistSelected;
             checklistRow.appendChild(btnLoad);
             checklistContainer.appendChild(checklistRow);
         }
@@ -592,10 +947,7 @@ async function newChecklistDialogue(checklists: tableWrapper<IT_Checklist>, user
     footerRow.setAttribute("class", "EmptyRow");
     footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
 
-
-    let showNewChecklistOption = false;
-
-    if (showNewChecklistOption)
+    if (useNew)
     {
         let spanNewChecklist = document.createElement("SPAN");
         spanNewChecklist.setAttribute("class", "tableAdd");
@@ -603,7 +955,7 @@ async function newChecklistDialogue(checklists: tableWrapper<IT_Checklist>, user
         spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
         footerRow.appendChild(spanNewChecklist);
 
-        footerRow.onclick = onCreateNewChecklist;
+        footerRow.onclick = onLoadNewChecklistDialogue;
     }
     else
     {
@@ -673,7 +1025,53 @@ function getObj(sess: IBasicSession): IBasicObject
 }
 
 
-async function createFooter(username:string)
+function saveChecklist(cl_uid?: string)
+{
+    startWaiting();
+
+    // alert("saving CL: " + cl_uid);
+    // let evt = document.createEvent('Event');
+    // evt.initEvent('saveChecklist', true, true);
+
+    // https://caniuse.com/?search=CustomEvent
+    // https://stackoverflow.com/questions/9417121/is-there-any-way-of-passing-additional-data-via-custom-events
+    let evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent('saveChecklist', false, false, { "cl_uid": cl_uid });
+
+    // Dispatch an event
+    // window.dispatchEvent(evt);
+    document.dispatchEvent(evt);
+}
+
+
+async function onSave(ev:MouseEvent)
+{
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    if(onSaveChecklist != null)
+        onSaveChecklist();
+
+    return false;
+}
+
+
+async function onCancel(ev: MouseEvent)
+{
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    onSaveChecklist = null;
+
+    await loadMainContainer();
+
+    console.log("onCancel");
+    return false;
+}
+
+
+
+async function createFooter(pd: IPortalSessionData)
 {
     let doc = window.parent.document;
     let main = doc.getElementById("Main");
@@ -687,7 +1085,7 @@ async function createFooter(username:string)
 
     let spanUsername = doc.createElement("SPAN");
     spanUsername.setAttribute("class", "bfUsername");
-    spanUsername.appendChild(doc.createTextNode(username));
+    spanUsername.appendChild(doc.createTextNode(pd.userName));
     buttonFrame.appendChild(spanUsername);
 
     let divRight = doc.createElement("DIV");
@@ -697,7 +1095,9 @@ async function createFooter(username:string)
     btnSave.setAttribute("type", "submit");
     btnSave.setAttribute("name", "btn_Speichern");
     btnSave.setAttribute("value", "Speichern");
-    btnSave.setAttribute("onclick", "javascript:console.log('hello');");
+    // btnSave.setAttribute("onclick", "alert('hello'); return false;");
+    btnSave.onclick = onSave;
+
     btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
     divRight.appendChild(btnSave);
     buttonFrame.appendChild(divRight);
@@ -712,6 +1112,8 @@ async function createFooter(username:string)
     btnCancel.setAttribute("id", "btn_Abbrechen");
     btnCancel.setAttribute("class", "validate-skip");
     btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+    btnCancel.onclick = onCancel;
+
 
     divLeft.appendChild(btnCancel);
     buttonFrame.appendChild(divLeft);
@@ -723,7 +1125,7 @@ async function createFooter(username:string)
 }
 
 
-async function openVersionSelection(cl_uid: string, tsk_uid:string)
+async function openVersionSelection(cl_uid: string, cl_name: string, tsk_uid:string)
 {
     // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
     let params: any = {
@@ -746,35 +1148,32 @@ async function openVersionSelection(cl_uid: string, tsk_uid:string)
 
     let checkListSets = new tableWrapper<IDropDown>(checkListsData.data.tables[0].columns, checkListsData.data.tables[0].rows, false);
     // console.log(checklists);
-    let df = await loadDataSetSelectionDialogue(checkListSets);
+    let df = await loadDataSetSelectionDialogue(checkListSets, cl_name);
 
     return df;
 }
 
 
 
-async function onDocumentReady()
+async function loadMainContainer()
 {
-    let userLanguage: AvailableLanguages = "de";
-    if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Language)
-        userLanguage = <AvailableLanguages>window.top.Portal.Session.Language().toLowerCase();
-
+    let pd: IPortalSessionData = getPortalData();
     let sess = <IBasicSession>await ajax.fetchJSON("../ajax/CurrentSession.ashx")
     let obj: IBasicObject = getObj(sess);
-    console.log(obj);
-
-    await createFooter("D. Administrator");
+    let mainContainer = document.getElementById("mainContainer");
+    clearHtmlElementContents(mainContainer);
+    // console.log(obj);
 
     // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
     let params: any = {
         "__obj_uid": null,
-        "__objt_code": null, 
+        "__objt_code": null,
         "__tsk_uid": null
     };
 
-    
+
     let urlAvailable = "../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1";
-    console.log(params);
+    // console.log(params);
     let allChecklistsData = <IAjaxResult<any>>await ajax.fetchJSON(urlAvailable, params);
 
     if (obj.OBJT_Code === "TSK")
@@ -789,8 +1188,8 @@ async function onDocumentReady()
         params.__obj_uid = obj.OBJ_UID;
         params.__objt_code = obj.OBJT_Code;
     }
-    
-    console.log("obj", obj);
+
+    // console.log("obj", obj);
     let availableChecklistsData = <IAjaxResult<any>>await ajax.fetchJSON(urlAvailable, params);
 
     if (allChecklistsData.hasError)
@@ -810,10 +1209,10 @@ async function onDocumentReady()
 
     // IT_Checklist, IDropDown
     // checkListSets.row(0).CL_SavedCount
-    console.log("allChecklists", allChecklists.rowCount, allChecklists);
-    console.log("availableChecklists", availableChecklists.rowCount, availableChecklists);
+    // console.log("allChecklists", allChecklists.rowCount, allChecklists);
+    // console.log("availableChecklists", availableChecklists.rowCount, availableChecklists);
 
-    
+
     // let openDialogue = await openChecklistDialogue(availableChecklists, userLanguage);
     // document.getElementById("mainContainer").appendChild(openDialogue);
 
@@ -825,21 +1224,32 @@ async function onDocumentReady()
         if (availableChecklists.rowCount == 1)
         {
             let cl_uid = availableChecklists.row(0).CL_UID
-            let versionDialogue = await openVersionSelection(cl_uid, null);
-            document.getElementById("mainContainer").appendChild(versionDialogue);
+            let cl_name = availableChecklists.row(0).CL_Name
+            let versionDialogue = await openVersionSelection(cl_uid, cl_name, null);
+            mainContainer.appendChild(versionDialogue);
         }
         else
         {
-            let openDialogue = await openChecklistDialogue(availableChecklists, userLanguage);
-            document.getElementById("mainContainer").appendChild(openDialogue);
+            let openDialogue = await openChecklistDialogue(availableChecklists, pd.userLanguage);
+            mainContainer.appendChild(openDialogue);
         }
     }
     else
     {
-        let newDialogue = await newChecklistDialogue(allChecklists, userLanguage);
-        document.getElementById("mainContainer").appendChild(newDialogue);
+        let newDialogue = await newChecklistDialogue(allChecklists, pd.userLanguage);
+        mainContainer.appendChild(newDialogue);
     }
 
+}
+
+
+async function onDocumentReady()
+{
+    await assertSession();
+    let pd: IPortalSessionData = getPortalData();
+
+    await createFooter(pd);
+    await loadMainContainer();
 }
 
 
@@ -872,7 +1282,7 @@ export async function main()
         // <link href="css/Layout.css" rel = "stylesheet" type = "text/css" >
         addStylesheet("./css/Layout.css?v=1", "dialogueCSS");
         addStylesheet("../css/Scrolling/Scrollbar.css?v=1", "scrollbarCSS");
-        // addStylesheet("css/checklist.css?v=1", "checklistCSS");
+        addStylesheet("css/checklist.css?v=1", "checklistCSS");
     }
 
     if (document.addEventListener) document.addEventListener("DOMContentLoaded", onDocumentReady, false);

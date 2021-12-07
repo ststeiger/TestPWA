@@ -37,31 +37,281 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.main = void 0;
+var autobind_autotrace = require("./autobind_autotrace.js");
+var autorun = require("./autorun.js");
+var utils = require("./string_utils.js");
+var hu = require("./http_utility.js");
+var xml = require("./xml_beautifier.js");
+var uuid = require("./uuid.js");
+var linq = require("./linq.js");
 var table_wrapper_js_1 = require("./table_wrapper.js");
 var ajax = require("./ajax.js");
-function onChecklistClose(ev) {
-    var divChecklistsPopup = ev.currentTarget.parentNode;
-    divChecklistsPopup.parentNode.removeChild(divChecklistsPopup);
-}
-function onChecklistLoad(ev) {
+var db_html = require("./db_html.js");
+var translations = require("./translations.js");
+var url_params = require("./url_params.js");
+var _ = {
+    "autobind_autotrace": autobind_autotrace,
+    "autorun": autorun,
+    "hu": hu,
+    "linq": linq,
+    "tr": table_wrapper_js_1.TableWrapper,
+    "tra": translations,
+    "up": url_params,
+    "utils": utils,
+    "uuid": uuid,
+    "xml": xml
+};
+var onSaveChecklist;
+function assertSession() {
     return __awaiter(this, void 0, void 0, function () {
-        var btnLoad, popup, row, cl_uid;
+        var txt, err_1;
         return __generator(this, function (_a) {
-            btnLoad = ev.currentTarget;
-            popup = btnLoad;
-            row = btnLoad;
-            while (row && !row.classList.contains("pu_content")) {
-                row = row.parentElement;
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4, ajax.fetchText("../ajax/CurrentSession.ashx")];
+                case 1:
+                    txt = _a.sent();
+                    return [3, 3];
+                case 2:
+                    err_1 = _a.sent();
+                    return [3, 3];
+                case 3: return [2];
             }
-            cl_uid = row.getAttribute("name");
-            while (popup && !popup.classList.contains("Popup")) {
-                popup = popup.parentElement;
+        });
+    });
+}
+function getPortalData() {
+    var userLanguage = "de";
+    var proc = "200CEB26807D6BF99FD6F4F0D1CA54D4";
+    var userName = "A. Rösti";
+    if (window.top.Portal && window.top.Portal.Session) {
+        if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.ID)
+            proc = window.top.Portal.Session.ID();
+        if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Language)
+            userLanguage = window.top.Portal.Session.Language().toLowerCase();
+        if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Name)
+            userName = window.top.Portal.Session.Name();
+    }
+    return {
+        userLanguage: userLanguage,
+        proc: proc,
+        userName: userName
+    };
+}
+function startWaiting(timeout) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            if (window.top.Portal && window.top.Portal.Global && window.top.Portal.Global.Waiting && window.top.Portal.Global.Waiting.Start) {
+                window.setTimeout(function () {
+                    window.top.Portal.Global.Waiting.Start();
+                }, timeout || 20);
             }
-            popup.parentNode.removeChild(popup);
-            console.log("cl_uid", cl_uid);
             return [2];
         });
     });
+}
+function stopWaiting(timeout) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            if (window.top.Portal && window.top.Portal.Global && window.top.Portal.Global.Waiting && window.top.Portal.Global.Waiting.Stop) {
+                window.setTimeout(function () {
+                    window.top.Portal.Global.Waiting.Stop();
+                }, timeout || 1500);
+            }
+            return [2];
+        });
+    });
+}
+function clearHtmlElementContents(el) {
+    while (el.lastChild) {
+        el.removeChild(el.lastChild);
+    }
+}
+function getSelectedRow(ev) {
+    var row = ev.currentTarget;
+    while (row && !row.classList.contains("pu_content")) {
+        row = row.parentElement;
+    }
+    return row;
+}
+function getPopopContainer(el) {
+    var popup = el;
+    while (popup && !popup.classList.contains("Popup")) {
+        popup = popup.parentElement;
+    }
+    return popup;
+}
+function loadChecklistValues(cl_uid, cls_uid) {
+    return __awaiter(this, void 0, void 0, function () {
+        var params, checkListData, checklistValues, i, ele, type;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    params = {
+                        "__cl_uid": cl_uid,
+                        "__cls_uid": cls_uid
+                    };
+                    return [4, ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.LoadChecklist.sql&format=1", params)];
+                case 1:
+                    checkListData = _a.sent();
+                    checklistValues = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
+                    for (i = 0; i < checklistValues.rowCount; ++i) {
+                        ele = document.getElementById(checklistValues.row(i).CLV_ELE_UID);
+                        if (!ele)
+                            continue;
+                        type = (ele.getAttribute("type") || "").toLowerCase();
+                        if ("checkbox" === type) {
+                            ele.checked = (checklistValues.row(i).CLV_Value === 'true');
+                        }
+                        else if ("text" === type) {
+                            ele.value = checklistValues.row(i).CLV_Value;
+                        }
+                        else if ("textarea" === ele.nodeName.toLowerCase()) {
+                            ele.value = checklistValues.row(i).CLV_Value;
+                        }
+                    }
+                    return [2];
+            }
+        });
+    });
+}
+function QuickFix_SNB_2021_FIXME() {
+    var badForegrounds = Array.prototype.slice.call(document.querySelectorAll('td[bgcolor="#E7E6E6"]'));
+    var badBackgrounds = Array.prototype.slice.call(document.querySelectorAll('td[bgcolor="#EDEDED"]'));
+    for (var i = 0; i < badBackgrounds.length; ++i) {
+        badBackgrounds[i].setAttribute("bgcolor", "#5F5F5F");
+    }
+    for (var i = 0; i < badForegrounds.length; ++i) {
+        var oldStyle = badForegrounds[i].getAttribute("style") || "";
+        badForegrounds[i].setAttribute("style", oldStyle + "; color: #000;");
+    }
+}
+function loadChecklist(proc, cl_uid, cls_uid, withData) {
+    return __awaiter(this, void 0, void 0, function () {
+        var mainContain, divOverview, logo, checkListTitle, br1, br2, divChecklist, clUrl, checkListData, checklistName, elements, elemntProps, checkListHeader, htmlInfo, assembledFragment, tChecklist;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("loadChecklist", proc, cl_uid);
+                    mainContain = document.getElementById("mainContainer");
+                    if (!mainContain)
+                        return [2];
+                    clearHtmlElementContents(mainContain);
+                    divOverview = document.createElement("DIV");
+                    divOverview.setAttribute("id", "tOverview");
+                    divOverview.setAttribute("style", "padding-top: 20px; max-width: 100%; height: calc(100% - 40px); overflow: auto;");
+                    logo = document.createElement("IMG");
+                    logo.setAttribute("src", "images/SNB-Logo-blau.svg");
+                    logo.setAttribute("style", "fontwidth: 6cm;");
+                    checkListTitle = document.createElement("H2");
+                    checkListTitle.setAttribute("id", "checkListTitle");
+                    checkListTitle.setAttribute("style", "font-family: Arial; font-size: 14pt;");
+                    divOverview.appendChild(checkListTitle);
+                    br1 = document.createElement("BR");
+                    br2 = document.createElement("BR");
+                    divOverview.appendChild(br1);
+                    divOverview.appendChild(br2);
+                    divChecklist = document.createElement("DIV");
+                    divChecklist.setAttribute("id", "tChecklist");
+                    divOverview.appendChild(divChecklist);
+                    mainContain.appendChild(divOverview);
+                    startWaiting();
+                    clUrl = "../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1";
+                    return [4, ajax.fetchJSON(clUrl, { "__cl_uid": cl_uid, "__cls_uid": cls_uid })];
+                case 1:
+                    checkListData = _a.sent();
+                    if (checkListData.hasError) {
+                        alert("Error loading checklist-data:\r\n" + checkListData.error.message);
+                        return [2];
+                    }
+                    checklistName = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
+                    elements = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[1].columns, checkListData.data.tables[1].rows, false);
+                    elemntProps = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[2].columns, checkListData.data.tables[2].rows, false);
+                    console.log("checklistName", checklistName);
+                    checkListHeader = document.getElementById("checkListTitle");
+                    if (checklistName.rowCount > 0) {
+                        document.title = checklistName.row(0).CL_Name;
+                        if (checkListHeader)
+                            checkListHeader.innerText = checklistName.row(0).CL_Title;
+                    }
+                    htmlInfo = db_html.constructRecursiveDataStructure(elements, elemntProps.groupBy("PRO_ELE_UID"));
+                    assembledFragment = db_html.assembleStructure(htmlInfo);
+                    tChecklist = document.getElementById("tChecklist");
+                    clearHtmlElementContents(tChecklist);
+                    tChecklist.appendChild(assembledFragment);
+                    onSaveChecklist =
+                        function () {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var sess, obj, params, cls_uid, saveData, saveDataSetResult, saveChecklistDataResult;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4, ajax.fetchJSON("../ajax/CurrentSession.ashx")];
+                                        case 1:
+                                            sess = _a.sent();
+                                            obj = getObj(sess);
+                                            console.log(obj);
+                                            params = {
+                                                "__cls_uid": uuid.newGuid(),
+                                                "__cls_cl_uid": cl_uid,
+                                                "__cls_be_hash": proc,
+                                                "__cls_obj_uid": "",
+                                                "__cls_objt_code": "",
+                                                "__cls_tsk_uid": ""
+                                            };
+                                            if (obj.OBJT_Code === "TSK") {
+                                                params.__cls_tsk_uid = obj.OBJ_UID;
+                                                params.__cls_obj_uid = null;
+                                                params.__cls_objt_code = null;
+                                            }
+                                            else {
+                                                params.__cls_tsk_uid = null;
+                                                params.__cls_obj_uid = obj.OBJ_UID;
+                                                params.__cls_objt_code = obj.OBJT_Code;
+                                            }
+                                            cls_uid = params.__cls_uid;
+                                            saveData = db_html.collectSaveData(document.querySelector("table"), params.__cls_uid);
+                                            return [4, ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", params)];
+                                        case 2:
+                                            saveDataSetResult = _a.sent();
+                                            console.log("dataSetResult", saveDataSetResult);
+                                            if (!(saveDataSetResult.hasError === false)) return [3, 4];
+                                            return [4, ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData)];
+                                        case 3:
+                                            saveChecklistDataResult = _a.sent();
+                                            if (saveDataSetResult.hasError === false) {
+                                                console.log("saveResult", saveChecklistDataResult);
+                                            }
+                                            else {
+                                                alert(saveChecklistDataResult.error.message);
+                                            }
+                                            return [3, 5];
+                                        case 4:
+                                            alert(saveDataSetResult.error.message);
+                                            _a.label = 5;
+                                        case 5:
+                                            stopWaiting();
+                                            return [2];
+                                    }
+                                });
+                            });
+                        };
+                    QuickFix_SNB_2021_FIXME();
+                    if (!withData) return [3, 3];
+                    return [4, loadChecklistValues(cl_uid, cls_uid)];
+                case 2:
+                    _a.sent();
+                    _a.label = 3;
+                case 3:
+                    stopWaiting(400);
+                    return [2];
+            }
+        });
+    });
+}
+function onChecklistClose(ev) {
+    var divChecklistsPopup = ev.currentTarget.parentNode;
+    divChecklistsPopup.parentNode.removeChild(divChecklistsPopup);
 }
 function getTranslation(item, language) {
     if (!item)
@@ -72,6 +322,7 @@ function getTranslation(item, language) {
     var i18n = {
         "OpenChecklist": { "de": "Checkliste öffnen", "fr": "Ouvrir liste de contrôle", "it": "Apri lista di controllo", "en": "Open checklist" },
         "NewChecklist": { "de": "Neue Checkliste", "fr": "Nouvelle liste de contrôle", "it": "Nuova lista di controllo", "en": "New checklist" },
+        "SelectVersion": { "de": "Version auswählen", "fr": "Sélectionnez version", "it": "Seleziona versione", "en": "Select version" },
         "OverrideChecklistName": {
             "de": "Name\n    Durch das Überschreiben des Names in der Liste wird der Name der Checkliste geändert",
             "fr": "Nom\n    L'écrasement du nom dans la liste modifie le nom de la liste de contrôle",
@@ -107,18 +358,59 @@ function getTranslation(item, language) {
     }
     return i18n[item][language];
 }
-function onCreateNewChecklist(me) {
-    alert(me.currentTarget);
-}
-function loadDataSetSelectionDialogue(checkListSets) {
+function onLoadNewChecklistDialogue(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var userLanguage, useClose, useActiveInactive, useDelete, useLoad, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, subtract, i, color, checklistRow, lblContainer, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, showNewChecklistOption, spanNewChecklist, spanNewChecklist;
+        var popup, pd, params, urlAvailable, allChecklistsData, allChecklists, openDialogue;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    popup = getPopopContainer(ev.currentTarget);
+                    popup.parentNode.removeChild(popup);
+                    pd = getPortalData();
+                    params = {
+                        "__obj_uid": null,
+                        "__objt_code": null,
+                        "__tsk_uid": null
+                    };
+                    urlAvailable = "../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1";
+                    return [4, ajax.fetchJSON(urlAvailable, params)];
+                case 1:
+                    allChecklistsData = _a.sent();
+                    allChecklists = new table_wrapper_js_1.TableWrapper(allChecklistsData.data.tables[0].columns, allChecklistsData.data.tables[0].rows, false);
+                    return [4, newChecklistDialogue(allChecklists, pd.userLanguage)];
+                case 2:
+                    openDialogue = _a.sent();
+                    document.getElementById("mainContainer").appendChild(openDialogue);
+                    return [2];
+            }
+        });
+    });
+}
+function onDataSetSelected(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        var row, cls_uid, popup, pd;
+        return __generator(this, function (_a) {
+            row = getSelectedRow(ev);
+            cls_uid = row.getAttribute("name");
+            popup = getPopopContainer(ev.currentTarget);
+            popup.parentNode.removeChild(popup);
+            pd = getPortalData();
+            console.log("cls_uid", cls_uid);
+            loadChecklist(pd.proc, null, cls_uid, true);
+            return [2];
+        });
+    });
+}
+function loadDataSetSelectionDialogue(checkListSets, cl_name) {
+    return __awaiter(this, void 0, void 0, function () {
+        var userLanguage, useClose, useActiveInactive, useDelete, useLoad, useNew, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, subtract, i, color, checklistRow, lblContainer, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, spanNewChecklist, spanNewChecklist;
         return __generator(this, function (_a) {
             userLanguage = "de";
             useClose = false;
             useActiveInactive = false;
             useDelete = false;
             useLoad = true;
+            useNew = true;
             ce = document.createElement;
             fragment = document.createDocumentFragment();
             divChecklistsPopup = document.createElement("DIV");
@@ -136,7 +428,7 @@ function loadDataSetSelectionDialogue(checkListSets) {
             dialogueTitle = document.createElement("DIV");
             dialogueTitle.setAttribute("class", "Title");
             dialogueTitle.setAttribute("style", "background: rgb(61, 61, 61); border-top: none; border-right: none; border-bottom: 1px solid black; border-left: none; border-image: initial; color: orange; line-height: 25px; height: 25px; text-indent: 5px;");
-            dialogueTitle.appendChild(document.createTextNode(getTranslation("OpenChecklist", userLanguage)));
+            dialogueTitle.appendChild(document.createTextNode(getTranslation("SelectVersion", userLanguage) + " (" + cl_name + ")"));
             divChecklistsPopup.appendChild(dialogueTitle);
             checklistBody = document.createElement("DIV");
             checklistBody.setAttribute("class", "Body");
@@ -184,7 +476,7 @@ function loadDataSetSelectionDialogue(checkListSets) {
                     btnLoad.setAttribute("class", "_SELECT");
                     btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
                     btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
-                    btnLoad.onclick = onChecklistLoad;
+                    btnLoad.onclick = onDataSetSelected;
                     checklistRow.appendChild(btnLoad);
                     checklistContainer.appendChild(checklistRow);
                 }
@@ -194,13 +486,12 @@ function loadDataSetSelectionDialogue(checkListSets) {
             footerRow = document.createElement("DIV");
             footerRow.setAttribute("class", "EmptyRow");
             footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
-            showNewChecklistOption = false;
-            if (showNewChecklistOption) {
+            if (useNew) {
                 spanNewChecklist = document.createElement("SPAN");
                 spanNewChecklist.setAttribute("class", "tableAdd");
                 spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
                 footerRow.appendChild(spanNewChecklist);
-                footerRow.onclick = onCreateNewChecklist;
+                footerRow.onclick = onLoadNewChecklistDialogue;
             }
             else {
                 spanNewChecklist = document.createElement("SPAN");
@@ -210,6 +501,28 @@ function loadDataSetSelectionDialogue(checkListSets) {
             divChecklistsPopup.appendChild(footerRow);
             fragment.appendChild(divChecklistsPopup);
             return [2, fragment];
+        });
+    });
+}
+function onExistingChecklistSelected(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        var row, cl_uid, cl_name, popup, versionDialogue;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("onExistingChecklistSelected");
+                    row = getSelectedRow(ev);
+                    cl_uid = row.getAttribute("data-cl_uid");
+                    cl_name = row.getAttribute("data-cl_name");
+                    popup = getPopopContainer(ev.currentTarget);
+                    popup.parentNode.removeChild(popup);
+                    console.log("onExistingChecklistSelected", cl_uid, cl_name);
+                    return [4, openVersionSelection(cl_uid, cl_name, null)];
+                case 1:
+                    versionDialogue = _a.sent();
+                    document.getElementById("mainContainer").appendChild(versionDialogue);
+                    return [2];
+            }
         });
     });
 }
@@ -253,10 +566,10 @@ function openChecklistDialogue(checklists, userLanguage) {
             subtract += (useDelete ? 41 : 0);
             subtract += (useLoad ? 41 : 0);
             for (i = 0; i < checklists.rowCount; ++i) {
-                console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
                 color = colors[i % 2];
                 checklistRow = document.createElement("DIV");
-                checklistRow.setAttribute("name", checklists.row(i).CL_UID);
+                checklistRow.setAttribute("data-cl_uid", checklists.row(i).CL_UID);
+                checklistRow.setAttribute("data-cl_name", checklists.row(i).CL_Name);
                 checklistRow.setAttribute("class", "pu_content");
                 checklistRow.setAttribute("style", "background-color: " + color + "; clear: both; overflow: hidden; position: relative; width: 100%; white-space: nowrap;");
                 lblContainer = document.createElement("DIV");
@@ -287,7 +600,7 @@ function openChecklistDialogue(checklists, userLanguage) {
                     btnLoad.setAttribute("class", "_SELECT");
                     btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
                     btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
-                    btnLoad.onclick = onChecklistLoad;
+                    btnLoad.onclick = onExistingChecklistSelected;
                     checklistRow.appendChild(btnLoad);
                     checklistContainer.appendChild(checklistRow);
                 }
@@ -302,7 +615,7 @@ function openChecklistDialogue(checklists, userLanguage) {
                 spanNewChecklist.setAttribute("class", "tableAdd");
                 spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
                 footerRow.appendChild(spanNewChecklist);
-                footerRow.onclick = onCreateNewChecklist;
+                footerRow.onclick = onLoadNewChecklistDialogue;
             }
             else {
                 spanNewChecklist = document.createElement("SPAN");
@@ -315,14 +628,30 @@ function openChecklistDialogue(checklists, userLanguage) {
         });
     });
 }
+function onNewChecklistSelected(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        var row, cl_uid, popup, pd;
+        return __generator(this, function (_a) {
+            row = getSelectedRow(ev);
+            cl_uid = row.getAttribute("name");
+            popup = getPopopContainer(ev.currentTarget);
+            popup.parentNode.removeChild(popup);
+            pd = getPortalData();
+            console.log("cl_uid", cl_uid);
+            loadChecklist(pd.proc, cl_uid, null, false);
+            return [2];
+        });
+    });
+}
 function newChecklistDialogue(checklists, userLanguage) {
     return __awaiter(this, void 0, void 0, function () {
-        var useClose, useActiveInactive, useDelete, useLoad, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, subtract, i, color, checklistRow, lblContainer, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, showNewChecklistOption, spanNewChecklist, spanNewChecklist;
+        var useClose, useActiveInactive, useDelete, useLoad, useNew, ce, fragment, divChecklistsPopup, closeChecklistButton, dialogueTitle, checklistBody, checklistContainer, colors, subtract, i, color, checklistRow, lblContainer, lblChecklistDesignation, btnActiveInactive, btnDelete, btnLoad, footerRow, spanNewChecklist, spanNewChecklist;
         return __generator(this, function (_a) {
             useClose = false;
             useActiveInactive = false;
             useDelete = false;
             useLoad = true;
+            useNew = false;
             ce = document.createElement;
             fragment = document.createDocumentFragment();
             divChecklistsPopup = document.createElement("DIV");
@@ -388,7 +717,7 @@ function newChecklistDialogue(checklists, userLanguage) {
                     btnLoad.setAttribute("class", "_SELECT");
                     btnLoad.setAttribute("title", getTranslation("LoadChecklistForEditing", userLanguage));
                     btnLoad.setAttribute("style", "background-position: 50% 50%; background-repeat: no-repeat; border: none; border-left: 1px solid rgb(61, 61, 61); border-right: 1px solid rgb(61, 61, 61); box-sizing: border-box; float: left; height: 25px; line-height: 25px; overflow: hidden; text-indent: 5px; width: 40px; background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///yJjjN3d3fr7/El/oCdnjy9sk5+7zaG9zuju81aIp1mKqCppkFOGpkyAovf5+z93m42uw9jj6yxqkWORrr7R3bvP3GiVsd3n7QAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAQABAAAAVnoCCOZCkCaKqqJzogS1EsyJC2iRPsvJOgpwGBRwwQbCfEjiGhFBGAk2JnQFkgPEVUAChQU4/IrrDtflHh3aTcOFewu0b5sMRcioeysMg7lgEJQ0UEP38AAwcLOwoHNkBcK5GPJpQiIQA7'); cursor: pointer;");
-                    btnLoad.onclick = onChecklistLoad;
+                    btnLoad.onclick = onNewChecklistSelected;
                     checklistRow.appendChild(btnLoad);
                     checklistContainer.appendChild(checklistRow);
                 }
@@ -398,13 +727,12 @@ function newChecklistDialogue(checklists, userLanguage) {
             footerRow = document.createElement("DIV");
             footerRow.setAttribute("class", "EmptyRow");
             footerRow.setAttribute("style", "background-color: rgb(61, 61, 61); clear: both; line-height: 25px; padding-left: 5px; padding-right: 5px; width: 100%;");
-            showNewChecklistOption = false;
-            if (showNewChecklistOption) {
+            if (useNew) {
                 spanNewChecklist = document.createElement("SPAN");
                 spanNewChecklist.setAttribute("class", "tableAdd");
                 spanNewChecklist.appendChild(document.createTextNode(getTranslation("NewChecklist", userLanguage)));
                 footerRow.appendChild(spanNewChecklist);
-                footerRow.onclick = onCreateNewChecklist;
+                footerRow.onclick = onLoadNewChecklistDialogue;
             }
             else {
                 spanNewChecklist = document.createElement("SPAN");
@@ -458,7 +786,41 @@ function getObj(sess) {
         OBJT_Code = OBJT_Code.toUpperCase();
     return { "OBJ_UID": OBJ_UID, "OBJT_Code": OBJT_Code };
 }
-function createFooter(username) {
+function saveChecklist(cl_uid) {
+    startWaiting();
+    var evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent('saveChecklist', false, false, { "cl_uid": cl_uid });
+    document.dispatchEvent(evt);
+}
+function onSave(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (onSaveChecklist != null)
+                onSaveChecklist();
+            return [2, false];
+        });
+    });
+}
+function onCancel(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    onSaveChecklist = null;
+                    return [4, loadMainContainer()];
+                case 1:
+                    _a.sent();
+                    console.log("onCancel");
+                    return [2, false];
+            }
+        });
+    });
+}
+function createFooter(pd) {
     return __awaiter(this, void 0, void 0, function () {
         var doc, main, fragment, buttonFrame, spanUsername, divRight, btnSave, divLeft, btnCancel;
         return __generator(this, function (_a) {
@@ -470,7 +832,7 @@ function createFooter(username) {
             buttonFrame.setAttribute("id", "buttonFrame");
             spanUsername = doc.createElement("SPAN");
             spanUsername.setAttribute("class", "bfUsername");
-            spanUsername.appendChild(doc.createTextNode(username));
+            spanUsername.appendChild(doc.createTextNode(pd.userName));
             buttonFrame.appendChild(spanUsername);
             divRight = doc.createElement("DIV");
             divRight.setAttribute("class", "Right");
@@ -478,7 +840,7 @@ function createFooter(username) {
             btnSave.setAttribute("type", "submit");
             btnSave.setAttribute("name", "btn_Speichern");
             btnSave.setAttribute("value", "Speichern");
-            btnSave.setAttribute("onclick", "javascript:console.log('hello');");
+            btnSave.onclick = onSave;
             btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
             divRight.appendChild(btnSave);
             buttonFrame.appendChild(divRight);
@@ -491,6 +853,7 @@ function createFooter(username) {
             btnCancel.setAttribute("id", "btn_Abbrechen");
             btnCancel.setAttribute("class", "validate-skip");
             btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+            btnCancel.onclick = onCancel;
             divLeft.appendChild(btnCancel);
             buttonFrame.appendChild(divLeft);
             fragment.appendChild(buttonFrame);
@@ -500,7 +863,7 @@ function createFooter(username) {
         });
     });
 }
-function openVersionSelection(cl_uid, tsk_uid) {
+function openVersionSelection(cl_uid, cl_name, tsk_uid) {
     return __awaiter(this, void 0, void 0, function () {
         var params, checkListsData, checkListSets, df;
         return __generator(this, function (_a) {
@@ -523,7 +886,7 @@ function openVersionSelection(cl_uid, tsk_uid) {
                         return [2];
                     }
                     checkListSets = new table_wrapper_js_1.TableWrapper(checkListsData.data.tables[0].columns, checkListsData.data.tables[0].rows, false);
-                    return [4, loadDataSetSelectionDialogue(checkListSets)];
+                    return [4, loadDataSetSelectionDialogue(checkListSets, cl_name)];
                 case 2:
                     df = _a.sent();
                     return [2, df];
@@ -531,32 +894,27 @@ function openVersionSelection(cl_uid, tsk_uid) {
         });
     });
 }
-function onDocumentReady() {
+function loadMainContainer() {
     return __awaiter(this, void 0, void 0, function () {
-        var userLanguage, sess, obj, params, urlAvailable, allChecklistsData, availableChecklistsData, allChecklists, availableChecklists, cl_uid, versionDialogue, openDialogue, newDialogue;
+        var pd, sess, obj, mainContainer, params, urlAvailable, allChecklistsData, availableChecklistsData, allChecklists, availableChecklists, cl_uid, cl_name, versionDialogue, openDialogue, newDialogue;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    userLanguage = "de";
-                    if (window.top.Portal && window.top.Portal.Session && window.top.Portal.Session.Language)
-                        userLanguage = window.top.Portal.Session.Language().toLowerCase();
+                    pd = getPortalData();
                     return [4, ajax.fetchJSON("../ajax/CurrentSession.ashx")];
                 case 1:
                     sess = _a.sent();
                     obj = getObj(sess);
-                    console.log(obj);
-                    return [4, createFooter("D. Administrator")];
-                case 2:
-                    _a.sent();
+                    mainContainer = document.getElementById("mainContainer");
+                    clearHtmlElementContents(mainContainer);
                     params = {
                         "__obj_uid": null,
                         "__objt_code": null,
                         "__tsk_uid": null
                     };
                     urlAvailable = "../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1";
-                    console.log(params);
                     return [4, ajax.fetchJSON(urlAvailable, params)];
-                case 3:
+                case 2:
                     allChecklistsData = _a.sent();
                     if (obj.OBJT_Code === "TSK") {
                         params.__tsk_uid = obj.OBJ_UID;
@@ -568,9 +926,8 @@ function onDocumentReady() {
                         params.__obj_uid = obj.OBJ_UID;
                         params.__objt_code = obj.OBJT_Code;
                     }
-                    console.log("obj", obj);
                     return [4, ajax.fetchJSON(urlAvailable, params)];
-                case 4:
+                case 3:
                     availableChecklistsData = _a.sent();
                     if (allChecklistsData.hasError) {
                         alert("Error loading checklist-data1:\r\n" + allChecklistsData.error.message);
@@ -582,28 +939,47 @@ function onDocumentReady() {
                     }
                     allChecklists = new table_wrapper_js_1.TableWrapper(allChecklistsData.data.tables[0].columns, allChecklistsData.data.tables[0].rows, false);
                     availableChecklists = new table_wrapper_js_1.TableWrapper(availableChecklistsData.data.tables[0].columns, availableChecklistsData.data.tables[0].rows, false);
-                    console.log("allChecklists", allChecklists.rowCount, allChecklists);
-                    console.log("availableChecklists", availableChecklists.rowCount, availableChecklists);
-                    if (!(availableChecklists.rowCount > 0)) return [3, 9];
-                    if (!(availableChecklists.rowCount == 1)) return [3, 6];
+                    if (!(availableChecklists.rowCount > 0)) return [3, 8];
+                    if (!(availableChecklists.rowCount == 1)) return [3, 5];
                     cl_uid = availableChecklists.row(0).CL_UID;
-                    return [4, openVersionSelection(cl_uid, null)];
-                case 5:
+                    cl_name = availableChecklists.row(0).CL_Name;
+                    return [4, openVersionSelection(cl_uid, cl_name, null)];
+                case 4:
                     versionDialogue = _a.sent();
-                    document.getElementById("mainContainer").appendChild(versionDialogue);
-                    return [3, 8];
-                case 6: return [4, openChecklistDialogue(availableChecklists, userLanguage)];
-                case 7:
+                    mainContainer.appendChild(versionDialogue);
+                    return [3, 7];
+                case 5: return [4, openChecklistDialogue(availableChecklists, pd.userLanguage)];
+                case 6:
                     openDialogue = _a.sent();
-                    document.getElementById("mainContainer").appendChild(openDialogue);
-                    _a.label = 8;
-                case 8: return [3, 11];
-                case 9: return [4, newChecklistDialogue(allChecklists, userLanguage)];
-                case 10:
+                    mainContainer.appendChild(openDialogue);
+                    _a.label = 7;
+                case 7: return [3, 10];
+                case 8: return [4, newChecklistDialogue(allChecklists, pd.userLanguage)];
+                case 9:
                     newDialogue = _a.sent();
-                    document.getElementById("mainContainer").appendChild(newDialogue);
-                    _a.label = 11;
-                case 11: return [2];
+                    mainContainer.appendChild(newDialogue);
+                    _a.label = 10;
+                case 10: return [2];
+            }
+        });
+    });
+}
+function onDocumentReady() {
+    return __awaiter(this, void 0, void 0, function () {
+        var pd;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, assertSession()];
+                case 1:
+                    _a.sent();
+                    pd = getPortalData();
+                    return [4, createFooter(pd)];
+                case 2:
+                    _a.sent();
+                    return [4, loadMainContainer()];
+                case 3:
+                    _a.sent();
+                    return [2];
             }
         });
     });
@@ -619,6 +995,7 @@ function main() {
             if (true) {
                 addStylesheet("./css/Layout.css?v=1", "dialogueCSS");
                 addStylesheet("../css/Scrolling/Scrollbar.css?v=1", "scrollbarCSS");
+                addStylesheet("css/checklist.css?v=1", "checklistCSS");
             }
             if (document.addEventListener)
                 document.addEventListener("DOMContentLoaded", onDocumentReady, false);

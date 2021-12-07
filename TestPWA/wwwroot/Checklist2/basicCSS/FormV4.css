@@ -1,0 +1,2934 @@
+﻿/************************************************************************/
+/* @@Style (IHttpHandler) */
+/************************************************************************/
+/************************************************************************/
+/* @@Total files: '11' */
+/************************************************************************/
+/************************************************************************/
+/* @@Found: 'jqueryCustom.css' */
+/************************************************************************/
+/*
+ * jQuery UI CSS Framework 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Theming/API
+ */
+
+/* Layout helpers
+----------------------------------*/
+.ui-helper-hidden { display: none; }
+.ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
+.ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
+.ui-helper-clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.ui-helper-clearfix { display: inline-block; }
+/* required comment for clearfix to work in Opera \*/
+* html .ui-helper-clearfix { height:1%; }
+.ui-helper-clearfix { display:block; }
+/* end clearfix */
+.ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
+
+
+/* Interaction Cues
+----------------------------------*/
+.ui-state-disabled { cursor: default !important; }
+
+
+/* Icons
+----------------------------------*/
+
+/* states and images */
+.ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
+
+
+/* Misc visuals
+----------------------------------*/
+
+/* Overlays */
+.ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+
+/*
+ * jQuery UI CSS Framework 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Theming/API
+ *
+ * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Trebuchet%20MS,%20Tahoma,%20Verdana,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=f6a828&bgTextureHeader=12_gloss_wave.png&bgImgOpacityHeader=35&borderColorHeader=e78f08&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=eeeeee&bgTextureContent=03_highlight_soft.png&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=333333&iconColorContent=222222&bgColorDefault=f6f6f6&bgTextureDefault=02_glass.png&bgImgOpacityDefault=100&borderColorDefault=cccccc&fcDefault=1c94c4&iconColorDefault=ef8c08&bgColorHover=fdf5ce&bgTextureHover=02_glass.png&bgImgOpacityHover=100&borderColorHover=fbcb09&fcHover=c77405&iconColorHover=ef8c08&bgColorActive=ffffff&bgTextureActive=02_glass.png&bgImgOpacityActive=65&borderColorActive=fbd850&fcActive=eb8f00&iconColorActive=ef8c08&bgColorHighlight=ffe45c&bgTextureHighlight=03_highlight_soft.png&bgImgOpacityHighlight=75&borderColorHighlight=fed22f&fcHighlight=363636&iconColorHighlight=228ef1&bgColorError=b81900&bgTextureError=08_diagonals_thick.png&bgImgOpacityError=18&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffd27a&bgColorOverlay=666666&bgTextureOverlay=08_diagonals_thick.png&bgImgOpacityOverlay=20&opacityOverlay=50&bgColorShadow=000000&bgTextureShadow=01_flat.png&bgImgOpacityShadow=10&opacityShadow=20&thicknessShadow=5px&offsetTopShadow=-5px&offsetLeftShadow=-5px&cornerRadiusShadow=5px
+ */
+
+
+/* Component containers
+----------------------------------*/
+.ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em; }
+.ui-widget .ui-widget { font-size: 1em; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1em; }
+.ui-widget-content { border: 1px solid #dddddd;
+					 background: #eeeeee url(../../jQuery/css/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x;
+					 background: #eeeeee url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABkCAYAAABHLFpgAAAAIUlEQVQYlWP48ePHfyYGBgaGIUT8//8fO5cSFn6J4UQAAJSgIpAFCJPdAAAAAElFTkSuQmCC') 50% top repeat-x;
+					 color: #333333; }
+.ui-widget-content a { color: #333333; }
+.ui-widget-header { border: 1px solid #e78f08; background: #f6a828 url(../../jQuery/css/ui-lightness/images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+.ui-widget-header a { color: #ffffff; }
+
+/* Interaction states
+----------------------------------*/
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #cccccc; background: #f6f6f6 url(../../jQuery/css/ui-lightness/images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #1c94c4; }
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #1c94c4; text-decoration: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #fbcb09; background: #fdf5ce url(../../jQuery/css/ui-lightness/images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
+.ui-state-hover a, .ui-state-hover a:hover { color: #c77405; text-decoration: none; }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #fbd850; background: #ffffff url(../../jQuery/css/ui-lightness/images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #eb8f00; }
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; text-decoration: none; }
+.ui-widget :active { outline: none; }
+
+/* Interaction Cues
+----------------------------------*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: 1px solid #fed22f; background: #ffe45c url(../../jQuery/css/ui-lightness/images/ui-bg_highlight-soft_75_ffe45c_1x100.png) 50% top repeat-x; color: #363636; }
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: #363636; }
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {border: 1px solid #cd0a0a; background: #b81900 url(../../jQuery/css/ui-lightness/images/ui-bg_diagonals-thick_18_b81900_40x40.png) 50% 50% repeat; color: #ffffff; }
+.ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a { color: #ffffff; }
+.ui-state-error-text, .ui-widget-content .ui-state-error-text, .ui-widget-header .ui-state-error-text { color: #ffffff; }
+.ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary { font-weight: bold; }
+.ui-priority-secondary, .ui-widget-content .ui-priority-secondary,  .ui-widget-header .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
+
+/* Icons
+----------------------------------*/
+
+/* states and images */
+.ui-icon { width: 16px; height: 16px; background-image: url(../../jQuery/css/ui-lightness/images/ui-icons_222222_256x240.png); }
+.ui-widget-content .ui-icon {background-image: url(../../jQuery/css/ui-lightness/images/ui-icons_222222_256x240.png); }
+.ui-widget-header .ui-icon {background-image: url(../../jQuery/css/ui-lightness/images/ui-icons_ffffff_256x240.png); }
+.ui-state-default .ui-icon { background-image: url(../../jQuery/css/ui-lightness/images/ui-icons_ef8c08_256x240.png); }
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(../../jQuery/css/ui-lightness/images/ui-icons_ef8c08_256x240.png); }
+.ui-state-active .ui-icon {background-image: url(../../jQuery/css/ui-lightness/images/ui-icons_ef8c08_256x240.png); }
+.ui-state-highlight .ui-icon {background-image: url(../../jQuery/css/ui-lightness/images/ui-icons_228ef1_256x240.png); }
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(../../jQuery/css/ui-lightness/images/ui-icons_ffd27a_256x240.png); }
+
+/* positioning */
+.ui-icon-carat-1-n { background-position: 0 0; }
+.ui-icon-carat-1-ne { background-position: -16px 0; }
+.ui-icon-carat-1-e { background-position: -32px 0; }
+.ui-icon-carat-1-se { background-position: -48px 0; }
+.ui-icon-carat-1-s { background-position: -64px 0; }
+.ui-icon-carat-1-sw { background-position: -80px 0; }
+.ui-icon-carat-1-w { background-position: -96px 0; }
+.ui-icon-carat-1-nw { background-position: -112px 0; }
+.ui-icon-carat-2-n-s { background-position: -128px 0; }
+.ui-icon-carat-2-e-w { background-position: -144px 0; }
+.ui-icon-triangle-1-n { background-position: 0 -16px; }
+.ui-icon-triangle-1-ne { background-position: -16px -16px; }
+.ui-icon-triangle-1-e { background-position: -32px -16px; }
+.ui-icon-triangle-1-se { background-position: -48px -16px; }
+.ui-icon-triangle-1-s { background-position: -64px -16px; }
+.ui-icon-triangle-1-sw { background-position: -80px -16px; }
+.ui-icon-triangle-1-w { background-position: -96px -16px; }
+.ui-icon-triangle-1-nw { background-position: -112px -16px; }
+.ui-icon-triangle-2-n-s { background-position: -128px -16px; }
+.ui-icon-triangle-2-e-w { background-position: -144px -16px; }
+.ui-icon-arrow-1-n { background-position: 0 -32px; }
+.ui-icon-arrow-1-ne { background-position: -16px -32px; }
+.ui-icon-arrow-1-e { background-position: -32px -32px; }
+.ui-icon-arrow-1-se { background-position: -48px -32px; }
+.ui-icon-arrow-1-s { background-position: -64px -32px; }
+.ui-icon-arrow-1-sw { background-position: -80px -32px; }
+.ui-icon-arrow-1-w { background-position: -96px -32px; }
+.ui-icon-arrow-1-nw { background-position: -112px -32px; }
+.ui-icon-arrow-2-n-s { background-position: -128px -32px; }
+.ui-icon-arrow-2-ne-sw { background-position: -144px -32px; }
+.ui-icon-arrow-2-e-w { background-position: -160px -32px; }
+.ui-icon-arrow-2-se-nw { background-position: -176px -32px; }
+.ui-icon-arrowstop-1-n { background-position: -192px -32px; }
+.ui-icon-arrowstop-1-e { background-position: -208px -32px; }
+.ui-icon-arrowstop-1-s { background-position: -224px -32px; }
+.ui-icon-arrowstop-1-w { background-position: -240px -32px; }
+.ui-icon-arrowthick-1-n { background-position: 0 -48px; }
+.ui-icon-arrowthick-1-ne { background-position: -16px -48px; }
+.ui-icon-arrowthick-1-e { background-position: -32px -48px; }
+.ui-icon-arrowthick-1-se { background-position: -48px -48px; }
+.ui-icon-arrowthick-1-s { background-position: -64px -48px; }
+.ui-icon-arrowthick-1-sw { background-position: -80px -48px; }
+.ui-icon-arrowthick-1-w { background-position: -96px -48px; }
+.ui-icon-arrowthick-1-nw { background-position: -112px -48px; }
+.ui-icon-arrowthick-2-n-s { background-position: -128px -48px; }
+.ui-icon-arrowthick-2-ne-sw { background-position: -144px -48px; }
+.ui-icon-arrowthick-2-e-w { background-position: -160px -48px; }
+.ui-icon-arrowthick-2-se-nw { background-position: -176px -48px; }
+.ui-icon-arrowthickstop-1-n { background-position: -192px -48px; }
+.ui-icon-arrowthickstop-1-e { background-position: -208px -48px; }
+.ui-icon-arrowthickstop-1-s { background-position: -224px -48px; }
+.ui-icon-arrowthickstop-1-w { background-position: -240px -48px; }
+.ui-icon-arrowreturnthick-1-w { background-position: 0 -64px; }
+.ui-icon-arrowreturnthick-1-n { background-position: -16px -64px; }
+.ui-icon-arrowreturnthick-1-e { background-position: -32px -64px; }
+.ui-icon-arrowreturnthick-1-s { background-position: -48px -64px; }
+.ui-icon-arrowreturn-1-w { background-position: -64px -64px; }
+.ui-icon-arrowreturn-1-n { background-position: -80px -64px; }
+.ui-icon-arrowreturn-1-e { background-position: -96px -64px; }
+.ui-icon-arrowreturn-1-s { background-position: -112px -64px; }
+.ui-icon-arrowrefresh-1-w { background-position: -128px -64px; }
+.ui-icon-arrowrefresh-1-n { background-position: -144px -64px; }
+.ui-icon-arrowrefresh-1-e { background-position: -160px -64px; }
+.ui-icon-arrowrefresh-1-s { background-position: -176px -64px; }
+.ui-icon-arrow-4 { background-position: 0 -80px; }
+.ui-icon-arrow-4-diag { background-position: -16px -80px; }
+.ui-icon-extlink { background-position: -32px -80px; }
+.ui-icon-newwin { background-position: -48px -80px; }
+.ui-icon-refresh { background-position: -64px -80px; }
+.ui-icon-shuffle { background-position: -80px -80px; }
+.ui-icon-transfer-e-w { background-position: -96px -80px; }
+.ui-icon-transferthick-e-w { background-position: -112px -80px; }
+.ui-icon-folder-collapsed { background-position: 0 -96px; }
+.ui-icon-folder-open { background-position: -16px -96px; }
+.ui-icon-document { background-position: -32px -96px; }
+.ui-icon-document-b { background-position: -48px -96px; }
+.ui-icon-note { background-position: -64px -96px; }
+.ui-icon-mail-closed { background-position: -80px -96px; }
+.ui-icon-mail-open { background-position: -96px -96px; }
+.ui-icon-suitcase { background-position: -112px -96px; }
+.ui-icon-comment { background-position: -128px -96px; }
+.ui-icon-person { background-position: -144px -96px; }
+.ui-icon-print { background-position: -160px -96px; }
+.ui-icon-trash { background-position: -176px -96px; }
+.ui-icon-locked { background-position: -192px -96px; }
+.ui-icon-unlocked { background-position: -208px -96px; }
+.ui-icon-bookmark { background-position: -224px -96px; }
+.ui-icon-tag { background-position: -240px -96px; }
+.ui-icon-home { background-position: 0 -112px; }
+.ui-icon-flag { background-position: -16px -112px; }
+.ui-icon-calendar { background-position: -32px -112px; }
+.ui-icon-cart { background-position: -48px -112px; }
+.ui-icon-pencil { background-position: -64px -112px; }
+.ui-icon-clock { background-position: -80px -112px; }
+.ui-icon-disk { background-position: -96px -112px; }
+.ui-icon-calculator { background-position: -112px -112px; }
+.ui-icon-zoomin { background-position: -128px -112px; }
+.ui-icon-zoomout { background-position: -144px -112px; }
+.ui-icon-search { background-position: -160px -112px; }
+.ui-icon-wrench { background-position: -176px -112px; }
+.ui-icon-gear { background-position: -192px -112px; }
+.ui-icon-heart { background-position: -208px -112px; }
+.ui-icon-star { background-position: -224px -112px; }
+.ui-icon-link { background-position: -240px -112px; }
+.ui-icon-cancel { background-position: 0 -128px; }
+.ui-icon-plus { background-position: -16px -128px; }
+.ui-icon-plusthick { background-position: -32px -128px; }
+.ui-icon-minus { background-position: -48px -128px; }
+.ui-icon-minusthick { background-position: -64px -128px; }
+.ui-icon-close { background-position: -80px -128px; }
+.ui-icon-closethick { background-position: -96px -128px; }
+.ui-icon-key { background-position: -112px -128px; }
+.ui-icon-lightbulb { background-position: -128px -128px; }
+.ui-icon-scissors { background-position: -144px -128px; }
+.ui-icon-clipboard { background-position: -160px -128px; }
+.ui-icon-copy { background-position: -176px -128px; }
+.ui-icon-contact { background-position: -192px -128px; }
+.ui-icon-image { background-position: -208px -128px; }
+.ui-icon-video { background-position: -224px -128px; }
+.ui-icon-script { background-position: -240px -128px; }
+.ui-icon-alert { background-position: 0 -144px; }
+.ui-icon-info { background-position: -16px -144px; }
+.ui-icon-notice { background-position: -32px -144px; }
+.ui-icon-help { background-position: -48px -144px; }
+.ui-icon-check { background-position: -64px -144px; }
+.ui-icon-bullet { background-position: -80px -144px; }
+.ui-icon-radio-off { background-position: -96px -144px; }
+.ui-icon-radio-on { background-position: -112px -144px; }
+.ui-icon-pin-w { background-position: -128px -144px; }
+.ui-icon-pin-s { background-position: -144px -144px; }
+.ui-icon-play { background-position: 0 -160px; }
+.ui-icon-pause { background-position: -16px -160px; }
+.ui-icon-seek-next { background-position: -32px -160px; }
+.ui-icon-seek-prev { background-position: -48px -160px; }
+.ui-icon-seek-end { background-position: -64px -160px; }
+.ui-icon-seek-start { background-position: -80px -160px; }
+/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */
+.ui-icon-seek-first { background-position: -80px -160px; }
+.ui-icon-stop { background-position: -96px -160px; }
+.ui-icon-eject { background-position: -112px -160px; }
+.ui-icon-volume-off { background-position: -128px -160px; }
+.ui-icon-volume-on { background-position: -144px -160px; }
+.ui-icon-power { background-position: 0 -176px; }
+.ui-icon-signal-diag { background-position: -16px -176px; }
+.ui-icon-signal { background-position: -32px -176px; }
+.ui-icon-battery-0 { background-position: -48px -176px; }
+.ui-icon-battery-1 { background-position: -64px -176px; }
+.ui-icon-battery-2 { background-position: -80px -176px; }
+.ui-icon-battery-3 { background-position: -96px -176px; }
+.ui-icon-circle-plus { background-position: 0 -192px; }
+.ui-icon-circle-minus { background-position: -16px -192px; }
+.ui-icon-circle-close { background-position: -32px -192px; }
+.ui-icon-circle-triangle-e { background-position: -48px -192px; }
+.ui-icon-circle-triangle-s { background-position: -64px -192px; }
+.ui-icon-circle-triangle-w { background-position: -80px -192px; }
+.ui-icon-circle-triangle-n { background-position: -96px -192px; }
+.ui-icon-circle-arrow-e { background-position: -112px -192px; }
+.ui-icon-circle-arrow-s { background-position: -128px -192px; }
+.ui-icon-circle-arrow-w { background-position: -144px -192px; }
+.ui-icon-circle-arrow-n { background-position: -160px -192px; }
+.ui-icon-circle-zoomin { background-position: -176px -192px; }
+.ui-icon-circle-zoomout { background-position: -192px -192px; }
+.ui-icon-circle-check { background-position: -208px -192px; }
+.ui-icon-circlesmall-plus { background-position: 0 -208px; }
+.ui-icon-circlesmall-minus { background-position: -16px -208px; }
+.ui-icon-circlesmall-close { background-position: -32px -208px; }
+.ui-icon-squaresmall-plus { background-position: -48px -208px; }
+.ui-icon-squaresmall-minus { background-position: -64px -208px; }
+.ui-icon-squaresmall-close { background-position: -80px -208px; }
+.ui-icon-grip-dotted-vertical { background-position: 0 -224px; }
+.ui-icon-grip-dotted-horizontal { background-position: -16px -224px; }
+.ui-icon-grip-solid-vertical { background-position: -32px -224px; }
+.ui-icon-grip-solid-horizontal { background-position: -48px -224px; }
+.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
+.ui-icon-grip-diagonal-se { background-position: -80px -224px; }
+
+
+/* Misc visuals
+----------------------------------*/
+
+/* Corner radius */
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; -khtml-border-top-left-radius: 4px; border-top-left-radius: 4px; }
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; -khtml-border-top-right-radius: 4px; border-top-right-radius: 4px; }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -khtml-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; -khtml-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
+
+/* Overlays */
+.ui-widget-overlay { background: #666666 url(../../jQuery/css/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png) 50% 50% repeat; opacity: .50;filter:Alpha(Opacity=50); }
+.ui-widget-shadow { margin: -5px 0 0 -5px; padding: 5px; background: #000000 url(../../jQuery/css/ui-lightness/images/ui-bg_flat_10_000000_40x100.png) 50% 50% repeat-x; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }/*
+ * jQuery UI Resizable 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Resizable#theming
+ */
+.ui-resizable { position: relative;}
+.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block; }
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
+.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }
+.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0; }
+.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0; height: 100%; }
+.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0; height: 100%; }
+.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
+.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
+.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
+.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/*
+ * jQuery UI Selectable 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Selectable#theming
+ */
+.ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
+/*
+ * jQuery UI Accordion 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Accordion#theming
+ */
+/* IE/Win - Fix animation bug - #4615 */
+.ui-accordion { width: 100%; }
+.ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
+.ui-accordion .ui-accordion-li-fix { display: inline; }
+.ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
+.ui-accordion .ui-accordion-header a { display: block; font-size: 1em; padding: .5em .5em .5em .7em; }
+.ui-accordion-icons .ui-accordion-header a { padding-left: 2.2em; }
+.ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
+.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
+.ui-accordion .ui-accordion-content-active { display: block; }
+/*
+ * jQuery UI Autocomplete 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Autocomplete#theming
+ */
+.ui-autocomplete { position: absolute; cursor: default; }	
+
+/* workarounds */
+* html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+
+/*
+ * jQuery UI Menu 1.8.15
+ *
+ * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Menu#theming
+ */
+.ui-menu {
+	list-style:none;
+	padding: 2px;
+	margin: 0;
+	display:block;
+	float: left;
+}
+.ui-menu .ui-menu {
+	margin-top: -3px;
+}
+.ui-menu .ui-menu-item {
+	margin:0;
+	padding: 0;
+	zoom: 1;
+	float: left;
+	clear: left;
+	width: 100%;
+}
+.ui-menu .ui-menu-item a {
+	text-decoration:none;
+	display:block;
+	padding:.2em .4em;
+	line-height:1.5;
+	zoom:1;
+}
+.ui-menu .ui-menu-item a.ui-state-hover,
+.ui-menu .ui-menu-item a.ui-state-active {
+	font-weight: normal;
+	margin: -1px;
+}
+/*
+ * jQuery UI Button 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Button#theming
+ */
+.ui-button { display: inline-block; position: relative; padding: 0; margin-right: .1em; text-decoration: none !important; cursor: pointer; text-align: center; zoom: 1; overflow: visible; } /* the overflow property removes extra width in IE */
+.ui-button-icon-only { width: 2.2em; } /* to make room for the icon, a width needs to be set here */
+button.ui-button-icon-only { width: 2.4em; } /* button elements seem to need a little more width */
+.ui-button-icons-only { width: 3.4em; } 
+button.ui-button-icons-only { width: 3.7em; } 
+
+/*button text element */
+.ui-button .ui-button-text { display: block; line-height: 1.4;  }
+.ui-button-text-only .ui-button-text { padding: .4em 1em; }
+.ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text { padding: .4em; text-indent: -9999999px; }
+.ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text { padding: .4em 1em .4em 2.1em; }
+.ui-button-text-icon-secondary .ui-button-text, .ui-button-text-icons .ui-button-text { padding: .4em 2.1em .4em 1em; }
+.ui-button-text-icons .ui-button-text { padding-left: 2.1em; padding-right: 2.1em; }
+/* no icon support for input elements, provide padding by default */
+input.ui-button { padding: .4em 1em; }
+
+/*button icon element(s) */
+.ui-button-icon-only .ui-icon, .ui-button-text-icon-primary .ui-icon, .ui-button-text-icon-secondary .ui-icon, .ui-button-text-icons .ui-icon, .ui-button-icons-only .ui-icon { position: absolute; top: 50%; margin-top: -8px; }
+.ui-button-icon-only .ui-icon { left: 50%; margin-left: -8px; }
+.ui-button-text-icon-primary .ui-button-icon-primary, .ui-button-text-icons .ui-button-icon-primary, .ui-button-icons-only .ui-button-icon-primary { left: .5em; }
+.ui-button-text-icon-secondary .ui-button-icon-secondary, .ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
+.ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
+
+/*button sets*/
+.ui-buttonset { margin-right: 7px; }
+.ui-buttonset .ui-button { margin-left: 0; margin-right: -.3em; }
+
+/* workarounds */
+button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
+/*
+ * jQuery UI Dialog 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Dialog#theming
+ */
+.ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
+.ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative;  }
+.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; } 
+.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
+.ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; }
+.ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
+.ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
+.ui-draggable .ui-dialog-titlebar { cursor: move; }
+/*
+ * jQuery UI Slider 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Slider#theming
+ */
+.ui-slider { position: relative; text-align: left; }
+.ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; }
+.ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
+
+.ui-slider-horizontal { height: .8em; }
+.ui-slider-horizontal .ui-slider-handle { top: -.3em; margin-left: -.6em; }
+.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+.ui-slider-horizontal .ui-slider-range-min { left: 0; }
+.ui-slider-horizontal .ui-slider-range-max { right: 0; }
+
+.ui-slider-vertical { width: .8em; height: 100px; }
+.ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
+.ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
+.ui-slider-vertical .ui-slider-range-min { bottom: 0; }
+.ui-slider-vertical .ui-slider-range-max { top: 0; }/*
+ * jQuery UI Tabs 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Tabs#theming
+ */
+.ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+.ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
+.ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
+.ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
+.ui-tabs .ui-tabs-hide { display: none !important; }
+/*
+ * jQuery UI Datepicker 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Datepicker#theming
+ */
+.ui-datepicker { width: 17em; padding: .2em .2em 0; display: none;}
+.ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.8em; height: 1.8em; }
+.ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
+.ui-datepicker .ui-datepicker-prev { left:2px; }
+.ui-datepicker .ui-datepicker-next { right:2px; }
+.ui-datepicker .ui-datepicker-prev-hover { left:1px; }
+.ui-datepicker .ui-datepicker-next-hover { right:1px; }
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  }
+.ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; }
+.ui-datepicker .ui-datepicker-title select { font-size:1em; margin:1px 0; }
+.ui-datepicker select.ui-datepicker-month-year {width: 100%;}
+.ui-datepicker select.ui-datepicker-month, 
+.ui-datepicker select.ui-datepicker-year { width: 49%;}
+.ui-datepicker table {width: 100%; font-size: .9em; border-collapse: collapse; margin:0 0 .4em; }
+.ui-datepicker th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0;  }
+.ui-datepicker td { border: 0; padding: 1px; }
+.ui-datepicker td span, .ui-datepicker td a { display: block; padding: .2em; text-align: right; text-decoration: none; }
+.ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
+.ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
+
+/* with multiple calendars */
+.ui-datepicker.ui-datepicker-multi { width:auto; }
+.ui-datepicker-multi .ui-datepicker-group { float:left; }
+.ui-datepicker-multi .ui-datepicker-group table { width:95%; margin:0 auto .4em; }
+.ui-datepicker-multi-2 .ui-datepicker-group { width:50%; }
+.ui-datepicker-multi-3 .ui-datepicker-group { width:33.3%; }
+.ui-datepicker-multi-4 .ui-datepicker-group { width:25%; }
+.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header { border-left-width:0; }
+.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header { border-left-width:0; }
+.ui-datepicker-multi .ui-datepicker-buttonpane { clear:left; }
+.ui-datepicker-row-break { clear:both; width:100%; font-size:0em; }
+
+/* RTL support */
+.ui-datepicker-rtl { direction: rtl; }
+.ui-datepicker-rtl .ui-datepicker-prev { right: 2px; left: auto; }
+.ui-datepicker-rtl .ui-datepicker-next { left: 2px; right: auto; }
+.ui-datepicker-rtl .ui-datepicker-prev:hover { right: 1px; left: auto; }
+.ui-datepicker-rtl .ui-datepicker-next:hover { left: 1px; right: auto; }
+.ui-datepicker-rtl .ui-datepicker-buttonpane { clear:right; }
+.ui-datepicker-rtl .ui-datepicker-buttonpane button { float: left; }
+.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current { float:right; }
+.ui-datepicker-rtl .ui-datepicker-group { float:right; }
+.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
+.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
+
+/* IE6 IFRAME FIX (taken from datepicker 1.5.3 */
+.ui-datepicker-cover {
+    display: none; /*sorry for IE5*/
+    display/**/: block; /*sorry for IE5*/
+    position: absolute; /*must have*/
+    z-index: -1; /*must have*/
+    filter: mask(); /*must have*/
+    top: -4px; /*must have*/
+    left: -4px; /*must have*/
+    width: 200px; /*must have*/
+    height: 200px; /*must have*/
+}/*
+ * jQuery UI Progressbar 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Progressbar#theming
+ */
+.ui-progressbar { height:2em; text-align: left; }
+.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
+
+/********************************************************************************/
+/* R.L. (10.12.2012): Multiple selections on dropdowns.                         */
+/********************************************************************************/
+ul.asMultiple{	
+    margin:				0px;
+	padding:			0px;
+	position:			absolute !important;
+	left:				0px;
+	list-style-type:	none;
+	overflow-y:			visible !important;
+	top:				0px;
+	z-index:			150;}
+
+ul.asMultiple li{
+	background-color:	#ffffff;
+	clear:				both;
+	display:			none;
+	line-height:		22px !important;
+	max-width:			100%;
+	min-height:			22px !important;
+	overflow-y:			visible !important;
+	vertical-align:		middle !important;}
+
+ul.asMultiple li:hover{background-color: rgb(178, 202, 193) !important;}
+
+ul.asMultiple li.Odd{background-color: #ececec;}	
+
+ul.asMultiple li.Select{
+	background-color:	transparent !important;
+	background-image:	url(../../images/Empty.gif);
+	display:			block;}
+	
+ul.asMultiple li.Select:hover{background-color: transparent !important;}
+
+ul.asMultiple li input[type=checkbox]{
+	float:				left !important;
+	height:				22px !important;
+    margin:				0px 5px 0px 5px;
+	outline:			none !important;
+	padding:			0px;
+	width:				auto !important;}
+	
+ul.asMultiple li span{
+	display:			block !important;
+	float:				left !important;
+	line-height:		20px !important;}
+	
+/* css for timepicker */
+/*
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; }
+.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
+*/
+
+/************************************************************************/
+/* @@Found: 'Management.css' */
+/************************************************************************/
+/**************************************************************************/
+/* R.L. (16.10.2012): Importing PopUp styles. 		                  */
+/**************************************************************************/
+/*@import url('Message.css');*/
+
+/**************************************************************************/
+/* R.L. (30.07.2012): Dynamical layout (width & height).                  */
+/* R.L. (30.07.2012): Do not set colors or fonts in here.                 */
+/* R.L. (30.07.2012): Do not alter this yet (or better never)!            */
+/**************************************************************************/
+
+/**************************************************************************/
+/* Quick notes:                                                           */
+/* Main: width: 95%, min-height: 400px, min-width: 600px.                 */
+/* Content: width: 97%.                                                   */
+/**************************************************************************/
+div.Debug{/* Remove after testing */
+	border:				1px dotted orange !important;
+	color:				red !important;
+	max-width:			30%;
+	position:			absolute;
+	right:				0px;
+	top:				0px;
+	z-index:			101;}
+
+html, body, form{
+	height:				100%;
+	margin:				0px;
+	padding:			0px;
+	/*position:			relative;*/
+	width:				100%;}
+	
+/*html, four letters to ruin it all in ie8 :s*/
+body, form{
+	position:			relative;}
+
+div{
+	display:			block;
+	margin:				0px;
+	padding:			0px;
+	position:			relative;
+	z-index:			0;
+}
+
+div.Main{
+	height:				100%;
+	overflow:			hidden;
+	margin-left:			auto;
+	margin-right:			auto;
+	min-height:			400px; /* Optional (prevents Filter from scrolling) */
+	min-width:			600px; /* Optional (prevents squeezing too small) */
+	width:				95%;}
+
+div.Main .Clear{clear: both;}
+
+div.Main div.buttonFrame{
+	float:				right;
+	overflow:			hidden;
+	position:			absolute;
+	width:				100%;
+	z-index:			1;}
+
+div.Main div.buttonFrame div.Fields,
+div.Main div.buttonFrame input.Submit{
+	float:				right;
+	margin-right:			0px;}
+
+div.Main div.buttonFrame div.Fields input,
+div.Main div.buttonFrame div.Fields select{
+	margin-left:			4px;
+	margin-right:			8px;}
+
+div.Main div.buttonFrame div.Fields input{width: 80px;}
+div.Main div.buttonFrame div.Fields input.NR{width: 40px;}
+
+div.Main div.buttonFrame div.Left{float: left;}
+div.Main div.buttonFrame div.Right{float: right;}
+div.Main div.buttonFrame button.Right{float: right;}
+div.Main div.buttonFrame input[type=submit].Right{float: right;}
+
+div.Main div.buttonFrame div.Left input[type='text'],
+div.Main div.buttonFrame div.Left select,
+div.Main div.buttonFrame div.Left span{
+	margin-right:			10px;}
+
+div.Main div.buttonFrame div.fixedSmall input[type='text'],
+div.Main div.buttonFrame div.fixedSmall span{
+	height:				14px;
+	line-height:			14px;
+	min-height:			14px;
+	width:				85px;}
+
+div.Main div.buttonFrame div.fixedSmall select{
+	display:			inline-block !important;
+	width:				110px;}
+
+div.Main div.buttonFrame select{
+	box-sizing:			border-box;
+	-moz-box-sizing:		border-box;
+	-webkit-box-sizing:		border-box;
+
+	height:				16px;
+	line-height:			16px;
+	min-height:			16px;
+	overflow:			hidden;
+	vertical-align:			middle;}
+
+div.Main div.buttonFrame span.bfUsername{
+	height:				20px;
+	line-height:			20px;
+	margin-left:			5px;}
+
+div.Main div.contentWrapper{
+	bottom:				40px;
+	overflow:			hidden;
+	padding-bottom:			20px;
+	position:			absolute;
+	top:				111px; /* Header(60), Spacer(20), Navigation(30), Spacer(1) */
+	width:				100%;}
+
+div.Main div.contentWrapper div.Content{
+	height:				100%;
+	margin-left:			auto;
+	margin-right:			auto;
+	overflow:			auto;
+	width:				97%;}
+
+div.Main div.contentWrapper div.Content a{text-decoration: none;}
+
+div.Main div.contentWrapper div.Content div.Filter{
+	clear:				both;
+	position:			absolute;
+	width:				100%;
+	z-index:			2;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Line{
+	clear:				both;
+	height:				1px;
+	margin:				7px 0px 7px 0px;}
+
+div.Main div.contentWrapper div.Content div.Filter div.buttonRow,
+div.Main div.contentWrapper div.Content div.Filter div.Row{
+	clear:				both;
+	white-space:			nowrap;}
+	
+div.Main div.contentWrapper div.Content div.Filter div.Inline{
+	clear:				none;
+	display:            inline;}
+
+div.Main div.contentWrapper div.Content div.Filter div.buttonRow input{
+	appearance:			button;
+	-moz-appearance:		button;
+	-webkit-appearance:		button;
+	float:				right;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Margin{
+	line-height:			20px;
+	min-height:			20px;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Row{
+	height:				23px;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column{
+	white-space:			nowrap;
+	width:				30%;
+	float:				left;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column input,
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column select,
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span{
+	box-sizing:			border-box;
+	-moz-box-sizing:		border-box;
+	-webkit-box-sizing:		border-box;
+
+	display:			block;
+	height:				16px;
+	line-height:			16px;
+	min-height:			16px;
+	overflow:			hidden;
+	vertical-align:			middle;}
+	
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column div.image{
+   height: 18px; 
+}
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column div.image,
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column input,
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column select{
+	float:				right;
+	position:			relative;
+	right:				1px;
+	width:				60%;}
+
+/*div.Main div.contentWrapper div.Content div.Filter div.Row div.Column input.Between{}*/
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column input.Half{width: 30%;}
+	
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column input.Quater{
+	float:				right;
+	width:				20%;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column select,
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span{
+	display:			block;
+	height:				18px;
+	line-height:			18px;
+	min-height:			18px;
+	overflow:			hidden;
+	vertical-align:			middle;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span{
+	float:				left;
+	text-overflow:			clip;
+	width:				40%;}
+	
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span.field{
+	float:				right;
+	width:				60%;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span.Quater{
+	float:				right;
+	text-align:			center;
+	width:				20%;}
+	
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span.checkbox{
+	float:				left;
+	width:				20px;}
+	
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span.checkbox input{
+	width:				100%;
+	float:left;
+	background-color:transparent;
+	outline: none;
+	}
+		
+/* Remove later
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Datepicker img{
+	display:			none;
+	float:				right;
+	margin-left:			3px;}
+*/
+input.Datepicker,
+div.Main div.buttonFrame div.Datepicker input[type='text'],
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Datepicker input{
+	background-image:		url(../../images/cal.gif);
+	background-repeat:		no-repeat;
+	background-position:		top right;}
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Space{
+	width:				5%;}
+
+div.Main div.contentWrapper div.Content div.Result{
+	overflow:			auto;
+	z-index:			1;
+}
+
+div.Main div.contentWrapper div.Content div.Result table{
+	width:				100%;}
+
+div.Main div.contentWrapper div.Content table td,
+div.Main div.contentWrapper div.Content table th{
+	height:				22px;}
+
+div.Main div.contentWrapper div.Content table th.th_last{
+	border:				none !important;
+	margin:				0px !important;
+	padding:			0px !important;}
+
+div.Main div.contentWrapper div.Content table td.Icon,
+div.Main div.contentWrapper div.Content table td.Select,
+div.Main div.contentWrapper div.Content table th.Icon,
+div.Main div.contentWrapper div.Content table th.Select{
+	max-width:			35px !important;
+	min-width:			35px !important;
+	text-align:			center;
+	width:				35px !important;}
+
+div.Main div.contentWrapper div.Content table td.Center,
+div.Main div.contentWrapper div.Content table th.Center{
+	text-align:			center;}
+
+div.Main div.contentWrapper div.Content table td.Left,
+div.Main div.contentWrapper div.Content table th.Left{
+	padding-left:			5px;
+	text-align:			left;}
+
+div.Main div.contentWrapper div.Content table td.Right,
+div.Main div.contentWrapper div.Content table th.Right{
+	text-align:			right;}
+	
+div.Main div.contentWrapper div.Content table td.noWrap{white-space: nowrap;}
+div.Main div.contentWrapper div.Content table td.Wrap{white-space: wrap;}
+
+div.Main div.contentWrapper div.Content table td div.False,
+div.Main div.contentWrapper div.Content table td div.True{
+	height:				15px;
+	margin:				auto auto;
+	outline:			1px dotted transparent;
+	width:				15px;}
+
+div.Main div.contentWrapper div.Content table td span.Center{
+	display:			block;
+	text-align:			center;}
+
+div.Main div.contentWrapper div.Content table td.Icon a,
+div.Main div.contentWrapper div.Content table td.Icon div,
+div.Main div.contentWrapper div.Content table td.Icon img,
+div.Main div.contentWrapper div.Content table td.Icon input[type='image']{
+	border:				none;
+	cursor:				pointer;
+	display:			block;
+	margin:				auto auto;}
+
+div.Main div.contentWrapper div.Content table td.Icon a,
+div.Main div.contentWrapper div.Content table td.Icon div{
+	background-repeat:		no-repeat;
+	height:				16px;
+	width:				16px;}
+
+div.Main div.contentWrapper div.Content table td.Select input[type='radio']{
+	cursor:				pointer;
+	display:			block;
+	margin:				auto auto;}
+
+div.Main div.contentWrapper div.Content table tr.Opened{
+	filter:				Alpha(opacity=50);
+	opacity:			0.5;}
+
+div.Main div.contentWrapper div.Content table.Bottom th{vertical-align: bottom;}
+
+div.Main div.contentWrapper div.Content iframe.iFrameDB{
+	margin-top:			10px;}
+
+div.Main div.Footer,
+div.Main div.Header,
+div.Main div.Navigation{
+	position:			absolute;
+	width:				100%;}
+
+div.Main div.Footer{
+	bottom:				10px;
+	height:				20px;
+	min-height:			20px;
+	z-index:			1;}
+
+div.Main div.Footer table{
+	height:				20px;}
+
+div.Main div.Footer table td{
+	height:				20px;
+	line-height:			20px;}
+
+div.Main div.Header{
+	background-repeat:		no-repeat;
+	height:				60px;
+	min-height:			60px;
+	top:				0px;
+	z-index:			2;}
+
+div.Main div.Header span{
+	display:			block;
+	float:				right;
+	height:				60px;
+	line-height:			60px;}
+
+div.Main div.Navigation{
+	height:				30px;
+	min-height:			30px;
+	top:				80px;
+	z-index:			2;}
+
+div.Main div.Navigation #Register{
+	border-collapse:		collapse;
+	height:				30px;
+	width:				100%;}
+
+div.Main div.Navigation #Register input{
+	background-color:		transparent;
+	border:				none;
+	height:				25px;
+	width:				100%;}
+
+div.Main div.Navigation #Register td{text-align: center;}
+
+span.Navigate{display: none;}
+
+.Hidden{display: none;visibility: hidden;}
+
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span.checkbox input,
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column input{
+    height:  auto;  
+}
+
+td.vTop{vertical-align:top !important;}
+td.vBottom{vertical-align:bottom !important;}
+
+/**************************************************************************/
+/* R.L. (11.10.2012): Solving image path problems.                        */
+/**************************************************************************/
+a.Icon,
+div.Icon {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    border: none;
+    cursor: pointer;
+    display: block;
+    height: 16px;
+    margin: auto auto;
+    width: 16px;
+
+    /* Wie lang wirds go bis de Chef was seit? :D */
+    -webkit-filter: drop-shadow(1px 1px 1px #000);
+    filter: drop-shadow(1px 1px 1px #000);
+}
+
+div.IconA{
+	background-position: 50% 50%;
+	height: auto;
+	width: auto
+}
+
+.iBericht{background-image: url(../../images/bericht.gif);}
+.iColorP{background-image: url(../../stylizer/colorpicker.gif);}
+.iCopy{background-image: url(../../images/Copy.png);}
+.iDownload{background-image: url(../../images/download01.gif);}
+.iDWG{background-image: url(../../images/plan01.gif);}
+.iDWG2{background-image: url(../../images/dwg2.gif);}
+.iEdit{background-image: url(../../images/edit02.png);}
+.iPDF{background-image: url(../../images/PDF.png);}
+.iMYTASK{background-image: url(../../images/edit02.png);}
+
+.iMail{background-image:		url(../../images/mail.png);}
+.iEMail{
+	background-image:		url(../../images/email03.gif);
+	width:				24px !important;}
+
+.iSO{background-image: url(../../images/standort.gif)}
+.iGRU{background-image: url(../../images/grundstueck.gif)}
+.iGB{background-image: url(../../images/gebaeude.gif)}
+.iGS{background-image: url(../../images/geschoss.gif)}
+.iTK{background-image: url(../../images/trakt.gif)}
+.iRM{background-image: url(../../images/raum.gif)}
+.iAL{background-image: url(../../images/anlage.gif)}
+.iBT{background-image: url(../../images/bauteil.gif)}
+.iMO{background-image: url(../../images/mobiliar.gif)}
+.iPP{background-image: url(../../images/parkplatz.gif)}
+.iAO{background-image: url(../../images/aussenobjekt.gif)}
+.iTR{background-image: url(../../images/tuer.gif)}
+.iIN{background-image: url(../../images/informatik.gif)}
+.iSH{background-image: url(../../images/sicherheit.gif)}
+.iST{background-image: url(../../images/sicherheit.gif)}
+.iST2{background-image: url(../../images/edit02.png)}
+.iZL{background-image: url(../../images/zaehler.gif)}
+.iZYL{background-image: url(../../images/zylinder.gif)}
+.iZN{background-image: url(../../images/Zone.gif)}
+.iAP{background-image: url(../../images/arbeitsplatz.gif)}
+.iDO{background-image: url(../../images/dose.gif)}
+.iKU{background-image: url(../../images/kunst.gif)}
+.iWK{background-image: url(../../images/werk.png)}
+.iKM{background-image: url(../../images/kommunikation.gif)}
+.iVTR{background-image: url(../../images/vertrag.png)}
+.iADR{background-image: url(../../images/edit02.png)}
+.iSL{background-image: url(../../images/schluessel.png)}
+.iSLB{background-image: url(../../images/SLB.png)}
+.iSLG{background-image: url(../../images/schluesselgruppe.png)}
+.iFZ{background-image: url(../../images/fahrzeug.gif)}
+.iBU{background-image: url(../../images/buch.gif)}
+
+
+.iAddress {
+    background-image: url(../../images/icons/agenda.png)
+}
+
+.iContact {
+    background-image: url(../../images/icons/business-card.png)
+}
+
+.iPerson {
+    background-image: url(../../images/icons/user-black-close-up-shape.png)
+}
+
+.iGroup {
+    background-image: url(../../images/icons/multiple-users-silhouette.png)
+}
+.iMailSign {
+    background-image: url(../../images/icons/close-envelope.png)
+}
+.iLabel {
+    background-image: url(../../images/icons/label.png)
+}
+.iPhone {
+    background-image: url(../../images/icons/phone-call-button.png)
+}
+.iList2 {
+    background-image: url(../../images/icons/list.png);
+}
+.iLocked {
+    background-image: url(../../images/icons/locked.png);
+}
+.iImport {
+    background-image: url(../../images/icons/bookmark_button.png);
+    background-size: contain;
+}
+.iImported {
+    /*background-image: url(../../images/icons/link7.png);*/
+    background-image: url(../../images/icons/bookmark_button_yellow.png);
+    background-size: contain;
+}
+.iRecycle {
+    background-image: url(../../images/icons/garbage2.png);
+    background-size: contain;
+}
+.iRestore {
+    background-image: url(../../images/icons/restore1.png);
+    background-size: contain;
+}
+.iComparison {
+    background-image: url(../../images/icons/log-in.png);
+    background-size: contain;
+    height: 16px !important;
+    width: 16px !important;
+}
+.iSync {
+    background-image: url(../../images/icons/repeat_green.png);
+    background-size: contain;
+}
+.iDesync {
+    background-image: url(../../images/icons/repeat_red.png);
+    background-size: contain;
+}
+.iMagic {
+    background-image: url(../../images/icons/download.png);
+    background-size: contain;
+}
+.iCloudUp {
+    background-image: url(../../images/icons/upload.png);
+    background-size: contain;
+}
+.i_Edit {
+    background-image: url(../../images/icons/edit.png);
+    background-size: contain;
+}
+.i_Eraser {
+    background-image: url(../../images/icons/eraser.png);
+    background-size: contain;
+}
+
+.iToggle::before {
+    content: "▼";
+    font-size: 16px;
+    -webkit-filter: drop-shadow(1px 1px 1px #000);
+    filter: drop-shadow(1px 1px 1px #000);
+}
+.iToggled::before {
+    content: "▲";
+    font-size: 16px;
+    -webkit-filter: drop-shadow(1px 1px 1px #000);
+    filter: drop-shadow(1px 1px 1px #000);
+}
+
+
+.iInfo{
+	background-image:		url(../../images/info.gif);}
+
+.i_Order{
+	background-image:		url(../../images/icons/list_order.png);}
+
+.iTrue,
+.itrue,
+.iOk{
+	background-image:		url(../../images/ok.gif);}
+
+.iFalse,
+.ifalse,
+.iDelete,
+.iNOk{
+	background-image:		url(../../images/nok.gif);}
+
+.iDTrue,
+.iDtrue{
+	background-image:		url(../../images/checkbox_checked.png)}
+
+.iDFalse,
+.iDfalse{
+	background-image:		url(../../images/checkbox_unchecked.png);}
+
+.iOki{background-image: url(../../images/ok_i.gif);}
+
+.iFlag{background-image: url(../../images/flag.png);}
+.iPatternP{background-image: url(../../stylizer/patternpicker.gif);}
+.iURL{background-image: url(../../images/url04.gif);}
+.iPrint{background-image: url(../../images/print01.gif);}
+.iDIR{background-image: url(../../images/view01.png);}
+.iRefresh{background-image: url(../../images/refreshing_16.png);}
+
+.iExit{
+	background-image: url(../../images/exit.png);
+	height:	22px !important;
+	width: 22px !important}
+
+.iView{background-image: url(../../images/view01.png);}
+.iTask{background-image: url(../../images/task.png);}
+.iGo{background-image: url(../../images/go.gif);}
+.iList{background-image: url(../../images/select-list_16.png);}
+
+.iRed{background-image: url(../../images/dot_red.png);}
+.iYellow{background-image: url(../../images/dot_yellow.png);}
+.iGreen{background-image: url(../../images/dot_green.png);}
+
+.bGreen {background-color: green !important;}
+.bRed {background-color: red !important;}
+
+div.noCursor, .noCursor {cursor: default;}
+
+tr.green td{background-color: #45d335 !important;}
+tr.red td{background-color: #ff3333 !important;}
+
+/* Start: Portal Object Filter */
+/*
+#portalObjectFilter_Popup .Body{
+	box-sizing: border-box;
+	padding: 5px
+}
+
+#portalObjectFilter_Popup .Body .Icon{
+	height: 21px;
+	line-height: 21px;
+	margin: 0px;
+	width: 100%;
+}
+
+#portalObjectFilter_Popup .Body select{
+	height: 20px;
+	line-height: 20px;
+	width: 100%;
+}
+*/
+/* End: Portal Object Filter */
+
+
+.markGreen{
+    box-shadow: 0px 0px 10px 1px #45d335 inset;
+    -moz-box-shadow: 0px 0px 10px 1px #45d335 inset;
+    -webkit-box-shadow: 0px 0px 10px 1px #45d335 inset;
+}
+
+.markOrange{
+    box-shadow: 0px 0px 10px 1px #FFA500 inset;
+    -moz-box-shadow: 0px 0px 10px 1px #FFA500 inset;
+    -webkit-box-shadow: 0px 0px 10px 1px #FFA500 inset;
+}
+
+.markRed{
+    box-shadow: 0px 0px 10px 1px #ff2500 inset;
+    -moz-box-shadow: 0px 0px 10px 1px #ff2500 inset;
+    -webkit-box-shadow: 0px 0px 10px 1px #ff2500 inset;
+}
+
+
+/* Popup */		
+div.Popup div.Title{
+	color: orange;
+    line-height:25px;
+    height: 25px;
+    text-indent: 20px;      
+    border:none !important;
+}
+
+div.Popup div.closeImage{
+	background-image: url(../../images/divClose.png);
+	background-repeat: no-repeat;
+	background-position: 5px 5px;
+	cursor: pointer;
+	height: 25px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 25px;
+	z-index: 1;
+}
+
+div.Popup
+{
+    position:absolute !important; 
+    top: 10%; 
+    margin-left:12.5%;
+    margin-right:12.5%;
+    width:75%; 
+    height:75%; 
+    z-index:100; 
+    display:none;
+}
+
+div.Popup .Body
+{
+    margin-top:7px;
+    position:relative;
+    margin-left:auto;
+    margin-right:auto;
+    width:95% 
+}
+
+div.Popup input[type=text]{
+    width: 140px;
+    display: inline-block;
+}
+div.Popup .Row{
+    height:23px;
+    line-height:23px;
+}
+div.Popup .Row select{
+    height:16px;
+}
+
+
+#div_PopupForm {
+    top: calc(50% - 350px);
+    margin-left: calc(50% - 450px);
+    margin-right: calc(50% - 450px);
+    width: 900px;
+    height: 700px;
+}
+
+
+
+#div_PopupForm .Body {
+    margin-top: 0px;
+    width: 100%
+}
+
+#div_PopupForm .PopupButton {
+    margin-left: 1.5%;
+    bottom: 22px;
+    width: 100px;
+}
+
+#div_PopupForm .button {
+    width: 127px;
+    padding: 0px;
+}
+
+
+/* End Popup */	
+
+/************************************************************************/
+/* @@Found: 'Form.css' */
+/************************************************************************/
+/**************************************************************************/
+/* R.L. (20.09.2012): Dynamical layout (width & height).                  */
+/* R.L. (20.09.2012): Inherits layoutManagement.css                       */
+/**************************************************************************/
+/*@import url('Management.css');*/
+
+/**************************************************************************/
+/* R.L. (21.09.2012): Classnames after % div.Content were miragted.       */
+/**************************************************************************/
+div.Main div.contentForms{padding-bottom: 40px;}
+
+div.Main div.contentForms div.Content{overflow-y: auto !important;}
+
+div.Main div.contentForms div.Content div.buttonFrame{display :none;}
+
+div.Main div.contentForms div.Content div.Overlay{
+	bottom:				0px;
+	left:				0px;
+	position:			absolute;
+	right:				0px;
+	top:				0px;
+	z-index:			5;}
+	
+div.Main div.contentForms div.Content div.Overlay table{
+	margin:				auto auto;
+	width:				50%;}
+
+div.Main div.contentForms div.Content table.Content{
+	border-collapse:		collapse;
+	empty-cells:			show;
+	width:				100%;
+    /*table-layout: fixed;*/
+}
+
+div.Main div.contentForms div.Content table.Content a img{border: none;}
+
+div.Main div.contentForms div.Content table.Content .aHalf{width: 49% !important;}
+div.Main div.contentForms div.Content table.Content .Half{width: 50% !important;}
+
+
+div.Popup input[type='text'].Hidden,
+div.Main div.contentForms div.Content table.Content input[type="text"].Hidden, 
+div.Main div.contentForms div.Content table.Content .Hidden{
+    display: none;visibility: hidden;
+}
+div.Main div.contentForms div.Content table.Content .Invisible{visibility: hidden;}
+
+div.Main div.contentForms div.Content table.Content div.Datepicker input[type='text'],
+div.Main div.contentForms div.Content table.Content input[type='text'].Datepicker{
+	background-image:		url(../../images/cal.gif);
+	background-repeat:		no-repeat;
+	background-position:		top right;}
+
+div.Main div.contentForms div.Content table.Content div.resizeOverflow input[type='submit']{
+	height:				100%;
+	margin:				0px;
+	padding-bottom:			0px;
+	padding-top:			0px;}
+
+div.Main div.contentForms div.Content table.Content div.Left,
+div.Main div.contentForms div.Content table.Content input.Left,
+div.Main div.contentForms div.Content table.Content span.Left{
+	float:				left !important;}
+
+div.Main div.contentForms div.Content table.Content button.Right,
+div.Main div.contentForms div.Content table.Content div.Right,
+div.Main div.contentForms div.Content table.Content input.Right,
+div.Main div.contentForms div.Content table.Content span.Right{
+	float:				right !important;}
+
+div.Main div.contentForms div.Content table.Content input[type='text'],
+div.Main div.contentForms div.Content table.Content input[type="text"],
+div.Main div.contentForms div.Content table.Content select,
+div.Main div.contentForms div.Content table.Content textarea,
+div.Popup input[type='text'] {
+    border: none;
+    box-sizing: border-box;
+    display: block;
+    /*overflow: hidden;*/
+    width: 100%;
+    white-space: pre-line;
+    border-radius: 2px;
+}
+
+div.Main div.contentForms div.Content table.Content textarea{
+    overflow-y:auto;
+}
+
+.formInput,
+div.Main div.contentForms div.Content table.Content input[type='text'],
+div.Main div.contentForms div.Content table.Content select,
+div.Popup input[type='text']{
+	box-sizing:			border-box;
+	-moz-box-sizing:		border-box;
+	-webkit-box-sizing:		border-box;
+
+	height:				16px;
+	line-height:			16px;
+	min-height:			16px;}
+
+div.Main div.contentForms div.Content table.Content div.Slicklist select {
+	height: 20px;
+}
+
+div.Main div.contentForms div.Content table.Content div.Slicklist input[type='text'],
+div.Main div.contentForms div.Content table.Content div.Slicklist select[multiple] {
+	height: 100%;
+	line-height: initial;
+	min-height: 16px;
+}
+
+div.Main div.contentForms div.Content table.Content input[type='image'].resizeOverflow,
+div.Main div.contentForms div.Content table.Content input[type='submit'].resizeOverflow{
+	float:				left;}
+
+div.Main div.contentForms div.Content table.Content input[type='text'].formInputRight,
+div.Main div.contentForms div.Content table.Content input[type='text'].formInputRightEvent{
+	padding-right:			2px;
+	text-align:			right;}
+
+div.Main div.contentForms div.Content input[type='text'].resizeMe,
+div.Main div.contentForms div.Content select.resizeMe,
+div.Main div.contentForms div.Content span.resizeMe,
+div.Main div.contentForms div.Content textarea.resizeMe{
+	display:			block;
+	float:				left;
+	margin-right:			5px;
+	width:				90%;}
+
+div.Main div.contentForms div.Content table.Content span.formCalcLabels,
+div.Main div.contentForms div.Content table.Content span.formStandardLabelsValidity{
+	height:				15px;
+	margin-right:			5px;
+	min-width:			50px;
+	padding-right:			4px;}
+
+div.Main div.contentForms div.Content table.Content span.formCalcLabels{
+	text-align:			right;}
+
+div.Main div.contentForms div.Content table.Content span.formCalcLabels,
+div.Main div.contentForms div.Content table.Content span.formHeadLabels,
+div.Main div.contentForms div.Content table.Content span.formStandardLabelsValidity{
+	display:			block;
+	float:				left;
+	height:				16px;
+	line-height:			16px;
+	overflow:			hidden;}
+
+div.Main div.contentForms div.Content table.Content span.formError01{color: Red;}
+div.Main div.contentForms div.Content table.Content span.formHeadLabels{width: 100%;}
+
+div.Main div.contentForms div.Content table.Content div.resizeOverflow,
+div.Main div.contentForms div.Content table.Content span.resizeOverflow{
+	display:			block;
+	float:				left;
+	height:				16px;
+	line-height:			16px;
+	vertical-align:			middle;}
+
+div.Main div.contentForms div.Content table.Content table.inSelection{float: right;}
+
+div.Main div.contentForms div.Content table.Content table.inSelection td select{
+	margin-left:			5px;
+	width:				100px;}
+
+div.Main div.contentForms div.Content table.Content table.inSelection td span{width: 50px;}
+
+div.Main div.contentForms div.Content table.Content table.inTable{width: 100%;}
+div.Main div.contentForms div.Content table.Content table.inTable td{vertical-align: top;}
+div.Main div.contentForms div.Content table.Content table.inTable td.Icon{vertical-align: middle;}
+div.Main div.contentForms div.Content table.Content table.inTable td.Select{vertical-align: middle;}
+
+div.Main div.contentForms div.Content table.Half{width: 50%;}
+
+div.Main div.contentForms div.Content table.noMin td{min-height: 0px !important;}
+
+div.Main div.contentForms div.Content table.Content table.Preview{
+	outline:			1px solid transparent;
+	height:				100px;
+	width:				100%;}
+		
+div.Main div.contentForms div.Content table.Content table.Preview td{
+	text-align:			center;
+	vertical-align:			middle;}
+	
+div.Main div.contentForms div.Content table.Content td.Preview{
+	text-align:			center;
+	vertical-align:			middle;}
+
+div.Main div.contentForms div.Content table.Content td{
+	border-bottom:			1px solid transparent;
+	line-height:			20px;
+	min-height:			20px;
+	padding-bottom:			0px;
+	padding-top:			0px;
+	text-align:			left;
+	vertical-align:			middle;
+	white-space:			nowrap; /* Test in iCrap */
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+div.Main div.contentForms div.Content table.Content td.Half input[type='text']:first-child,
+div.Main div.contentForms div.Content table.Content td.Half select:first-child{
+	float:				left;
+	margin-right:			1%;
+	width:				49%;}
+
+div.Main div.contentForms div.Content table.Content td.Half input[type='text'],
+div.Main div.contentForms div.Content table.Content td.Half select{
+	float:				left;
+	margin-right:			0;
+	width:				50%;}
+	
+div.Main div.contentForms div.Content table.Content td.iHalf input[type='text']:first-child,
+div.Main div.contentForms div.Content table.Content td.iHalf select:first-child{
+	float:				left;
+	margin-right:			1%;
+	width:				49%;}
+
+div.Main div.contentForms div.Content table.Content td.iHalf input[type='text'],
+div.Main div.contentForms div.Content table.Content td.iHalf select{
+	float:				left;
+	margin-right:			0;
+	width:				50%;}
+	
+div.Main div.contentForms div.Content table.Content td.Quater input[type='text']:first-child,
+div.Main div.contentForms div.Content table.Content td.Quater select:first-child{
+	float:				left;
+	margin-right:			1%;
+	width:				24%;}
+
+
+div.Main div.contentForms div.Content table.Content td.Quater input[type='text'],
+div.Main div.contentForms div.Content table.Content td.Quater select{
+	float:				left;
+	margin-right:			0;
+	width:				75%;}
+	
+
+div.Main div.contentForms div.Content h1.titel01
+div.Main div.contentForms div.Content table.Content td.titel01{
+	text-align:			left;
+	height:				25px;
+	line-height:			25px;
+	min-height: 			25px;}
+
+div.Main div.contentForms div.Content table.Content td.titel01 span{
+	display:			block;
+	float:				left;}
+
+div.Main div.contentForms div.Content table.Content td.titel01 span.aTitle{
+	margin-right:			5px;
+	width:				auto !important;}
+
+div.Main div.contentForms div.Content table.Content td.titel01 span.text{margin-right: 5px;}
+div.Main div.contentForms div.Content table.Content td.titel01 span.title{width: 100px;}
+
+div.Main div.contentForms div.Content table.Content td.Center{text-align: center !important;}
+div.Main div.contentForms div.Content table.Content td.Left{text-align: left;}
+div.Main div.contentForms div.Content table.Content td.Middle{vertical-align: middle !important;}
+div.Main div.contentForms div.Content table.Content td.Right{text-align: right !important;}
+div.Main div.contentForms div.Content table.Content td.Top{vertical-align: top !important;}
+div.Main div.contentForms div.Content table.Content td.Wrap{white-space: normal !important;}
+
+textarea{
+    resize: none;
+}
+
+div.Main div.contentForms div.Content table.Content tr.Colgroup td{
+	height:				0px;
+	min-height:			0px;}
+
+/*div.Main div.contentForms div.Content table.Content tr.Colgroup td.Data{min-width: 200px;}*/
+div.Main div.contentForms div.Content table.Content tr.Colgroup td.Label{width: 150px;}
+div.Main div.contentForms div.Content table.Content tr.Colgroup td.Spacer{width: 4%;}
+
+div.Main div.contentForms div.Content table.Content tr.colDouble td.Label{width: 100px;}
+div.Main div.contentForms div.Content table.Content tr.Line td{
+	margin:				0px;
+	padding:			0px;
+	height: 			11px;
+	line-height: 			11px;
+	min-height: 			11px;}
+
+div.Main div.contentForms div.Content table.Content tr.Line td div{
+	height:				1px;
+	margin:				5px 0px 5px 0px;}
+
+div.Main div.contentForms div.Content table.Content tr.lineFirst td{
+	height: 			6px;
+	line-height: 			6px;
+	min-height: 			6px;}
+
+div.Main div.contentForms div.Content table.Content tr.lineFirst td div{
+	background-color:		transparent !important;
+	margin:				0px 0px 5px 0px;}
+
+div.Main div.contentForms div.Content textarea{
+	max-height:			120px;
+	min-height:			100px;}
+	
+div.Main div.contentForms div.Content textarea.Middle{
+	height:				75px;
+	max-height:			75px;
+	min-height:			75px;}
+	
+div.Main div.contentForms div.Content textarea.Small{
+	height:				48px;
+	max-height:			48px;
+	min-height:			48px;}
+
+div.Main div.contentForms div.Content textarea.Mini{
+	height:				38px;
+	max-height:			38px;
+	min-height:			38px;}
+
+div.Main div.contentForms div.Content textarea.Line{
+	height:				16px;
+	max-height:			16px;
+	min-height:			16px;}
+
+div.Main div.Header div{
+	clear:				both;
+	float:				right;
+	height:				30px;
+	line-height:			20px;
+	vertical-align:			top;}
+
+div.Main div.Header span{
+	float:				right;
+	height:				30px;
+	line-height:			40px;
+	vertical-align:			bottom;}	
+
+
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column{
+	width:				47.5%;}
+	
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column.Space{
+	width:				5%;}
+	
+div.Main div.contentWrapper div.Content div.Filter div.Row div.Column span.Unit{
+	width:				25px;
+	float:          right;
+    text-align:right;
+}
+
+table.Fixed{
+    table-layout:   fixed;
+}
+
+
+div.eventCatcher{
+	background: #ffffff;
+	height: 100%;
+	position:absolute;
+	width: 100%;
+        
+	filter: alpha(opacity=00);
+	opacity: 0.0;
+}
+
+div.Main div.contentForms div.Content .tHalf,
+div.Main div.contentForms div.Content table.Content input[type='text'].tHalf {width:calc(50% - 5px);}
+div.Main div.contentForms div.Content table.Content input[type='text'].t20,
+div.Main div.contentForms div.Content table.Content span.t20  {width:calc(100% - 20px);}
+div.Main div.contentForms div.Content table.Content input[type='text'].t50,
+div.Main div.contentForms div.Content table.Content span.t50 {width:calc(100% - 50px);}
+div.Main div.contentForms div.Content table.Content input[type='text'].t75,
+div.Main div.contentForms div.Content table.Content span.t75 {width:calc(100% - 75px);}
+.tLeft {float:left;}
+.tRight {float:right;}
+.Suffix {margin-left:20px;}
+span.Validity { 
+    display:inline-block;
+    max-width: calc(100% - 40px);
+    overflow:hidden;
+    vertical-align: middle;
+}
+div.Validity{
+	cursor: pointer;
+    display:inline-block;
+	background-image:		url(../../images/bericht.gif);
+	background-repeat:		no-repeat;
+	background-position:	left;
+    width:20px;
+    height:20px;
+    vertical-align: middle;
+}
+
+
+/*damit im ie die placeholder so aussehen wie im edge / chrome */
+*:-ms-input-placeholder {
+    color: #6d6d6d !important;
+}
+
+/**************************************************************************/
+/* R.L. (15.05.2018): Klasse basierts css                                 */
+/* Fange da mit eme Klasse-basierte css ah, will die ander Struktur       */
+/* veschwenderisch und restriktiv isch.                                   */
+/* !Änderige am bestehende bitte obe ahfüege, ned under dem               */
+/* !De oberi teil sötti i (ferner) zuekunft alles weg :-)                 */
+/**************************************************************************/
+
+/*
+	Macht Igabefelder bim fokusiere grösser, damit de ganzi Inhalt sichtbar isch:
+	 - Dörf nöd 100% sii, damit mer wieder use cha :-)
+	 - "transition" git Problem im IE11
+	 - "box-sizing" isch aktuell au definiert under "div.Main div.contentForms div.Content table.Content textarea"
+	 - Firefox zeigt Schiebebalke nume ah, wenn gnueg Platz da isch (~40px)
+*/
+/*
+textarea._expandOnFocus:focus{
+	border: 1px solid red !important;
+	box-sizing: border-box;
+	height: auto !important;
+    max-height: 100% !important;
+	min-height: 100px !important;
+	opacity: 0.95;
+	padding: 5px;
+    position: absolute;
+	right: 0;
+	left: 0;
+    z-index: 1
+}
+*/
+textarea._expandOnFocus:focus{
+	bottom: 0;
+	box-sizing: border-box;
+	height: 100% !important;
+    max-height: 100% !important;
+	max-width: 70%;
+	opacity: 0.95;
+	padding: 5px;
+    position: absolute;
+	right: 0;
+	top: 0;
+    z-index: 1
+}
+/************************************************************************/
+/* @@Found: 'jqueryConfirm.css' */
+/************************************************************************/
+#confirmOverlay, #confirmOverlay2, #confirmErrorOverlay{
+	width:100%;
+	height:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	background:url('../../images/Confirm/ie.png');
+	background: -moz-linear-gradient(rgba(11,11,11,0.1), rgba(11,11,11,0.6)) repeat-x rgba(11,11,11,0.2);
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(11,11,11,0.1)), to(rgba(11,11,11,0.6))) repeat-x rgba(11,11,11,0.2);
+	z-index:9990;
+}
+#confirmOverlay2 {
+	z-index:9991;
+}
+#confirmErrorOverlay {
+	z-index:9992;
+}
+
+#confirmBox{
+	background:url('../../images/Confirm/body_bg.jpg') repeat-x left bottom #e5e5e5;
+	width:500px;
+	position:relative;
+	border: 1px solid #000;
+
+    box-shadow: 4px 4px 5px 0px #000;
+    -moz-box-shadow: 4px 4px 5px 0px #000;
+    -webkit-box-shadow: 4px 4px 5px 0px #000;
+}
+
+#confirmOverlay2 #confirmBox,
+#confirmErrorOverlay #confirmBox { 
+	background: none rgb(102, 102, 102);
+}
+
+#confirmBox h1,
+#confirmBox p{
+	font:26px/1 'Cuprum','Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+	background:url('../../images/Confirm/header_bg.jpg') repeat-x left bottom #f5f5f5;
+	padding: 10px 25px;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
+	color:#666;
+}
+
+#confirmBox h1{
+	letter-spacing:0.3px;
+	white-space:nowrap;
+    overflow:hidden;
+    color:#888;
+    padding: 15px 20px;
+    margin-top: 0px;
+    margin-bottom: 6px;
+}
+
+#confirmBox iframe{
+	border: none;
+	height: 430px;
+	margin: auto 0px;
+	min-width: 400px;
+	outline: none;
+	padding: none;
+	width: 100%;}
+
+#confirmBox p{
+	background:none;
+	font-size:16px;
+	line-height:1.4;
+	padding-top: 15px;
+    margin-top:0px;
+}
+
+#confirmButtons{
+	padding: 0px 0 15px;
+	text-align:center;
+}
+
+#confirmBox .button{
+	display:inline-block;
+	background:url('../../images/Confirm/buttons.png') no-repeat;
+	color:white;
+	position:relative;
+	height: 33px;
+	
+	font:17px/33px 'Cuprum','Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+	
+	margin-right: 15px;
+	padding: 0 35px 0 40px;
+	text-decoration:none;
+	border:none;
+}
+
+#confirmBox .button:last-child{	margin-right:0;}
+
+#confirmBox .button span{
+	position:absolute;
+	top:0;
+	right:-5px;
+	background:url('../../images/Confirm/buttons.png') no-repeat;
+	width:5px;
+	height:33px
+}
+
+#confirmBox .blue{				background-position:left top;text-shadow:1px 1px 0 #5889a2;}
+#confirmBox .blue span{			background-position:-195px 0;}
+#confirmBox .blue:hover{		background-position:left bottom;}
+#confirmBox .blue:hover span{	background-position:-195px bottom;}
+
+#confirmBox .gray{				background-position:-200px top;text-shadow:1px 1px 0 #707070;}
+#confirmBox .gray span{			background-position:-395px 0;}
+#confirmBox .gray:hover{		background-position:-200px bottom;}
+#confirmBox .gray:hover span{	background-position:-395px bottom;}
+
+#confirmBox.Doc { width:800px; height:537px;}
+#iConClude.Doc {height: 400px}
+
+#confirmBox.BM2 { width:740px; height:518px;}
+#confirmBox.BM2 p{ margin-bottom: 10px;}
+#iConClude.BM2 {height: 397px}
+/************************************************************************/
+/* @@Found: '../../QR/css/Basic.Form.QR.css' */
+/************************************************************************/
+.asQRCanvas{
+	box-sizing: border-box;
+}
+
+#asQREtiquetteWrapper{
+	background: #fff;
+	box-sizing: border-box;
+	display: inline-block;
+	max-height: 300px;
+	outline: 0;
+	overflow: hidden;
+	position: relative
+}
+
+#asQREtiquetteWrapper > canvas{
+	float: left
+}
+
+#asQREtiquetteText{
+	float: left;
+	font: 12px arial, sans-serif;
+	margin-top: 0px;
+	text-align: left;
+	vertical-align: middle
+}
+
+#asQREtiquetteText span{
+	color: #000;
+	display: block;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+	position: relative;
+	vertical-align: middle;
+	white-space: nowrap;
+	width: 100%
+}
+
+#asQREditor{
+	box-sizing: border-box;
+	position: relative;
+	top: 10px
+}
+
+#asQREditor > h2{
+	text-align: left
+}
+
+#asQREditor input{
+	box-sizing: border-box;
+	display: block;
+	height: 20px;
+	line-height: 20px;
+	margin-bottom: 1px;
+	text-indent: 5px;
+	width: 100%
+}
+/************************************************************************/
+/* @@Found: 'Tooltip.css' */
+/************************************************************************/
+/* REM: Tooltips über CSS3 - aktuell auf Formularen */
+body.Forms [data-lang-tooltip]{
+    background-repeat: no-repeat;
+	background-image: url('data:image/gif;base64,R0lGODlhEAAQAMZyACxUjixUjyxVjy1Vjy5Vjy5WkC9WkC9XkC9YkTJakj9lm0BlnEFnnT1vrj5wrz9xsEBxsEBxsUFysUFysktxpUJzsktypkJ0s0N0tEN1tE9zpUR1tUZ1sU10qE90pUR2tUV2tlB3q0l5t016tE19uVB9t1B+uFJ/uFOAu1WCvV6DtGGFtmCIu2aHtV6JwGaIuGKKv2OLwGWOw2yPvW2Qv26Rv2+TwGyUxnCUwm+WyHGWxHCXyXGYynKYyHKYyXKYynOYyHOYyXSYx3KZyXKZynOZynOZy3Oay3OazHSay3ObzXSbzHSbzXWby3SbznWbzHacy3WczneczXadznmdy3mdzH+dxnufzHyfzoCfx4CfyXygznuh0X6hz3+hzYGj0oGk04Ok0oKm0oOn1Imp0oypzpCt0pCt1Y6u15Ov1JWv05Cw2ZKw15Sw1ZWy2Jiz1pe02Jq33P///////////////////////////////////////////////////////yH5BAEKAH8ALAAAAAAQABAAAAfKgH+Cg38DA4SIgggvWm5uWi8JiX8UbGtjXFxiaGkeiBRxYFNRcnJKSF1wGoMHZ19RTkylRj88WGaSfytoTKdGRDw7wjlkLYJWYU9LSUlHRUNDPj1eVoVtW1JSUE2lKSkyQFRqAQJvXVVVVD6lIB8ZIjFlAH9ZZFdBLiKlGBcVEycrBIW4QQLEhgylKkiI8ABGB0EGdKDgV6EUBAcORtAoMIiBEBMLSzVoMALHAkQMbMAowYHDCBYzFEwq0EFFDRoqLBCYRAjAvESBAAA7');
+    cursor: help;
+    display: inline-block;
+    text-indent: 20px
+}
+
+body.Forms [data-lang-tooltip]:hover{
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTczbp9jAAACFElEQVQ4T5WTW08TURSF+19MBIEa244FoqYNIbYw9IIxKGBqM70BBYZGBWMKLRcb2plOq7xI4yU8GBU1JQ0xUYGi7yZFftDy7DMzJTUN0ZWsZGZyvrX3PjtjOU+/dxdANl7/TY1389he8iATdmLG18FNz/Tt19u588P2tQnMBTohBy4ifbcbG6HL3MvjVqRGOzEb7MaeMtE+hOCY9wJWJnuQl2woRGwwpUbtUGMOrIauYErswJ76V0jjvQz5VhdW7lk5qETJdgNnAXEBxcRVaMzrYRs7a20d5/WTId4iQWY1DsV1qDTlbLo83YvFMSu2Hw+fBWSlfqQnWfWog4UwxwRulcxCinGn7gS5F9mQHcRwmNaUDHRh/b4NmxE7dz4isDDBGADYXR7grqSuQ2UBOUnATLAHpx/Zik9ZQGLkEr+gnOQwTDM7DRz4lh/C9/wwDgoivuS8ePnQhQdjNhaQ0rvIhPv4XBthNjsDdxZd/KCpA0XEoTKCQ9WHo6IPn7Me0L1xmFTdvI2tZD9qazf1agW9mikd9KOu+XGsBfDqkRs15c5ZQOODDG36Gj5lBluqmaoz6EcpyF17KuK57MYJYwxc19ELCUqiD9VVT7OaqZ/lUW6CS8kbqFcirbApCinPuniL1TUvvhb83AS+WRrE1sIAjivR9rApao3m20mLeDbv5u3S835xHCf/+2fSmpqraiuL5Q8bf74gDk4UoQAAAABJRU5ErkJggg==');
+}
+
+body.Forms [data-lang-tooltip]:hover:after{
+	background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.85);
+	border: 1px solid #000;
+    border-radius: 4px;
+    color: #000;
+    content: attr(data-lang-tooltip);
+    left: 20px;
+    line-height: 20px;
+    margin: 0;
+	opacity: 0.85;
+    padding: 1px 5px;
+    pointer-events: none;
+    position: absolute;
+    margin-top: 20px;
+    text-indent: 0;
+    z-index: 999
+}
+/************************************************************************/
+/* @@Found: 'baseFont.css' */
+/************************************************************************/
+/**************************************************************************/
+/* R.L. (30.07.2012): Fonts.                                              */
+/**************************************************************************/
+font.mandatory{color: red;}
+span.mandatory{color: red;}
+
+.Red{color: #FF7F00 !important;}
+.Green{color: #93DB70 !important;}
+
+/**************************************************************************/
+/* Management.                                                                 */
+/**************************************************************************/
+body.Management, body.Management a, body.Management input, body.Management select, body.Management text, body.Management td, body.Management th, .formButton{
+	font-family:		Arial, Helvetica, Sans-Serif;
+	font-size:		11px !important;}
+
+body.Management div.Main a{text-decoration: none;}
+
+body.Management div.Main div.contentWrapper div.Content div.Filter div.Title span{
+	font-size:		12px;
+	font-weight:		bold;}
+
+body.Management div.Main div.Header span{
+	font-size:		18px;}
+	
+body.Management div.Main div.Navigation #Register input{
+	font-size:			11px;
+	font-weight:			bold;}
+
+body.Management div.Main div.Navigation #Register td.registerSelected{
+	font-size:			11px;
+	font-weight:			bold;}
+
+/**************************************************************************/
+/* Forms.                                                                 */
+/**************************************************************************/
+body.Forms, body.Forms a, body.Forms input, body.Forms select, body.Forms td, body.Forms textarea, body.Forms th{
+	font-family:		Arial, Helvetica, Sans-Serif;
+	font-size:		11px !important;}
+
+body.Forms div.Main div.contentWrapper h1.titel01,
+body.Forms div.Main div.contentWrapper div.Content table.Content td.titel01 span{
+	font-weight:			bold;
+	font-size:			12px;}
+
+body.Forms div.Main div.contentWrapper div.Content table.Content td.titel01 span.text{
+	font-weight:			normal;
+	font-size:			11px;}
+
+body.Forms .fTitel,
+div.Main div.contentForms div.Content table.Content td.fTitel{
+    font-weight: bold;
+    line-height: 30px;
+    text-shadow: 1px 1px black;
+    font-size: 20px !important;
+}
+body.Forms .fTitel01,
+div.Main div.contentForms div.Content table.Content td.fTitel01{
+    font-weight: bold;
+    line-height: 30px;
+    text-shadow: 1px 1px black;
+    font-size: 16px !important;
+}
+
+body.Forms .fTitel02,
+div.Main div.contentForms div.Content table.Content td.fTitel02{
+    font-weight: bold;
+    line-height: 30px;
+    text-shadow: 1px 1px black;
+    font-size: 14px !important;
+}
+
+body.Forms .fLabel,
+div.Main div.contentForms div.Content table.Content td.fLabel{
+    font-weight: 700;
+    font-size: 12px !important;
+}
+
+body.Forms .Template{
+    text-align:center;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 30px;
+    text-shadow: 1px 1px black;
+}
+
+body.Forms div.Main div.Header span{font-size: 18px;}
+body.Forms div.Main div.Header span div{font-size: 11px;}
+
+th.Sortable { cursor:pointer; color: #0066cc; }
+
+/**************************************************************************/
+/* Info.                                                                  */
+/**************************************************************************/
+body.Info h1, body.Info p{
+	font-family:		Arial, Helvetica, Sans-Serif;
+	font-size:		13px !important;}
+	
+/**************************************************************************/
+/* MessageBox                                                             */
+/* R.L.: Does not belong here.                                            */
+/**************************************************************************/
+body.Forms div.Main div.contentWrapper div.Content div.divMessageSmall
+{
+    position:absolute; 
+    left:50%; 
+    top: 150px; 
+    margin-left:-175px; 
+    width:350px; 
+    height:130px; 
+    z-index:100; 
+    border: 1px solid black; 
+    background-color:White;
+    color: Black !important;
+}
+
+/**************************************************************************/
+/* Checklist.                                                             */
+/**************************************************************************/
+body.Checklist, body.Checklist a, body.Checklist input, body.Checklist select, body.Checklist text, body.Checklist td, body.Checklist th{
+	font-family:		Arial, Helvetica, Sans-Serif;
+	font-size:		11px !important;}
+	
+/**************************************************************************/
+/* History.                                                               */
+/**************************************************************************/
+td.historyTitle{font-weight: bold; height: 30px; vertical-align:bottom !important;}
+td.historyDate{ color: #CC0000; vertical-align:bottom  !important;}
+td.historyUser {font-weight: bold;color: #333333;}	
+td.historytablehead {font-weight: bold;}
+td.historyAlt{ color: red; background-color: #E1E1E1;}
+td.historyNeu{ color: #006600; background-color: #E1E1E1;}
+
+
+div.image {
+    background-repeat: no-repeat;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+
+/************************************************************************/
+/* @@Found: 'Schemes/black.css' */
+/************************************************************************/
+/**************************************************************************/
+/* R.L. (30.07.2012): Black scheme.                                       */
+/**************************************************************************/
+
+/****************************************************************************************************************************************/
+/* R.L. (24.10.2012): General.                                                                                                          */
+/****************************************************************************************************************************************/
+body.Black div.Main div.buttonFrame input[type=submit],
+body.Black div.Main div.contentWrapper input[type=submit],
+.formButton{
+	appearance:			button;
+	-moz-appearance:		button;
+	-webkit-appearance:		button;
+
+	background-color:		#3d3d3d;
+	border:				none;
+	cursor:				pointer;
+	color:				#ffffff;
+
+	background: rgb(92,92,92); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(92,92,92,1) 0%, rgba(104,104,104,1) 12%, rgba(116,116,116,1) 25%, rgba(88,88,88,1) 39%, rgba(63,63,63,1) 50%, rgba(38,38,38,1) 53%, rgba(23,23,23,1) 60%, rgba(62,62,62,1) 76%, rgba(48,48,48,1) 91%, rgba(40,40,40,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(92,92,92,1)), color-stop(12%,rgba(104,104,104,1)), color-stop(25%,rgba(116,116,116,1)), color-stop(39%,rgba(88,88,88,1)), color-stop(50%,rgba(63,63,63,1)), color-stop(53%,rgba(38,38,38,1)), color-stop(60%,rgba(23,23,23,1)), color-stop(76%,rgba(62,62,62,1)), color-stop(91%,rgba(48,48,48,1)), color-stop(100%,rgba(40,40,40,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(92,92,92,1) 0%,rgba(104,104,104,1) 12%,rgba(116,116,116,1) 25%,rgba(88,88,88,1) 39%,rgba(63,63,63,1) 50%,rgba(38,38,38,1) 53%,rgba(23,23,23,1) 60%,rgba(62,62,62,1) 76%,rgba(48,48,48,1) 91%,rgba(40,40,40,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(92,92,92,1) 0%,rgba(104,104,104,1) 12%,rgba(116,116,116,1) 25%,rgba(88,88,88,1) 39%,rgba(63,63,63,1) 50%,rgba(38,38,38,1) 53%,rgba(23,23,23,1) 60%,rgba(62,62,62,1) 76%,rgba(48,48,48,1) 91%,rgba(40,40,40,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(92,92,92,1) 0%,rgba(104,104,104,1) 12%,rgba(116,116,116,1) 25%,rgba(88,88,88,1) 39%,rgba(63,63,63,1) 50%,rgba(38,38,38,1) 53%,rgba(23,23,23,1) 60%,rgba(62,62,62,1) 76%,rgba(48,48,48,1) 91%,rgba(40,40,40,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(92,92,92,1) 0%,rgba(104,104,104,1) 12%,rgba(116,116,116,1) 25%,rgba(88,88,88,1) 39%,rgba(63,63,63,1) 50%,rgba(38,38,38,1) 53%,rgba(23,23,23,1) 60%,rgba(62,62,62,1) 76%,rgba(48,48,48,1) 91%,rgba(40,40,40,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c5c5c', endColorstr='#282828',GradientType=0 ); /* IE6-9 */
+
+	background: rgb(76,76,76); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 40%, rgba(63,63,63,1) 53%, rgba(44,44,44,1) 56%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(76,76,76,1)), color-stop(12%,rgba(89,89,89,1)), color-stop(25%,rgba(102,102,102,1)), color-stop(40%,rgba(71,71,71,1)), color-stop(53%,rgba(63,63,63,1)), color-stop(56%,rgba(44,44,44,1)), color-stop(60%,rgba(17,17,17,1)), color-stop(76%,rgba(43,43,43,1)), color-stop(91%,rgba(28,28,28,1)), color-stop(100%,rgba(19,19,19,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 40%,rgba(63,63,63,1) 53%,rgba(44,44,44,1) 56%,rgba(17,17,17,1) 60%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 40%,rgba(63,63,63,1) 53%,rgba(44,44,44,1) 56%,rgba(17,17,17,1) 60%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 40%,rgba(63,63,63,1) 53%,rgba(44,44,44,1) 56%,rgba(17,17,17,1) 60%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 40%,rgba(63,63,63,1) 53%,rgba(44,44,44,1) 56%,rgba(17,17,17,1) 60%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */
+
+    height: 22px;
+}
+
+body.Black input,
+body.Black select{
+	border:				none;
+	border-radius:			0px;
+	-moz-border-radius:		0px;
+	-webkit-border-radius:		0px;}
+
+/****************************************************************************************************************************************/
+/* R.L. (24.09.2012): Management.                                                                                                       */
+/****************************************************************************************************************************************/
+*::selection{background-color: #e6e6fa; color: #1e90ff; cursor: text;}
+*::-moz-selection{background-color: #e6e6fa; color: #1e90ff; cursor: text;}
+*::-webkit-selection{background-color: #e6e6fa; color: #1e90ff; cursor: text;}
+
+body.Black{
+	background-color:		#000000;
+	behavior:			url('/css/2_0/csshover3.htc');
+	color:				#ffffff;}
+
+body.Black div.Main div.buttonFrame{
+	background-color:		#666666;}
+
+body.Black div.Main div.Header{
+	background-color:		#000000;
+	background-image:		none !important;
+	height:				60px;}
+
+body.Black div.Main div.contentWrapper,
+body.Black div.Main div.contentWrapper div.Content,
+body.Black div.Main div.contentWrapper div.Content div.Filter{
+	background-color:		#666666;
+	overflow:			hidden;}
+
+body.Black div.Main div.Footer{
+	background-color:		#999999;
+	overflow:			hidden;}
+
+body.Black div.Main div.contentWrapper div.Content a{color: #f6af39;}
+
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Line{
+	background-color:		#999999;}
+
+body.Black div.Main div.contentWrapper div.Content div.Filter div.buttonRow input{
+	background-color:		#3d3d3d;
+	border:				none;
+	color:				#ffffff;}
+
+body.Black div.Main div.buttonFrame select,
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row select,
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row input{
+	background-color:		#ffffff;
+	outline:			1px dotted transparent;}
+
+body.Black div.Main div.buttonFrame select:hover,
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row select:hover,
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row div.Column:hover select,
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row input:hover{
+	background-color:		#f6af39;}
+
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row select[disabled='disabled']{background-color: #f7f7f7 !important;}
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row select[disabled="disabled"]{background-color: #f7f7f7 !important;}
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row select[disabled]{background-color: #f7f7f7 !important;}
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row select:disabled{background-color: #f7f7f7 !important;}
+
+body.Black div.Main input.Datepicker,
+body.Black div.Main div.buttonFrame div.Datepicker input[type='text'],
+body.Black div.Main div.contentWrapper div.Content div.Filter div.Row div.Datepicker input{
+	background-image:		url(../../images/calBlack.png);
+	background-image:		url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASBAMAAACp/uMjAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wIEQs6FqzViQYAAAAVUExURUpNSkpNpZmZmaVNSqWmpdbT1v///0zRHlsAAABASURBVAjXY1CCAwYlFwhwADIdBQUFMZmuoWAQAGS6paaFAVECKhOkINjYFKYgOc0sAZWJpgC7CXitYIACIBMOAENpLMXk0QqhAAAAAElFTkSuQmCC');
+	background-position:		100% -1px;}
+
+body.Black div.Main div.contentWrapper div.Content table.Header,
+body.Black div.Main div.contentWrapper div.Content table.Header th,
+body.Black div.Main div.contentWrapper div.Content div.Result table,
+body.Black div.Main div.contentWrapper div.Content div.Result table td,
+body.Black div.Main div.contentWrapper div.Content div.Result table th{
+	background-color:		#767676;
+	border:				1px solid #000000;
+	border-collapse:		collapse;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result table td a{color: #ffffff;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result table td b.Term{color: crimson;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result table td div.False{background-color: #45d335;}
+body.Black div.Main div.contentWrapper div.Content div.Result table td div.True{background-color: #ff3333;}
+
+body.Black div.Main div.contentWrapper div.Content table.Header th,
+body.Black div.Main div.contentWrapper div.Content div.Result table th{
+	background-color:		#3d3d3d;
+	font-weight:			normal;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result table tr.alternateImportant td{
+	background-color:		#666666;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result table tr:hover td,
+body.Black div.Main div.contentWrapper div.Content div.Result table tr.alternateImportant:hover td{
+	background-color:		#f6af39;}
+
+
+body.Black div.Main div.contentWrapper div.Content div.Result table tr.Footer td{background-color: #3d3d3d;}
+
+/* Special: Taskmanagement - Schedule */
+body.Black div.Main div.contentWrapper div.Content div.Result table.tmSchedule tr td div.Elements div{
+	border:				1px solid #666666;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result table.tmSchedule tr td div.Elements div span{
+	background-color:		#999999;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result table.tmSchedule tr td div.Elements div.dof0 span{background-color: #8b8b8b;}
+body.Black div.Main div.contentWrapper div.Content div.Result table.tmSchedule tr td div.Elements div.dof6 span{background-color: #9a9a9a;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result table.tmSchedule tr td div.taskDates,
+body.Black div.Main div.contentWrapper div.Content div.Result table.tmSchedule tr td div.taskObject{
+	border:				1px solid #666666;}
+/* End-Special */
+
+body.Black div.Main div.Footer table{border-collapse: collapse;}
+
+body.Black div.Main div.Footer table td.footLeft{background-color: #3d3d3d;}
+
+body.Black div.Main div.Footer table td.footRight{
+	background-color:		#3d3d3d;
+	border:				none;}
+
+body.Black div.Main div.Footer table td.footRight img{display: none;}
+
+body.Black div.Main div.Navigation #Register input{
+	color:				#ffffff;}
+
+body.Black div.Main div.Navigation #Register td.register{
+	background-color:		#3d3d3d;
+	border-right:			1px solid #000000;}
+
+body.Black div.Main div.Navigation #Register td.registerRest{background-color: #000000;}
+
+body.Black div.Main div.Navigation #Register td.registerSelected{
+	background-color:		#666666;
+	border-right:			1px solid #000000;
+	color:				#f6af39;}
+
+/**************************************************************************/
+/* R.L. (24.09.2012): Messages.                                           */
+/**************************************************************************/
+body.Black div.Main div.contentWrapper div.Content div.Result div.PopUp{
+	background-color:		#999999;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result div.PopUp div.Message{
+	background-color:		#666666;
+	border:				1px dotted #f6af39;
+	color:				#ffffff;
+	outline:			1px dotted #f6af39;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result div.PopUp div.Message input[type=submit]{
+	height:				18px;
+	line-height:			18px;}
+
+body.Black div.Main div.contentWrapper div.Content div.Result div.PopUp div.Message span.Header{
+	color:				#f6af39;}
+
+/**************************************************************************/
+/* R.L. (03.08.2012): Black relocations.                                  */
+/**************************************************************************/
+body.Black div.Main{width: 100%;}
+
+body.Black div.Main div.buttonFrame{
+	bottom:				10px;
+	max-height:			20px;
+}
+
+body.Black div.Main div.buttonFrame div.Fields{
+	height:				20px;
+	line-height:			20px;}
+
+body.Black div.Main div.buttonFrame div.Left{
+	float:				right;
+	line-height:			20px;
+	margin-right:			1px;}
+
+body.Black div.Main div.buttonFrame input[type=submit]{
+	height:				20px;}
+
+body.Black div.Main div.buttonFrame select{
+	height:				17px !important;
+	line-height:			17px !important;
+	max-height:			17px !important;}
+
+body.Black div.Main div.contentWrapper{
+	top:				86px; /* Header(35), Spacer(20), Navigation(30), Spacer(1) */}
+
+body.Black div.Main div.contentWrapper div.Content div.Filter div.buttonRow input{
+	height:				20px;
+	line-height:			20px;}
+
+body.Black div.Main div.Header{
+	background-repeat:		no-repeat;
+	height:				35px;
+	min-height:			35px;}
+
+body.Black div.Main div.Header span{
+	height:				35px;
+	line-height:			35px;}
+
+body.Black div.Main div.Navigation{
+	top:				55px;}
+
+/****************************************************************************************************************************************/
+/* R.L. (24.09.2012): Forms.                                                                                                            */
+/****************************************************************************************************************************************/
+/*
+body.Black div.Main div.contentForms div.Content table.Content input[disabled='disabled']{display: none;}
+body.Black div.Main div.contentForms div.Content table.Content input[disabled="disabled"]{display: none;}
+body.Black div.Main div.contentForms div.Content table.Content input[disabled]{display: none;}
+body.Black div.Main div.contentForms div.Content table.Content input:disabled{display: none;}
+*/
+body.Black div.Main div.contentForms div.Content span.Bold{font-size: 14px; font-weight: bold}
+body.Black div.Main div.contentForms div.Content span.Highlighted{color: #f6af39}
+
+body.Black div.Main div.contentForms div.Content table.Content input[type='submit']{
+	height:				16px;}
+
+body.Black div.Main div.contentForms div.Content table.Content input[type='text'],
+body.Black div.Main div.contentForms div.Content table.Content textarea{
+	outline:			1px dotted transparent;}
+
+body.Black .formInput,
+body.Black div.Main div.contentForms div.Content table.Content input[type='text'],
+body.Black div.Main div.contentForms div.Content table.Content select{
+	outline:			1px dotted transparent;}
+
+body.Black .formInput:hover,
+body.Black div.Main div.contentForms div.Content  table.Content select:hover,
+body.Black div.Main div.contentForms div.Content  table.Content input[type='text']:hover{
+	background-color:		#f6af39;}
+
+body.Black div.Main input.Datepicker,
+body.Black div.Main div.contentForms div.Content table.Content div.Datepicker input[type='text'],
+body.Black div.Main div.contentForms div.Content table.Content input[type='text'].Datepicker{
+	background-image:		url(../../images/calBlack.png);
+	background-image:		url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASBAMAAACp/uMjAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wIEQs6FqzViQYAAAAVUExURUpNSkpNpZmZmaVNSqWmpdbT1v///0zRHlsAAABASURBVAjXY1CCAwYlFwhwADIdBQUFMZmuoWAQAGS6paaFAVECKhOkINjYFKYgOc0sAZWJpgC7CXitYIACIBMOAENpLMXk0QqhAAAAAElFTkSuQmCC');
+	background-position:		100% -1px;}
+
+body.Black div.Main div.contentForms div.Content table.Content input[type='text'].formInputEvent,
+body.Black div.Main div.contentForms div.Content table.Content input[type='text'].formInputRightEvent{
+	background-color:		#fffacd;}
+
+body.Black .formInput.onError,
+body.Black div.Main div.contentForms div.Content table.Content input[type='text'].onError,
+body.Black div.Main div.contentForms div.Content table.Content input[type='text'].formInputError,
+body.Black div.Main div.contentForms div.Content table.Content span.onError input[type='checkbox'],
+body.Black div.Main div.contentForms div.Content table.Content span.formInputError input[type='checkbox']{
+	outline:			1px solid red;
+	color:				navy;}
+
+body.Black div.Main div.contentForms div.Content table.Content select.formSelectDependings01,
+body.Black div.Main div.contentForms div.Content table.Content select.formSelectEvent{
+	background-color:		#fffacd;}
+
+body.Black div.Main div.contentForms div.Content table.Content select.onError,
+body.Black div.Main div.contentForms div.Content table.Content select.formSelectError{
+	background-color:		#ff9966;
+	color:				navy;}
+
+body.Black div.Main div.contentForms div.Content table.Content span.formCalcLabels{
+	background-color: 		#ffffff;
+	color:				#000000;
+}
+
+body.Black div.Main div.contentForms div.Content span.formHeadLabels{
+	background-color:		transparent;
+	color:				#ffffff;}
+
+body.Black div.Main div.contentForms div.Content table.Content span.formKennzeichenLabels,
+body.Black div.Main div.contentForms div.Content table.Content span.formLabelsGray{
+	color:				#ffffff;}
+
+body.Black div.Main div.contentForms div.Content table.Content span.formPflichtfeldLabels{color: red;}
+
+body.Black div.Main div.contentForms div.Content table.Content table.Preview{
+	outline:			1px dotted gray;}
+
+body.Black div.Main div.contentForms div.Content table.Content tr.Line td div{
+	background-color:		#999999;}
+
+/**************************************************************************/
+/* R.L. (24.09.2012): Black relocations.                                  */
+/**************************************************************************/
+body.Forms div.Main div.contentForms{
+	padding-bottom:			0px;
+	top:				81px;}
+
+body.Forms div.Main div.Header{display: none}
+body.Forms div.Main div.Navigation{top: 0px}
+body.Forms div.Main div.contentWrapper{top: 31px}
+
+/**************************************************************************/
+/* R.L. (03.08.2012): Black hidden.                                       */
+/**************************************************************************/
+body.Black div.Main div.Footer{display: none;}
+
+/* Popup */		
+div.Popup div.Title{
+	background: #3d3d3d !important;
+    border-bottom: 1px solid black !important;
+}
+
+div.Popup
+{
+    border: solid 1px black; 
+    background-color:#666666;
+    box-shadow: 4px 4px 5px 0px #000;
+    -moz-box-shadow: 4px 4px 5px 0px #000;
+    -webkit-box-shadow: 4px 4px 5px 0px #000;
+}
+/************************************************************************/
+/* @@Found: '~/css/nav-h.css' */
+/************************************************************************/
+/**************************************************************************/
+/* R.L. (16.08.2012): Listnavigation (base).                              */
+/**************************************************************************/
+ul#navmenu-h,
+ul#navmenu-h a,
+ul#navmenu-h div,
+ul#navmenu-h ul,
+ul#navmenu-h li{
+	border:				none;
+	display:			block;
+	margin:				0px;
+	overflow-y:			visible !important;
+	overflow:			visible !important;
+	padding:			0px;
+	position:			relative;}
+
+ul#navmenu-h{
+	height:				30px;
+	list-style:			none;
+	width:				100%;}
+
+ul#navmenu-h ul{
+	display:			none;
+	left:				0px;
+	list-style:			none;
+	min-height:			30px;
+	position:			absolute !important;
+	top:				100%;
+	width:				100%;
+	z-index:			99;}
+
+/* R.L. (30.10.2012): Second sub-level */
+ul#navmenu-h ul ul{
+	left:				100%;
+	top:				-1px;}
+	
+ul#navmenu-h ul ul li{margin-left: 1px;}
+/* End: R.L. (30.10.2012): Second sub-level */
+
+ul#navmenu-h li{
+	float:				left;
+	height:				30px;
+	line-height:		30px !important;
+	overflow-x:			hidden;
+    position:			absolute;
+}
+
+ul#navmenu-h li li{
+	height:				30px;
+	left:				0px;
+	margin-bottom:			1px;
+	position:			relative;
+	top:				1px;
+	width:				100%;
+	z-index:			20;}
+
+ul#navmenu-h a,
+ul#navmenu-h div{
+	cursor:				pointer;
+	display:			block;
+	float:				left;
+	font-size:			11px;
+	font-weight:		normal;
+	height:				30px;
+	line-height:		30px !important;
+	overflow:			hidden !important;
+	text-align:			center;
+	text-decoration:	none;
+	width:				100% !important;}
+
+ul#navmenu-h li:hover ul,
+ul#navmenu-h li.iehover ul{
+	display:			block !important;}
+
+/* R.L. (30.10.2012): Second sub-level */
+ul#navmenu-h li:hover ul ul,
+ul#navmenu-h li.iehover ul ul{
+	display:			none !important;}
+
+ul#navmenu-h ul li:hover ul,
+ul#navmenu-h ul li.iehover ul{
+	display:			block !important;}
+/* End: R.L. (30.10.2012): Second sub-level */
+
+ul#navmenu-h li:hover li a,
+ul#navmenu-h li.iehover li a,
+ul#navmenu-h li:hover li div,
+ul#navmenu-h li.iehover li div{
+	text-align:			left; 
+	text-indent:			8px;}
+
+/**************************************************************************/
+/* R.L. (07.06.2012): Additions                                           */
+/**************************************************************************/
+ul#navmenu-h li a span.Border,
+ul#navmenu-h li div span.Border{
+	/*background:			#999999;*/
+	height:				100%;
+	position:			absolute !important;
+	right:				0px;
+	top:				0px;
+	width:				1px;}
+
+ul#navmenu-h .Last span.Border{display: none;}
+
+ul#navmenu-h li.endabledfalse,
+ul#navmenu-h li.endabledfalse:hover,
+ul#navmenu-h li.endabledfalse a,
+ul#navmenu-h li.endabledfalse:hover a,
+ul#navmenu-h li.endabledfalse div,
+ul#navmenu-h li.endabledfalse:hover div{
+	cursor:				auto;}
+
+/**************************************************************************/
+/* JDE (21.08.2012): Navmenü für Workflow im MoveManagement               */
+/**************************************************************************/
+
+ul#workflowMM,
+ul#workflowMM a,
+ul#workflowMM ul,
+ul#workflowMM li{
+	border:				none;
+	display:			block;
+	margin:				0px;
+	overflow-y:			visible !important;
+	overflow:			visible !important;
+	padding:			0px;
+	position:			relative;}
+	
+ul#workflowMM  
+{
+    list-style: none; 
+    height: 50px;
+}
+
+ul#workflowMM ul 
+{
+ display: none;
+ left: 0px;
+ list-style: none;
+ min-height: 50px;
+ width: 160px; 
+ position: absolute !important;
+ top: 100%;
+ z-index: 2000;
+}
+
+ul#workflowMM ul ul,
+ul#workflowMM ul ul ul
+{
+     top: 0px; 
+     left: 100%; 
+     z-index: 99;
+}
+
+ul#workflowMM li
+{
+    float: left;
+    display: inline; 
+    position: relative;
+    width:25%;
+    /*position: absolute;*/
+}
+
+ul#navmenu-h li li
+{
+	left:				0px;
+	position:			relative;
+	top:				1px;
+	width:				100%;
+	z-index:			2100;
+}
+
+ul#workflowMM ul li{
+    width: 100%; 
+    display: block; 
+}
+
+ul#workflowMM a {
+ padding: 6px;
+ float: left;
+ display: block;
+ font: bold 11px Arial, sans-serif;
+ text-decoration: none;
+ height: 1%;
+ width: 100%;
+}
+
+ul#workflowMM a.MenuMM {
+ width: 350px;
+}
+
+ul#workflowMM li:hover ul ul,
+ul#workflowMM li:hover ul ul ul,
+ul#workflowMM li.iehover ul ul,
+ul#workflowMM li.iehover ul ul ul 
+{ 
+    display: none; 
+}
+ul#workflowMM li:hover ul,
+ul#workflowMM ul li:hover ul,
+ul#workflowMM ul ul li:hover ul,
+ul#workflowMM li.iehover ul,
+ul#workflowMM ul li.iehover ul,
+ul#workflowMM ul ul li.iehover ul 
+{ 
+    display: block; 
+}
+
+ul#workflowMM li a span.Border
+{
+	background:			#999999;
+	height:				100%;
+	position:			absolute !important;
+	right:				0px;
+	top:				0px;
+	width:				1px;
+}
+
+ul#workflowMM .Last span.Border
+{
+    display: none;
+}
+
+ul#workflowMM li.endabledfalse,
+ul#workflowMM li.endabledfalse:hover,
+ul#workflowMM li.endabledfalse a,
+ul#workflowMM li.endabledfalse:hover a
+{
+	cursor:	auto;
+}
+
+/************************************************************************/
+/* @@Found: 'Schemes/blackNav.css' */
+/************************************************************************/
+/*@import url('nav-h.css');*/
+
+/**************************************************************************/
+/* R.L. (16.08.2012): Listnavigation for black.                           */
+/**************************************************************************/
+#navmenu-h,
+#navmenu-h li{
+	background-color:#3d3d3d;
+	
+	}
+
+#navmenu-h li ul
+{
+    background-color: #666666;
+}
+
+
+#navmenu-h li li{
+	background-color:		#999999;}
+
+#navmenu-h a,
+#navmenu-h div{
+	color:				#ffffff;
+	font-weight:			normal;}
+
+#navmenu-h a:hover,
+#navmenu-h div:hover{
+	color:				#F6AF39}
+
+#navmenu-h li.endabledfalse,
+#navmenu-h li.endabledfalse:hover,
+#navmenu-h li.endabledfalse a,
+#navmenu-h li.endabledfalse:hover a,
+#navmenu-h li.endabledfalse div,
+#navmenu-h li.endabledfalse:hover div{
+	background-color:		#3d3d3d !important;
+	color:				Gray !important;}
+
+#navmenu-h li.Active a span,
+#navmenu-h li.Active div span{
+	color:				#F6AF39 !important;}
+
+#navmenu-h li a span.Border,
+#navmenu-h li div span.Border{
+	background-color:		#000000;}
+	
+/**************************************************************************/
+/* JDE (21.08.2012): Navmenü black für Workflow im MoveManagement         */
+/**************************************************************************/
+#workflowMM{
+	background-color:		#3d3d3d;}
+
+#workflowMM li{
+	background-color:		#3d3d3d;}
+
+#workflowMM li li{
+	background-color:		#666666;}
+
+#workflowMM a{
+    background-color:		#3d3d3d;
+	color:				    #ffffff;
+	font-weight:			normal;}
+
+#workflowMM a.MenuMM:hover,#workflowMM a:hover
+{
+    color: #F6AF39;
+    background-color: #666666;
+}
+
+#workflowMM li.endabledfalse,
+#workflowMM li.endabledfalse:hover,
+#workflowMM li.endabledfalse a,
+#workflowMM li.endabledfalse:hover a
+{
+	background-color:		#3d3d3d !important;
+	color:				    Gray !important;
+}
+
+#workflowMM li.Active a span
+{
+    color: #F6AF39 !important;
+}
+/************************************************************************/
+/* @@Found: '~/Modules/css/Basic.Print.css' */
+/************************************************************************/
+
+
+@media print {
+   
+    body{
+	    background-color: #fff !important;
+	    color: #000 !important;
+	    -webkit-print-color-adjust: exact;
+	    print-color-adjust: exact;
+    }
+
+    body.Black div.Main div.contentWrapper, body.Black div.Main div.contentWrapper div.Content, body.Black div.Main div.contentWrapper div.Content div.Filter{
+	    background-color: #ffffff !important;
+    }
+
+    input[type='text'], select {
+        border-radius: !important 2px;
+        box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.3);
+    }
+
+    /* combobox select */
+    .combobox-wrapper select {
+        background-image: none;
+    }
+
+    .combobox-wrapper::before {
+        content: "▼";
+        font-size: 9px;
+        z-index:9;
+        position: absolute;
+        right: 6px;
+        top: -1px;
+    }
+
+    /* Tooltips */
+    body.Forms [data-lang-tooltip] {
+        all: unset;
+    }
+
+    /* Form fTitel02 */
+    body.Forms .fTitel02, div.Main div.contentForms div.Content table.Content td.fTitel02{
+	    text-shadow: none;
+    }
+
+    /* Form Register */
+    #navmenu-h, #navmenu-h li{
+	    background-color: #d6d6d6 !important;
+        box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.4);
+    }
+    #navmenu-h a, #navmenu-h div{
+	    color: #000 !important;
+    }
+    #navmenu-h li.Active a span, #navmenu-h li.Active div span{
+	    color: #ff0000 !important;
+    }
+
+
+    /* Form Button Frame */
+    body.Black div.Main div.buttonFrame {
+        display: none;
+    }
+
+}

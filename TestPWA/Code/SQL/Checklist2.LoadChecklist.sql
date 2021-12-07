@@ -21,7 +21,11 @@ AND CLV_CLS_UID IN
 		--,CLS_Date 
 	FROM T_Checklist_ZO_SavedDataSet 
 	WHERE (1=1) 
-	-- AND CLS_UID = @__cls_uid 
-	AND CLS_CLV_UID IN ( SELECT TOP 1 CLV_UID FROM T_ChecklistVersion WHERE CLV_CL_UID = @__cl_uid ORDER BY CLV_Created  DESC  ) 
+	AND 
+	(
+		CLS_UID = @__cls_uid 
+		OR 
+		CLS_CLV_UID = ( SELECT TOP 1 CLV_UID FROM T_ChecklistVersion WHERE CLV_CL_UID = @__cl_uid AND @__cls_uid IS NULL ORDER BY CLV_Created  DESC  ) 
+	) 
 	ORDER BY CLS_Date DESC 
 ) 

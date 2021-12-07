@@ -382,8 +382,8 @@ namespace AnySqlWebAdmin
 
         public T_TM_Tasks()
         {
-            this.TSK_UID = System.Guid.NewGuid();
-
+            // this.TSK_UID = System.Guid.NewGuid();
+            this.TSK_UID = new System.Guid("4E610F56-226B-48AF-BC83-ADF45131170D");
             this.TSK_RM_UID = System.Guid.NewGuid();
             this._TSK_OBJT_Code = "RM";
             this.TSK_OBJT_UID = System.Guid.NewGuid();

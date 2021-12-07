@@ -1,4 +1,41 @@
 
+interface IAvailableLanguages
+{
+    de: string;
+    fr?: string;
+    it?: string;
+    en?: string;
+}
+
+
+// interface ITranslationData { [key: string]: IAvailableLanguages }
+// interface ITranslationData { [key: string]: { [lang: string]: string }  }
+
+//type Languages = Record<"de" | "fr" | "it" | "en", string>
+
+//interface IReadings
+//{
+//    [key: string]: Languages
+//}
+
+
+type PartialRecord<K extends keyof any, T> = { [P in K]?: T; };
+// type List = PartialRecord<'a' | 'b' | 'c', string>
+type AvailableLanguages = "de" | "fr" | "it" | "en";
+type TranslationEntries<T extends string> = Record<T, Record<AvailableLanguages, string>>;
+
+// type AvailableLanguages = "de" | "DE" | "fr" | "FR" | "it" | "IT" | "en" | "EN";
+// type TranslationEntries<T extends string> = Record<T, PartialRecord<AvailableLanguages, string>>;
+
+
+interface IPortalSessionData
+{
+    userLanguage: AvailableLanguages;
+    proc: string;
+    userName: string;
+}
+
+
 interface IT_AP_Standort
 {
     SO_UID: string;
@@ -12,6 +49,7 @@ interface IT_AP_Standort
     _SO_Label: string;
     _SO_Sort: number;
 }
+
 
 
 interface IT_AP_Gebaeude

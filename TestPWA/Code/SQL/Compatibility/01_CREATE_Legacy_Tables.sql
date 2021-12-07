@@ -1,4 +1,10 @@
-﻿
+﻿-- CREATE SCHEMA smtp; 
+-- ALTER SCHEMA smtp TRANSFER dbo.messages
+
+
+GO
+
+
 IF EXISTS(
 	SELECT * FROM INFORMATION_SCHEMA.TABLES  
 	WHERE TABLE_TYPE = 'BASE TABLE' 
@@ -26,11 +32,12 @@ CREATE TABLE dbo.T_Benutzer
 	,BE_ActiveDirectoryUID uniqueidentifier NULL
 	,BE_Domaene national character varying(255) NULL
 	,BE_Email character varying(500) NULL
+	,BE_Status int NULL 
 	,BE_usePRT bit NULL
 	,BE_useMOD bit NULL
 	,BE_useNA bit NULL
 	 
-	,BE_Hash AS ( LOWER(CONVERT(varchar(32), HashBytes('MD5', LOWER(BE_User)), 2)) ) PERSISTED 
+	,BE_Hash AS ( LOWER(CONVERT(varchar(32), HashBytes('MD5', LOWER(CAST(BE_User AS varchar(50)))), 2)) ) PERSISTED 
 	,BE_IsCOR_Hash AS ( LOWER(CONVERT(varchar(32), HashBytes('MD5', 'IsCorUser'+ LOWER(BE_User)), 2)) ) PERSISTED 
 
 	-- ,BE_Hash AS ( LOWER(SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('MD5', LOWER(BE_User))), 3, 32) )  ) PERSISTED 
@@ -137,6 +144,14 @@ GO
 
 
 
+-- ALTER TABLE dbo.T_Benutzer DROP COLUMN BE_Hash; 
+-- ALTER TABLE dbo.T_Benutzer DROP COLUMN BE_IsCOR_Hash; 
+
+-- ALTER TABLE dbo.T_Benutzer ADD BE_Hash AS ( LOWER(CONVERT(varchar(32), HashBytes('MD5', LOWER(CAST(BE_User AS varchar(50)))), 2)) ) PERSISTED 
+-- ALTER TABLE dbo.T_Benutzer ADD BE_IsCOR_Hash AS (LOWER(CONVERT(varchar(32), HashBytes('MD5','IsCorUser' + LOWER(CAST(BE_User AS varchar(50)))),(2)))) PERSISTED 
+
+
+
 
 DELETE FROM dbo.T_Benutzer; 
 
@@ -156,6 +171,7 @@ GO
 		BE_ActiveDirectoryUID uniqueidentifier NULL,
 		BE_Domaene nvarchar(255) NULL,
 		BE_Email varchar(500) NULL,
+		BE_Status int NULL, 
 		BE_usePRT bit NULL,
 		BE_useMOD bit NULL,
 		BE_useNA bit NULL
@@ -172,11 +188,35 @@ GO
 		,BE_ActiveDirectoryUID 
 		,BE_Domaene 
 		,BE_Email 
+		,BE_Status 
 		,BE_usePRT 
 		,BE_useMOD 
 		,BE_useNA 
 	) 
-	VALUES (1, N'Noob', N'McNoobington', N'DE', N'noob.mcnoobington', N'84e1999d5794cf8c064e82e110ae3c49', NULL, NULL, NULL, NULL, NULL, NULL);
+	VALUES (1, N'Noob', N'McNoobington', N'DE', N'noob.mcnoobington', N'84e1999d5794cf8c064e82e110ae3c49', NULL, NULL, NULL, 1, NULL, NULL, NULL);
+
+		
+	INSERT INTO @foo 
+	( 
+		 BE_ID 
+		,BE_Name 
+		,BE_Vorname 
+		,BE_Language 
+		,BE_User 
+		,BE_Hash 
+		,BE_ActiveDirectoryUID 
+		,BE_Domaene 
+		,BE_Email 
+		,BE_usePRT 
+		,BE_useMOD 
+		,BE_useNA 
+	) 
+	VALUES (12435, N'Administrator', N'DE', N'DE', N'administrator', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL);
+
+	-- INSERT INTO dbo.T_Benutzer(BE_ID, BE_Name, BE_Vorname, BE_Language, BE_User, BE_ActiveDirectoryUID, BE_Domaene, BE_Email, BE_Status, BE_usePRT, BE_useMOD, BE_useNA) VALUES (1, N'Noob', N'McNoobington', N'DE', N'noob.mcnoobington', NULL, NULL, 1, NULL, NULL, NULL, NULL); 
+	-- INSERT INTO dbo.T_Benutzer(BE_ID, BE_Name, BE_Vorname, BE_Language, BE_User, BE_ActiveDirectoryUID, BE_Domaene, BE_Email, BE_Status, BE_usePRT, BE_useMOD, BE_useNA) VALUES (12435, N'Administrator', N'DE', N'DE', N'administrator', NULL, NULL, 1, NULL, NULL, NULL, NULL); 
+
+
 
 
 	INSERT dbo.T_Benutzer
@@ -219,6 +259,9 @@ GO
 
 
 
+UPDATE T_Benutzer SET BE_Status = 1; 
+
+GO
 
 
 CREATE TABLE [dbo].[T_COR_Objekte](
@@ -364,4 +407,152 @@ CREATE TABLE [dbo].[T_TM_Tasks]
 ); 
 
 GO
+
+
+
+INSERT INTO dbo.T_TM_Tasks
+(
+	 TSK_UID
+	,TSK_MDT_ID
+	,TSK_OBJT_UID
+	,TSK_Nr
+	,TSK_Beschreibung
+	,TSK_TerminVon
+	,TSK_TerminBis
+	,TSK_Kosten
+	,TSK_Bemerkung
+	,TSK_Status
+	,TSK_ErfDate
+	,TSK_MutUser
+	,TSK_MutDate
+	,TSK_TPRI_UID
+	,TSK_TART_UID
+	,TSK_TSTA_UID
+	,TSK_ADR_UID_zustaendig
+	,TSK_TPL_UID
+	,TSK_TPL_PlanungVon
+	,TSK_TPL_PlanungBis
+	,TSK_VWS_IsVWS
+	,TSK_VWS_FormID
+	,TSK_SO_UID
+	,TSK_GB_UID
+	,TSK_TK_UID
+	,TSK_GS_UID
+	,TSK_RM_UID
+	,TSK_TR_UID
+	,TSK_AL_UID
+	,TSK_KU_UID
+	,TSK_MO_UID
+	,TSK_PP_UID
+	,TSK_AP_UID
+	,TSK_SH_UID
+	,TSK_ADR_UID
+	,TSK_VTR_UID
+	,TSK_KT_UID
+	,TSK_BE_ID_erfasser
+	,TSK_BE_ID_verantwortlich
+	,TSK_ErledigtAm
+	,TSK_DO_UID
+	,TSK_IN_UID
+	,TSK_KM_UID
+	,TSK_TCL_UID
+	,TSK_AO_UID
+	,TSK_TSK_UID
+	,TSK_ZYL_UID
+	,TSK_SLG_UID
+	,TSK_BP_UID
+	,TSK_ABT_UID
+	,TSK_IsStoerung
+	,TSK_SM_Erfasser_Name
+	,TSK_SM_Erfasser_Vorname
+	,TSK_SM_Erfasser_Tel
+	,TSK_SM_Erfasser_Email
+	,TSK_ZN_UID
+	,TSK_Sort
+	,TSK_FZ_UID
+	,TSK_BG_ID_verantwortlich
+	,TSK_BU_UID
+	,TSK_IKS_Nr
+	,TSK_ST_UID
+	,TSK_ST2_UID
+	,TSK_KOM_VTR_UID
+	,TSK_KOM_InterneVerrechnung
+	,TSK_KOM_InterneVerrechnungMaterial
+	,TSK_KOM_ADR_UID
+)
+SELECT 
+	'4e610f56-226b-48af-bc83-adf45131170d' AS TSK_UID -- uniqueidentifier
+	,0 AS TSK_MDT_ID -- int
+	,'50c2ff8b-c265-4049-b1a7-dbc852bd3fe2' AS TSK_OBJT_UID -- uniqueidentifier
+	,'123' AS TSK_Nr -- varchar(25)
+	,'Test' AS TSK_Beschreibung -- varchar(255)
+	,'17530101' AS TSK_TerminVon -- datetime
+	,'29991231' AS TSK_TerminBis -- datetime
+	,100.23 AS TSK_Kosten -- float
+	,NULL AS TSK_Bemerkung -- varchar(max)
+	,1 AS TSK_Status -- int
+	,CURRENT_TIMESTAMP AS TSK_ErfDate -- datetime
+	,NULL AS TSK_MutUser -- varchar(50)
+	,NULL AS TSK_MutDate -- datetime
+	,NEWID() AS TSK_TPRI_UID -- uniqueidentifier
+	,NEWID() AS TSK_TART_UID -- uniqueidentifier
+	,NEWID() AS TSK_TSTA_UID -- uniqueidentifier
+	,NULL AS TSK_ADR_UID_zustaendig -- uniqueidentifier
+	,NULL AS TSK_TPL_UID -- uniqueidentifier
+	,NULL AS TSK_TPL_PlanungVon -- datetime
+	,NULL AS TSK_TPL_PlanungBis -- datetime
+	,0 AS TSK_VWS_IsVWS -- bit
+	,NULL AS TSK_VWS_FormID -- varchar(36)
+	,NULL AS TSK_SO_UID -- uniqueidentifier
+	,NULL AS TSK_GB_UID -- uniqueidentifier
+	,NULL AS TSK_TK_UID -- uniqueidentifier
+	,NULL AS TSK_GS_UID -- uniqueidentifier
+	,NULL AS TSK_RM_UID -- uniqueidentifier
+	,NULL AS TSK_TR_UID -- uniqueidentifier
+	,'c4009949-a25d-4163-8325-0999092c1253' AS TSK_AL_UID -- uniqueidentifier
+	,NULL AS TSK_KU_UID -- uniqueidentifier
+	,NULL AS TSK_MO_UID -- uniqueidentifier
+	,NULL AS TSK_PP_UID -- uniqueidentifier
+	,NULL AS TSK_AP_UID -- uniqueidentifier
+	,NULL AS TSK_SH_UID -- uniqueidentifier
+	,NULL AS TSK_ADR_UID -- uniqueidentifier
+	,NULL AS TSK_VTR_UID -- uniqueidentifier
+	,NULL AS TSK_KT_UID -- uniqueidentifier
+	,NULL AS TSK_BE_ID_erfasser -- int
+	,NULL AS TSK_BE_ID_verantwortlich -- int
+	,NULL AS TSK_ErledigtAm -- datetime
+	,NULL AS TSK_DO_UID -- uniqueidentifier
+	,NULL AS TSK_IN_UID -- uniqueidentifier
+	,NULL AS TSK_KM_UID -- uniqueidentifier
+	,NULL AS TSK_TCL_UID -- uniqueidentifier
+	,NULL AS TSK_AO_UID -- uniqueidentifier
+	,NULL AS TSK_TSK_UID -- uniqueidentifier
+	,NULL AS TSK_ZYL_UID -- uniqueidentifier
+	,NULL AS TSK_SLG_UID -- uniqueidentifier
+	,NULL AS TSK_BP_UID -- uniqueidentifier
+	,NULL AS TSK_ABT_UID -- uniqueidentifier
+	,0 AS TSK_IsStoerung -- bit
+	,NULL AS TSK_SM_Erfasser_Name -- varchar(100)
+	,NULL AS TSK_SM_Erfasser_Vorname -- varchar(100)
+	,NULL AS TSK_SM_Erfasser_Tel -- varchar(50)
+	,NULL AS TSK_SM_Erfasser_Email -- varchar(255)
+	,NULL AS TSK_ZN_UID -- uniqueidentifier
+	,NULL AS TSK_Sort -- int
+	,NULL AS TSK_FZ_UID -- uniqueidentifier
+	,NULL AS TSK_BG_ID_verantwortlich -- int
+	,NULL AS TSK_BU_UID -- uniqueidentifier
+	,NULL AS TSK_IKS_Nr -- varchar(50)
+	,NULL AS TSK_ST_UID -- uniqueidentifier
+	,NULL AS TSK_ST2_UID -- uniqueidentifier
+	,NULL AS TSK_KOM_VTR_UID -- uniqueidentifier
+	,NULL AS TSK_KOM_InterneVerrechnung -- bit
+	,NULL AS TSK_KOM_InterneVerrechnungMaterial -- bit
+	,NULL AS TSK_KOM_ADR_UID -- uniqueidentifier
+WHERE NOT EXISTS(SELECT * FROM T_TM_Tasks WHERE TSK_UID = '4E610F56-226B-48AF-BC83-ADF45131170D' )
+
+
+GO 
+
+
+
 
