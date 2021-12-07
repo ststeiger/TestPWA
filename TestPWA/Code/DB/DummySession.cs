@@ -13,6 +13,7 @@ namespace AnySqlWebAdmin
 
         public cODS ods;
         public cMainDS mainDS;
+        public cMainDS mainDS_TSK;
 
         public DummySession()
         {
@@ -23,6 +24,8 @@ namespace AnySqlWebAdmin
             this.formtype = "black";
 
             this.mainDS = new cMainDS();
+            this.mainDS_TSK = new cMainDS();
+
             this.ods = this.mainDS.m_ods; ;
         }
     }

@@ -25,10 +25,10 @@
 				,NULL AS REG_REG_UID 
 				,NULL AS REG_MOD_UID 
 				,'CHKL2' AS REG_Code 
-				,'Checkliste' AS REG_LANG_DE 
-				,'Checklist ' AS REG_LANG_EN 
-				,'Liste de contrôle' AS REG_LANG_FR 
-				,'Lista di controllo' AS REG_LANG_IT 
+				,'Checkliste 2' AS REG_LANG_DE 
+				,'Checklist 2' AS REG_LANG_EN 
+				,'Liste de contrôle 2' AS REG_LANG_FR 
+				,'Lista di controllo 2' AS REG_LANG_IT 
 				,'~/templates/forms/iframe.ascx?src=Checklist2/debug.htm' AS REG_Control 
 				-- ,'~/templates/forms/iframe.ascx?src=BuildingData/BuildingData.htm' AS REG_Control 
 				,1 AS REG_Show 

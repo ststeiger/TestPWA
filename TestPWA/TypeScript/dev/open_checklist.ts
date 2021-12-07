@@ -1001,7 +1001,7 @@ function addStylesheet(url: string, id?:string)
 
 function getObj(sess: IBasicSession): IBasicObject
 {
-    let obj = sess.mainDS.main[0];
+    let obj = (sess.mainDS_TSK || sess.mainDS).main[0];
     let SO_UID = (<IT_AP_Standort>obj).SO_UID;
     let GB_UID = (<IT_AP_Gebaeude>obj).GB_UID;
     let GS_UID = (<IT_AP_Geschoss>obj).GS_UID;
@@ -1175,6 +1175,8 @@ async function loadMainContainer()
     let urlAvailable = "../ajax/AnySelect.ashx?sql=Checklist2.GetAvailableChecklists.sql&format=1";
     // console.log(params);
     let allChecklistsData = <IAjaxResult<any>>await ajax.fetchJSON(urlAvailable, params);
+    // console.log(obj);
+
 
     if (obj.OBJT_Code === "TSK")
     {
@@ -1189,17 +1191,19 @@ async function loadMainContainer()
         params.__objt_code = obj.OBJT_Code;
     }
 
-    // console.log("obj", obj);
+    // console.log("params2", params);
     let availableChecklistsData = <IAjaxResult<any>>await ajax.fetchJSON(urlAvailable, params);
 
     if (allChecklistsData.hasError)
     {
+        console.log(allChecklistsData.error);
         alert("Error loading checklist-data1:\r\n" + allChecklistsData.error.message);
         return;
     }
 
     if (availableChecklistsData.hasError)
     {
+        console.log(availableChecklistsData.error);
         alert("Error loading checklist-data2:\r\n" + availableChecklistsData.error.message);
         return;
     }

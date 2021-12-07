@@ -761,7 +761,7 @@ function addStylesheet(url, id) {
     h.appendChild(ss);
 }
 function getObj(sess) {
-    var obj = sess.mainDS.main[0];
+    var obj = (sess.mainDS_TSK || sess.mainDS).main[0];
     var SO_UID = obj.SO_UID;
     var GB_UID = obj.GB_UID;
     var GS_UID = obj.GS_UID;
@@ -930,10 +930,12 @@ function loadMainContainer() {
                 case 3:
                     availableChecklistsData = _a.sent();
                     if (allChecklistsData.hasError) {
+                        console.log(allChecklistsData.error);
                         alert("Error loading checklist-data1:\r\n" + allChecklistsData.error.message);
                         return [2];
                     }
                     if (availableChecklistsData.hasError) {
+                        console.log(availableChecklistsData.error);
                         alert("Error loading checklist-data2:\r\n" + availableChecklistsData.error.message);
                         return [2];
                     }

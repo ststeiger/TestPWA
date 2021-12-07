@@ -15,8 +15,8 @@
 				,1 AS ZO_OBJTREG_Status 
 			FROM 
 			(
-				SELECT TOP 1 OBJT_UID FROM T_OV_Ref_ObjektTyp WHERE OBJT_Status = 1 AND OBJT_Lang_DE = 'Standort' 
-				-- SELECT TOP 1 OBJT_UID FROM T_OV_Ref_ObjektTyp WHERE OBJT_Status = 1 AND OBJT_Lang_DE = 'Task' 
+				-- SELECT TOP 1 OBJT_UID FROM T_OV_Ref_ObjektTyp WHERE OBJT_Status = 1 AND OBJT_Lang_DE = 'Standort' 
+				SELECT TOP 1 OBJT_UID FROM T_OV_Ref_ObjektTyp WHERE OBJT_Status = 1 AND OBJT_Lang_DE = 'Task' 
 			) AS tObjektTyp 
 		) AS tSource 
     

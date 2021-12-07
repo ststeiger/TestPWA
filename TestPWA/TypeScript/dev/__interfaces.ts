@@ -220,6 +220,7 @@ interface IBasicSession
 
     ods: IODS;
     mainDS: IMainDS;
+    mainDS_TSK: IMainDS;
 }
 
 interface IBasicObject
