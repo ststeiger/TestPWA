@@ -29,8 +29,8 @@
 				,'Checklist 2' AS REG_LANG_EN 
 				,'Liste de contrôle 2' AS REG_LANG_FR 
 				,'Lista di controllo 2' AS REG_LANG_IT 
-				,'~/templates/forms/iframe.ascx?src=Checklist2/debug.htm' AS REG_Control 
-				-- ,'~/templates/forms/iframe.ascx?src=BuildingData/BuildingData.htm' AS REG_Control 
+				-- ,'~/templates/forms/iframe.ascx?src=Checklist2/debug.htm' AS REG_Control 
+                ,'~/templates/forms/iframe.ascx?src={@basic}Checklist2/debug.htm' AS REG_Control 
 				,1 AS REG_Show 
 				,1 AS REG_Status 
 				,31 AS REG_Sort 
