@@ -24,7 +24,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Code\SQL\Navigation\Register\" />
     <Folder Include="wwwroot\Checklist2\ts\" />
     <Folder Include="wwwroot\ts\" />
   </ItemGroup>
