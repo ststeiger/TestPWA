@@ -1,8 +1,9 @@
 ﻿
 namespace AnySqlWebAdmin
 {
-    
-    
+#pragma warning disable CA1416
+
+
     public class SecretManager
     {
 
@@ -262,14 +263,17 @@ namespace AnySqlWebAdmin
             } // End Try
             catch (System.Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
                 throw;
             } // End Catch
 
-            return InlineTypeAssignHelper<T>(null);
         } // End Function ObjectToGeneric 
 
 
     } // End Class SecretManager 
 
 
+
+#pragma warning restore CA1416
 } // End Namespace 

@@ -31,48 +31,23 @@ namespace TestPWA
 
         public static void Main(string[] args)
         {
-            // https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqldatareader.getschematable?view=dotnet-plat-ext-6.0
-            AnySqlWebAdmin.SqlFactory fac = new AnySqlWebAdmin.SqlFactory();
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/global_objects/encodeURIComponent
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/global_objects/decodeUriComponent
+            // string enc = GlobalObj.encodeURIComponent("hello(world) give me five+six 2%3=2&");
+            // string enc = URLEncoder.encode("hello(world) give me five+six 2%3=2&");
+            // string enc = EcmaEncodeDecode.escape("hello(world) give me five+six 2%3=2&");
+            // string enc = EcmaEncodeDecode.encodeURIComponent("hello(world) give me five+six 2%3=2& 你好，世界");
+            // System.Console.WriteLine(enc);
 
-            using (System.Data.Common.DbConnection con = fac.Connection)
-            {
-                using (System.Data.Common.DbCommand cmd = con.CreateCommand())
-                {
-                    cmd.CommandText = "SELECT * FROM T_TM_Tasks";
-
-                    using (System.Data.Common.DbDataReader rdr = cmd.ExecuteReader())
-                    {
-                        System.Data.DataTable dt = rdr.GetSchemaTable();
-
-                        object obj = dt.Rows[0]["ColumnSize"];
-                        System.Console.WriteLine(obj.GetType());
-
-                        System.Console.WriteLine(dt);
-                    }
-                }
-            }
+            // InfoExtraction.GetTranslations();
+            // InfoExtraction.ReplaceCssImages();
 
 
 
 
-
-                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/global_objects/encodeURIComponent
-                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/global_objects/decodeUriComponent
-                // string enc = GlobalObj.encodeURIComponent("hello(world) give me five+six 2%3=2&");
-                // string enc = URLEncoder.encode("hello(world) give me five+six 2%3=2&");
-                // string enc = EcmaEncodeDecode.escape("hello(world) give me five+six 2%3=2&");
-                // string enc = EcmaEncodeDecode.encodeURIComponent("hello(world) give me five+six 2%3=2& 你好，世界");
-                // System.Console.WriteLine(enc);
-
-                // InfoExtraction.GetTranslations();
-                // InfoExtraction.ReplaceCssImages();
-
-
-
-
-                // DbHtml.GenerateAllChecklists();
-                // TestEpPlus.Test(); return;
-                CreateHostBuilder(args).Build().Run();
+            // DbHtml.GenerateAllChecklists();
+            // TestEpPlus.Test(); return;
+            CreateHostBuilder(args).Build().Run();
         } // End Sub Main 
 
 
