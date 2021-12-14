@@ -38,7 +38,7 @@ CREATE TABLE dbo.T_Benutzer
 	,BE_useNA bit NULL
 	 
 	,BE_Hash AS ( LOWER(CONVERT(varchar(32), HashBytes('MD5', LOWER(CAST(BE_User AS varchar(50)))), 2)) ) PERSISTED 
-	,BE_IsCOR_Hash AS ( LOWER(CONVERT(varchar(32), HashBytes('MD5', 'IsCorUser'+ LOWER(BE_User)), 2)) ) PERSISTED 
+	,BE_IsCOR_Hash AS ( LOWER(CONVERT(varchar(32), HashBytes('MD5', 'IsCorUser'+ LOWER(CAST(BE_User AS varchar(50)))), 2)) ) PERSISTED 
 
 	-- ,BE_Hash AS ( LOWER(SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('MD5', LOWER(BE_User))), 3, 32) )  ) PERSISTED 
 	-- ,BE_IsCOR_Hash AS ( SUBSTRING(master.dbo.fn_varbintohexstr (HashBytes('MD5', 'IsCorUser' + lower(BE_User ))), 3, 32) ) PERSISTED 
