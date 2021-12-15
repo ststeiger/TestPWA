@@ -54,6 +54,12 @@ function isPrimitive(val: any)
     return !(typeof val == "object" || typeof val == "function");
 }
 
+function isArray(obj:any)
+{
+    return !!obj && obj.constructor === Array;
+}
+
+
 
 
 function objectToQueryString(obj:any)
@@ -64,14 +70,34 @@ function objectToQueryString(obj:any)
         if (obj.hasOwnProperty(p))
         {
             if (isPrimitive(obj[p]))
+            { 
                 str.push(urlEncode(p) + "=" + urlEncode(obj[p]));
+            }
+            else if (isArray(obj[p]))
+            {
+                let t: any[] = obj[p];
+
+                for (let i = 0; i < t.length; ++i)
+                {
+                    str.push(urlEncode(p) + "=" + urlEncode(t[i]));
+                }
+            }
         }
     }
 
     return str.join("&");
 }
 
-let person = { first_name: "Marty", last_name: "Mcfly" };
+let person = {
+    "first_name": "Marty",
+    "last_name": "Mcfly",
+    "dependencies": ["stack", "queue", "linked_list"],
+    "objects": {
+        "key1": "value 1",
+        "key2": "value 2",
+        "key3": "value 3"
+    }
+};
 let queryString = objectToQueryString(person); 
 
 
