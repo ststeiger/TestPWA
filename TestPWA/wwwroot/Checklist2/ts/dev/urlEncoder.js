@@ -25,18 +25,33 @@ function isPrimitive(val) {
 function isArray(obj) {
     return !!obj && obj.constructor === Array;
 }
-function objectToQueryString(obj) {
+function isObject(obj) {
+    return (typeof obj === 'object' && obj !== null);
+}
+function objectToQueryString(obj, key) {
     var str = [];
-    for (var p in obj) {
-        if (obj.hasOwnProperty(p)) {
-            if (isPrimitive(obj[p])) {
-                str.push(urlEncode(p) + "=" + urlEncode(obj[p]));
-            }
-            else if (isArray(obj[p])) {
-                var t = obj[p];
-                for (var i = 0; i < t.length; ++i) {
-                    str.push(urlEncode(p) + "=" + urlEncode(t[i]));
-                }
+    if (isPrimitive(obj)) {
+        if (obj != null)
+            str.push(String(obj));
+    }
+    else if (isArray(obj)) {
+        var t = obj;
+        for (var i = 0; i < t.length; ++i) {
+            var v = objectToQueryString(t[i]);
+            if (v != null)
+                str.push(urlEncode(key || i.toString()) + "=" + urlEncode(v));
+        }
+    }
+    else if (isObject(obj)) {
+        for (var p in obj) {
+            if (!obj.hasOwnProperty(p))
+                continue;
+            var r = objectToQueryString(obj[p], p);
+            if (r != null) {
+                if (isArray(obj[p]))
+                    str.push(r);
+                else
+                    str.push(urlEncode(p) + "=" + urlEncode(r));
             }
         }
     }
@@ -53,21 +68,27 @@ var person = {
     }
 };
 var queryString = objectToQueryString(person);
-function nestedLoop(obj) {
-    var res = {};
-    function recurse(obj) {
-        for (var key in obj) {
-            var value = obj[key];
-            if (value != undefined) {
-                if (value && typeof value === 'object') {
-                    recurse(value);
-                }
-                else {
-                    res[key] = value;
-                }
+console.log(queryString);
+function unpack(qs) {
+    var obj = {};
+    var values = qs.split("&");
+    for (var i = 0; i < values.length; ++i) {
+        var kvp = values[i].split("=");
+        var k = decodeURIComponent(kvp[0]);
+        var v = decodeURIComponent(kvp[1]);
+        if (obj.hasOwnProperty(k)) {
+            if (isArray(obj[k]))
+                obj[k].push(v);
+            else {
+                var t = obj[k];
+                obj[k] = [t];
+                obj[k].push(v);
             }
         }
+        else
+            obj[k] = v;
     }
-    recurse(obj);
-    return res;
+    return obj;
 }
+console.log(unpack(queryString));
+console.log(unpack(unpack(queryString).objects));

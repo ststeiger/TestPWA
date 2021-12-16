@@ -60,29 +60,52 @@ function isArray(obj:any)
 }
 
 
+function isObject(obj: any)
+{
+    return (typeof obj === 'object' && obj !== null);
+}
 
 
-function objectToQueryString(obj:any)
+
+
+function objectToQueryString(obj:any, key?:string):string
 {
     let str = [];
-    for (let p in obj)
-    {
-        if (obj.hasOwnProperty(p))
-        {
-            if (isPrimitive(obj[p]))
-            { 
-                str.push(urlEncode(p) + "=" + urlEncode(obj[p]));
-            }
-            else if (isArray(obj[p]))
-            {
-                let t: any[] = obj[p];
 
-                for (let i = 0; i < t.length; ++i)
-                {
-                    str.push(urlEncode(p) + "=" + urlEncode(t[i]));
-                }
+    if (isPrimitive(obj))
+    {
+        if(obj != null)
+            str.push(String(obj));
+    }
+    else if (isArray(obj))
+    {
+        let t: any[] = obj;
+
+        for (let i = 0; i < t.length; ++i)
+        {
+            let v = objectToQueryString(t[i]);
+            if(v!= null)
+                str.push(urlEncode(key || i.toString()) + "=" + urlEncode(v));
+        }
+    }
+    else if (isObject(obj))
+    {
+        for (let p in obj)
+        {
+            if (!obj.hasOwnProperty(p))
+                continue;
+
+            let r = objectToQueryString(obj[p], p);
+
+            if (r != null)
+            {
+                if (isArray(obj[p]))
+                    str.push(r);
+                else
+                    str.push(urlEncode(p) + "=" + urlEncode(r));
             }
         }
+
     }
 
     return str.join("&");
@@ -99,33 +122,39 @@ let person = {
     }
 };
 let queryString = objectToQueryString(person); 
+console.log(queryString);
 
 
-
-function nestedLoop(obj:any)
+function unpack(qs:string)
 {
-    const res:any = {};
+    let obj:any = {};
 
-    function recurse(obj:any)
+    let values = qs.split("&");
+    for (let i = 0; i < values.length; ++i)
     {
-        for (const key in obj)
+        let kvp = values[i].split("=");
+        let k = decodeURIComponent(kvp[0]);
+        let v = decodeURIComponent(kvp[1]);
+
+        if (obj.hasOwnProperty(k))
         {
-            let value = obj[key];
-            if (value != undefined)
+            if (isArray(obj[k]))
+                obj[k].push(v);
+            else
             {
-                if (value && typeof value === 'object')
-                {
-                    recurse(value);
-                }
-                else
-                {
-                    // Do your stuff here to var value
-                    res[key] = value;
-                }
+                let t = obj[k];
+                obj[k] = [t];
+                obj[k].push(v);
             }
         }
+        else
+            obj[k] = v;
+        
     }
-    
-    recurse(obj);
-    return res;
+
+    return obj;
 }
+
+
+console.log(unpack(queryString));
+console.log(unpack(unpack(queryString).objects))
