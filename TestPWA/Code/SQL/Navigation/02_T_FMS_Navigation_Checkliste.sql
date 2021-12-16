@@ -25,7 +25,7 @@ SET @xml = N'<?xml version="1.0" encoding="utf-16" standalone="yes"?>
         <NA_NodeID xsi:nil="true" />
         <NA_ParentNodeID>coRight</NA_ParentNodeID>
         <NA_Sort>110</NA_Sort>
-        <NA_Status>1</NA_Status>
+        <NA_Status>99</NA_Status>
         <NA_useLoading xsi:nil="true" />
         <NA_MOD_UID xsi:nil="true" />
         <NA_Guidename xsi:nil="true" />

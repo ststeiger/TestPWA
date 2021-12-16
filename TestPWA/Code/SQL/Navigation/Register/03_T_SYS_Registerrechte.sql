@@ -11,16 +11,25 @@
     FROM 
     ( 
 		SELECT 
-			 NEWID() AS REGR_UID
-			,T_Benutzergruppen.ID AS REGR_GRANTEE_ID
-			,'75B859DB-65A0-4E6C-8D8D-FECFF83A4773' AS REGR_REG_UID
-			,1 AS REGR_IsRead
-			,1 AS REGR_Status
-			,0 AS REGR_MDT_ID
+			 NEWID() AS REGR_UID 
+			,T_Benutzergruppen.ID AS REGR_GRANTEE_ID 
+			,'75B859DB-65A0-4E6C-8D8D-FECFF83A4773' AS REGR_REG_UID 
+			,1 AS REGR_IsRead 
+			,1 AS REGR_Status 
+			,0 AS REGR_MDT_ID 
 		FROM 
-		(
+		( 
 			SELECT * FROM T_Benutzergruppen 
-			WHERE Name IN ('Administratoren', 'Power-User')
+			WHERE Name IN ('Administratoren', 'Power-User') 
+			OR ID IN 
+			( 
+				SELECT REGR_GRANTEE_ID 
+				FROM T_SYS_Registerrechte 
+				WHERE REGR_REG_UID = '153A8620-A3C0-4E80-8A21-39A3557C3205' 
+				AND REGR_IsRead = 1 
+				AND REGR_Status = 1 
+				GROUP BY REGR_GRANTEE_ID 
+			) 
 		) AS T_Benutzergruppen 
 	) AS tSource 
     
