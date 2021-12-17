@@ -45,31 +45,29 @@
 
 
 
-http://localhost/VIR_DIR/API/Tables/{schema_name}/{table_name}
-http://localhost/VIR_DIR/API/Views/{schema_name}/{view_name}
-http://localhost/VIR_DIR/API/TVF/{schema_name}/{function_name}
-http://localhost/VIR_DIR/API/SF/{schema_name}/{function_name}
-http://localhost/VIR_DIR/API/Procedures/{schema_name}/{procedure_name}
-http://localhost/VIR_DIR/API/Resources/{schema_name}/{procedure_name}
-http://localhost/VIR_DIR/API/Basic_SQL/{schema_name}/{procedure_name}
-http://localhost/VIR_DIR/API/Documents/{DK_UID}/{dateiname}
-http://localhost/VIR_DIR/API/SVG/{SVG_UID}/{dateiname}
-http://localhost/VIR_DIR/API/Images/{DK_UID}/{dateiname}
-http://localhost/VIR_DIR/API/CSS/{DK_UID}/{dateiname}
-http://localhost/VIR_DIR/API/Scripts/{state}/{dateiname}
-http://localhost/VIR_DIR/API/Modules/{module_type}/{file_name}
+// http://localhost/VIR_DIR/API/Tables/{schema_name}/{table_name}
+// http://localhost/VIR_DIR/API/Views/{schema_name}/{view_name}
+// http://localhost/VIR_DIR/API/TVF/{schema_name}/{function_name}
+// http://localhost/VIR_DIR/API/SF/{schema_name}/{function_name}
+// http://localhost/VIR_DIR/API/Procedures/{schema_name}/{procedure_name}
+// http://localhost/VIR_DIR/API/Resources/{schema_name}/{procedure_name}
+// http://localhost/VIR_DIR/API/Basic_SQL/{schema_name}/{procedure_name}
+// http://localhost/VIR_DIR/API/Documents/{DK_UID}/{dateiname}
+// http://localhost/VIR_DIR/API/SVG/{SVG_UID}/{dateiname}
+// http://localhost/VIR_DIR/API/Images/{DK_UID}/{dateiname}
+// http://localhost/VIR_DIR/API/CSS/{DK_UID}/{dateiname}
+// http://localhost/VIR_DIR/API/Scripts/{state}/{dateiname}
+// http://localhost/VIR_DIR/API/Modules/{module_type}/{file_name}
+
+// http://localhost/VIR_DIR/API/{ds}/Tables/{schema_name}/{table_name}
 
 
 
-http://localhost/VIR_DIR/API/{ds}/Tables/{schema_name}/{table_name}
-
-
-
-fields
-for tables 
-for views
-for table - valued functions
-for scalar - functions
+// fields
+// for tables 
+// for views
+// for table - valued functions
+// for scalar - functions
 
 
 
