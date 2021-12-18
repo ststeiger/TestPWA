@@ -1,6 +1,8 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.lunar = void 0;
 var lunar = (function () {
-    function lunar() {
+    function lunar(d) {
         this.lunarMonthday = [
             1887, 0x1694, 0x16aa, 0x4ad5,
             0xab6, 0xc4b7, 0x4ae, 0xa56, 0xb52a, 0x1d2a, 0xd54, 0x75aa, 0x156a,
@@ -68,11 +70,11 @@ var lunar = (function () {
             0x106a3d, 0x106c51, 0x106e47, 0x10703c, 0x10724f, 0x107444,
             0x107638, 0x10784c, 0x107a3f, 0x107c53, 0x107e48
         ];
+        this.m_backingDate = d || (new Date());
     }
     lunar.prototype.getBitInt = function (data, length, shift) {
         return (data & (((1 << length) - 1) << shift)) >> shift;
     };
-    ;
     lunar.prototype.solarToInt = function (y, m, d) {
         y = parseInt(y.toString(), 10);
         m = parseInt(m.toString(), 10);
@@ -82,14 +84,20 @@ var lunar = (function () {
         return 365 * y + parseInt((y / 4).toString()) - parseInt((y / 100).toString()) + parseInt((y / 400).toString()) + parseInt(((m * 306 + 5) / 10).toString())
             + (d - 1);
     };
-    lunar.prototype.year = function (a) {
-        return 2021;
+    lunar.prototype.year = function (y) {
+        if (y == null)
+            return this.m_backingDate.getUTCFullYear();
+        this.m_backingDate.setUTCFullYear(parseInt(y.toString()));
     };
-    lunar.prototype.month = function (a) {
-        return 1;
+    lunar.prototype.month = function (M) {
+        if (M == null)
+            return this.m_backingDate.getUTCMonth();
+        this.m_backingDate.setUTCMonth(parseInt(M.toString()));
     };
-    lunar.prototype.date = function () {
-        return 1;
+    lunar.prototype.date = function (d) {
+        if (d == null)
+            return this.m_backingDate.getUTCDate();
+        this.m_backingDate.setUTCDate(parseInt(d.toString()));
     };
     lunar.prototype.isLeanMonth = function () {
         return false;
@@ -167,3 +175,4 @@ var lunar = (function () {
     };
     return lunar;
 }());
+exports.lunar = lunar;

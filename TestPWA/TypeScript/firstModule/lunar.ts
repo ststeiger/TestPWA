@@ -10,7 +10,8 @@
 
 
 // https://github.com/Luavis/moment-lunar
-class lunar
+// https://www.quora.com/What-is-the-difference-between-Chinese-New-Year-and-Lunar-New-Year?share=1
+export class lunar
 {
     private lunarMonthday = [
         1887, 0x1694, 0x16aa, 0x4ad5,
@@ -81,10 +82,18 @@ class lunar
         0x107638, 0x10784c, 0x107a3f, 0x107c53, 0x107e48
     ];
 
+    protected m_backingDate: Date;
+    
+    constructor(d?:Date)
+    {
+        this.m_backingDate = d || (new Date());
+    }
+
+
     private getBitInt(data: any, length: any, shift: any)
     {
         return (data & (((1 << length) - 1) << shift)) >> shift;
-    };
+    }
 
     private solarToInt(y: number, m: number, d: number)
     {
@@ -99,21 +108,38 @@ class lunar
     }
 
 
-    public year(a?: number)
+    // Gets or sets the year.
+    // Accepts numbers from - 270, 000 to 270, 000.
+    public year(y?: number | string)
     {
-        return 2021;
+        if (y == null)
+            return this.m_backingDate.getUTCFullYear();
+
+        this.m_backingDate.setUTCFullYear(parseInt(y.toString()));
     }
 
 
-    public month(a?: number)
+
+    // Gets or sets the month.
+    // Accepts numbers from 0 to 11. If the range is exceeded, it will bubble up to the year.
+    // moment.month() is zero based, so it will return 0-11
+    public month(M?: number | string)
     {
-        return 1;
+        if (M == null)
+            return this.m_backingDate.getUTCMonth();
+
+        this.m_backingDate.setUTCMonth(parseInt(M.toString()));
     }
 
 
-    public date()
+    // Gets or sets the day of the month.
+    // Accepts numbers from 1 to 31. If the range is exceeded, it will bubble up to the months.
+    public date(d?: number | string):number
     {
-        return 1;
+        if (d == null)
+            return this.m_backingDate.getUTCDate();
+
+        this.m_backingDate.setUTCDate(parseInt(d.toString()));
     }
 
 
@@ -122,7 +148,8 @@ class lunar
         return false;
     }
 
-
+    // get lunar new year's day
+    // moment().year(2017).month(0).date(1).solar().format('YYYY-MM-DD');
     public solar(isLeanMonth?: boolean)
     {
         isLeanMonth = isLeanMonth === true;
@@ -175,6 +202,7 @@ class lunar
         return new Date(y, mm - 1, dd);
     }
 
+    
     public lunar()
     {
         let index = this.year() - this.solarYear[0];
@@ -225,3 +253,10 @@ class lunar
     }
 
 }
+
+
+// get lunar new year's day
+// moment().year(2017).month(0).date(1).solar().format('YYYY-MM-DD');
+
+// let a = new lunar().solar();
+// console.log(a);
