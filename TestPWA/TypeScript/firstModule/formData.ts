@@ -7,12 +7,92 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Response/redirected
 
 
+// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
 // https://mdn.github.io/dom-examples/
 // https://mdn.github.io/dom-examples/streams/
 // https://mdn.github.io/dom-examples/streams/strings-transform-stream/
 // https://mdn.github.io/dom-examples/streams/strings-transform-stream/Uint8ArrayToStringsTransformer.js
 // https://mdn.github.io/dom-examples/scrolltooptions/
 
+
+
+// https://en.wikipedia.org/wiki/Open_Data_Protocol
+// GET: Get the resource(a collection of entities, a single entity, a structural property, a navigation property, a stream, etc.).
+// POST: Create a new resource.
+// PUT: Update an existing resource by replacing it with a complete instance.
+// PATCH: Update an existing resource by replacing part of its properties with a partial instance.
+// DELETE: Remove the resource.
+// - TRACE, OPTIONS, CONNECT
+
+// https://code-maze.com/different-ways-consume-restful-api-csharp/
+// https://www.c-sharpcorner.com/UploadFile/4b0136/restful-api-in-Asp-Net-introduction-of-rest-web-api/
+// https://stackoverflow.com/questions/14202257/design-restful-query-api-with-a-long-list-of-query-parameters
+// https://datatracker.ietf.org/doc/html/rfc2119
+
+
+
+
+// https://stackoverflow.com/questions/14202257/design-restful-query-api-with-a-long-list-of-query-parameters
+// In a nutshell: Make a POST but override HTTP method using X - HTTP - Method - Override header.
+// So it is possible to semantically transform a POST request into a GET request.
+
+
+
+// https://www.tabnine.com/code/javascript/functions/builtins/XMLHttpRequest/setRequestHeader
+// https://www.geeksforgeeks.org/how-to-make-put-request-using-xmlhttprequest-by-making-custom-http-library/
+// https://stackoverflow.com/questions/19840509/sending-put-delete-data-with-a-xmlhttprequest
+
+
+
+// http://localhost/VIR_DIR/API/Tables/{schema_name}/{table_name}
+// http://localhost/VIR_DIR/API/Views/{schema_name}/{view_name}
+// http://localhost/VIR_DIR/API/TVF/{schema_name}/{function_name}
+// http://localhost/VIR_DIR/API/SF/{schema_name}/{function_name}
+// http://localhost/VIR_DIR/API/Procedures/{schema_name}/{procedure_name}
+// http://localhost/VIR_DIR/API/Resources/{schema_name}/{procedure_name}
+// http://localhost/VIR_DIR/API/Basic_SQL/{schema_name}/{procedure_name}
+// http://localhost/VIR_DIR/API/Documents/{DK_UID}/{dateiname}
+// http://localhost/VIR_DIR/API/SVG/{SVG_UID}/{dateiname}
+// http://localhost/VIR_DIR/API/Images/{DK_UID}/{dateiname}
+// http://localhost/VIR_DIR/API/CSS/{DK_UID}/{dateiname}
+// http://localhost/VIR_DIR/API/Scripts/{state}/{dateiname}
+// http://localhost/VIR_DIR/API/Modules/{module_type}/{file_name}
+
+// http://localhost/VIR_DIR/API/{ds}/Tables/{schema_name}/{table_name}
+
+
+
+// fields
+// for tables 
+// for views
+// for table - valued functions
+// for scalar - functions
+
+
+
+
+// Example POST method implementation:
+async function postData(url = '', data = {})
+{
+    // Default options are marked with *
+    const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            , "X-HTTP-Method-Override": "GET"
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+
+    return response.json(); // parses JSON response into native JavaScript objects
+}
 
 
 function sendCustomFormData()

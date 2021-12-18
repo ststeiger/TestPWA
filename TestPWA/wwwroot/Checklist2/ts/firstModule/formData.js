@@ -35,6 +35,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+function postData(url, data) {
+    if (url === void 0) { url = ''; }
+    if (data === void 0) { data = {}; }
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, fetch(url, {
+                        method: 'POST',
+                        mode: 'cors',
+                        cache: 'no-cache',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "X-HTTP-Method-Override": "GET"
+                        },
+                        redirect: 'follow',
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(data)
+                    })];
+                case 1:
+                    response = _a.sent();
+                    return [2, response.json()];
+            }
+        });
+    });
+}
 function sendCustomFormData() {
     var formData = new FormData();
     var fileInputElement = document.getElementById("inp1");
