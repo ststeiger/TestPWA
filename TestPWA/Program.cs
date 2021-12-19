@@ -41,6 +41,7 @@ namespace TestPWA
 
             // InfoExtraction.GetTranslations();
             // InfoExtraction.ReplaceCssImages();
+            ChineseCalender.TestTicks();
 
 
             // DbHtml.GenerateAllChecklists();

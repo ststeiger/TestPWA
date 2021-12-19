@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChineseZodiac = exports.MyDateTime = exports.GregorianCalendar = void 0;
+exports.ChineseZodiac = void 0;
 var DateTimeKind;
 (function (DateTimeKind) {
     DateTimeKind[DateTimeKind["Unspecified"] = 0] = "Unspecified";
@@ -11,38 +11,53 @@ var GregorianCalendar = (function () {
     function GregorianCalendar() {
     }
     GregorianCalendar.prototype.GetYear = function (time) {
-        return 2021;
+        var ticks = time.JavaScriptTicks;
+        var dt = new Date(ticks);
+        return dt.getUTCFullYear();
     };
     GregorianCalendar.prototype.GetMonth = function (time) {
-        return 11;
+        var ticks = time.JavaScriptTicks;
+        var dt = new Date(ticks);
+        return (dt.getUTCMonth() + 1);
     };
     GregorianCalendar.prototype.GetDayOfMonth = function (time) {
-        return 31;
+        var ticks = time.JavaScriptTicks;
+        var dt = new Date(ticks);
+        return dt.getUTCDate();
     };
     return GregorianCalendar;
 }());
-exports.GregorianCalendar = GregorianCalendar;
-var MyDateTime = (function () {
-    function MyDateTime() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
+var DotNetDateTime = (function () {
+    function DotNetDateTime(ticks, dt) {
         this.m_ticks = 0;
+        this.m_ticks = ticks;
     }
-    Object.defineProperty(MyDateTime.prototype, "Ticks", {
+    DotNetDateTime.fromJsDate = function (dt) {
+        var jsTicks = dt.getTime();
+        var dotNetJsbaseTicks = 621355968000000000;
+        var tenK = 10000;
+        var dotTicks = dotNetJsbaseTicks + jsTicks * tenK;
+        return new DotNetDateTime(dotTicks, DateTimeKind.Unspecified);
+    };
+    Object.defineProperty(DotNetDateTime.prototype, "Ticks", {
         get: function () {
             return this.m_ticks;
-        },
-        set: function (value) {
-            this.m_ticks = value;
         },
         enumerable: false,
         configurable: true
     });
-    return MyDateTime;
+    Object.defineProperty(DotNetDateTime.prototype, "JavaScriptTicks", {
+        get: function () {
+            var dotNetJsbaseTicks = 621355968000000000;
+            var dotNetTicksSince1970 = this.m_ticks - dotNetJsbaseTicks;
+            var jsTicks = parseInt((dotNetTicksSince1970 / 10000).toString(), 10);
+            return jsTicks;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return DotNetDateTime;
 }());
-exports.MyDateTime = MyDateTime;
 var MinLunisolarYear = 1901;
 var MaxLunisolarYear = 2100;
 var DaysPerYear = 365;
@@ -57,8 +72,8 @@ var TicksPerHour = TicksPerMinute * 60;
 var TicksPerDay = TicksPerHour * 24;
 var MinTicks = 0;
 var MaxTicks = DaysTo10000 * TicksPerDay - 1;
-var MinValue = new MyDateTime(MinTicks, DateTimeKind.Unspecified);
-var MaxValue = new MyDateTime(MaxTicks, DateTimeKind.Unspecified);
+var MinValue = new DotNetDateTime(MinTicks, DateTimeKind.Unspecified);
+var MaxValue = new DotNetDateTime(MaxTicks, DateTimeKind.Unspecified);
 var Jan1Month = 1;
 var Jan1Date = 2;
 var nDaysPerMonth = 3;
@@ -266,11 +281,6 @@ var s_yinfo = [
     [2, 1, 21, 55592],
     [0, 2, 9, 54560],
 ];
-function binaryLiterals() {
-    var bar = 1;
-    var foo = 19168;
-    var a = [0, 2, 19, 19168];
-}
 function GregorianIsLeapYear(y) {
     if ((y % 4) != 0) {
         return false;
@@ -279,15 +289,6 @@ function GregorianIsLeapYear(y) {
         return true;
     }
     return (y % 400) == 0;
-}
-function IsLeapYear(year) {
-    if (year % 400 == 0)
-        return true;
-    if (year % 100 == 0)
-        return false;
-    if (year % 4 == 0)
-        return true;
-    return false;
 }
 function GetYearInfo(lunarYear, index) {
     if (lunarYear < MinLunisolarYear || lunarYear > MaxLunisolarYear) {
@@ -363,7 +364,8 @@ function GetTerrestrialBranch(sexagenaryYear) {
     return ((sexagenaryYear - 1) % 12) + 1;
 }
 function ChineseZodiac(date) {
-    var sexagenaryYear = GetSexagenaryYear(date);
+    var dotNetDate = DotNetDateTime.fromJsDate(date);
+    var sexagenaryYear = GetSexagenaryYear(dotNetDate);
     var terrestrialBranch = GetTerrestrialBranch(sexagenaryYear);
     var years = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
     return years[terrestrialBranch - 1];

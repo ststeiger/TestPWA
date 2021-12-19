@@ -8,9 +8,57 @@ namespace TestPWA
     {
 
 
+        public static void TestTicks()
+        {
+            // Ticks:
+            // The value of this property represents the number of 100-nanosecond intervals
+            // that have elapsed since 12:00:00 midnight, January 1, 0001 in the Gregorian calendar,
+            // There are 10,000 ticks in a millisecond(see TicksPerMillisecond)
+            // and 10 million ticks in a second.
+            // Nanosecond: 1e-9
+            // 100 Nanosecond: 1e-7
+            // Millisecond: 1e-3
+            // 1e-3*1e-4
+            System.DateTime dt = new System.DateTime(1970, 01, 01, 0, 0, 0, System.DateTimeKind.Utc);
+            System.Console.WriteLine(dt.Ticks); // long:              621355968000000000
+            System.DateTime dt2 = new System.DateTime(1970, 01, 02, 0, 0, 0, System.DateTimeKind.Utc); // 621356832000000000
+            System.Console.WriteLine(dt.Ticks); // MAX_SAFE_INTEGER:    9007199254740991 = 2^53-1
+
+
+
+            long baseTicks = 621355968000000000;
+            long ticksPerDay = 864000000000;
+            long b = baseTicks + 14 * ticksPerDay;
+
+            System.DateTime dt15 = new System.DateTime(1970, 01, 15, 0, 0, 0, System.DateTimeKind.Utc);
+            System.Console.WriteLine(dt15.Ticks);
+            System.Console.WriteLine(b);
+
+
+
+            // let jsTicks = new Date(Date.UTC(1970,0,15)).getTime(); // 1209600000
+            System.Numerics.BigInteger biBaseTicks = new System.Numerics.BigInteger(621355968000000000);
+            System.Numerics.BigInteger jsTicks = new System.Numerics.BigInteger(1209600000);
+            System.Numerics.BigInteger tenK = new System.Numerics.BigInteger(10000);
+
+
+
+            System.Numerics.BigInteger c = biBaseTicks + jsTicks * tenK;
+            System.Console.WriteLine(c);
+
+            // 24*60*60*1000*1000000/100 = 24*60*60*1000*10000 = 864000000000
+
+            // string s = ChineseZodiac(new System.DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc));
+            string s = ChineseZodiac(new System.DateTime(2022, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc));
+            System.Console.WriteLine(s);
+
+
+        }
+
+
         // https://gist.github.com/ststeiger/709354299a457e2d79b06d0127096fee
         // string chineseZodiac = ChineseCalender.ChineseZodiac(System.DateTime.UtcNow); System.Console.WriteLine(dt);
-        public string ChineseZodiac(System.DateTime date)
+        public static string ChineseZodiac(System.DateTime date)
         {
             System.Globalization.EastAsianLunisolarCalendar cc =
                   new System.Globalization.ChineseLunisolarCalendar();

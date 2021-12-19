@@ -10,48 +10,88 @@ enum DateTimeKind
 }
 
     
-export class GregorianCalendar
+class GregorianCalendar
 {
     constructor()
     { }
 
 
-    public GetYear(time: MyDateTime): number
+    public GetYear(time: DotNetDateTime): number
     {
-        return 2021;
+        let ticks = time.JavaScriptTicks;
+        let dt = new Date(ticks);
+
+        return dt.getUTCFullYear();
     }
-    public GetMonth(time: MyDateTime): number
+    public GetMonth(time: DotNetDateTime): number
     {
-        return 11;
+        let ticks = time.JavaScriptTicks;
+        let dt = new Date(ticks);
+
+        return (dt.getUTCMonth() + 1);
     }
-    public GetDayOfMonth(time: MyDateTime): number
+    public GetDayOfMonth(time: DotNetDateTime): number
     {
-        return 31;
+        let ticks = time.JavaScriptTicks;
+        let dt = new Date(ticks);
+
+        return dt.getUTCDate();
     }
 }
 
 
-export class MyDateTime
+
+class DotNetDateTime
 {
-
-    constructor(...args: any[])
-    {
-
-    }
-
 
     private m_ticks: number = 0;
 
+    // constructor(...args: any[])
+    constructor(ticks:number, dt:DateTimeKind)
+    {
+        this.m_ticks = ticks;
+    }
 
+
+    public static fromJsDate(dt:Date)
+    {
+        let jsTicks = dt.getTime();
+        // let jsTicks = BigInt(dt.getTime());
+
+        // System.Numerics.BigInteger biBaseTicks = new System.Numerics.BigInteger(621355968000000000);
+        let dotNetJsbaseTicks: number = 621355968000000000;
+
+        // System.Numerics.BigInteger tenK = new System.Numerics.BigInteger(10000);
+        let tenK: number = 10000;  
+
+        let dotTicks = dotNetJsbaseTicks + jsTicks * tenK;
+        return new DotNetDateTime(dotTicks, DateTimeKind.Unspecified);
+    }
+
+
+
+    // The value of this property represents the number of 100-nanosecond intervals
+    // that have elapsed since 12: 00: 00 midnight, January 1, 0001 in the Gregorian calendar,
+    // Nanosecond: 1e-9
+    // 100 Nanosecond: 1e-7
+    // Millisecond: 1e-3
+    // 1e-3*1e-4
+    // 10000*1e-7
     get Ticks(): number
     {
         return this.m_ticks;
     }
-    set Ticks(value: number)
-    {
-        this.m_ticks = value;
-    }
+    // set Ticks(value: number) { this.m_ticks = value; }
 
+
+    get JavaScriptTicks(): number
+    {
+        let dotNetJsbaseTicks: number = 621355968000000000;
+        let dotNetTicksSince1970 = this.m_ticks - dotNetJsbaseTicks;
+        let jsTicks = parseInt((dotNetTicksSince1970 / 10000).toString(), 10);
+
+        return jsTicks;
+    }
 }
 
 
@@ -81,8 +121,8 @@ const TicksPerDay: number = TicksPerHour * 24;
 const MinTicks: number = 0;
 const MaxTicks: number = DaysTo10000 * TicksPerDay - 1;
             
-const MinValue: MyDateTime = new MyDateTime(MinTicks, DateTimeKind.Unspecified);
-const MaxValue: MyDateTime = new MyDateTime(MaxTicks, DateTimeKind.Unspecified);
+const MinValue: DotNetDateTime = new DotNetDateTime(MinTicks, DateTimeKind.Unspecified);
+const MaxValue: DotNetDateTime = new DotNetDateTime(MaxTicks, DateTimeKind.Unspecified);
 
 const Jan1Month: number = 1;
 const Jan1Date: number = 2;
@@ -315,15 +355,15 @@ const s_yinfo: number[][] = [
 
 
 // Binary Literals !!! 
-function binaryLiterals()
-{
-    // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-7.0/binary-literals
-    // https://stackoverflow.com/questions/2803145/is-there-0b-or-something-similar-to-represent-a-binary-number-in-javascript#:~:text=No%2C%20there%20isn't%20an,octal%20(prefix%200%20)%20formats.
-    let bar = 0b01;
-    let foo = 0b0100101011100000;
+//function binaryLiterals()
+//{
+//    // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-7.0/binary-literals
+//    // https://stackoverflow.com/questions/2803145/is-there-0b-or-something-similar-to-represent-a-binary-number-in-javascript#:~:text=No%2C%20there%20isn't%20an,octal%20(prefix%200%20)%20formats.
+//    let bar = 0b01;
+//    let foo = 0b0100101011100000;
 
-    let a = [0, 2, 19, 0b0100101011100000];
-}
+//    let a = [0, 2, 19, 0b0100101011100000];
+//}
 
 
 
@@ -345,20 +385,20 @@ function GregorianIsLeapYear(y: number): boolean
 
 
 
-// Just for comparison - less compact
-function IsLeapYear(year: number): boolean
-{
-    if (year % 400 == 0)
-        return true;
+//// Just for comparison - less compact
+//function IsLeapYear(year: number): boolean
+//{
+//    if (year % 400 == 0)
+//        return true;
 
-    if (year % 100 == 0)
-        return false;
+//    if (year % 100 == 0)
+//        return false;
 
-    if (year % 4 == 0)
-        return true;
+//    if (year % 4 == 0)
+//        return true;
 
-    return false;
-} // End Function IsLeapYear
+//    return false;
+//} // End Function IsLeapYear
 
 
             
@@ -468,7 +508,7 @@ function GregorianToLunar(solarYear: number, solarMonth: number, solarDate: numb
 }
 
 
-function TimeToLunar(time: MyDateTime)
+function TimeToLunar(time: DotNetDateTime)
 {
     // let x = { year: 0, month: 0, day: 0 };
 
@@ -487,7 +527,7 @@ function TimeToLunar(time: MyDateTime)
 }
 
             
-function GetSexagenaryYear(time: MyDateTime): number
+function GetSexagenaryYear(time: DotNetDateTime): number
 {
     CheckTicksRange(time.Ticks);
 
@@ -516,9 +556,10 @@ function GetTerrestrialBranch(sexagenaryYear: number): number
 
 
             
-export function ChineseZodiac(date: MyDateTime):string
+export function ChineseZodiac(date:Date):string
 {
-    let sexagenaryYear: number = GetSexagenaryYear(date);
+    let dotNetDate: DotNetDateTime = DotNetDateTime.fromJsDate(date);
+    let sexagenaryYear: number = GetSexagenaryYear(dotNetDate);
     let terrestrialBranch: number = GetTerrestrialBranch(sexagenaryYear);
 
     // let years: string[] = "rat,ox,tiger,hare,dragon,snake,horse,sheep,monkey,fowl,dog,pig".split(',');
