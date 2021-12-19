@@ -425,6 +425,26 @@ function CheckTicksRange(ticks: number): void
 
 
 
+// let DaysToMonth365:number[] = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
+// let DaysToMonth366: number[] = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
+
+function GetGregorianDaysInMonth(year: number, month: number): number
+{
+    if (month < 1 || month > 12)
+        throw new Error("Argument 'month' out of range");
+
+    let even = ((month % 2) === 0);
+
+    if (month > 7)
+        return (even ? 31 : 30);
+
+    if (month === 2)
+    {
+        return ((year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28);
+    }
+
+    return (even ? 30 : 31);
+}
 
 
 

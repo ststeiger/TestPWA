@@ -301,6 +301,17 @@ function CheckTicksRange(ticks) {
         throw new Error("time");
     }
 }
+function GetGregorianDaysInMonth(year, month) {
+    if (month < 1 || month > 12)
+        throw new Error("Argument 'month' out of range");
+    var even = ((month % 2) === 0);
+    if (month > 7)
+        return (even ? 31 : 30);
+    if (month === 2) {
+        return ((year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28);
+    }
+    return (even ? 30 : 31);
+}
 function GregorianToLunar(solarYear, solarMonth, solarDate) {
     var outData = { lunarYear: 0, lunarMonth: 0, lunarDate: 0 };
     var isLeapYear = GregorianIsLeapYear(solarYear);
