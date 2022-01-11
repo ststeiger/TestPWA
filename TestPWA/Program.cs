@@ -41,12 +41,12 @@ namespace TestPWA
 
             // InfoExtraction.GetTranslations();
             // InfoExtraction.ReplaceCssImages();
-            ChineseCalender.TestTicks();
+            // ChineseCalender.TestTicks();
 
 
             // DbHtml.GenerateAllChecklists();
-            // TestEpPlus.Test(); return;
-            CreateHostBuilder(args).Build().Run();
+            TestEpPlus.Test(); return;
+            // CreateHostBuilder(args).Build().Run();
         } // End Sub Main 
 
 

@@ -639,9 +639,12 @@ namespace TestPWA
                 text.Bold = false;
 
 
+                string logoPath = System.IO.Path.GetDirectoryName(typeof(TestEpPlus).Assembly.Location);
+                logoPath = System.IO.Path.Combine(logoPath, "..", "..", "..", "wwwroot", "Checklist2", "images", "SNB-Logo-blau-320px.png");
+                logoPath = System.IO.Path.GetFullPath(logoPath);
 
 
-                OfficeOpenXml.Drawing.ExcelPicture picture = worksheet.Drawings.AddPicture("Logo", System.Drawing.Image.FromFile(@"D:\Stefan.Steiger\Documents\Visual Studio 2017\Projects\TestPWA\TestPWA\wwwroot\images\SNB-Logo-blau-320px.png"));
+                OfficeOpenXml.Drawing.ExcelPicture picture = worksheet.Drawings.AddPicture("Logo", System.Drawing.Image.FromFile(logoPath));
                 picture.SetPosition(0, 0, 5, 0);
 
                 package.SaveAs(new System.IO.FileInfo(@"D:\demoOut.xlsx"));
