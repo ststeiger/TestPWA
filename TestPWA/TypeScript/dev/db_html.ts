@@ -36,6 +36,13 @@ export function collectStructure(p: Node, parent?: string, sort?: number):IXmlSt
 
     let children: Node[] = Array.prototype.slice.call(p.childNodes);
     let guid = uuid.newGuid();
+    
+    if (p && p.nodeType == Node.ELEMENT_NODE)
+    {
+        if ((<Element>p).id)
+            guid = (<Element>p).id;
+    }
+
 
     let checklistData: IXmlStructure = {
         "uuid": guid
@@ -48,7 +55,23 @@ export function collectStructure(p: Node, parent?: string, sort?: number):IXmlSt
 
     if (p.nodeName.toLowerCase() === "td")
     {
-        checklistData.innerHtml = (<Element>p).innerHTML;
+        let inputSort = 0;
+
+        for (let i = 0; i < children.length; ++i)
+        {
+            let tagName = children[i].nodeName.toLowerCase();
+
+            // if (children[i].nodeType === Node.TEXT_NODE && !string_utils.isNullOrWhiteSpace(children[i].nodeValue))
+            if (children[i].nodeType === Node.ELEMENT_NODE && (tagName == "input" || tagName == "textarea")) 
+            {
+                let ret = collectStructure(children[i], guid, inputSort++);
+                checklistData.children.push(ret)
+            }
+
+        }
+
+        if (inputSort == 0)
+            checklistData.innerHtml = (<Element>p).innerHTML;
     }
     else if (children.length)
     {

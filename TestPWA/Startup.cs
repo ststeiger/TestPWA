@@ -187,6 +187,9 @@ namespace TestPWA
             app.UseAnySqlInsert();
             app.UseTestHandler();
             app.UseSessionDataHandler();
+            app.UseChecklistExportHandler();
+
+
             app.UseVerticalImage();
             app.UseVerticalImage2();
         } // End Sub Configure 

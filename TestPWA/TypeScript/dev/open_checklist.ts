@@ -294,13 +294,16 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
 
             // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
             let params: any = {
-                  "__cls_uid": uuid.newGuid() 
+                "__cls_uid": cls_uid || uuid.newGuid() 
                 , "__cls_cl_uid": cl_uid 
                 , "__cls_be_hash": proc
                 , "__cls_obj_uid": ""
                 , "__cls_objt_code": ""
                 , "__cls_tsk_uid": ""
             };
+
+
+            console.log("foo", "cls_uid", cls_uid, "cl_uid", cl_uid, "params", params);
 
 
             if (obj.OBJT_Code === "TSK")
@@ -317,13 +320,16 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
             }
 
 
-            let cls_uid:string = params.__cls_uid;
+            // let passed_cls_uid:string = params.__cls_uid;
             // console.log("saveChecklist->e.detail.cl_uid: ", e.detail.cl_uid);
 
             // e.target matches elem
             let saveData = db_html.collectSaveData(document.querySelector("table"), params.__cls_uid);
             // console.log("saveData", saveData);
-            // console.log("saveData",  saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; })   );
+            // console.log("saveData", saveData.filter(function (x) { return "46842fd6-a7c4-4156-8b54-29265b4e1648" === x.uuid; })   );
+
+
+
 
             let saveDataSetResult = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", params);
 
@@ -335,6 +341,7 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
                 if (saveDataSetResult.hasError === false)
                 {
                     console.log("saveResult", saveChecklistDataResult);
+                    await loadMainContainer();
                 }
                 else
                 {
@@ -384,7 +391,9 @@ function onChecklistClose(ev: MouseEvent)
 
 
 type ChecklistTranslationItems = "OpenChecklist" | "NewChecklist" | "OverrideChecklistName" | "ChecklistStatus"
-    | "LoadChecklistForEditing" | "DeleteEntry" | "Empty" | "SelectVersion";
+    | "LoadChecklistForEditing" | "DeleteEntry" | "Empty" | "SelectVersion"
+    | "SaveChecklist" | "CancelChecklist" | "ExcelExportChecklist"
+    ;
 
 
 function getTranslation(item: ChecklistTranslationItems, language?: AvailableLanguages):string
@@ -397,9 +406,15 @@ function getTranslation(item: ChecklistTranslationItems, language?: AvailableLan
 
     language = <AvailableLanguages>language.toLowerCase();
 
-
+    
 
     let i18n: TranslationEntries<ChecklistTranslationItems> = {
+
+        "SaveChecklist": { "de": "Speichern", "fr": "Enregistrer", "it": "Salvare", "en": "Save" },
+        "CancelChecklist": { "de": "Abbrechen", "fr": "Annuler", "it": "Annulla", "en": "Cancel" },
+        "ExcelExportChecklist": { "de": "Excel-Export", "fr": "Exportation Excel", "it": "Esportazione Excel", "en": "Excel export" },
+
+
           "OpenChecklist": { "de": "Checkliste öffnen", "fr": "Ouvrir liste de contrôle", "it": "Apri lista di controllo", "en": "Open checklist" }
         , "NewChecklist": { "de": "Neue Checkliste", "fr": "Nouvelle liste de contrôle", "it": "Nuova lista di controllo", "en": "New checklist" }
         , "SelectVersion": { "de": "Version auswählen", "fr": "Sélectionnez version", "it": "Seleziona versione", "en": "Select version" }
@@ -1071,8 +1086,83 @@ async function onCancel(ev: MouseEvent)
 
 
 
+function postNewDownload(action: string, windowName: string, params:any) 
+{
+    windowName = windowName || "_blank";
+
+    let form = document.createElement("form");
+    form.setAttribute("id", "msg_" + uuid.uuidv4());
+    form.setAttribute("method", "post");
+    form.setAttribute("action", action);
+    form.setAttribute("target", windowName);
+    form.setAttribute("style", "display: none;");
+    // setting form target to a window named 'formresult'
+
+
+    // Repeat for all data fields
+    
+    // End Repeat for all data fields
+
+
+    for (let tK in params)
+    {
+        if (params.hasOwnProperty(tK))
+        {
+            let tV = params[tK];
+
+            let hiddenField = document.createElement("input");
+            hiddenField.setAttribute("name", tK);
+            hiddenField.setAttribute("value", tV); //encodeURIComponent(tV));
+            form.appendChild(hiddenField);
+        }
+    };
+
+    document.body.appendChild(form);
+
+
+    // document.forms[0].submit();
+    //document.getElementById("xxx").click();
+    form.submit();
+    document.body.removeChild(form);
+} // End Function IssuePostRequest
+
+
+async function onExport(ev: MouseEvent)
+{
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    // if (onSaveChecklist != null)
+    //    onSaveChecklist();
+
+    console.log("onExport");
+
+    let checklistData:IXmlStructure = db_html.collectStructure(document.querySelector("table"))
+    let saveData = db_html.collectSaveData(document.querySelector("table"), "__cls_uid");
+    
+
+    let exportData = {
+        "checklistJSON": JSON.stringify(checklistData),
+        "valuesJSON": JSON.stringify(saveData)
+    };
+
+
+    console.log("exportData2", exportData);
+    // let resp = await ajax.postFetch("../ajax/ChecklistExport.ashx", exportData);
+    // console.log("resp", resp);
+    postNewDownload("../ajax/ChecklistExport.ashx", "_blank", exportData);
+
+
+    return false;
+}
+
+
+
+
 async function createFooter(pd: IPortalSessionData)
 {
+    let userLanguage: AvailableLanguages = pd.userLanguage || "de";
+    
     let doc = window.parent.document;
     let main = doc.getElementById("Main");
     // main.insertAdjacentHTML("afterbegin", ccc);
@@ -1091,15 +1181,38 @@ async function createFooter(pd: IPortalSessionData)
     let divRight = doc.createElement("DIV");
     divRight.setAttribute("class", "Right");
 
+
+
+
+    let btnExport = doc.createElement("INPUT");
+    btnExport.setAttribute("type", "submit");
+    btnExport.setAttribute("name", "btn_Export");
+    btnExport.setAttribute("value", getTranslation("ExcelExportChecklist", userLanguage));
+    // btnExport.setAttribute("onclick", "alert('hello'); return false;");
+    btnExport.onclick = onExport;
+
+
+    btnExport.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+    divRight.appendChild(btnExport);
+
+
     let btnSave = doc.createElement("INPUT");
     btnSave.setAttribute("type", "submit");
     btnSave.setAttribute("name", "btn_Speichern");
-    btnSave.setAttribute("value", "Speichern");
+    btnSave.setAttribute("value", getTranslation("SaveChecklist", userLanguage));
+
+
+
     // btnSave.setAttribute("onclick", "alert('hello'); return false;");
     btnSave.onclick = onSave;
 
     btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
     divRight.appendChild(btnSave);
+
+
+
+
+
     buttonFrame.appendChild(divRight);
 
     let divLeft = doc.createElement("DIV");
@@ -1107,9 +1220,10 @@ async function createFooter(pd: IPortalSessionData)
 
     let btnCancel = doc.createElement("INPUT");
     btnCancel.setAttribute("type", "submit");
-    btnCancel.setAttribute("name", "btn_Abbrechen");
-    btnCancel.setAttribute("value", "Abbrechen");
     btnCancel.setAttribute("id", "btn_Abbrechen");
+    btnCancel.setAttribute("name", "btn_Abbrechen");
+    // btnCancel.setAttribute("value", "Abbrechen");
+    btnCancel.setAttribute("value", getTranslation("CancelChecklist", userLanguage));
     btnCancel.setAttribute("class", "validate-skip");
     btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
     btnCancel.onclick = onCancel;
@@ -1117,6 +1231,9 @@ async function createFooter(pd: IPortalSessionData)
 
     divLeft.appendChild(btnCancel);
     buttonFrame.appendChild(divLeft);
+
+
+
 
     fragment.appendChild(buttonFrame);
 

@@ -86,7 +86,7 @@ namespace TestPWA
 
 
         // https://stackoverflow.com/questions/3932382/traversing-directories-without-using-recursion/30218705#30218705
-        public static void Excelize(XmlStructure container, OfficeOpenXml.ExcelPackage package)
+        public static void Excelize(System.Collections.Generic.List<CheckListSaveData> saveData, XmlStructure container, OfficeOpenXml.ExcelPackage package)
         {
             System.Collections.Generic.Stack<XmlStructure> stack =
                 new System.Collections.Generic.Stack<XmlStructure>();
@@ -113,7 +113,18 @@ namespace TestPWA
             System.Collections.Generic.Dictionary<int, RowSpanCollection> spareSpans = 
                 new System.Collections.Generic.Dictionary<int, RowSpanCollection>();
 
+            System.Collections.Generic.Dictionary<string, string> valuesDictionary = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.InvariantCultureIgnoreCase);
 
+
+            if (saveData != null)
+            {
+
+                for (int i = 0; i < saveData.Count; ++i)
+                {
+                    valuesDictionary.Add(saveData[i].Guid, saveData[i].Value);
+                } // Next i 
+
+            } // End if (saveData != null) 
 
 
             while (stack.Count != 0)
@@ -127,7 +138,7 @@ namespace TestPWA
 
                 // console.log(properties);
 
-                if ("colgroup" == element.tagName)
+                if ("colgroup".Equals(element.tagName, System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     startColGroup = endColGroup + 1;
 
@@ -160,7 +171,7 @@ namespace TestPWA
                     }
 
                 }
-                else if ("tr" == element.tagName)
+                else if ("tr".Equals(element.tagName, System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     maxRows++;
                     currentRow++;
@@ -182,7 +193,7 @@ namespace TestPWA
 
                     trBorder = CssHelper.GetBorder(style);
                 } // End if tr 
-                else if ("td" == element.tagName)
+                else if ("td".Equals(element.tagName, System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     int colSpan = 1;
                     int rowSpan = 1;
@@ -388,13 +399,43 @@ namespace TestPWA
 
                     
                 }
-                else if ("input" == element.tagName)
+                else if ("input".Equals(element.tagName, System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    System.Console.WriteLine(element);
+
+                    if (valuesDictionary.ContainsKey(element.uuid))
+                    {
+                        string val = valuesDictionary[element.uuid];
+                        OfficeOpenXml.ExcelRange cell = ww.Cells[currentRow, startColumn];
+                        cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+
+                        // https://fsymbols.com/signs/tick/
+                        if ("true".Equals(val, System.StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            cell.Value = "✗";
+                            cell.Value = "✕";
+                            cell.Value = "☒";
+                        }
+                        else
+                            cell.Value = "☐";
+                    }
+
+
                 }
-                else if ("textarea" == element.tagName)
+                else if ("textarea".Equals(element.tagName, System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    System.Console.WriteLine(element);
+
+                    if (valuesDictionary.ContainsKey(element.uuid))
+                    {
+                        string val = valuesDictionary[element.uuid];
+
+                        OfficeOpenXml.ExcelRange cell = ww.Cells[currentRow, startColumn];
+
+                        cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                        cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        cell.Value = val;
+                    }
                 }
                 else
                 {
@@ -415,7 +456,16 @@ namespace TestPWA
 
 
 
-        public static void JsonToExcel(string json, string outputFilename)
+        public static void JsonToExcel(string saveDataJSON, string json, string outputFilename)
+        {
+            using (System.IO.Stream strm = System.IO.File.OpenWrite(outputFilename))
+            {
+                JsonToExcel(saveDataJSON, json, strm);
+            }
+        }
+
+
+        public static void JsonToExcel(string saveDataJSON, string json, System.IO.Stream stream)
         {
             XmlStructure data = Newtonsoft.Json.JsonConvert.DeserializeObject<XmlStructure>(json, new Newtonsoft.Json.JsonSerializerSettings()
             {
@@ -423,13 +473,19 @@ namespace TestPWA
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat
             });
 
+            // System.Collections.Generic.List<CheckListSaveData> saveData = CheckListDataValues.FromJson(saveDataJSON);
+            // System.Console.WriteLine(saveData);
+
+            System.Collections.Generic.List<CheckListSaveData> saveData = CheckListSaveData.FromJson(saveDataJSON);
+            // System.Console.WriteLine(saveData);
+
 
             using (OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage())
             {
                 OfficeOpenXml.ExcelWorkbook workbook = package.Workbook;
                 OfficeOpenXml.ExcelWorksheet worksheet = workbook.Worksheets.Add("Checkliste");
 
-                Excelize(data, package);
+                Excelize(saveData, data, package);
 
                 // Block - Add title and Logo
                 {
@@ -471,10 +527,8 @@ namespace TestPWA
                     title.Bold = true;
                 }
 
-
-
-                package.SaveAs(new System.IO.FileInfo(outputFilename));
-
+                // package.SaveAs(new System.IO.FileInfo(outputFilename));
+                package.SaveAs(stream);
             }
 
         }

@@ -104,7 +104,10 @@ namespace AnySqlWebAdmin
 
 
             RequestParameters parameters = new RequestParameters();
-            System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, object>> lss = await GetJsonObjectAsParameterList(context);
+            System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, object>> lss = null;
+
+            if (!context.Request.HasFormContentType)
+                lss = await GetJsonObjectAsParameterList(context);
 
             if (lss != null)
             {

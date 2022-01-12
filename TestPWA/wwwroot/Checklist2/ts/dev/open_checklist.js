@@ -243,7 +243,7 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                     onSaveChecklist =
                         function () {
                             return __awaiter(this, void 0, void 0, function () {
-                                var sess, obj, params, cls_uid, saveData, saveDataSetResult, saveChecklistDataResult;
+                                var sess, obj, params, saveData, saveDataSetResult, saveChecklistDataResult;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
                                         case 0: return [4, ajax.fetchJSON("../ajax/CurrentSession.ashx")];
@@ -252,13 +252,14 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                                             obj = getObj(sess);
                                             console.log(obj);
                                             params = {
-                                                "__cls_uid": uuid.newGuid(),
+                                                "__cls_uid": cls_uid || uuid.newGuid(),
                                                 "__cls_cl_uid": cl_uid,
                                                 "__cls_be_hash": proc,
                                                 "__cls_obj_uid": "",
                                                 "__cls_objt_code": "",
                                                 "__cls_tsk_uid": ""
                                             };
+                                            console.log("foo", "cls_uid", cls_uid, "cl_uid", cl_uid, "params", params);
                                             if (obj.OBJT_Code === "TSK") {
                                                 params.__cls_tsk_uid = obj.OBJ_UID;
                                                 params.__cls_obj_uid = null;
@@ -269,27 +270,29 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                                                 params.__cls_obj_uid = obj.OBJ_UID;
                                                 params.__cls_objt_code = obj.OBJT_Code;
                                             }
-                                            cls_uid = params.__cls_uid;
                                             saveData = db_html.collectSaveData(document.querySelector("table"), params.__cls_uid);
                                             return [4, ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", params)];
                                         case 2:
                                             saveDataSetResult = _a.sent();
                                             console.log("dataSetResult", saveDataSetResult);
-                                            if (!(saveDataSetResult.hasError === false)) return [3, 4];
+                                            if (!(saveDataSetResult.hasError === false)) return [3, 7];
                                             return [4, ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData)];
                                         case 3:
                                             saveChecklistDataResult = _a.sent();
-                                            if (saveDataSetResult.hasError === false) {
-                                                console.log("saveResult", saveChecklistDataResult);
-                                            }
-                                            else {
-                                                alert(saveChecklistDataResult.error.message);
-                                            }
-                                            return [3, 5];
+                                            if (!(saveDataSetResult.hasError === false)) return [3, 5];
+                                            console.log("saveResult", saveChecklistDataResult);
+                                            return [4, loadMainContainer()];
                                         case 4:
-                                            alert(saveDataSetResult.error.message);
-                                            _a.label = 5;
+                                            _a.sent();
+                                            return [3, 6];
                                         case 5:
+                                            alert(saveChecklistDataResult.error.message);
+                                            _a.label = 6;
+                                        case 6: return [3, 8];
+                                        case 7:
+                                            alert(saveDataSetResult.error.message);
+                                            _a.label = 8;
+                                        case 8:
                                             stopWaiting();
                                             return [2];
                                     }
@@ -320,6 +323,9 @@ function getTranslation(item, language) {
         language = "de";
     language = language.toLowerCase();
     var i18n = {
+        "SaveChecklist": { "de": "Speichern", "fr": "Enregistrer", "it": "Salvare", "en": "Save" },
+        "CancelChecklist": { "de": "Abbrechen", "fr": "Annuler", "it": "Annulla", "en": "Cancel" },
+        "ExcelExportChecklist": { "de": "Excel-Export", "fr": "Exportation Excel", "it": "Esportazione Excel", "en": "Excel export" },
         "OpenChecklist": { "de": "Checkliste öffnen", "fr": "Ouvrir liste de contrôle", "it": "Apri lista di controllo", "en": "Open checklist" },
         "NewChecklist": { "de": "Neue Checkliste", "fr": "Nouvelle liste de contrôle", "it": "Nuova lista di controllo", "en": "New checklist" },
         "SelectVersion": { "de": "Version auswählen", "fr": "Sélectionnez version", "it": "Seleziona versione", "en": "Select version" },
@@ -820,10 +826,52 @@ function onCancel(ev) {
         });
     });
 }
+function postNewDownload(action, windowName, params) {
+    windowName = windowName || "_blank";
+    var form = document.createElement("form");
+    form.setAttribute("id", "msg_" + uuid.uuidv4());
+    form.setAttribute("method", "post");
+    form.setAttribute("action", action);
+    form.setAttribute("target", windowName);
+    form.setAttribute("style", "display: none;");
+    for (var tK in params) {
+        if (params.hasOwnProperty(tK)) {
+            var tV = params[tK];
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("name", tK);
+            hiddenField.setAttribute("value", tV);
+            form.appendChild(hiddenField);
+        }
+    }
+    ;
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+}
+function onExport(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        var checklistData, saveData, exportData;
+        return __generator(this, function (_a) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            console.log("onExport");
+            checklistData = db_html.collectStructure(document.querySelector("table"));
+            saveData = db_html.collectSaveData(document.querySelector("table"), "__cls_uid");
+            exportData = {
+                "checklistJSON": JSON.stringify(checklistData),
+                "valuesJSON": JSON.stringify(saveData)
+            };
+            console.log("exportData2", exportData);
+            postNewDownload("../ajax/ChecklistExport.ashx", "_blank", exportData);
+            return [2, false];
+        });
+    });
+}
 function createFooter(pd) {
     return __awaiter(this, void 0, void 0, function () {
-        var doc, main, fragment, buttonFrame, spanUsername, divRight, btnSave, divLeft, btnCancel;
+        var userLanguage, doc, main, fragment, buttonFrame, spanUsername, divRight, btnExport, btnSave, divLeft, btnCancel;
         return __generator(this, function (_a) {
+            userLanguage = pd.userLanguage || "de";
             doc = window.parent.document;
             main = doc.getElementById("Main");
             fragment = doc.createDocumentFragment();
@@ -836,10 +884,17 @@ function createFooter(pd) {
             buttonFrame.appendChild(spanUsername);
             divRight = doc.createElement("DIV");
             divRight.setAttribute("class", "Right");
+            btnExport = doc.createElement("INPUT");
+            btnExport.setAttribute("type", "submit");
+            btnExport.setAttribute("name", "btn_Export");
+            btnExport.setAttribute("value", getTranslation("ExcelExportChecklist", userLanguage));
+            btnExport.onclick = onExport;
+            btnExport.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+            divRight.appendChild(btnExport);
             btnSave = doc.createElement("INPUT");
             btnSave.setAttribute("type", "submit");
             btnSave.setAttribute("name", "btn_Speichern");
-            btnSave.setAttribute("value", "Speichern");
+            btnSave.setAttribute("value", getTranslation("SaveChecklist", userLanguage));
             btnSave.onclick = onSave;
             btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
             divRight.appendChild(btnSave);
@@ -848,9 +903,9 @@ function createFooter(pd) {
             divLeft.setAttribute("class", "Left");
             btnCancel = doc.createElement("INPUT");
             btnCancel.setAttribute("type", "submit");
-            btnCancel.setAttribute("name", "btn_Abbrechen");
-            btnCancel.setAttribute("value", "Abbrechen");
             btnCancel.setAttribute("id", "btn_Abbrechen");
+            btnCancel.setAttribute("name", "btn_Abbrechen");
+            btnCancel.setAttribute("value", getTranslation("CancelChecklist", userLanguage));
             btnCancel.setAttribute("class", "validate-skip");
             btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
             btnCancel.onclick = onCancel;

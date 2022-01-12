@@ -44,9 +44,12 @@ namespace TestPWA
             // ChineseCalender.TestTicks();
 
 
-            // DbHtml.GenerateAllChecklists();
-            TestEpPlus.Test(); return;
-            // CreateHostBuilder(args).Build().Run();
+            DbHtml.GenerateAllChecklists();
+
+
+
+            // TestEpPlus.Test(); return;
+            CreateHostBuilder(args).Build().Run();
         } // End Sub Main 
 
 
