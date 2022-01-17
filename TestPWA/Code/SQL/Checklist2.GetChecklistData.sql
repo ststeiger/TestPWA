@@ -72,7 +72,15 @@ SELECT
 	,T_ChecklistElements.ELE_TagName 
 	,T_ChecklistElements.ELE_Level 
 	,T_ChecklistElements.ELE_Sort 
-	,T_ChecklistElements.ELE_InnerHtml 
+	-- ,T_ChecklistElements.ELE_InnerHtml 
+
+	,COALESCE
+	( 
+		 T_ChecklistElements_i18n2.ELE_i18n2_InnerHtml 
+		,T_ChecklistElements_i18n.ELE_i18n_InnerHtml 
+		,T_ChecklistElements.ELE_InnerHtml 
+	) AS ELE_InnerHtml 
+	 
 	,CASE 
 		WHEN T_ChecklistElements.ELE_InnerHtml = '<span><br></span>' THEN NULL 
 		WHEN T_ChecklistElements.ELE_InnerHtml = '<span style="color: #F2F2F2;"><br></span>' THEN NULL 
@@ -80,6 +88,17 @@ SELECT
 		ELSE T_ChecklistElements.ELE_InnerHtml 
 	 END AS ELE_InnerHtml2 
 FROM T_ChecklistElements 
+
+INNER JOIN T_Benutzer ON T_Benutzer.BE_ID = 12435 -- @BE_ID 
+
+LEFT JOIN T_ChecklistElements_i18n 
+	ON T_ChecklistElements_i18n.ELE_i18n_ELE_UID = T_ChecklistElements.ELE_UID 
+	AND T_ChecklistElements_i18n.ELE_i18n_SYSLANG_LCID = T_Benutzer._BE_LCID 
+
+LEFT JOIN T_ChecklistElements_i18n2 
+	ON T_ChecklistElements_i18n2.ELE_i18n2_ELE_UID = T_ChecklistElements.ELE_UID 
+	AND T_ChecklistElements_i18n2.ELE_i18n2_SYSLANG_LCID = T_Benutzer._BE_LCID 
+
 WHERE (1=1) 
 AND T_ChecklistElements.ELE_CLV_UID = @internal_clv_uid 
 -- AND T_ChecklistElements.ELE_Level = 3 

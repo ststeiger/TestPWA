@@ -295,16 +295,6 @@ SET @xml = N'<?xml version="1.0" encoding="utf-16" standalone="yes"?>
         <ELE_InnerHtml>&lt;span class="vert"&gt;erledigt&lt;/span&gt;</ELE_InnerHtml>
     </row>
     <row>
-        <ELE_UID>f31136ff-4380-4901-b14a-029b028fe8e0</ELE_UID>
-        <ELE_Parent_UID>ad4080c0-5b12-40a0-bd2c-31c35fd6e346</ELE_Parent_UID>
-        <ELE_CLV_UID>fa28e4d1-e505-4c54-9305-52d526dd0d70</ELE_CLV_UID>
-        <ELE_TagName>tr</ELE_TagName>
-        <ELE_Level>2</ELE_Level>
-        <ELE_Sort>33</ELE_Sort>
-        <ELE_RecSort>0000000000.0000000006.0000000033</ELE_RecSort>
-        <ELE_InnerHtml xsi:nil="true" />
-    </row>
-    <row>
         <ELE_UID>befc50df-c727-4d86-9830-02d5772314ce</ELE_UID>
         <ELE_Parent_UID>2eaa102d-cd2c-4a3c-9862-f8acc5e58e85</ELE_Parent_UID>
         <ELE_CLV_UID>26456198-0699-4718-aaf7-b8119be9d705</ELE_CLV_UID>
