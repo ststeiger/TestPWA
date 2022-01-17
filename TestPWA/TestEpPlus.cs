@@ -121,7 +121,8 @@ namespace TestPWA
 
                 for (int i = 0; i < saveData.Count; ++i)
                 {
-                    valuesDictionary.Add(saveData[i].Guid, saveData[i].Value);
+                    if(saveData[i] != null)
+                        valuesDictionary.Add(saveData[i].Guid, saveData[i].Value);
                 } // Next i 
 
             } // End if (saveData != null) 
@@ -312,6 +313,10 @@ namespace TestPWA
                     {
                         string bgColor = properties["bgcolor"];
 
+                        // Rücksubstitution Hintergrundfarbenanpassung
+                        if ("#5F5F5F".Equals(bgColor, System.StringComparison.InvariantCultureIgnoreCase))
+                            bgColor = "#EDEDED";
+
                         cell.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                         cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml(bgColor));
                     }
@@ -350,6 +355,7 @@ namespace TestPWA
 
                     foreach (TextItem thisTextItem in ls)
                     {
+                        thisTextItem.RichText = cell.RichText.Add(" ");
                         thisTextItem.RichText = cell.RichText.Add(thisTextItem.Text);
                     }
 
