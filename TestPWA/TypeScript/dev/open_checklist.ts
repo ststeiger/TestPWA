@@ -1158,14 +1158,30 @@ async function onExport(ev: MouseEvent)
 
 
 
-
-async function createFooter(pd: IPortalSessionData)
+// https://stackoverflow.com/questions/39359740/what-are-enum-flags-in-typescript
+enum DisplayButtons
 {
+    None = 0,
+    Cancel = 1 << 0, // 0001 -- the bitshift is unnecessary, but done for consistency
+    Save = 1 << 1,     // 0010
+    ExcelExport = 1 << 2,    // 0100
+    Boring = 1 << 3,   // 1000
+    All = ~(~0 << 4)   // 1111
+}
+
+
+async function createFooter(availableButtons: DisplayButtons)
+{
+    let pd: IPortalSessionData = getPortalData();
     let userLanguage: AvailableLanguages = pd.userLanguage || "de";
     
     let doc = window.parent.document;
     let main = doc.getElementById("Main");
     // main.insertAdjacentHTML("afterbegin", ccc);
+
+    let oldButtonFrame = doc.getElementById("buttonFrame");
+    if (oldButtonFrame != null)
+        oldButtonFrame.parentElement.removeChild(oldButtonFrame);
 
     let fragment = doc.createDocumentFragment();
 
@@ -1181,36 +1197,31 @@ async function createFooter(pd: IPortalSessionData)
     let divRight = doc.createElement("DIV");
     divRight.setAttribute("class", "Right");
 
+    if ((availableButtons & DisplayButtons.ExcelExport) === DisplayButtons.ExcelExport)
+    {
+        let btnExport = doc.createElement("INPUT");
+        btnExport.setAttribute("type", "submit");
+        btnExport.setAttribute("name", "btn_Export");
+        btnExport.setAttribute("value", getTranslation("ExcelExportChecklist", userLanguage));
+        // btnExport.setAttribute("onclick", "alert('hello'); return false;");
+        btnExport.onclick = onExport;
 
+        btnExport.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+        divRight.appendChild(btnExport);
+    }
 
+    if ((availableButtons & DisplayButtons.Save) === DisplayButtons.Save)
+    {
+        let btnSave = doc.createElement("INPUT");
+        btnSave.setAttribute("type", "submit");
+        btnSave.setAttribute("name", "btn_Speichern");
+        btnSave.setAttribute("value", getTranslation("SaveChecklist", userLanguage));
 
-    let btnExport = doc.createElement("INPUT");
-    btnExport.setAttribute("type", "submit");
-    btnExport.setAttribute("name", "btn_Export");
-    btnExport.setAttribute("value", getTranslation("ExcelExportChecklist", userLanguage));
-    // btnExport.setAttribute("onclick", "alert('hello'); return false;");
-    btnExport.onclick = onExport;
-
-
-    btnExport.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
-    divRight.appendChild(btnExport);
-
-
-    let btnSave = doc.createElement("INPUT");
-    btnSave.setAttribute("type", "submit");
-    btnSave.setAttribute("name", "btn_Speichern");
-    btnSave.setAttribute("value", getTranslation("SaveChecklist", userLanguage));
-
-
-
-    // btnSave.setAttribute("onclick", "alert('hello'); return false;");
-    btnSave.onclick = onSave;
-
-    btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
-    divRight.appendChild(btnSave);
-
-
-
+        // btnSave.setAttribute("onclick", "alert('hello'); return false;");
+        btnSave.onclick = onSave;
+        btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+        divRight.appendChild(btnSave);
+    }
 
 
     buttonFrame.appendChild(divRight);
@@ -1218,21 +1229,24 @@ async function createFooter(pd: IPortalSessionData)
     let divLeft = doc.createElement("DIV");
     divLeft.setAttribute("class", "Left");
 
-    let btnCancel = doc.createElement("INPUT");
-    btnCancel.setAttribute("type", "submit");
-    btnCancel.setAttribute("id", "btn_Abbrechen");
-    btnCancel.setAttribute("name", "btn_Abbrechen");
-    // btnCancel.setAttribute("value", "Abbrechen");
-    btnCancel.setAttribute("value", getTranslation("CancelChecklist", userLanguage));
-    btnCancel.setAttribute("class", "validate-skip");
-    btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
-    btnCancel.onclick = onCancel;
 
+    if ((availableButtons & DisplayButtons.Cancel) === DisplayButtons.Cancel)
+    {
+        let btnCancel = doc.createElement("INPUT");
+        btnCancel.setAttribute("type", "submit");
+        btnCancel.setAttribute("id", "btn_Abbrechen");
+        btnCancel.setAttribute("name", "btn_Abbrechen");
+        // btnCancel.setAttribute("value", "Abbrechen");
+        btnCancel.setAttribute("value", getTranslation("CancelChecklist", userLanguage));
+        btnCancel.setAttribute("class", "validate-skip");
+        btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+        btnCancel.onclick = onCancel;
 
-    divLeft.appendChild(btnCancel);
+        divLeft.appendChild(btnCancel);
+    }
+
+    
     buttonFrame.appendChild(divLeft);
-
-
 
 
     fragment.appendChild(buttonFrame);
@@ -1367,9 +1381,7 @@ async function loadMainContainer()
 async function onDocumentReady()
 {
     await assertSession();
-    let pd: IPortalSessionData = getPortalData();
-
-    await createFooter(pd);
+    await createFooter(DisplayButtons.Cancel);
     await loadMainContainer();
 }
 

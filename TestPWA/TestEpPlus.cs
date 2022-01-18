@@ -88,8 +88,12 @@ namespace TestPWA
         // https://stackoverflow.com/questions/3932382/traversing-directories-without-using-recursion/30218705#30218705
         public static void Excelize(System.Collections.Generic.List<CheckListSaveData> saveData, XmlStructure container, OfficeOpenXml.ExcelPackage package)
         {
+            if (container == null)
+                return;
+
             System.Collections.Generic.Stack<XmlStructure> stack =
                 new System.Collections.Generic.Stack<XmlStructure>();
+
             stack.Push(container);
 
             OfficeOpenXml.ExcelWorksheet ww = package.Workbook.Worksheets[1];

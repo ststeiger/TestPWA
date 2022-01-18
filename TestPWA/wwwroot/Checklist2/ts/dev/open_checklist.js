@@ -867,13 +867,26 @@ function onExport(ev) {
         });
     });
 }
-function createFooter(pd) {
+var DisplayButtons;
+(function (DisplayButtons) {
+    DisplayButtons[DisplayButtons["None"] = 0] = "None";
+    DisplayButtons[DisplayButtons["Cancel"] = 1] = "Cancel";
+    DisplayButtons[DisplayButtons["Save"] = 2] = "Save";
+    DisplayButtons[DisplayButtons["ExcelExport"] = 4] = "ExcelExport";
+    DisplayButtons[DisplayButtons["Boring"] = 8] = "Boring";
+    DisplayButtons[DisplayButtons["All"] = 15] = "All";
+})(DisplayButtons || (DisplayButtons = {}));
+function createFooter(availableButtons) {
     return __awaiter(this, void 0, void 0, function () {
-        var userLanguage, doc, main, fragment, buttonFrame, spanUsername, divRight, btnExport, btnSave, divLeft, btnCancel;
+        var pd, userLanguage, doc, main, oldButtonFrame, fragment, buttonFrame, spanUsername, divRight, btnExport, btnSave, divLeft, btnCancel;
         return __generator(this, function (_a) {
+            pd = getPortalData();
             userLanguage = pd.userLanguage || "de";
             doc = window.parent.document;
             main = doc.getElementById("Main");
+            oldButtonFrame = doc.getElementById("buttonFrame");
+            if (oldButtonFrame != null)
+                oldButtonFrame.parentElement.removeChild(oldButtonFrame);
             fragment = doc.createDocumentFragment();
             buttonFrame = doc.createElement("DIV");
             buttonFrame.setAttribute("class", "buttonFrame");
@@ -884,32 +897,38 @@ function createFooter(pd) {
             buttonFrame.appendChild(spanUsername);
             divRight = doc.createElement("DIV");
             divRight.setAttribute("class", "Right");
-            btnExport = doc.createElement("INPUT");
-            btnExport.setAttribute("type", "submit");
-            btnExport.setAttribute("name", "btn_Export");
-            btnExport.setAttribute("value", getTranslation("ExcelExportChecklist", userLanguage));
-            btnExport.onclick = onExport;
-            btnExport.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
-            divRight.appendChild(btnExport);
-            btnSave = doc.createElement("INPUT");
-            btnSave.setAttribute("type", "submit");
-            btnSave.setAttribute("name", "btn_Speichern");
-            btnSave.setAttribute("value", getTranslation("SaveChecklist", userLanguage));
-            btnSave.onclick = onSave;
-            btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
-            divRight.appendChild(btnSave);
+            if ((availableButtons & DisplayButtons.ExcelExport) === DisplayButtons.ExcelExport) {
+                btnExport = doc.createElement("INPUT");
+                btnExport.setAttribute("type", "submit");
+                btnExport.setAttribute("name", "btn_Export");
+                btnExport.setAttribute("value", getTranslation("ExcelExportChecklist", userLanguage));
+                btnExport.onclick = onExport;
+                btnExport.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+                divRight.appendChild(btnExport);
+            }
+            if ((availableButtons & DisplayButtons.Save) === DisplayButtons.Save) {
+                btnSave = doc.createElement("INPUT");
+                btnSave.setAttribute("type", "submit");
+                btnSave.setAttribute("name", "btn_Speichern");
+                btnSave.setAttribute("value", getTranslation("SaveChecklist", userLanguage));
+                btnSave.onclick = onSave;
+                btnSave.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+                divRight.appendChild(btnSave);
+            }
             buttonFrame.appendChild(divRight);
             divLeft = doc.createElement("DIV");
             divLeft.setAttribute("class", "Left");
-            btnCancel = doc.createElement("INPUT");
-            btnCancel.setAttribute("type", "submit");
-            btnCancel.setAttribute("id", "btn_Abbrechen");
-            btnCancel.setAttribute("name", "btn_Abbrechen");
-            btnCancel.setAttribute("value", getTranslation("CancelChecklist", userLanguage));
-            btnCancel.setAttribute("class", "validate-skip");
-            btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
-            btnCancel.onclick = onCancel;
-            divLeft.appendChild(btnCancel);
+            if ((availableButtons & DisplayButtons.Cancel) === DisplayButtons.Cancel) {
+                btnCancel = doc.createElement("INPUT");
+                btnCancel.setAttribute("type", "submit");
+                btnCancel.setAttribute("id", "btn_Abbrechen");
+                btnCancel.setAttribute("name", "btn_Abbrechen");
+                btnCancel.setAttribute("value", getTranslation("CancelChecklist", userLanguage));
+                btnCancel.setAttribute("class", "validate-skip");
+                btnCancel.setAttribute("style", "box-shadow: rgb(206, 206, 206) 10px 4px 9px -10px inset;");
+                btnCancel.onclick = onCancel;
+                divLeft.appendChild(btnCancel);
+            }
             buttonFrame.appendChild(divLeft);
             fragment.appendChild(buttonFrame);
             if (main != null)
@@ -1023,14 +1042,12 @@ function loadMainContainer() {
 }
 function onDocumentReady() {
     return __awaiter(this, void 0, void 0, function () {
-        var pd;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, assertSession()];
                 case 1:
                     _a.sent();
-                    pd = getPortalData();
-                    return [4, createFooter(pd)];
+                    return [4, createFooter(DisplayButtons.Cancel)];
                 case 2:
                     _a.sent();
                     return [4, loadMainContainer()];
