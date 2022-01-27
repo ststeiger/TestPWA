@@ -305,7 +305,9 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                 case 2:
                     _a.sent();
                     _a.label = 3;
-                case 3:
+                case 3: return [4, createFooter(DisplayButtons.Cancel | DisplayButtons.Save | DisplayButtons.ExcelExport)];
+                case 4:
+                    _a.sent();
                     stopWaiting(400);
                     return [2];
             }
@@ -801,11 +803,17 @@ function saveChecklist(cl_uid) {
 function onSave(ev) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            ev.preventDefault();
-            ev.stopPropagation();
-            if (onSaveChecklist != null)
-                onSaveChecklist();
-            return [2, false];
+            switch (_a.label) {
+                case 0:
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    if (onSaveChecklist != null)
+                        onSaveChecklist();
+                    return [4, createFooter(DisplayButtons.Cancel)];
+                case 1:
+                    _a.sent();
+                    return [2, false];
+            }
         });
     });
 }
@@ -819,6 +827,9 @@ function onCancel(ev) {
                     onSaveChecklist = null;
                     return [4, loadMainContainer()];
                 case 1:
+                    _a.sent();
+                    return [4, createFooter(DisplayButtons.Cancel)];
+                case 2:
                     _a.sent();
                     console.log("onCancel");
                     return [2, false];
@@ -873,7 +884,7 @@ var DisplayButtons;
     DisplayButtons[DisplayButtons["Cancel"] = 1] = "Cancel";
     DisplayButtons[DisplayButtons["Save"] = 2] = "Save";
     DisplayButtons[DisplayButtons["ExcelExport"] = 4] = "ExcelExport";
-    DisplayButtons[DisplayButtons["Boring"] = 8] = "Boring";
+    DisplayButtons[DisplayButtons["Print"] = 8] = "Print";
     DisplayButtons[DisplayButtons["All"] = 15] = "All";
 })(DisplayButtons || (DisplayButtons = {}));
 function createFooter(availableButtons) {

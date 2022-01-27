@@ -11,7 +11,10 @@ namespace AnySqlWebAdmin
 
         private static string GetMsConnectionString()
         {
-            if("DESKTOP-L73D2V6".Equals(System.Environment.MachineName, System.StringComparison.InvariantCultureIgnoreCase))
+            if ("DESKTOP-L73D2V6".Equals(System.Environment.MachineName, System.StringComparison.InvariantCultureIgnoreCase))
+                return GetMsConnectionString("COR_Basic_Demo_V4");
+
+            if ("DESKTOP-8HDOB22".Equals(System.Environment.MachineName, System.StringComparison.InvariantCultureIgnoreCase))
                 return GetMsConnectionString("COR_Basic_Demo_V4");
 
             return GetMsConnectionString("server_mail");

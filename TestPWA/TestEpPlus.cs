@@ -250,7 +250,7 @@ namespace TestPWA
                     if (properties.ContainsKey("valign"))
                         valign = properties["valign"];
 
-                    if (false)
+#if false
                     {
                         CssUnitValue elementHeight = null;
                         if (properties.ContainsKey("height"))
@@ -289,8 +289,7 @@ namespace TestPWA
 
                         } // End if (styleHeight != null)
                     }
-
-
+#endif 
 
 
                     OfficeOpenXml.ExcelRange cell = ww.Cells[currentRow, startColumn];

@@ -363,6 +363,10 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
     if (withData)
         await loadChecklistValues(cl_uid, cls_uid);
 
+
+    await createFooter(DisplayButtons.Cancel | DisplayButtons.Save | DisplayButtons.ExcelExport);
+
+
     stopWaiting(400);
 } // End Function loadChecklist 
 
@@ -1067,6 +1071,8 @@ async function onSave(ev:MouseEvent)
     if(onSaveChecklist != null)
         onSaveChecklist();
 
+    await createFooter(DisplayButtons.Cancel);
+
     return false;
 }
 
@@ -1079,6 +1085,7 @@ async function onCancel(ev: MouseEvent)
     onSaveChecklist = null;
 
     await loadMainContainer();
+    await createFooter(DisplayButtons.Cancel);
 
     console.log("onCancel");
     return false;
@@ -1165,7 +1172,7 @@ enum DisplayButtons
     Cancel = 1 << 0, // 0001 -- the bitshift is unnecessary, but done for consistency
     Save = 1 << 1,     // 0010
     ExcelExport = 1 << 2,    // 0100
-    Boring = 1 << 3,   // 1000
+    Print = 1 << 3,   // 1000
     All = ~(~0 << 4)   // 1111
 }
 
