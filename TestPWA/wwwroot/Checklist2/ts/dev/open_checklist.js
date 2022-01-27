@@ -187,9 +187,44 @@ function QuickFix_SNB_2021_FIXME() {
         badForegrounds[i].setAttribute("style", oldStyle + "; color: #000;");
     }
 }
+function getChecklistObjectParams(cls_uid, cl_uid, proc) {
+    return __awaiter(this, void 0, void 0, function () {
+        var sess, obj, params;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("getChecklistObjectParams");
+                    return [4, ajax.fetchJSON("../ajax/CurrentSession.ashx")];
+                case 1:
+                    sess = _a.sent();
+                    obj = getObj(sess);
+                    console.log(obj);
+                    params = {
+                        "__cls_uid": cls_uid || uuid.newGuid(),
+                        "__cls_cl_uid": cl_uid,
+                        "__cls_be_hash": proc,
+                        "__cls_obj_uid": "",
+                        "__cls_objt_code": "",
+                        "__cls_tsk_uid": ""
+                    };
+                    if (obj.OBJT_Code === "TSK") {
+                        params.__cls_tsk_uid = obj.OBJ_UID;
+                        params.__cls_obj_uid = null;
+                        params.__cls_objt_code = null;
+                    }
+                    else {
+                        params.__cls_tsk_uid = null;
+                        params.__cls_obj_uid = obj.OBJ_UID;
+                        params.__cls_objt_code = obj.OBJT_Code;
+                    }
+                    return [2, params];
+            }
+        });
+    });
+}
 function loadChecklist(proc, cl_uid, cls_uid, withData) {
     return __awaiter(this, void 0, void 0, function () {
-        var mainContain, divOverview, logo, checkListTitle, br1, br2, divChecklist, clUrl, checkListData, checklistName, elements, elemntProps, checkListHeader, htmlInfo, assembledFragment, tChecklist;
+        var mainContain, divOverview, logo, checkListTitle, br1, br2, divChecklist, clUrl, checkListData, checklistName, elements, elemntProps, checkListHeader, htmlInfo, assembledFragment, tChecklist, taskParams, isTaskDone;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -228,7 +263,6 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                     checklistName = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[0].columns, checkListData.data.tables[0].rows, false);
                     elements = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[1].columns, checkListData.data.tables[1].rows, false);
                     elemntProps = new table_wrapper_js_1.TableWrapper(checkListData.data.tables[2].columns, checkListData.data.tables[2].rows, false);
-                    console.log("checklistName", checklistName);
                     checkListHeader = document.getElementById("checkListTitle");
                     if (checklistName.rowCount > 0) {
                         document.title = checklistName.row(0).CL_Name;
@@ -243,44 +277,21 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                     onSaveChecklist =
                         function () {
                             return __awaiter(this, void 0, void 0, function () {
-                                var sess, obj, params, saveData, saveDataSetResult, saveChecklistDataResult;
+                                var params, saveData, saveDataSetResult, saveChecklistDataResult;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
-                                        case 0: return [4, ajax.fetchJSON("../ajax/CurrentSession.ashx")];
+                                        case 0: return [4, getChecklistObjectParams(cls_uid, cl_uid, proc)];
                                         case 1:
-                                            sess = _a.sent();
-                                            obj = getObj(sess);
-                                            console.log(obj);
-                                            params = {
-                                                "__cls_uid": cls_uid || uuid.newGuid(),
-                                                "__cls_cl_uid": cl_uid,
-                                                "__cls_be_hash": proc,
-                                                "__cls_obj_uid": "",
-                                                "__cls_objt_code": "",
-                                                "__cls_tsk_uid": ""
-                                            };
-                                            console.log("foo", "cls_uid", cls_uid, "cl_uid", cl_uid, "params", params);
-                                            if (obj.OBJT_Code === "TSK") {
-                                                params.__cls_tsk_uid = obj.OBJ_UID;
-                                                params.__cls_obj_uid = null;
-                                                params.__cls_objt_code = null;
-                                            }
-                                            else {
-                                                params.__cls_tsk_uid = null;
-                                                params.__cls_obj_uid = obj.OBJ_UID;
-                                                params.__cls_objt_code = obj.OBJT_Code;
-                                            }
+                                            params = _a.sent();
                                             saveData = db_html.collectSaveData(document.querySelector("table"), params.__cls_uid);
                                             return [4, ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", params)];
                                         case 2:
                                             saveDataSetResult = _a.sent();
-                                            console.log("dataSetResult", saveDataSetResult);
                                             if (!(saveDataSetResult.hasError === false)) return [3, 7];
                                             return [4, ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData)];
                                         case 3:
                                             saveChecklistDataResult = _a.sent();
                                             if (!(saveDataSetResult.hasError === false)) return [3, 5];
-                                            console.log("saveResult", saveChecklistDataResult);
                                             return [4, loadMainContainer()];
                                         case 4:
                                             _a.sent();
@@ -305,9 +316,23 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                 case 2:
                     _a.sent();
                     _a.label = 3;
-                case 3: return [4, createFooter(DisplayButtons.Cancel | DisplayButtons.Save | DisplayButtons.ExcelExport)];
+                case 3: return [4, getChecklistObjectParams(cls_uid, cl_uid, proc)];
                 case 4:
+                    taskParams = _a.sent();
+                    return [4, ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.CheckTaskDoneFlag.sql&format=1", taskParams)];
+                case 5:
+                    isTaskDone = _a.sent();
+                    console.log("isTaskDone", isTaskDone);
+                    if (!true) return [3, 7];
+                    return [4, createFooter(DisplayButtons.Cancel | DisplayButtons.ExcelExport)];
+                case 6:
                     _a.sent();
+                    return [3, 9];
+                case 7: return [4, createFooter(DisplayButtons.Cancel | DisplayButtons.Save | DisplayButtons.ExcelExport)];
+                case 8:
+                    _a.sent();
+                    _a.label = 9;
+                case 9:
                     stopWaiting(400);
                     return [2];
             }
@@ -398,12 +423,12 @@ function onDataSetSelected(ev) {
     return __awaiter(this, void 0, void 0, function () {
         var row, cls_uid, popup, pd;
         return __generator(this, function (_a) {
+            console.log("onDataSetSelected");
             row = getSelectedRow(ev);
             cls_uid = row.getAttribute("name");
             popup = getPopopContainer(ev.currentTarget);
             popup.parentNode.removeChild(popup);
             pd = getPortalData();
-            console.log("cls_uid", cls_uid);
             loadChecklist(pd.proc, null, cls_uid, true);
             return [2];
         });
@@ -450,7 +475,6 @@ function loadDataSetSelectionDialogue(checkListSets, cl_name) {
             subtract += (useDelete ? 41 : 0);
             subtract += (useLoad ? 41 : 0);
             for (i = 0; i < checkListSets.rowCount; ++i) {
-                console.log(i, checkListSets.row(i).k, checkListSets.row(i).v, checkListSets.row(i).s);
                 color = colors[i % 2];
                 checklistRow = document.createElement("DIV");
                 checklistRow.setAttribute("name", checkListSets.row(i).k);
@@ -524,7 +548,6 @@ function onExistingChecklistSelected(ev) {
                     cl_name = row.getAttribute("data-cl_name");
                     popup = getPopopContainer(ev.currentTarget);
                     popup.parentNode.removeChild(popup);
-                    console.log("onExistingChecklistSelected", cl_uid, cl_name);
                     return [4, openVersionSelection(cl_uid, cl_name, null)];
                 case 1:
                     versionDialogue = _a.sent();
@@ -640,12 +663,12 @@ function onNewChecklistSelected(ev) {
     return __awaiter(this, void 0, void 0, function () {
         var row, cl_uid, popup, pd;
         return __generator(this, function (_a) {
+            console.log("onNewChecklistSelected");
             row = getSelectedRow(ev);
             cl_uid = row.getAttribute("name");
             popup = getPopopContainer(ev.currentTarget);
             popup.parentNode.removeChild(popup);
             pd = getPortalData();
-            console.log("cl_uid", cl_uid);
             loadChecklist(pd.proc, cl_uid, null, false);
             return [2];
         });
@@ -691,7 +714,6 @@ function newChecklistDialogue(checklists, userLanguage) {
             subtract += (useDelete ? 41 : 0);
             subtract += (useLoad ? 41 : 0);
             for (i = 0; i < checklists.rowCount; ++i) {
-                console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
                 color = colors[i % 2];
                 checklistRow = document.createElement("DIV");
                 checklistRow.setAttribute("name", checklists.row(i).CL_UID);
@@ -962,7 +984,6 @@ function openVersionSelection(cl_uid, cl_name, tsk_uid) {
                     };
                     params.__cl_uid = cl_uid;
                     params.__tsk_uid = tsk_uid;
-                    console.log("openVersionSelection params", params);
                     return [4, ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.SelectSavedDataset.sql&format=1", params)];
                 case 1:
                     checkListsData = _a.sent();

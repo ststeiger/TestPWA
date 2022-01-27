@@ -191,6 +191,56 @@ function QuickFix_SNB_2021_FIXME()
 }
 
 
+interface IChecklistObjectData
+{
+    __cls_uid: string;
+    __cls_cl_uid: string;
+    __cls_be_hash: string;
+    __cls_obj_uid: string;
+    __cls_objt_code: string;
+    __cls_tsk_uid: string;
+}
+
+
+
+async function getChecklistObjectParams(cls_uid: string, cl_uid: string, proc: string): Promise<IChecklistObjectData>
+{
+    console.log("getChecklistObjectParams");
+
+    let sess = <IBasicSession>await ajax.fetchJSON("../ajax/CurrentSession.ashx");
+    let obj: IBasicObject = getObj(sess);
+    console.log(obj);
+
+    // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
+    let params: IChecklistObjectData = {
+        "__cls_uid": cls_uid || uuid.newGuid()
+        , "__cls_cl_uid": cl_uid
+        , "__cls_be_hash": proc
+        , "__cls_obj_uid": ""
+        , "__cls_objt_code": ""
+        , "__cls_tsk_uid": ""
+    };
+
+
+    // console.log("foo", "cls_uid", cls_uid, "cl_uid", cl_uid, "params", params);
+
+
+    if (obj.OBJT_Code === "TSK") {
+        params.__cls_tsk_uid = obj.OBJ_UID;
+        params.__cls_obj_uid = null;
+        params.__cls_objt_code = null;
+    }
+    else {
+        params.__cls_tsk_uid = null;
+        params.__cls_obj_uid = obj.OBJ_UID;
+        params.__cls_objt_code = obj.OBJT_Code;
+    }
+
+    return params;
+}
+
+
+
 // https://localhost:44314/ts/require/require.js?v=1
 // https://localhost:44314/vertical_text.htm
 // https://localhost:44314/Schuettgutcontainer.htm
@@ -251,7 +301,7 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
     let elemntProps = new tableWrapper<IT_Checklist_ZO_ElementProperties>(checkListData.data.tables[2].columns, checkListData.data.tables[2].rows, false);
     // console.log("elemntProps", elemntProps.columns);
 
-    console.log("checklistName", checklistName);
+    // console.log("checklistName", checklistName);
 
 
     let checkListHeader: HTMLHeadElement = document.getElementById("checkListTitle");
@@ -288,6 +338,7 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
     onSaveChecklist =
         async function ()
         {
+            /*
             let sess = <IBasicSession>await ajax.fetchJSON("../ajax/CurrentSession.ashx"); 
             let obj: IBasicObject = getObj(sess); 
             console.log(obj); 
@@ -318,7 +369,9 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
                 params.__cls_obj_uid = obj.OBJ_UID;
                 params.__cls_objt_code = obj.OBJT_Code;
             }
+            */
 
+            let params: IChecklistObjectData = await getChecklistObjectParams(cls_uid, cl_uid, proc);
 
             // let passed_cls_uid:string = params.__cls_uid;
             // console.log("saveChecklist->e.detail.cl_uid: ", e.detail.cl_uid);
@@ -333,14 +386,14 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
 
             let saveDataSetResult = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistDataSet.sql", params);
 
-            console.log("dataSetResult", saveDataSetResult);
+            // console.log("dataSetResult", saveDataSetResult);
             if (saveDataSetResult.hasError === false)
             {
                 let saveChecklistDataResult = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/anyInsert.ashx?sql=Checklist2.SaveChecklistData.sql", saveData);
 
                 if (saveDataSetResult.hasError === false)
                 {
-                    console.log("saveResult", saveChecklistDataResult);
+                    // console.log("saveResult", saveChecklistDataResult);
                     await loadMainContainer();
                 }
                 else
@@ -364,8 +417,24 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
         await loadChecklistValues(cl_uid, cls_uid);
 
 
-    await createFooter(DisplayButtons.Cancel | DisplayButtons.Save | DisplayButtons.ExcelExport);
 
+    // mainDS.main[0].TSK_TSTA_UID
+    // mainDS_TSK.main[0].TSK_TSTA_UID
+    let taskParams: IChecklistObjectData = await getChecklistObjectParams(cls_uid, cl_uid, proc);
+    let isTaskDone = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.CheckTaskDoneFlag.sql&format=1", taskParams);
+
+    // let checklistValues = new tableWrapper<IT_Checklist_ZO_ElementValues>(isTaskDone.data.tables[0].columns, isTaskDone.data.tables[0].rows, false);
+    // console.log("checklistValues", checklistValues);
+
+    // data.tables[0].rows(0)."IsDone"
+
+    console.log("isTaskDone", isTaskDone);
+
+
+    if (true)
+        await createFooter(DisplayButtons.Cancel | DisplayButtons.ExcelExport);
+    else
+        await createFooter(DisplayButtons.Cancel | DisplayButtons.Save | DisplayButtons.ExcelExport);
 
     stopWaiting(400);
 } // End Function loadChecklist 
@@ -496,6 +565,8 @@ async function onLoadNewChecklistDialogue(ev: MouseEvent)
 
 async function onDataSetSelected(ev: MouseEvent)
 {
+    console.log("onDataSetSelected");
+
     let row = getSelectedRow(ev);
     let cls_uid = row.getAttribute("name");
 
@@ -504,7 +575,7 @@ async function onDataSetSelected(ev: MouseEvent)
 
     let pd: IPortalSessionData = getPortalData();
 
-    console.log("cls_uid", cls_uid);
+    // console.log("cls_uid", cls_uid);
     loadChecklist(pd.proc, null, cls_uid, true);
 }
 
@@ -570,7 +641,7 @@ async function loadDataSetSelectionDialogue(checkListSets: tableWrapper<IDropDow
 
     for (let i = 0; i < checkListSets.rowCount; ++i)
     {
-        console.log(i, checkListSets.row(i).k, checkListSets.row(i).v, checkListSets.row(i).s);
+        // console.log(i, checkListSets.row(i).k, checkListSets.row(i).v, checkListSets.row(i).s);
 
         let color = colors[i % 2];
 
@@ -671,7 +742,7 @@ async function onExistingChecklistSelected(ev: MouseEvent)
     let popup = getPopopContainer(<Element>ev.currentTarget);
     popup.parentNode.removeChild(popup);
 
-    console.log("onExistingChecklistSelected", cl_uid, cl_name);
+    // console.log("onExistingChecklistSelected", cl_uid, cl_name);
     let versionDialogue = await openVersionSelection(cl_uid, cl_name, null);
     document.getElementById("mainContainer").appendChild(versionDialogue);
 }
@@ -829,6 +900,8 @@ async function openChecklistDialogue(checklists: tableWrapper<IT_Checklist>, use
 
 async function onNewChecklistSelected(ev: MouseEvent)
 {
+    console.log("onNewChecklistSelected");
+
     let row = getSelectedRow(ev);
     let cl_uid = row.getAttribute("name");
 
@@ -837,7 +910,7 @@ async function onNewChecklistSelected(ev: MouseEvent)
 
     let pd: IPortalSessionData = getPortalData();
 
-    console.log("cl_uid", cl_uid);
+    // console.log("cl_uid", cl_uid);
     loadChecklist(pd.proc, cl_uid, null, false);
 }
 
@@ -902,7 +975,7 @@ async function newChecklistDialogue(checklists: tableWrapper<IT_Checklist>, user
 
     for (let i = 0; i < checklists.rowCount; ++i)
     {
-        console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
+        // console.log(i, checklists.row(i).CL_UID, checklists.row(i).CL_Name, checklists.row(i).CL_Title);
 
         let color = colors[i % 2];
 
@@ -1275,7 +1348,7 @@ async function openVersionSelection(cl_uid: string, cl_name: string, tsk_uid:str
     params.__cl_uid = cl_uid;
     params.__tsk_uid = tsk_uid;
 
-    console.log("openVersionSelection params", params);
+    // console.log("openVersionSelection params", params);
     let checkListsData = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.SelectSavedDataset.sql&format=1", params);
 
     if (checkListsData.hasError)
