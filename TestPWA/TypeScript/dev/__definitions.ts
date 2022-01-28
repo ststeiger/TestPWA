@@ -376,8 +376,11 @@ interface IDropDown
 
 
 
-interface IT_Checklist_ZO_ElementValues
-{
+interface ICheckTaskDoneFlag {
+    IsDone: boolean;
+}
+
+interface IT_Checklist_ZO_ElementValues {
     CLV_ELE_UID: string;
     CLV_Value: string;
 }

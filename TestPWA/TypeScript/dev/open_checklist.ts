@@ -423,12 +423,12 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
     let taskParams: IChecklistObjectData = await getChecklistObjectParams(cls_uid, cl_uid, proc);
     let isTaskDone = <IAjaxResult<any>>await ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.CheckTaskDoneFlag.sql&format=1", taskParams);
 
-    // let checklistValues = new tableWrapper<IT_Checklist_ZO_ElementValues>(isTaskDone.data.tables[0].columns, isTaskDone.data.tables[0].rows, false);
+    let taskValues = new tableWrapper<ICheckTaskDoneFlag>(isTaskDone.data.tables[0].columns, isTaskDone.data.tables[0].rows, false);
     // console.log("checklistValues", checklistValues);
-
+    let taskIsDone = taskValues.row(0).IsDone
     // data.tables[0].rows(0)."IsDone"
 
-    console.log("isTaskDone", isTaskDone);
+    console.log("taskIsDone", taskIsDone, taskValues);
 
 
     if (true)

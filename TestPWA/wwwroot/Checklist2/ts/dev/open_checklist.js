@@ -224,7 +224,7 @@ function getChecklistObjectParams(cls_uid, cl_uid, proc) {
 }
 function loadChecklist(proc, cl_uid, cls_uid, withData) {
     return __awaiter(this, void 0, void 0, function () {
-        var mainContain, divOverview, logo, checkListTitle, br1, br2, divChecklist, clUrl, checkListData, checklistName, elements, elemntProps, checkListHeader, htmlInfo, assembledFragment, tChecklist, taskParams, isTaskDone;
+        var mainContain, divOverview, logo, checkListTitle, br1, br2, divChecklist, clUrl, checkListData, checklistName, elements, elemntProps, checkListHeader, htmlInfo, assembledFragment, tChecklist, taskParams, isTaskDone, taskValues, taskIsDone;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -322,7 +322,9 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                     return [4, ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.CheckTaskDoneFlag.sql&format=1", taskParams)];
                 case 5:
                     isTaskDone = _a.sent();
-                    console.log("isTaskDone", isTaskDone);
+                    taskValues = new table_wrapper_js_1.TableWrapper(isTaskDone.data.tables[0].columns, isTaskDone.data.tables[0].rows, false);
+                    taskIsDone = taskValues.row(0).IsDone;
+                    console.log("taskIsDone", taskIsDone, taskValues);
                     if (!true) return [3, 7];
                     return [4, createFooter(DisplayButtons.Cancel | DisplayButtons.ExcelExport)];
                 case 6:
