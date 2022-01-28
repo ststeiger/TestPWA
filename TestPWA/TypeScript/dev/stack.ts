@@ -1,4 +1,4 @@
-
+﻿
 // LIFO-data-structure 
 export class Stack<T>
 {

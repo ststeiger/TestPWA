@@ -416,7 +416,7 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
     if (withData)
         await loadChecklistValues(cl_uid, cls_uid);
 
-
+    console.log("hello there");
 
     // mainDS.main[0].TSK_TSTA_UID
     // mainDS_TSK.main[0].TSK_TSTA_UID
@@ -428,10 +428,10 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
     let taskIsDone = taskValues.row(0).IsDone
     // data.tables[0].rows(0)."IsDone"
 
-    console.log("taskIsDone", taskIsDone, taskValues);
+    // console.log("taskIsDone", taskIsDone, taskValues);
 
 
-    if (true)
+    if (taskIsDone)
         await createFooter(DisplayButtons.Cancel | DisplayButtons.ExcelExport);
     else
         await createFooter(DisplayButtons.Cancel | DisplayButtons.Save | DisplayButtons.ExcelExport);

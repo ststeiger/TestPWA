@@ -1,4 +1,4 @@
-
+﻿
 // FIFO-data-structure 
 export class Queue<T>
 {

@@ -1,4 +1,4 @@
-
+﻿
 import * as foo from "./foo.js";
 import * as test from "./testmodule2.js";
 

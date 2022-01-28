@@ -1,4 +1,4 @@
-
+﻿
 // https://dev.maxmind.com/geoip/
 // https://stackoverflow.com/questions/461742/how-to-convert-an-ipv4-address-into-a-integer-in-c
 function ip_range_to_cidr(ip1: string, ip2: string) : string

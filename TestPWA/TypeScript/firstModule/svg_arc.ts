@@ -1,5 +1,5 @@
-// https://stackoverflow.com/questions/5736398/how-to-calculate-the-svg-path-for-an-arc-of-a-circle
-// issue with 360�
+﻿// https://stackoverflow.com/questions/5736398/how-to-calculate-the-svg-path-for-an-arc-of-a-circle
+// issue with 360°
 // issue with fill 
 // issue with accuracy
 

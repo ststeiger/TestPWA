@@ -70,11 +70,17 @@
         ,tSource."TSK_KOM_InterneVerrechnungMaterial" 
         ,tSource."TSK_KOM_ADR_UID"
 	FROM T_TM_Tasks AS tSource
-
-    
+	
+    LEFT JOIN T_TM_Ref_TaskStatus ON T_TM_Ref_TaskStatus.TSTA_UID = tSource.TSK_TSTA_UID 
     -- REM: INNER JOIN ON FOREIGN KEYS should not be done here, because this removes entries with value "NULL" 
 
     WHERE (1=1) 
+
+	-- AND T_TM_Ref_TaskStatus.TSTA_IsDone = 1
+	AND T_TM_Ref_TaskStatus.TSTA_IsDone = 0
+	-- AND T_TM_Ref_TaskStatus.TSTA_IsDone IS NULL 
+
+
     AND 
     ( 
         tSource."TSK_AL_UID" IS NULL 

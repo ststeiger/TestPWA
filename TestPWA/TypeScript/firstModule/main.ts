@@ -1,7 +1,7 @@
-
+ï»¿
 import * as hua from "./hu2.js";
 
-let a = hua.htmlEncode("äöüÄÖÜ");
+let a = hua.htmlEncode("Ã¤Ã¶Ã¼Ã„Ã–Ãœ");
 console.log(a);
 
 

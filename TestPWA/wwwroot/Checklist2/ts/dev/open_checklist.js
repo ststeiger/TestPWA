@@ -316,7 +316,9 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                 case 2:
                     _a.sent();
                     _a.label = 3;
-                case 3: return [4, getChecklistObjectParams(cls_uid, cl_uid, proc)];
+                case 3:
+                    console.log("hello there");
+                    return [4, getChecklistObjectParams(cls_uid, cl_uid, proc)];
                 case 4:
                     taskParams = _a.sent();
                     return [4, ajax.fetchJSON("../ajax/AnySelect.ashx?sql=Checklist2.CheckTaskDoneFlag.sql&format=1", taskParams)];
@@ -324,8 +326,7 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                     isTaskDone = _a.sent();
                     taskValues = new table_wrapper_js_1.TableWrapper(isTaskDone.data.tables[0].columns, isTaskDone.data.tables[0].rows, false);
                     taskIsDone = taskValues.row(0).IsDone;
-                    console.log("taskIsDone", taskIsDone, taskValues);
-                    if (!true) return [3, 7];
+                    if (!taskIsDone) return [3, 7];
                     return [4, createFooter(DisplayButtons.Cancel | DisplayButtons.ExcelExport)];
                 case 6:
                     _a.sent();

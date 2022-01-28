@@ -1,4 +1,4 @@
-
+﻿
 function createFilter(fn?: (node: Node) => number): NodeFilter
 {
     // Accept all currently filtered elements.

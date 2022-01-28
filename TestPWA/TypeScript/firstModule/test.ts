@@ -1,4 +1,4 @@
-
+ï»¿
 "use strict";
 
 interface Window
@@ -67,7 +67,7 @@ declare global
 
 
 let a: IHttpUtility = require<IHttpUtility>("HttpUtility.js")
-let b = a.htmlEncode("äöü<>[]{}nihao")
+let b = a.htmlEncode("Ã¤Ã¶Ã¼<>[]{}nihao")
 let c = a.htmlDecode(b);
 console.log(c);
 

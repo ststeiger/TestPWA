@@ -1,4 +1,4 @@
-
+﻿
 // https://github.com/briancray/tinyamd/blob/master/tinyamd.js
 // https://github.com/briancray/tinyamd/tree/master/tests
 

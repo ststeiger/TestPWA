@@ -1,4 +1,4 @@
-
+﻿
 export class DoublyLinkedNode<T>
 {
 

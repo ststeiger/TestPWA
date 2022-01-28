@@ -1,4 +1,4 @@
-
+﻿
 // User defined class node
 export class SinglyLinkedNode<T>
 {

@@ -1,4 +1,4 @@
-
+﻿
 // https://stackoverflow.com/questions/20310369/declare-a-delegate-type-in-typescript
 // type Predicate<T, TKey> = (item: T) => TKey;
 

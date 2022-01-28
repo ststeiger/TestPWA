@@ -1,4 +1,4 @@
-
+﻿
 export function left(str: string, length?: number)
 {
     if (!str) return str;

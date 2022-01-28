@@ -1,4 +1,4 @@
-
+ï»¿
 "use strict";
 
 
@@ -744,14 +744,14 @@ function urlPathEncode(value: string):string
 // function urlPathEncode(value: string): string
 // function toUTF8Array(str: string): number[]
 
-// UrlPathEncode("äöüabc")
+// UrlPathEncode("Ã¤Ã¶Ã¼abc")
 //'%c3%a4%c3%b6%c3%bcabc'
 // %c3%a4%c3%b6%c3%bcabc
 
 
 // var a = require("ts/firstModule/HttpUtility.js?v=2");
 // console.log(a);
-// a.htmlDecode(a.htmlEncode("äöü"))
+// a.htmlDecode(a.htmlEncode("Ã¤Ã¶Ã¼"))
 
 
 // var enc = HtmlAttributeEncode('Hello&"<\'nihao')

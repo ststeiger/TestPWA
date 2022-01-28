@@ -1,4 +1,4 @@
-
+ï»¿
 import * as autobind_autotrace from "./autobind_autotrace.js";
 import * as uuid from "./uuid.js";
 import * as utils from "./string_utils.js";
@@ -170,8 +170,8 @@ function _createElement(data: IXmlStructure):Element
             let txt = el.textContent || el.innerText;
             el.innerHTML = "";
 
-            if ("Wartungs oder Prüfintervall [Jahr]" === txt)
-                txt = "Wartungs oder\r\nPrüfintervall [Jahr]";
+            if ("Wartungs oder PrÃ¼fintervall [Jahr]" === txt)
+                txt = "Wartungs oder\r\nPrÃ¼fintervall [Jahr]";
 
             let img = document.createElement("IMG");
             // div.setAttribute("style", "background-image: url(\"../cgi-bin/GenerateImage.ashx?no_cache=1636450422429&bgcolor=%23FFF&rotate=true&text=" + encodeURIComponent(txt) + "\");");

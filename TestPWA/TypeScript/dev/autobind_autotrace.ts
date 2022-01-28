@@ -1,4 +1,4 @@
-
+﻿
 // 3 ways to install typescript: 
 //   - NuGet package (Install-Package Microsoft.TypeScript.MSBuild -Version 4.4.4) 
 //     for TypeScript 3.2 or higher is installed into your project, 

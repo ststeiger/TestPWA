@@ -1,4 +1,4 @@
-
+﻿
 // they do not load anything ...
 // https://github.com/zouloux/amd-lite
 // https://github.com/zouloux/amd-lite/blob/master/amdLite.js

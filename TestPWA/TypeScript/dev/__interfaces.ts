@@ -1,4 +1,4 @@
-
+﻿
 interface IAvailableLanguages
 {
     de: string;

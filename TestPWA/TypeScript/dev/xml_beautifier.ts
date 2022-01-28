@@ -1,4 +1,4 @@
-
+﻿
 "use strict";
 
 // https://gist.github.com/max-pub/a5c15b7831bbfaba7ad13acefc3d0781

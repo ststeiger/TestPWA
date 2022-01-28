@@ -1,4 +1,4 @@
-
+﻿
 // https://dmitripavlutin.com/parse-url-javascript/
 // https://github.com/lifaon74/url-polyfill
 //const url = new URL('https://www.example.com:8080/bla/blo/foo.aspx?fr=yset_ie_syc_oracle&type=orcl_hpset#page0');
