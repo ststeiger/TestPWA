@@ -44,7 +44,7 @@ namespace TestPWA
             // ChineseCalender.TestTicks();
 
 
-            DbHtml.GenerateAllChecklists();
+            // DbHtml.GenerateAllChecklists();
 
 
 
