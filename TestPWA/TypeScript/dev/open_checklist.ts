@@ -282,10 +282,9 @@ async function loadChecklist(proc: string, cl_uid: string, cls_uid: string, with
 
     startWaiting();
 
-
     // while this changes NULL into "", it has the advantage that a catchable error is produced if chlist is NULL 
     let clUrl = "../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1"; //&__cl_uid=", cl_uid;
-    let checkListData = <IAjaxResult<any>>await ajax.fetchJSON(clUrl, { "__cl_uid": cl_uid, "__cls_uid": cls_uid});
+    let checkListData = <IAjaxResult<any>>await ajax.fetchJSON(clUrl, { "__cl_uid": cl_uid, "__cls_uid": cls_uid, "proc": proc});
     if (checkListData.hasError)
     {
         alert("Error loading checklist-data:\r\n" + checkListData.error.message);

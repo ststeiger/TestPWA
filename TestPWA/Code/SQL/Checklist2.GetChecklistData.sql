@@ -2,8 +2,15 @@
 -- Checklist2.GetChecklistData.sql
 -- DECLARE @__cl_uid uniqueidentifier; 
 -- DECLARE @__cls_uid uniqueidentifier; 
+-- DECLARE @proc varchar(50); 
 -- SET @__cl_uid = 'EB159A9C-E69F-49F4-B10E-3A4825973E46'; 
 -- SET @__cls_uid = '70B427DB-2F7C-4DA3-83CF-BAEBFD4AB0D0'; 
+-- SET @proc = '200CEB26807D6BF99FD6F4F0D1CA54D4'
+
+
+DECLARE @__user int; 
+SET @__user = ISNULL(NULLIF(dbo.fu_RPT_GetUserId(@proc), ''), '12435'); 
+
 
 
 IF @__cl_uid IS NULL 
@@ -89,7 +96,7 @@ SELECT
 	 END AS ELE_InnerHtml2 
 FROM T_ChecklistElements 
 
-INNER JOIN T_Benutzer ON T_Benutzer.BE_ID = 12435 -- @BE_ID 
+INNER JOIN T_Benutzer ON T_Benutzer.BE_ID = @__user -- @BE_ID 
 
 LEFT JOIN T_ChecklistElements_i18n 
 	ON T_ChecklistElements_i18n.ELE_i18n_ELE_UID = T_ChecklistElements.ELE_UID 

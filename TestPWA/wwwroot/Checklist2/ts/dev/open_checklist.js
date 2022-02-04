@@ -253,7 +253,7 @@ function loadChecklist(proc, cl_uid, cls_uid, withData) {
                     mainContain.appendChild(divOverview);
                     startWaiting();
                     clUrl = "../ajax/AnySelect.ashx?sql=Checklist2.GetChecklistData.sql&format=1";
-                    return [4, ajax.fetchJSON(clUrl, { "__cl_uid": cl_uid, "__cls_uid": cls_uid })];
+                    return [4, ajax.fetchJSON(clUrl, { "__cl_uid": cl_uid, "__cls_uid": cls_uid, "proc": proc })];
                 case 1:
                     checkListData = _a.sent();
                     if (checkListData.hasError) {

@@ -500,40 +500,43 @@ namespace TestPWA
                 {
                     // This will insert 15 rows starting at row 10. All the rows under will be shifted down.
                     // worksheet.InsertRow(10, 15);
-                    worksheet.InsertRow(1, 5);
-
-
-                    string logoPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Checklist2/images/SNB-Logo-blau-320px.png");
                     
-
-                    using (OfficeOpenXml.Drawing.ExcelPicture picture = GetLogo(worksheet, "Logo", logoPath, 135, 150))
+                    if (_COR.SQL.getMandant() == _COR.Mandant.SNB)
                     {
-                        // picture.SetPosition(0, 0, 5, 0);
-                        picture.From.Row = 0;
-                        picture.From.Column = 5;
+                        worksheet.InsertRow(1, 5);
 
-                        picture.To.Row = 3;
-                        picture.To.Column = 10;
-                        // picture.Placement = xlMove; //XLPlacement : xlMoveAndSize,xlMove,xlFreeFloating
+                        string logoPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Checklist2/images/SNB-Logo-blau-320px.png");
 
-                        // picture.SetSize(135, 150);
-                        // picture.AdjustPositionAndSize();
+                        using (OfficeOpenXml.Drawing.ExcelPicture picture = GetLogo(worksheet, "Logo", logoPath, 135, 150))
+                        {
+                            // picture.SetPosition(0, 0, 5, 0);
+                            picture.From.Row = 0;
+                            picture.From.Column = 5;
+
+                            picture.To.Row = 3;
+                            picture.To.Column = 10;
+                            // picture.Placement = xlMove; //XLPlacement : xlMoveAndSize,xlMove,xlFreeFloating
+
+                            // picture.SetSize(135, 150);
+                            // picture.AdjustPositionAndSize();
+
+                            // A3:E4
+                            // 1,1: 5,4
+                            worksheet.Cells["A3:E4"].Merge = true;
+                        }
+
+                        OfficeOpenXml.ExcelRange cell = worksheet.Cells["A3"];
+                        cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+
+                        cell.IsRichText = true; // Cell contains RichText rather than basic values
+                        cell.Style.WrapText = true; // Required to honor new lines
+
+                        OfficeOpenXml.Style.ExcelRichText title = cell.RichText.Add("Wartungscheckliste MUVE");
+                        title.FontName = "Arial";    // This will be applied to all subsequent sections as well
+                        title.Size = 14;
+                        title.Bold = true;
                     }
 
-                    // A3:E4
-                    // 1,1: 5,4
-                    worksheet.Cells["A3:E4"].Merge = true;
-
-                    OfficeOpenXml.ExcelRange cell = worksheet.Cells["A3"];
-                    cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
-
-                    cell.IsRichText = true; // Cell contains RichText rather than basic values
-                    cell.Style.WrapText = true; // Required to honor new lines
-
-                    OfficeOpenXml.Style.ExcelRichText title = cell.RichText.Add("Wartungscheckliste MUVE");
-                    title.FontName = "Arial";    // This will be applied to all subsequent sections as well
-                    title.Size = 14;
-                    title.Bold = true;
                 }
 
                 // package.SaveAs(new System.IO.FileInfo(outputFilename));
