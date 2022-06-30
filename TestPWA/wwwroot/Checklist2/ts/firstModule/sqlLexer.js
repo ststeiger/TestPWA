@@ -73,6 +73,19 @@ function htmlEnc(s) {
         .replace(/'/g, '&#39;')
         .replace(/"/g, '&#34;');
 }
+function htmlEncodeWithCharCode(string) {
+    var buffer = [];
+    for (var i = string.length - 1; i >= 0; i--) {
+        buffer.unshift(['&#', string.charCodeAt(i), ';'].join(''));
+    }
+    return buffer.join('');
+}
+function htmlEncodeWithTextNode(text) {
+    var ta = document.createElement('textarea');
+    var tn = document.createTextNode(text);
+    ta.appendChild(tn);
+    return ta.innerHTML;
+}
 function stringEquals(a, b) {
     if (a == null && b == null)
         return true;
@@ -775,9 +788,9 @@ var SqlStringReader = (function () {
         list_of_reserved_words.sort();
         list_of_functions.sort();
         list_of_joins.sort();
-        var reserved_words = new Set(list_of_reserved_words);
-        var functions = new Set(list_of_functions);
-        var joins = new Set(list_of_joins);
+        var reserved_words = new CaseInsensitiveSet(list_of_reserved_words);
+        var functions = new CaseInsensitiveSet(list_of_functions);
+        var joins = new CaseInsensitiveSet(list_of_joins);
         for (var i = 0; i < ls.length; ++i) {
             var potentialBracket = ls[i].NextNonSeparatorIncludingBracket();
             if (potentialBracket != null && potentialBracket.KeywordType == SqlKeywordType.OpenBracket) {
@@ -806,6 +819,39 @@ var SqlStringReader = (function () {
         }
         return ls;
     };
+    SqlStringReader.LexToHtml = function (t) {
+        var ls = SqlStringReader.Lexme(t);
+        var colors = [
+            "blue",
+            "hotpink",
+            "gray",
+            "#A0A0A0",
+            "black",
+            "red",
+            "black",
+            "black",
+            "green",
+            "black",
+            "black",
+            "black",
+        ];
+        var sbb = new StringBuilder();
+        sbb.AppendLine("\n    <html>\n        <head></head>\n        <body>\n        ");
+        for (var i = 0; i < ls.length; ++i) {
+            var mytok = ls[i];
+            var html = mytok.HtmlText;
+            var color = colors[mytok.KeywordType];
+            sbb.Append("<span style=\"color: ");
+            sbb.Append(color);
+            sbb.Append(";\">");
+            sbb.Append(html);
+            sbb.Append("</span>");
+        }
+        sbb.AppendLine("</body>\n    </html>");
+        var s = sbb.ToString();
+        sbb.Clear();
+        return s;
+    };
     return SqlStringReader;
 }());
 var SqlStringReaderImpl = (function (_super) {
@@ -815,3 +861,19 @@ var SqlStringReaderImpl = (function (_super) {
     }
     return SqlStringReaderImpl;
 }(SqlStringReader));
+var CaseInsensitiveSet = (function (_super) {
+    __extends(CaseInsensitiveSet, _super);
+    function CaseInsensitiveSet(values) {
+        return _super.call(this, Array.from(values, function (it) { return it.toLowerCase(); })) || this;
+    }
+    CaseInsensitiveSet.prototype.add = function (str) {
+        return _super.prototype.add.call(this, str.toLowerCase());
+    };
+    CaseInsensitiveSet.prototype.has = function (str) {
+        return _super.prototype.has.call(this, str.toLowerCase());
+    };
+    CaseInsensitiveSet.prototype.delete = function (str) {
+        return _super.prototype.delete.call(this, str.toLowerCase());
+    };
+    return CaseInsensitiveSet;
+}(Set));

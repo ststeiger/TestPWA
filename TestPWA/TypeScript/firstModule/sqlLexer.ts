@@ -84,6 +84,39 @@ function htmlEnc(s: string): string
         .replace(/"/g, '&#34;');
 }
 
+function htmlEncodeWithCharCode(string:string)
+{
+    let buffer = [];
+
+    for (let i = string.length - 1; i >= 0; i--)
+    {
+        // Both methods change the length of the array 
+        // by the number of elements added to the array. 
+        // Both method changes the original array. 
+        // Both method returns the newly added element
+        // The little difference is that unshift() method adds the element at 0 index 
+        // and all the values get shifted by 1 by ultimately returning the length of the array. 
+        // The push() method returns the last element adding a new element from the last index. 
+        buffer.unshift(['&#', string.charCodeAt(i), ';'].join(''));
+    }
+
+    return buffer.join('');
+}
+
+function htmlEncodeWithTextNode(text:string)
+{
+    let ta = document.createElement('textarea');
+    let tn = document.createTextNode(text);
+    ta.appendChild(tn);
+    return ta.innerHTML;
+}
+
+
+// https://www.delftstack.com/howto/javascript/htmlencode-javascript/
+// https://github.com/mathiasbynens/he/blob/master/he.js
+// console.log(htmlEncodeWithCharCode("<h1>Hello world</h1>"));
+
+
 function stringEquals(a: string, b: string)
 {
     if (a == null && b == null)
@@ -1205,9 +1238,9 @@ CROSS JOIN LATERAL(SELECT 123 AS crossApplied) AS t9
         list_of_joins.sort();
 
 
-        const reserved_words = new Set(list_of_reserved_words);
-        const functions = new Set(list_of_functions);
-        const joins = new Set(list_of_joins);
+        const reserved_words = new CaseInsensitiveSet(list_of_reserved_words);
+        const functions = new CaseInsensitiveSet(list_of_functions);
+        const joins = new CaseInsensitiveSet(list_of_joins);
 
 
         for (let i = 0; i < ls.length; ++i)
@@ -1263,6 +1296,63 @@ CROSS JOIN LATERAL(SELECT 123 AS crossApplied) AS t9
     }
 
 
+
+
+
+    public static LexToHtml(t: string ): string 
+    {
+        let ls: SqlToken[] = SqlStringReader.Lexme(t);
+
+        let colors: string[] = [
+            "blue", // Reserved = 0,
+            "hotpink", // Function = 1,
+            "gray", // Operator = 2,
+            "#A0A0A0", // From = 3,
+            "black", // Identifier = 4,
+            "red", // String = 5,
+            "black", // Number = 6,
+            "black", // Separator = 7,
+            "green", // Comment = 8,
+            "black", // OpenBracket = 9,
+            "black", // CloseBracket = 10,
+            "black", // Unknown = 11
+        ];
+
+
+
+        let sbb = new StringBuilder();
+        sbb.AppendLine(`
+    <html>
+        <head></head>
+        <body>
+        `);
+
+        for (let i = 0; i < ls.length; ++i)
+        {
+            let mytok: SqlToken = ls[i];
+
+            // if (mytok.KeywordType == SqlKeywordType.Comment) continue;
+
+            let html: string = mytok.HtmlText;
+            let color: string = colors[mytok.KeywordType];
+
+            sbb.Append(`<span style="color: `);
+            sbb.Append(color);
+            sbb.Append(`;">`);
+            sbb.Append(html);
+            sbb.Append(`</span>`);
+
+        }
+        sbb.AppendLine(`</body>
+    </html>`);
+
+        let s: string = sbb.ToString();
+        sbb.Clear();
+
+        return s;
+    }
+
+
 }
 
 
@@ -1277,3 +1367,29 @@ class SqlStringReaderImpl
     }
 
 }
+
+
+class CaseInsensitiveSet extends Set
+{
+    constructor(values:any[])
+    {
+        super(Array.from(values, it => it.toLowerCase()));
+    }
+
+    add(str:string)
+    {
+        return super.add(str.toLowerCase());
+    }
+
+    has(str: string)
+    {
+        return super.has(str.toLowerCase());
+    }
+
+    delete(str: string)
+    {
+        return super.delete(str.toLowerCase());
+    }
+}
+
+// const countries = new CaseInsensitiveSet(["Usa", "CanAdA"]);
