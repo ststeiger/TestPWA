@@ -19,6 +19,38 @@ namespace TestPWA
         }
 
 
+        public static async System.Threading.Tasks.Task EncodeCSVAsync(
+           System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<string>> csvData,
+           char delimiter,
+           char qualifier,
+           System.IO.TextWriter tw)
+        {
+
+            foreach(System.Collections.Generic.IEnumerable<string> row in csvData)
+            {
+                bool isFirst = true;
+
+                // System.Console.WriteLine(row);
+                foreach (string column in row)
+                {
+                    if (!isFirst)
+                    {
+                        await tw.WriteAsync(delimiter);
+                        isFirst = false;
+                    }
+
+                    // System.Console.WriteLine(column);
+                    string cellData = EscapeIfNecessary(column, delimiter, qualifier);
+                    await tw.WriteAsync(cellData);
+                }
+
+                await tw.WriteAsync("\r\n");
+            }
+
+        }
+
+
+
 
         public static async System.Threading.Tasks.Task EncodeCSVAsync(
            System.Collections.Generic.List<System.Collections.Generic.List<string>> csvData,
@@ -77,6 +109,36 @@ namespace TestPWA
             return ret;
         }
 
+
+        public static void EncodeCSV(
+             System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<string>> csvData,
+             char delimiter,
+             char qualifier,
+             System.IO.TextWriter tw)
+        {
+
+            foreach (System.Collections.Generic.IEnumerable<string> row in csvData)
+            {
+                bool isFirst = true;
+
+                // System.Console.WriteLine(row);
+                foreach (string column in row)
+                {
+                    if (!isFirst)
+                    {
+                        tw.Write(delimiter);
+                        isFirst = false;
+                    }
+                    
+                    // System.Console.WriteLine(column);
+                    string cellData = EscapeIfNecessary(column, delimiter, qualifier);
+                    tw.Write(cellData);
+                }
+
+                tw.Write("\r\n");
+            }
+
+        }
 
 
         public static void EncodeCSV(
