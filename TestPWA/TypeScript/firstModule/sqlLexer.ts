@@ -12,7 +12,8 @@ enum SqlKeywordType
     Comment = 8,
     OpenBracket = 9,
     CloseBracket = 10,
-    Unknown = 11
+    Go = 11,
+    Unknown = 12
 }
 
 
@@ -21,6 +22,7 @@ enum SqlSyntaxTokenType
     String,
     DashComment,
     SlashComment,
+    ScriptSeparator,
     StatementSeparator,
     QuotedIdentifier,
     SingleArgumentOperator,
@@ -29,48 +31,6 @@ enum SqlSyntaxTokenType
 }
 
 
-
-class StringBuilder
-{
-
-    protected m_list: string[];
-
-
-    constructor()
-    {
-        this.m_list = [];
-    }
-
-
-    public Clear()
-    {
-        this.m_list = null;
-        this.m_list = [];
-    }
-
-
-    public Append(text: string)
-    {
-        this.m_list.push(text);
-    }
-
-    public AppendLine(text: string)
-    {
-        this.m_list.push(text);
-        this.m_list.push("\r\n");
-    }
-
-    public ToString(): string
-    {
-        return this.m_list.join("");
-    }
-
-    get Length(): number
-    {
-        return this.m_list.join("").length;
-    }
-
-}
 
 
 // https://github.com/emn178/js-htmlencode/blob/master/src/htmlencode.js
@@ -128,6 +88,52 @@ function stringEquals(a: string, b: string)
     return a.toLowerCase() === b.toLowerCase();
 }
 
+
+
+class SqlStringBuilder
+{
+
+    protected m_list: string[];
+
+
+    constructor()
+    {
+        this.m_list = [];
+        this.Append = this.Append.bind(this);
+        this.AppendLine = this.AppendLine.bind(this);
+        this.ToString = this.ToString.bind(this);
+    }
+
+
+    public Clear()
+    {
+        this.m_list = null;
+        this.m_list = [];
+    }
+
+
+    public Append(text: string)
+    {
+        this.m_list.push(text);
+    }
+
+    public AppendLine(text: string)
+    {
+        this.m_list.push(text);
+        this.m_list.push("\r\n");
+    }
+
+    public ToString(): string
+    {
+        return this.m_list.join("");
+    }
+
+    get Length(): number
+    {
+        return this.m_list.join("").length;
+    }
+
+}
 
 
 
@@ -625,6 +631,17 @@ abstract class SqlStringReader
         );
     }
 
+
+    get IsGoStatement(): boolean
+    {
+        if (this.Current == null || this.Next == null)
+            return false;
+
+        return (this.Current.toLowerCase() == 'g' && this.Next.toLowerCase() == 'o');
+    }
+    
+
+
     get IsDoubleOperator(): boolean
     {
         return (
@@ -722,7 +739,7 @@ abstract class SqlStringReader
 
     public ReadQuotedString(): string
     {
-        let sb = new StringBuilder();
+        let sb = new SqlStringBuilder();
         sb.Append(this.Current);
 
         while (this.GoToNext())
@@ -742,7 +759,7 @@ abstract class SqlStringReader
 
     public ReadDoubleQuotedString(): string
     {
-        let sb = new StringBuilder();
+        let sb = new SqlStringBuilder();
         sb.Append(this.Current);
 
         while (this.GoToNext())
@@ -761,7 +778,7 @@ abstract class SqlStringReader
 
     public ReadSquareBracketString(): string
     {
-        let sb = new StringBuilder();
+        let sb = new SqlStringBuilder();
         sb.Append(this.Current);
 
         while (this.GoToNext())
@@ -781,7 +798,7 @@ abstract class SqlStringReader
 
     public ReadDashDashComment(): string
     {
-        let sb = new StringBuilder();
+        let sb = new SqlStringBuilder();
 
         sb.Append(this.Current);
 
@@ -799,7 +816,7 @@ abstract class SqlStringReader
 
     public ReadStatementSeparator(): string
     {
-        let sb = new StringBuilder();
+        let sb = new SqlStringBuilder();
 
         sb.Append(this.Current);
 
@@ -826,7 +843,7 @@ abstract class SqlStringReader
     // SELECT 'SELECT ''123'' AS hello, ''Jean le Rond d''''Alembert''' AS world
     public ReadSlashStarCommentWithResult(): string 
     {
-        let sb = new StringBuilder();
+        let sb = new SqlStringBuilder();
         sb.Append(this.Current);
 
         while (this.GoToNext())
@@ -970,7 +987,7 @@ CROSS JOIN LATERAL(SELECT 123 AS crossApplied) AS t9
         let x: SqlStringReader = new SqlStringReaderImpl(sql);
 
         let ls: SqlToken[] = [];
-        let sb = new StringBuilder();
+        let sb = new SqlStringBuilder();
 
         while (x.GoToNext())
         {
@@ -1057,11 +1074,8 @@ CROSS JOIN LATERAL(SELECT 123 AS crossApplied) AS t9
             if (x.IsEnquiry)
             {
                 let foo: string = sb.ToString();
-                if (!!foo)
-                    throw new Error("damn"); //System.InvalidProgramException("damn");
-
+                if (!!foo) throw new Error("damn"); //System.InvalidProgramException("damn");
                 sb.Clear();
-
 
                 ls.push(new SqlToken("\"\"", SqlSyntaxTokenType.String, SqlKeywordType.String));
 
@@ -1131,6 +1145,22 @@ CROSS JOIN LATERAL(SELECT 123 AS crossApplied) AS t9
                 statement = x.ReadStatementSeparator();
                 ls.push(new SqlToken(statement, SqlSyntaxTokenType.StatementSeparator, SqlKeywordType.Separator));
 
+                continue;
+            }
+
+
+            if (x.IsGoStatement)
+            {
+                let statement: string = sb.ToString();
+
+                if (!!statement)
+                    ls.push(new SqlToken(statement, SqlSyntaxTokenType.Undefined, SqlKeywordType.Identifier));
+
+                sb.Clear();
+
+                ls.push(new SqlToken("GO", SqlSyntaxTokenType.ScriptSeparator, SqlKeywordType.Go));
+
+                x.GoToNext();
                 continue;
             }
 
@@ -1296,7 +1326,35 @@ CROSS JOIN LATERAL(SELECT 123 AS crossApplied) AS t9
     }
 
 
+    // This does not work properly, as GO can be an alias or identifier. 
+    public static SeparateScript(t: string): string[] 
+    {
+        let ret: string[] = [];
+        let ls: SqlToken[] = SqlStringReader.Lexme(t);
 
+        let sbb = new SqlStringBuilder();
+
+        for (let i = 0; i < ls.length; ++i)
+        {
+            let mytok: SqlToken = ls[i];
+            
+            if (mytok.KeywordType == SqlKeywordType.Go)
+            {
+                ret.push(sbb.ToString());
+                sbb.Clear();
+            }
+            else 
+                sbb.Append(mytok.Text);
+        }
+
+        let s = sbb.ToString();
+        sbb.Clear();
+
+        if (s.length > 0)
+            ret.push(s);
+        
+        return ret;
+    }
 
 
     public static LexToHtml(t: string ): string 
@@ -1320,7 +1378,7 @@ CROSS JOIN LATERAL(SELECT 123 AS crossApplied) AS t9
 
 
 
-        let sbb = new StringBuilder();
+        let sbb = new SqlStringBuilder();
         sbb.AppendLine(`
     <html>
         <head></head>
@@ -1369,27 +1427,67 @@ class SqlStringReaderImpl
 }
 
 
-class CaseInsensitiveSet extends Set
+class CaseInsensitiveSet
 {
-    constructor(values:any[])
+
+    protected m_objects: any;
+
+
+    constructor(values: any[])
     {
-        super(Array.from(values, it => it.toLowerCase()));
+        this.m_objects = {};
+
+        for (let i = 0; i < values.length; ++i)
+        {
+            this.m_objects[values[i]] = true;
+        }
+        
     }
 
-    add(str:string)
+    add(str: string)
     {
-        return super.add(str.toLowerCase());
+        this.m_objects[str.toLowerCase()] = true;
     }
 
-    has(str: string)
+    has(str: string):boolean 
     {
-        return super.has(str.toLowerCase());
+        if (this.m_objects[str.toLowerCase()])
+            return true;
+
+        return false;
     }
 
     delete(str: string)
     {
-        return super.delete(str.toLowerCase());
+        delete this.m_objects[str.toLowerCase()];
     }
+
 }
+
+
+
+// Doesn't work in ES5 - super.constructor requires new 
+//class CaseInsensitiveSet extends Set
+//{
+//    constructor(values:any[])
+//    {
+//        super(Array.from(values, it => it.toLowerCase()));
+//    }
+
+//    add(str:string)
+//    {
+//        return super.add(str.toLowerCase());
+//    }
+
+//    has(str: string)
+//    {
+//        return super.has(str.toLowerCase());
+//    }
+
+//    delete(str: string)
+//    {
+//        return super.delete(str.toLowerCase());
+//    }
+//}
 
 // const countries = new CaseInsensitiveSet(["Usa", "CanAdA"]);

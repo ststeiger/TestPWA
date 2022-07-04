@@ -26,46 +26,21 @@ var SqlKeywordType;
     SqlKeywordType[SqlKeywordType["Comment"] = 8] = "Comment";
     SqlKeywordType[SqlKeywordType["OpenBracket"] = 9] = "OpenBracket";
     SqlKeywordType[SqlKeywordType["CloseBracket"] = 10] = "CloseBracket";
-    SqlKeywordType[SqlKeywordType["Unknown"] = 11] = "Unknown";
+    SqlKeywordType[SqlKeywordType["Go"] = 11] = "Go";
+    SqlKeywordType[SqlKeywordType["Unknown"] = 12] = "Unknown";
 })(SqlKeywordType || (SqlKeywordType = {}));
 var SqlSyntaxTokenType;
 (function (SqlSyntaxTokenType) {
     SqlSyntaxTokenType[SqlSyntaxTokenType["String"] = 0] = "String";
     SqlSyntaxTokenType[SqlSyntaxTokenType["DashComment"] = 1] = "DashComment";
     SqlSyntaxTokenType[SqlSyntaxTokenType["SlashComment"] = 2] = "SlashComment";
-    SqlSyntaxTokenType[SqlSyntaxTokenType["StatementSeparator"] = 3] = "StatementSeparator";
-    SqlSyntaxTokenType[SqlSyntaxTokenType["QuotedIdentifier"] = 4] = "QuotedIdentifier";
-    SqlSyntaxTokenType[SqlSyntaxTokenType["SingleArgumentOperator"] = 5] = "SingleArgumentOperator";
-    SqlSyntaxTokenType[SqlSyntaxTokenType["DoubleArgumentOperator"] = 6] = "DoubleArgumentOperator";
-    SqlSyntaxTokenType[SqlSyntaxTokenType["Undefined"] = 7] = "Undefined";
+    SqlSyntaxTokenType[SqlSyntaxTokenType["ScriptSeparator"] = 3] = "ScriptSeparator";
+    SqlSyntaxTokenType[SqlSyntaxTokenType["StatementSeparator"] = 4] = "StatementSeparator";
+    SqlSyntaxTokenType[SqlSyntaxTokenType["QuotedIdentifier"] = 5] = "QuotedIdentifier";
+    SqlSyntaxTokenType[SqlSyntaxTokenType["SingleArgumentOperator"] = 6] = "SingleArgumentOperator";
+    SqlSyntaxTokenType[SqlSyntaxTokenType["DoubleArgumentOperator"] = 7] = "DoubleArgumentOperator";
+    SqlSyntaxTokenType[SqlSyntaxTokenType["Undefined"] = 8] = "Undefined";
 })(SqlSyntaxTokenType || (SqlSyntaxTokenType = {}));
-var StringBuilder = (function () {
-    function StringBuilder() {
-        this.m_list = [];
-    }
-    StringBuilder.prototype.Clear = function () {
-        this.m_list = null;
-        this.m_list = [];
-    };
-    StringBuilder.prototype.Append = function (text) {
-        this.m_list.push(text);
-    };
-    StringBuilder.prototype.AppendLine = function (text) {
-        this.m_list.push(text);
-        this.m_list.push("\r\n");
-    };
-    StringBuilder.prototype.ToString = function () {
-        return this.m_list.join("");
-    };
-    Object.defineProperty(StringBuilder.prototype, "Length", {
-        get: function () {
-            return this.m_list.join("").length;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    return StringBuilder;
-}());
 function htmlEnc(s) {
     return s.replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -93,6 +68,36 @@ function stringEquals(a, b) {
         return false;
     return a.toLowerCase() === b.toLowerCase();
 }
+var SqlStringBuilder = (function () {
+    function SqlStringBuilder() {
+        this.m_list = [];
+        this.Append = this.Append.bind(this);
+        this.AppendLine = this.AppendLine.bind(this);
+        this.ToString = this.ToString.bind(this);
+    }
+    SqlStringBuilder.prototype.Clear = function () {
+        this.m_list = null;
+        this.m_list = [];
+    };
+    SqlStringBuilder.prototype.Append = function (text) {
+        this.m_list.push(text);
+    };
+    SqlStringBuilder.prototype.AppendLine = function (text) {
+        this.m_list.push(text);
+        this.m_list.push("\r\n");
+    };
+    SqlStringBuilder.prototype.ToString = function () {
+        return this.m_list.join("");
+    };
+    Object.defineProperty(SqlStringBuilder.prototype, "Length", {
+        get: function () {
+            return this.m_list.join("").length;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return SqlStringBuilder;
+}());
 var SqlToken = (function () {
     function SqlToken(text, syntaxTokenType, keywordType) {
         this.m_text = "";
@@ -442,6 +447,15 @@ var SqlStringReader = (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(SqlStringReader.prototype, "IsGoStatement", {
+        get: function () {
+            if (this.Current == null || this.Next == null)
+                return false;
+            return (this.Current.toLowerCase() == 'g' && this.Next.toLowerCase() == 'o');
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(SqlStringReader.prototype, "IsDoubleOperator", {
         get: function () {
             return ((this.Current == '&' && this.Next == '&') ||
@@ -523,7 +537,7 @@ var SqlStringReader = (function () {
         configurable: true
     });
     SqlStringReader.prototype.ReadQuotedString = function () {
-        var sb = new StringBuilder();
+        var sb = new SqlStringBuilder();
         sb.Append(this.Current);
         while (this.GoToNext()) {
             sb.Append(this.Current);
@@ -534,7 +548,7 @@ var SqlStringReader = (function () {
         return SqlStringReader.BackSubstitute(sb.ToString());
     };
     SqlStringReader.prototype.ReadDoubleQuotedString = function () {
-        var sb = new StringBuilder();
+        var sb = new SqlStringBuilder();
         sb.Append(this.Current);
         while (this.GoToNext()) {
             sb.Append(this.Current);
@@ -545,7 +559,7 @@ var SqlStringReader = (function () {
         return SqlStringReader.BackSubstitute(sb.ToString());
     };
     SqlStringReader.prototype.ReadSquareBracketString = function () {
-        var sb = new StringBuilder();
+        var sb = new SqlStringBuilder();
         sb.Append(this.Current);
         while (this.GoToNext()) {
             sb.Append(this.Current);
@@ -556,7 +570,7 @@ var SqlStringReader = (function () {
         return SqlStringReader.BackSubstitute(sb.ToString());
     };
     SqlStringReader.prototype.ReadDashDashComment = function () {
-        var sb = new StringBuilder();
+        var sb = new SqlStringBuilder();
         sb.Append(this.Current);
         while (this.GoToNext()) {
             sb.Append(this.Current);
@@ -566,7 +580,7 @@ var SqlStringReader = (function () {
         return SqlStringReader.BackSubstitute(sb.ToString());
     };
     SqlStringReader.prototype.ReadStatementSeparator = function () {
-        var sb = new StringBuilder();
+        var sb = new SqlStringBuilder();
         sb.Append(this.Current);
         while (this.GoToNext()) {
             if (this.IsStatementSeparator && !this.IsBracket && !this.IsBeginDashDashComment && !this.IsBeginSlashStarComment && !this.IsBackspace && !this.IsEndSlashStarComment && !this.IsQuote)
@@ -579,7 +593,7 @@ var SqlStringReader = (function () {
         return sb.ToString();
     };
     SqlStringReader.prototype.ReadSlashStarCommentWithResult = function () {
-        var sb = new StringBuilder();
+        var sb = new SqlStringBuilder();
         sb.Append(this.Current);
         while (this.GoToNext()) {
             if (this.IsBeginSlashStarComment) {
@@ -616,7 +630,7 @@ var SqlStringReader = (function () {
     SqlStringReader.Lexme = function (sql) {
         var x = new SqlStringReaderImpl(sql);
         var ls = [];
-        var sb = new StringBuilder();
+        var sb = new SqlStringBuilder();
         while (x.GoToNext()) {
             if (x.IsQuote) {
                 var quotedString = x.ReadQuotedString();
@@ -713,6 +727,15 @@ var SqlStringReader = (function () {
                 sb.Clear();
                 statement = x.ReadStatementSeparator();
                 ls.push(new SqlToken(statement, SqlSyntaxTokenType.StatementSeparator, SqlKeywordType.Separator));
+                continue;
+            }
+            if (x.IsGoStatement) {
+                var statement = sb.ToString();
+                if (!!statement)
+                    ls.push(new SqlToken(statement, SqlSyntaxTokenType.Undefined, SqlKeywordType.Identifier));
+                sb.Clear();
+                ls.push(new SqlToken("GO", SqlSyntaxTokenType.ScriptSeparator, SqlKeywordType.Go));
+                x.GoToNext();
                 continue;
             }
             sb.Append(x.Current);
@@ -819,6 +842,25 @@ var SqlStringReader = (function () {
         }
         return ls;
     };
+    SqlStringReader.SeparateScript = function (t) {
+        var ret = [];
+        var ls = SqlStringReader.Lexme(t);
+        var sbb = new SqlStringBuilder();
+        for (var i = 0; i < ls.length; ++i) {
+            var mytok = ls[i];
+            if (mytok.KeywordType == SqlKeywordType.Go) {
+                ret.push(sbb.ToString());
+                sbb.Clear();
+            }
+            else
+                sbb.Append(mytok.Text);
+        }
+        var s = sbb.ToString();
+        sbb.Clear();
+        if (s.length > 0)
+            ret.push(s);
+        return ret;
+    };
     SqlStringReader.LexToHtml = function (t) {
         var ls = SqlStringReader.Lexme(t);
         var colors = [
@@ -835,7 +877,7 @@ var SqlStringReader = (function () {
             "black",
             "black",
         ];
-        var sbb = new StringBuilder();
+        var sbb = new SqlStringBuilder();
         sbb.AppendLine("\n    <html>\n        <head></head>\n        <body>\n        ");
         for (var i = 0; i < ls.length; ++i) {
             var mytok = ls[i];
@@ -861,19 +903,23 @@ var SqlStringReaderImpl = (function (_super) {
     }
     return SqlStringReaderImpl;
 }(SqlStringReader));
-var CaseInsensitiveSet = (function (_super) {
-    __extends(CaseInsensitiveSet, _super);
+var CaseInsensitiveSet = (function () {
     function CaseInsensitiveSet(values) {
-        return _super.call(this, Array.from(values, function (it) { return it.toLowerCase(); })) || this;
+        this.m_objects = {};
+        for (var i = 0; i < values.length; ++i) {
+            this.m_objects[values[i]] = true;
+        }
     }
     CaseInsensitiveSet.prototype.add = function (str) {
-        return _super.prototype.add.call(this, str.toLowerCase());
+        this.m_objects[str.toLowerCase()] = true;
     };
     CaseInsensitiveSet.prototype.has = function (str) {
-        return _super.prototype.has.call(this, str.toLowerCase());
+        if (this.m_objects[str.toLowerCase()])
+            return true;
+        return false;
     };
     CaseInsensitiveSet.prototype.delete = function (str) {
-        return _super.prototype.delete.call(this, str.toLowerCase());
+        delete this.m_objects[str.toLowerCase()];
     };
     return CaseInsensitiveSet;
-}(Set));
+}());
