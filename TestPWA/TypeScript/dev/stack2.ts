@@ -164,7 +164,18 @@ class sillyIterator
     }
 
 
-    protected getNextTab(root: HTMLElement): HTMLElement[]
+    public foo()
+    {
+        // let checklistData: IXmlStructure = db_html.collectStructure(document.querySelector("table"))
+        // let saveData = db_html.collectSaveData(document.querySelector("table"), "__cls_uid");
+        let checklistData: IXmlStructure = this.collectHtml(document.querySelector("table"))
+    }
+
+
+
+
+    // https://stackoverflow.com/questions/64551229/queryselectorall-vs-nodeiterator-vs-treewalker-fastest-pure-js-flat-dom-iterat
+    protected collectHtml(root: HTMLElement): IXmlStructure
     {
         let currentNode: Node;
         // https://developer.mozilla.org/en-US/docs/Web/API/Document/createNodeIterator
@@ -178,11 +189,89 @@ class sillyIterator
 
         let a: HTMLElement[] = [];
 
+        let currentRow = 0;
+        let startColumn = 0;
+        let endColumn = 0;
+
+        function _getProperties(el: Element): string[][]
+        {
+            let arr: string[][] = [];
+
+            for (let i = 0, atts = el.attributes, n = atts.length; i < n; i++)
+            {
+                let a = atts[i].nodeName;
+                arr.push([a, el.getAttribute(a)]);
+            } // Next i 
+
+            return arr;
+        } // End Function _getProperties 
+
+
+        let checklistData: IXmlStructure = {
+              "uuid": "rootUid()"
+            , "parent_uuid": null 
+            , "tagName": root.nodeName 
+            , "properties": _getProperties(<Element>root)
+            , "children": []
+            , "sort": 0 // sort
+        };
+
+
+
         while (currentNode = ni.nextNode())
         {
+            let guid = "uuid.newGuid()";
+
+            // currentNode.parentNode
+
+
+
+
+            if ("tr" === currentNode.nodeName)
+            {
+                currentRow += 1;
+                // console.log(currentNode, currentRow);
+            } // End if ("tr" === currentNode.nodeName)
+            else if ("td" === currentNode.nodeName)
+            {
+                // let colSpan = parseInt(properties["colspan"] || "1");
+                // let rowSpan = parseInt(properties["rowspan"] || "1");
+
+                // startColumn = endColumn + 1;
+                // endColumn = startColumn + colSpan - 1;
+
+                // console.log(currentNode);
+                // console.log("y:", currentRow, "x1:", startColumn, "x2", endColumn, "colspan", colSpan, "rowSpan", rowSpan);
+            } // End if ("td" === element.tagName)
+
+
+            if (currentNode.nodeName.toLowerCase() === "td")
+            {
+                let inputSort = 0;
+
+                
+                let children: Node[] = Array.prototype.slice.call(currentNode.childNodes);
+                for (let i = 0; i < children.length; ++i)
+                {
+                    let tagName = children[i].nodeName.toLowerCase();
+
+                    // if (children[i].nodeType === Node.TEXT_NODE && !string_utils.isNullOrWhiteSpace(children[i].nodeValue))
+                    if (children[i].nodeType === Node.ELEMENT_NODE
+                        && (tagName == "input" || tagName == "textarea")) 
+                    {
+                        // let ret = collectStructure(children[i], guid, inputSort++);
+                        // checklistData.children.push(ret)
+                    }
+
+                }
+
+            }
+
+
+
             a.push(<HTMLElement>currentNode);
         }
 
-        return a;
+        return checklistData;
     }
 }

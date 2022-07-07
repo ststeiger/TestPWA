@@ -92,15 +92,53 @@ var sillyIterator = (function () {
         }
         return this.createFilter(acceptNode);
     };
-    sillyIterator.prototype.getNextTab = function (root) {
+    sillyIterator.prototype.foo = function () {
+        var checklistData = this.collectHtml(document.querySelector("table"));
+    };
+    sillyIterator.prototype.collectHtml = function (root) {
         var currentNode;
         var ni = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, this.createVisibleListNodesFilter());
         ni.currentNode = root;
         var a = [];
+        var currentRow = 0;
+        var startColumn = 0;
+        var endColumn = 0;
+        function _getProperties(el) {
+            var arr = [];
+            for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
+                var a_1 = atts[i].nodeName;
+                arr.push([a_1, el.getAttribute(a_1)]);
+            }
+            return arr;
+        }
+        var checklistData = {
+            "uuid": "rootUid()",
+            "parent_uuid": null,
+            "tagName": root.nodeName,
+            "properties": _getProperties(root),
+            "children": [],
+            "sort": 0
+        };
         while (currentNode = ni.nextNode()) {
+            var guid = "uuid.newGuid()";
+            if ("tr" === currentNode.nodeName) {
+                currentRow += 1;
+            }
+            else if ("td" === currentNode.nodeName) {
+            }
+            if (currentNode.nodeName.toLowerCase() === "td") {
+                var inputSort = 0;
+                var children = Array.prototype.slice.call(currentNode.childNodes);
+                for (var i = 0; i < children.length; ++i) {
+                    var tagName = children[i].nodeName.toLowerCase();
+                    if (children[i].nodeType === Node.ELEMENT_NODE
+                        && (tagName == "input" || tagName == "textarea")) {
+                    }
+                }
+            }
             a.push(currentNode);
         }
-        return a;
+        return checklistData;
     };
     return sillyIterator;
 }());
