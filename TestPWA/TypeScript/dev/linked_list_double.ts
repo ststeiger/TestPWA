@@ -16,7 +16,6 @@ export class DoublyLinkedNode<T>
 
 }
 
-
 export class DoublyLinkedList<T>
 {
 
@@ -24,14 +23,53 @@ export class DoublyLinkedList<T>
     public length: number;
     public tail: DoublyLinkedNode<T>;
 
+    
+    //get first(): DoublyLinkedNode<T>
+    //{
+    //    return this.head;
+    //}
+    //set first(value: DoublyLinkedNode<T>)
+    //{
+    //    this.head = value;
+    //}
+    
 
-    constructor(value:T)
+    //get last(): DoublyLinkedNode<T>
+    //{
+    //    return this.tail;
+    //}
+    //set last(value: DoublyLinkedNode<T>)
+    //{
+    //    this.tail = value;
+    //}
+    
+
+    constructor(value?:T)
     {
+        if (value != null)
+        {
+            this.head = new DoublyLinkedNode(value);
+            this.length = 1;
+        }
+        else
+        {
+            this.head = null;
+            this.tail = null;
+            this.length = 0;
+        }
 
-        
-        this.head = new DoublyLinkedNode<T>(value);
-        this.length = 1;
         this.tail = this.head;
+
+        // this.first
+        // this.last
+
+        this.printList = this.printList.bind(this);
+        this.insert = this.insert.bind(this);
+        this.prepend = this.prepend.bind(this);
+        this.append = this.append.bind(this);
+        this.remove = this.remove.bind(this);
+        this.removeFirst = this.removeFirst.bind(this);
+        this.removeLast = this.removeLast.bind(this);
     }
 
 
@@ -52,27 +90,43 @@ export class DoublyLinkedList<T>
     // Insert DoublyLinkedNode at end of the list
     public append(value:T)
     {
-        let newDoublyLinkedNode = new DoublyLinkedNode<T>(value);
+        let newDoublyLinkedNode = new DoublyLinkedNode(value);
 
-        this.tail.next = newDoublyLinkedNode;
-        newDoublyLinkedNode.previous = this.tail;
-        this.tail = newDoublyLinkedNode;
+        if (this.length == 0)
+        {
+            this.head = newDoublyLinkedNode;
+            this.tail = newDoublyLinkedNode;
+        }
+        else
+        {
+            this.tail.next = newDoublyLinkedNode;
+            newDoublyLinkedNode.previous = this.tail;
+            this.tail = newDoublyLinkedNode;
+        }
 
         this.length++;
-        this.printList();
+        // this.printList();
     }
 
     // Insert DoublyLinkedNode at the start of the list
     public prepend(value:T)
     {
-        let newDoublyLinkedNode = new DoublyLinkedNode<T>(value);
+        let newDoublyLinkedNode = new DoublyLinkedNode(value);
 
-        newDoublyLinkedNode.next = this.head;
-        this.head.previous = newDoublyLinkedNode;
-        this.head = newDoublyLinkedNode;
+        if (this.length == 0)
+        {
+            this.head = newDoublyLinkedNode;
+            this.tail = newDoublyLinkedNode;
+        }
+        else
+        {
+            newDoublyLinkedNode.next = this.head;
+            this.head.previous = newDoublyLinkedNode;
+            this.head = newDoublyLinkedNode;
+        }
 
         this.length++;
-        this.printList();
+        // this.printList();
     }
 
     // Insert DoublyLinkedNode at a given index
@@ -115,8 +169,79 @@ export class DoublyLinkedList<T>
         nextDoublyLinkedNode.previous = newDoublyLinkedNode;
 
         this.length++;
-        this.printList();
+        // this.printList();
     }
+
+    public addAfter(node: DoublyLinkedNode<T>, value:T)
+    {
+        if (node == null)
+        {
+            this.append(value);
+            return;
+        }
+
+        let newDoublyLinkedNode = new DoublyLinkedNode(value);
+        let nextDoublyLinkedNode = node.next;
+
+        newDoublyLinkedNode.next = nextDoublyLinkedNode;
+        node.next = newDoublyLinkedNode;
+        newDoublyLinkedNode.previous = node;
+
+        if (nextDoublyLinkedNode != null)
+            nextDoublyLinkedNode.previous = newDoublyLinkedNode;
+
+        if (newDoublyLinkedNode.next == null)
+            this.tail = newDoublyLinkedNode;
+        
+        if (newDoublyLinkedNode.previous == null)
+            this.head = newDoublyLinkedNode;
+        
+        this.length++;
+        // this.printList();
+    }
+
+
+
+    public addBefore(node: DoublyLinkedNode<T>, value: T)
+    {
+        if (node == null)
+        {
+            this.prepend(value);
+            return;
+        }
+
+        let newDoublyLinkedNode = new DoublyLinkedNode(value);
+
+        let nodeToAppendTo = node.previous;
+
+        if (nodeToAppendTo != null)
+            nodeToAppendTo.next = newDoublyLinkedNode;
+
+        node.previous = newDoublyLinkedNode;
+        newDoublyLinkedNode.previous = nodeToAppendTo;
+        newDoublyLinkedNode.next = node;
+        
+        if (newDoublyLinkedNode.next == null)
+            this.tail = newDoublyLinkedNode;
+
+        if (newDoublyLinkedNode.previous == null)
+            this.head = newDoublyLinkedNode;
+
+        this.length++;
+        // this.printList();
+    }
+
+    public removeFirst()
+    {
+        this.remove(0);
+    }
+
+
+    public removeLast()
+    {
+        this.remove(this.length);
+    }
+
 
     // Remove a DoublyLinkedNode
     public remove(index:number)
@@ -134,7 +259,7 @@ export class DoublyLinkedList<T>
             this.head.previous = null;
 
             this.length--;
-            this.printList();
+            // this.printList();
             return this;
         }
 
@@ -145,7 +270,7 @@ export class DoublyLinkedList<T>
             this.tail.next = null;
 
             this.length--;
-            this.printList();
+            // this.printList();
             return this;
         }
 
@@ -163,32 +288,74 @@ export class DoublyLinkedList<T>
         nextDoublyLinkedNode.previous = previousDoublyLinkedNode;
 
         this.length--;
-        this.printList();
+        // this.printList();
         return this;
     }
 }
 
 
 
-function foo()
-{
-    let myDoublyList = new DoublyLinkedList(10);
+//function tests()
+//{
 
-    myDoublyList.append(5);                     // 10 <--> 5
+    // let ls = new DoublyLinkedList()
+    // ls.append("a")
+    // ls.append("b")
+    // ls.prepend("c")
+    // ls.addAfter(ls.tail, "hello")
+    // ls.addBefore(ls.head, "i am the new head");
+    // ls.append("i am the new tail")
+    // ls.addBefore(ls.tail, "i am before the tail")
+    // ls.printList();
 
-    myDoublyList.append(16);                    // 10 <--> 5 <--> 16
+    // let ls = new DoublyLinkedList()
+    // ls.append("a")
+    // ls.printList();
 
-    myDoublyList.prepend(1);                    // 1 <--> 10 <--> 5 <--> 16
 
-    myDoublyList.insert(2, 99);                 // 1 <--> 10 <--> 99 <--> 5 <--> 16
-    myDoublyList.insert(20, 88);                // Invalid index. Current length is 5.
-    myDoublyList.insert(5, 80);                 // 1 <--> 10 <--> 99 <--> 5 <--> 16 <--> 80
-    myDoublyList.insert(0, 80);                 // 80 <--> 1 <--> 10 <--> 99 <--> 5 <--> 16 <--> 80
+    // let ls = new DoublyLinkedList()
+    // ls.prepend("c")
+    // ls.printList();
 
-    myDoublyList.remove(0);                     // 1 <--> 10 <--> 99 <--> 5 <--> 16 <--> 80
-    myDoublyList.remove(5);                     // 1 <--> 10 <--> 99 <--> 5 <--> 16
-    myDoublyList.remove(2);                     // 1 <--> 10 <--> 5 <--> 16
-}
+    // let ls = new DoublyLinkedList()
+    // ls.addAfter(ls.head, "hello")
+    // ls.printList();
+
+
+    // let ls = new DoublyLinkedList()
+    // ls.addAfter(ls.tail, "hello")
+    // ls.printList();
+
+
+
+    // let ls = new DoublyLinkedList()
+    // ls.addBefore(ls.head, "hello")
+    // ls.printList();
+
+
+    // let ls = new DoublyLinkedList()
+    // ls.addBefore(ls.tail, "hello")
+    // ls.printList();
+
+
+
+    // let myDoublyList = new DoublyLinkedList(10);
+
+    // myDoublyList.append(5);                     //  10 <--> 5
+
+    // myDoublyList.append(16);                    //  10 <--> 5 <--> 16
+
+    // myDoublyList.prepend(1);                    //  1 <--> 10 <--> 5 <--> 16
+
+    // myDoublyList.insert(2, 99);                 //  1 <--> 10 <--> 99 <--> 5 <--> 16
+    // myDoublyList.insert(20, 88);                //  Invalid index. Current length is 5.
+    // myDoublyList.insert(5, 80);                 //  1 <--> 10 <--> 99 <--> 5 <--> 16 <--> 80
+    // myDoublyList.insert(0, 80);                 //  80 <--> 1 <--> 10 <--> 99 <--> 5 <--> 16 <--> 80
+
+    // myDoublyList.remove(0);                     //  1 <--> 10 <--> 99 <--> 5 <--> 16 <--> 80
+    // myDoublyList.remove(5);                     // 1 <--> 10 <--> 99 <--> 5 <--> 16
+    // myDoublyList.remove(2);                     // 1 <--> 10 <--> 5 <--> 16
+//}
 
 
 // https://medium.com/geekculture/doubly-linked-lists-javascript-b13cc21ca59d
