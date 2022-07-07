@@ -171,8 +171,35 @@ class sillyIterator
         let checklistData: IXmlStructure = this.collectHtml(document.querySelector("table"))
     }
 
+    
+    // https://stackoverflow.com/questions/60317251/how-to-feature-detect-whether-a-browser-supports-dynamic-es6-module-loading
+    public isImportSupported()
+    {
+        let supported = false;
+        try 
+        {
+            // eval("try { import('foo').catch(() => {}); } catch (e) { }");
+            new Function("try { import('foo').catch(() => {}); } catch (e) { }")();
+            
+            supported = true;
+        } 
+        catch (e) { }
+        
+        return supported;
+    }
 
-
+    
+    public hasDynamicImport()
+    {
+        try
+        {
+            return new Function("return import('data:text/javascript;base64,Cg==').then(r => true)")();
+        }
+        catch (e)
+        {
+            return Promise.resolve(false);
+        }
+    }
 
     // https://stackoverflow.com/questions/64551229/queryselectorall-vs-nodeiterator-vs-treewalker-fastest-pure-js-flat-dom-iterat
     protected collectHtml(root: HTMLElement): IXmlStructure
