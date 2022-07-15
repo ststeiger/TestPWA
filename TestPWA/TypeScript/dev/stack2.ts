@@ -291,6 +291,19 @@ class sillyIterator
         //    console.log("foo");
         //}
 
+        function _getAttributes(el: Element): string[][]
+        {
+            let arr: string[][] = [];
+
+            for (let i = 0, atts = el.attributes, n = atts.length; i < n; i++)
+            {
+                let a = atts[i].nodeName;
+                arr.push([a, el.getAttribute(a)]);
+            } // Next i 
+
+            return arr;
+        } // End Function _getProperties 
+
 
         function getNodeData(currentElement: Element, isDir:boolean)
         {
@@ -298,7 +311,7 @@ class sillyIterator
                 "uuid": currentElement.id
                 , "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null)
                 , "tagName": currentElement.tagName
-                , "properties": null // _getProperties(<Element>p)
+                , "properties": _getAttributes(<Element>currentElement)
                 , "children": isDir ? [] : null
                 , "sort": 0
             };

@@ -175,7 +175,6 @@ namespace TestPWA
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-
                 // https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/adding-controller?view=aspnetcore-5.0&tabs=visual-studio
                 endpoints.MapControllerRoute(
                     name: "default",

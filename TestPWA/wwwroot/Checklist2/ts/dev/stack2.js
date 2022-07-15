@@ -180,12 +180,20 @@ var sillyIterator = (function () {
             });
         }
         stack.push(new InsertableStackFrame(rootNode, hasChildren(rootNode)));
+        function _getAttributes(el) {
+            var arr = [];
+            for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
+                var a = atts[i].nodeName;
+                arr.push([a, el.getAttribute(a)]);
+            }
+            return arr;
+        }
         function getNodeData(currentElement, isDir) {
             var checklistData = {
                 "uuid": currentElement.id,
                 "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null),
                 "tagName": currentElement.tagName,
-                "properties": null,
+                "properties": _getAttributes(currentElement),
                 "children": isDir ? [] : null,
                 "sort": 0
             };
