@@ -10,6 +10,7 @@ export class InsertableStack<T>
     protected items: dbl.DoublyLinkedList<T>;
     protected m_markedNode: dbl.DoublyLinkedNode<T>;
 
+
     // Array is used to implement stack
     constructor()
     {
@@ -18,9 +19,9 @@ export class InsertableStack<T>
 
         this.push = this.push.bind(this);
         this.pop = this.pop.bind(this);
-        this.dequeue = this.pop.bind(this);
-        this.peek = this.pop.bind(this);
-        this.debugDisplay = this.pop.bind(this);
+        this.dequeue = this.dequeue.bind(this);
+        this.peek = this.peek.bind(this);
+        this.debugDisplay = this.debugDisplay.bind(this);
     }
 
 
@@ -30,6 +31,7 @@ export class InsertableStack<T>
         // push element into the items
         this.items.append(element);
     }
+
 
     public pop(): T
     {
@@ -46,6 +48,7 @@ export class InsertableStack<T>
         return ret;
     }
 
+
     public dequeue(): T
     {
         let ret:T = this.items.head.value;
@@ -57,12 +60,9 @@ export class InsertableStack<T>
     public peek():T
     {
         // return the top most element from the stack
-        // but does'nt delete it.
+        // but doesn't delete it.
         return this.items.tail.value;
     }
-
-
-    
 
 
     // return true if stack is empty
@@ -89,7 +89,8 @@ export class InsertableStack<T>
         this.m_markedNode = null;
     }
 
-    public InsertAfterCurrent(data: T): void
+
+    public insertAfterCurrent(data: T): void
     {
         if (this.m_markedNode == null)
         {
@@ -100,13 +101,37 @@ export class InsertableStack<T>
         this.items.addAfter(this.m_markedNode, data);
     }
 
-    public debugDisplay(): string 
+
+    public actual():number
     {
+        let cnt = 0;
+        let currentList = this.items.head;
+        while (currentList !== null)
+        {
+            cnt++;
+            currentList = currentList.next;
+        }
+
+        return cnt;
+    }
+
+
+
+    public debugDisplay(fn?: (x: T) => string)
+    {
+        fn = fn || function (xx: T)
+        {
+            if (xx == null)
+                return null;
+
+            return String(xx);
+        };
+
         let str: string[] = [];
         let currentList = this.items.head;
         while (currentList !== null)
         {
-            str.push(String(currentList.value));
+            str.push(fn(currentList.value));
             currentList = currentList.next;
         }
 
@@ -117,9 +142,385 @@ export class InsertableStack<T>
 }
 
 
+export class InsertableStackFrame<T>
+{
+    public data: T ; // The custom data 
+    public level:number; // = answers question "What is the recursion level" 
+    public hasChildren: boolean; // = answers question "Is directory or not" ? 
+
+
+    public constructor(item: T, hasChildren: boolean , level?:number)
+    {
+        level = level || 0;
+
+        this.data = item;
+        this.level = level;
+        this.hasChildren = hasChildren;
+    }
+
+}
+
+
+
+
+
+
 
 class sillyIterator
 {
+
+    
+    public static useIterateThroughAnything<T>(rootNode: T, getChildren: (baseNode: T) => T[]): void
+    {
+        let tbl = document.querySelectorAll("table.Excel").item(0);
+
+        sillyIterator.iterateThroughAnything<Element>(tbl, function (x: Element)
+        {
+            return Array.prototype.slice.call(x.children);
+        });
+
+        sillyIterator.iterateThroughAnything<Node>(tbl, function (x: Node)
+        {
+            return Array.prototype.slice.call(x.childNodes);
+        });
+    }
+
+
+    public static iterateThroughAnything<T>(rootNode: T, getChildren:(baseNode: T) => T[]): void
+    {
+        let stack = new InsertableStack<InsertableStackFrame<T>>();
+
+
+        function hasChildren(someNode: T): boolean
+        {
+            return (getChildren(someNode).length > 0);
+        }
+
+
+        // let count = 0;
+        stack.push(new InsertableStackFrame<T>(rootNode, hasChildren(rootNode)));
+
+        // count++;
+        //if (count != stack.actual())
+        //{
+        //    debugger;
+        //    console.log("foo");
+        //}
+
+
+        while (!stack.isEmpty)
+        {
+            let node: InsertableStackFrame<T> = stack.pop();
+            //count--;
+            //if (count != stack.actual())
+            //{
+            //    debugger;
+            //    console.log("foo");
+            //}
+
+            // if (node.level > 5) continue;
+
+            if (node.hasChildren)
+            {
+                stack.markCurrent();
+
+                let entries: T[] = getChildren(node.data);
+
+                for (let i: number = 0; i < entries.length; ++i)
+                {
+                    let entry = entries[i];
+                    let hasChild: boolean = hasChildren(entry);
+                    stack.insertAfterCurrent(new InsertableStackFrame<T>(entry, hasChild, hasChild ? node.level + 1 : node.level));
+                    //count++;
+                    //if (count != stack.actual())
+                    //{
+                    //    debugger;
+                    //    console.log("foo");
+                    //}
+                }
+
+                stack.unmarkCurrent();
+            } // Whend 
+
+            if (node.hasChildren)
+            {
+                console.log("directory: ");
+            }
+
+            console.log("node.data [lvl " + node.level.toString() + "]: ", node.data);
+        } // Whend
+
+
+    } // End Sub iterateThroughAnything 
+
+
+
+
+    public static iterateThroughNodes(rootNode: Node): void
+    {
+        let stack = new InsertableStack<InsertableStackFrame<Node>>();
+        
+        function hasChildren(someNode: Node): boolean
+        {
+            return (someNode.childNodes.length > 0);
+        }
+
+
+        function getChildren(baseNode: Node): NodeListOf<ChildNode>
+        {
+            return baseNode.childNodes;
+        }
+
+        function uuidv4(): string
+        {
+            return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, function (b: string)
+            {
+                let c = parseInt(b);
+                return (c ^ ((window.crypto || window.msCrypto)).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            });
+        }
+
+
+        // let count = 0;
+        stack.push(new InsertableStackFrame<Node>(rootNode, hasChildren(rootNode)));
+
+        // count++;
+        //if (count != stack.actual())
+        //{
+        //    debugger;
+        //    console.log("foo");
+        //}
+
+
+        function getNodeData(currentElement: Element, isDir:boolean)
+        {
+            let checklistData: IXmlStructure2 = {
+                "uuid": currentElement.id
+                , "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null)
+                , "tagName": currentElement.tagName
+                , "properties": null // _getProperties(<Element>p)
+                , "children": isDir ? [] : null
+                , "sort": 0
+            };
+
+            return checklistData;
+        }
+
+        let currentParent: IXmlStructure2 = null;
+
+
+
+
+        while (!stack.isEmpty)
+        {
+            let node: InsertableStackFrame<Node> = stack.pop();
+            //count--;
+            //if (count != stack.actual())
+            //{
+            //    debugger;
+            //    console.log("foo");
+            //}
+
+            // if (node.level > 5) continue;
+
+
+            if (node.hasChildren)
+            {
+                stack.markCurrent();
+
+                let entries: NodeListOf<ChildNode> = getChildren(node.data);
+                
+                for (let i: number = 0; i < entries.length; ++i)
+                {
+                    let entry = entries.item(i);
+                    let hasChild: boolean = hasChildren(entry);
+                    stack.insertAfterCurrent(new InsertableStackFrame<Node>(entry, hasChild, hasChild ? node.level + 1 : node.level));
+                    //count++;
+                    //if (count != stack.actual())
+                    //{
+                    //    debugger;
+                    //    console.log("foo");
+                    //}
+                }
+
+                stack.unmarkCurrent();
+            } // Whend
+
+            console.log((node.hasChildren ? "directory: " : "") + "node.data [lvl " + node.level.toString() + "]: ", node.data);
+
+
+
+            
+
+            if (node.data.nodeType === Node.ELEMENT_NODE)
+            {
+                let id = (<Element>node.data).getAttribute("id");
+                // let guid = uuid.newGuid();
+                if (id == null || id == "null")
+                    (<Element>node.data).setAttribute("id", uuidv4());
+
+                id = (<Element>node.data).getAttribute("id");
+
+                if (node.hasChildren)
+                {
+                    let lastParent = currentParent;
+                    currentParent = getNodeData(<Element><any>node, node.hasChildren);
+                    currentParent.parent = lastParent;
+
+                    if (lastParent != null)
+                        lastParent.children.push(currentParent);
+                }
+                else
+                {
+                    let noob = getNodeData(<Element><any>node, node.hasChildren);
+                    noob.parent = currentParent;
+                    currentParent.children.push(noob);
+                }
+
+            }
+            
+        } // Whend
+
+        console.log(currentParent);
+    } // End Sub iterateThroughNodes 
+
+
+    public static iterateThroughElements(rootElement: Element): void
+    {
+        let stack = new InsertableStack<InsertableStackFrame<Element>>();
+
+        function hasChildren(someElement: Element): boolean
+        {
+            return (someElement.children.length > 0);
+        }
+
+
+        function getChildren(baseElement: Element): HTMLCollection
+        {
+            return baseElement.children;
+        }
+
+
+        // let count = 0;
+        stack.push(new InsertableStackFrame<Element>(rootElement, hasChildren(rootElement)));
+
+        // count++;
+        //if (count != stack.actual())
+        //{
+        //    debugger;
+        //    console.log("foo");
+        //}
+
+
+        while (!stack.isEmpty)
+        {
+            let node: InsertableStackFrame<Element> = stack.pop();
+            //count--;
+            //if (count != stack.actual())
+            //{
+            //    debugger;
+            //    console.log("foo");
+            //}
+
+            // if (node.level > 5) continue;
+
+            if (node.hasChildren)
+            {
+                stack.markCurrent();
+
+                let entries: HTMLCollection = getChildren(node.data);
+                for (let i: number = 0; i < entries.length; ++i)
+                {
+                    let entry = entries.item(i);
+                    let hasChild: boolean = hasChildren(entry);
+                    stack.insertAfterCurrent(new InsertableStackFrame<Element>(entry, hasChild, hasChild ? node.level + 1 : node.level));
+                    //count++;
+                    //if (count != stack.actual())
+                    //{
+                    //    debugger;
+                    //    console.log("foo");
+                    //}
+                }
+
+                stack.unmarkCurrent();
+            } // Whend 
+
+            if (node.hasChildren)
+            {
+                console.log("directory: ");
+            }
+            
+            console.log("node.data [lvl " + node.level.toString() + "]: ", node.data);
+        } // Whend
+
+    } // End Sub iterateThroughElements 
+
+
+
+
+    private static InsertableStackIterateDirectory2(rootPath: string):void
+    {
+        let stack: InsertableStack<InsertableStackFrame<string>> = new InsertableStack<InsertableStackFrame<string>>();
+
+
+        let context = {
+            Response: {
+                Write: function (x: any) { console.log(x); }
+            }
+        };
+
+        function hasChildren(rootPath: string): boolean
+        {
+            return false;
+        }
+
+
+        function getChildren(rootPath: string): string[]
+        {
+            return [];
+        }
+        
+        stack.push(new InsertableStackFrame<string>(rootPath, hasChildren(rootPath)));
+        
+        while (!stack.isEmpty)
+        {
+            let node: InsertableStackFrame<string> = stack.pop();
+            
+
+
+            if (node.level > 5) continue;
+
+            if (node.hasChildren)
+            {
+                stack.markCurrent();
+
+                let entries: string[] = getChildren(node.data);
+                for (let i:number = 0; i < entries.length; ++i)
+                {
+                    let withChild: boolean = hasChildren(entries[i]);
+                    stack.insertAfterCurrent(new InsertableStackFrame<string>(entries[i], withChild, withChild ? node.level + 1 : node.level));
+                }
+
+                stack.unmarkCurrent();
+            } // Whend 
+
+            if (node.hasChildren)
+                context.Response.Write("Directory:  ");
+
+            context.Response.Write(node.data);
+            context.Response.Write("   [");
+            context.Response.Write(node.level);
+            context.Response.Write("]");
+            context.Response.Write("\r\n");
+        } // Whend 
+
+    } // End Sub InsertableStackIterateDirectory 
+
+
+
+    // https://dev.to/joelbonetr/ways-of-iterating-over-a-nodelist-1574
+    // https://www.typescriptlang.org/play?target=1#code/FANwhgTgBApgNjAtjAdgFwM5QLxQCYD2AxgK7LoB0AjiTBAJ4DK8MRaBEAgnHABQBEeAJYh+ASgDcwYAHoAVMABmHKLyIEUGNLATltBRTqSpMYqAG9gUI3opg8eAKIgTAGSFbUdXgHIicISIAax8AGlUzbAA+CytrKHVNAgQKOAIAcwEhNDowNCENKAB3DiCYPH5wlj0MSTiAXzr64DkZaWUIXgRtIRwoAAYJKF6AHhsTDFTUdLQACyGAagWhMWBLeKhu4ZzEPuqJimykXhWpZuklDi6YHr7B4agx-fRJhBQZ+agllbW463BoAAPPa6CYAbSEAF0zkA
+    // _storeInDatabase
 
 
     protected createFilter(fn?: (node: Node) => number): NodeFilter
@@ -175,12 +576,10 @@ class sillyIterator
     // https://stackoverflow.com/questions/60317251/how-to-feature-detect-whether-a-browser-supports-dynamic-es6-module-loading
     public isImportSupported()
     {
-        let supported = false;
+        var supported = false; // not let
         try 
         {
-            // eval("try { import('foo').catch(() => {}); } catch (e) { }");
-            new Function("try { import('foo').catch(() => {}); } catch (e) { }")();
-            
+            new Function("try { import('data:text/javascript;base64,Cg==').catch(function() {}); } catch (e) { }")();
             supported = true;
         } 
         catch (e) { }
@@ -188,12 +587,12 @@ class sillyIterator
         return supported;
     }
 
-    
-    public hasDynamicImport()
+
+    public async isImportSupportedAsync():Promise<boolean>
     {
         try
         {
-            return new Function("return import('data:text/javascript;base64,Cg==').then(r => true)")();
+            return new Function("return import('data:text/javascript;base64,Cg==').then(function(r){ return true; })")();
         }
         catch (e)
         {

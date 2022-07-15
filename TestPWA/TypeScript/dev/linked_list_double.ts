@@ -180,16 +180,16 @@ export class DoublyLinkedList<T>
             return;
         }
 
-        let newDoublyLinkedNode = new DoublyLinkedNode(value);
-        let nextDoublyLinkedNode = node.next;
 
-        newDoublyLinkedNode.next = nextDoublyLinkedNode;
+        let newDoublyLinkedNode = new DoublyLinkedNode(value);
+        let backup_next = node.next;
         node.next = newDoublyLinkedNode;
         newDoublyLinkedNode.previous = node;
+        newDoublyLinkedNode.next = backup_next;
 
-        if (nextDoublyLinkedNode != null)
-            nextDoublyLinkedNode.previous = newDoublyLinkedNode;
-
+        if (backup_next != null)
+            backup_next.previous = newDoublyLinkedNode;
+        
         if (newDoublyLinkedNode.next == null)
             this.tail = newDoublyLinkedNode;
         
@@ -233,13 +233,15 @@ export class DoublyLinkedList<T>
 
     public removeFirst()
     {
-        this.remove(0);
+        if (this.length > 0)
+            this.remove(0);
     }
 
 
     public removeLast()
     {
-        this.remove(this.length);
+        if(this.length > 0)
+            this.remove(this.length -1);
     }
 
 
@@ -255,8 +257,18 @@ export class DoublyLinkedList<T>
         // Remove head
         if (index === 0)
         {
-            this.head = this.head.next;
-            this.head.previous = null;
+            if (this.length == 1)
+            {
+                this.head = null;
+                this.tail = null;
+            }
+            else
+            {
+                this.head = this.head.next;
+                // This requires the first one not being the only element  
+                if (this.head != null)
+                    this.head.previous = null;
+            }
 
             this.length--;
             // this.printList();
@@ -267,7 +279,10 @@ export class DoublyLinkedList<T>
         if (index === this.length - 1)
         {
             this.tail = this.tail.previous;
-            this.tail.next = null;
+
+            // This requires the last one not being the only element 
+            if(this.tail != null)
+                this.tail.next = null;
 
             this.length--;
             // this.printList();

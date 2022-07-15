@@ -97,12 +97,12 @@ var DoublyLinkedList = (function () {
             return;
         }
         var newDoublyLinkedNode = new DoublyLinkedNode(value);
-        var nextDoublyLinkedNode = node.next;
-        newDoublyLinkedNode.next = nextDoublyLinkedNode;
+        var backup_next = node.next;
         node.next = newDoublyLinkedNode;
         newDoublyLinkedNode.previous = node;
-        if (nextDoublyLinkedNode != null)
-            nextDoublyLinkedNode.previous = newDoublyLinkedNode;
+        newDoublyLinkedNode.next = backup_next;
+        if (backup_next != null)
+            backup_next.previous = newDoublyLinkedNode;
         if (newDoublyLinkedNode.next == null)
             this.tail = newDoublyLinkedNode;
         if (newDoublyLinkedNode.previous == null)
@@ -128,10 +128,12 @@ var DoublyLinkedList = (function () {
         this.length++;
     };
     DoublyLinkedList.prototype.removeFirst = function () {
-        this.remove(0);
+        if (this.length > 0)
+            this.remove(0);
     };
     DoublyLinkedList.prototype.removeLast = function () {
-        this.remove(this.length);
+        if (this.length > 0)
+            this.remove(this.length - 1);
     };
     DoublyLinkedList.prototype.remove = function (index) {
         if (!Number.isInteger(index) || index < 0 || index > this.length) {
@@ -139,14 +141,22 @@ var DoublyLinkedList = (function () {
             return this;
         }
         if (index === 0) {
-            this.head = this.head.next;
-            this.head.previous = null;
+            if (this.length == 1) {
+                this.head = null;
+                this.tail = null;
+            }
+            else {
+                this.head = this.head.next;
+                if (this.head != null)
+                    this.head.previous = null;
+            }
             this.length--;
             return this;
         }
         if (index === this.length - 1) {
             this.tail = this.tail.previous;
-            this.tail.next = null;
+            if (this.tail != null)
+                this.tail.next = null;
             this.length--;
             return this;
         }

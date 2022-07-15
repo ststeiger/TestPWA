@@ -355,6 +355,21 @@ interface IXmlStructure
 }
 
 
+interface IXmlStructure2
+{
+    uuid: string;
+    parent_uuid?: string;
+    tagName: string;
+    properties: string[][];
+    innerHtml?: string;
+    children: IXmlStructure2[];
+    sort: number;
+    lvl?: number;
+    rootNode?: number;
+    parent?:IXmlStructure2
+}
+
+
 
 interface IT_Checklist
 {
