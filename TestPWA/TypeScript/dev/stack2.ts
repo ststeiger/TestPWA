@@ -163,6 +163,88 @@ export class InsertableStackFrame<T>
 
 
 
+class RecursionDataCollector
+{
+
+    protected m_obj: IXmlStructure;
+    protected m_currentNode: IXmlStructure;
+
+    get RecursionData(): IXmlStructure
+    {
+        return this.m_obj;
+    }
+
+
+    constructor()
+    {
+        this.getNodeData = this.getNodeData.bind(this);
+        this._getAttributes = this._getAttributes.bind(this);
+    }
+
+
+    private getNodeData(currentElement: Element, isDir: boolean)
+    {
+        let checklistData: IXmlStructure = {
+            "uuid": currentElement.id
+            , "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null)
+            , "tagName": currentElement.tagName
+            , "properties": this._getAttributes(<Element>currentElement)
+            , "children": isDir ? [] : null
+            , "sort": 0
+        };
+
+        return checklistData;
+    }
+
+
+    private _getAttributes(el: Element): string[][]
+    {
+        let arr: string[][] = [];
+
+        for (let i = 0, atts = el.attributes, n = atts.length; i < n; i++)
+        {
+            let a = atts[i].nodeName;
+            arr.push([a, el.getAttribute(a)]);
+        } // Next i 
+
+        return arr;
+    } // End Function _getAttributes
+
+
+    public add<T>(frameToAdd: InsertableStackFrame<T>)
+    {
+        let bar = this.getNodeData(<Element><any>frameToAdd.data, frameToAdd.hasChildren);
+
+        if (frameToAdd.hasChildren)
+        {
+            if (this.m_currentNode == null)
+            {
+                this.m_obj = bar;
+                this.m_currentNode = bar;
+                return;
+            }
+            
+            this.m_currentNode.children.push(bar);
+            this.m_currentNode = bar;
+        }
+        else
+        {
+            if (this.m_currentNode == null)
+            {
+                this.m_obj = bar;
+                this.m_currentNode = bar;
+                return;
+            }
+
+            this.m_currentNode.children.push(bar);
+        }
+
+    }
+
+
+}
+
+
 
 
 
@@ -251,7 +333,10 @@ class sillyIterator
         } // Whend
 
 
-    } // End Sub iterateThroughAnything 
+    } // End Sub iterateThroughAnything
+
+
+
 
 
 
@@ -291,37 +376,8 @@ class sillyIterator
         //    console.log("foo");
         //}
 
-        function _getAttributes(el: Element): string[][]
-        {
-            let arr: string[][] = [];
 
-            for (let i = 0, atts = el.attributes, n = atts.length; i < n; i++)
-            {
-                let a = atts[i].nodeName;
-                arr.push([a, el.getAttribute(a)]);
-            } // Next i 
-
-            return arr;
-        } // End Function _getProperties 
-
-
-        function getNodeData(currentElement: Element, isDir:boolean)
-        {
-            let checklistData: IXmlStructure2 = {
-                "uuid": currentElement.id
-                , "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null)
-                , "tagName": currentElement.tagName
-                , "properties": _getAttributes(<Element>currentElement)
-                , "children": isDir ? [] : null
-                , "sort": 0
-            };
-
-            return checklistData;
-        }
-
-        let currentParent: IXmlStructure2 = null;
-
-
+        let dataCollector: RecursionDataCollector = new RecursionDataCollector();
 
 
         while (!stack.isEmpty)
@@ -362,9 +418,6 @@ class sillyIterator
             console.log((node.hasChildren ? "directory: " : "") + "node.data [lvl " + node.level.toString() + "]: ", node.data);
 
 
-
-            
-
             if (node.data.nodeType === Node.ELEMENT_NODE)
             {
                 let id = (<Element>node.data).getAttribute("id");
@@ -374,27 +427,13 @@ class sillyIterator
 
                 id = (<Element>node.data).getAttribute("id");
 
-                if (node.hasChildren)
-                {
-                    let lastParent = currentParent;
-                    currentParent = getNodeData(<Element><any>node, node.hasChildren);
-                    currentParent.parent = lastParent;
 
-                    if (lastParent != null)
-                        lastParent.children.push(currentParent);
-                }
-                else
-                {
-                    let noob = getNodeData(<Element><any>node, node.hasChildren);
-                    noob.parent = currentParent;
-                    currentParent.children.push(noob);
-                }
-
+                dataCollector.add(node);
             }
             
         } // Whend
-
-        console.log(currentParent);
+        
+        console.log("collected data:", dataCollector.RecursionData);
     } // End Sub iterateThroughNodes 
 
 

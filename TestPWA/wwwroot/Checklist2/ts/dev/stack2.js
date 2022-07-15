@@ -129,6 +129,59 @@ var InsertableStackFrame = (function () {
     return InsertableStackFrame;
 }());
 exports.InsertableStackFrame = InsertableStackFrame;
+var RecursionDataCollector = (function () {
+    function RecursionDataCollector() {
+        this.getNodeData = this.getNodeData.bind(this);
+        this._getAttributes = this._getAttributes.bind(this);
+    }
+    Object.defineProperty(RecursionDataCollector.prototype, "RecursionData", {
+        get: function () {
+            return this.m_obj;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    RecursionDataCollector.prototype.getNodeData = function (currentElement, isDir) {
+        var checklistData = {
+            "uuid": currentElement.id,
+            "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null),
+            "tagName": currentElement.tagName,
+            "properties": this._getAttributes(currentElement),
+            "children": isDir ? [] : null,
+            "sort": 0
+        };
+        return checklistData;
+    };
+    RecursionDataCollector.prototype._getAttributes = function (el) {
+        var arr = [];
+        for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
+            var a = atts[i].nodeName;
+            arr.push([a, el.getAttribute(a)]);
+        }
+        return arr;
+    };
+    RecursionDataCollector.prototype.add = function (frameToAdd) {
+        var bar = this.getNodeData(frameToAdd.data, frameToAdd.hasChildren);
+        if (frameToAdd.hasChildren) {
+            if (this.m_currentNode == null) {
+                this.m_obj = bar;
+                this.m_currentNode = bar;
+                return;
+            }
+            this.m_currentNode.children.push(bar);
+            this.m_currentNode = bar;
+        }
+        else {
+            if (this.m_currentNode == null) {
+                this.m_obj = bar;
+                this.m_currentNode = bar;
+                return;
+            }
+            this.m_currentNode.children.push(bar);
+        }
+    };
+    return RecursionDataCollector;
+}());
 var sillyIterator = (function () {
     function sillyIterator() {
     }
@@ -180,26 +233,7 @@ var sillyIterator = (function () {
             });
         }
         stack.push(new InsertableStackFrame(rootNode, hasChildren(rootNode)));
-        function _getAttributes(el) {
-            var arr = [];
-            for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
-                var a = atts[i].nodeName;
-                arr.push([a, el.getAttribute(a)]);
-            }
-            return arr;
-        }
-        function getNodeData(currentElement, isDir) {
-            var checklistData = {
-                "uuid": currentElement.id,
-                "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null),
-                "tagName": currentElement.tagName,
-                "properties": _getAttributes(currentElement),
-                "children": isDir ? [] : null,
-                "sort": 0
-            };
-            return checklistData;
-        }
-        var currentParent = null;
+        var dataCollector = new RecursionDataCollector();
         while (!stack.isEmpty) {
             var node = stack.pop();
             if (node.hasChildren) {
@@ -218,21 +252,10 @@ var sillyIterator = (function () {
                 if (id == null || id == "null")
                     node.data.setAttribute("id", uuidv4());
                 id = node.data.getAttribute("id");
-                if (node.hasChildren) {
-                    var lastParent = currentParent;
-                    currentParent = getNodeData(node, node.hasChildren);
-                    currentParent.parent = lastParent;
-                    if (lastParent != null)
-                        lastParent.children.push(currentParent);
-                }
-                else {
-                    var noob = getNodeData(node, node.hasChildren);
-                    noob.parent = currentParent;
-                    currentParent.children.push(noob);
-                }
+                dataCollector.add(node);
             }
         }
-        console.log(currentParent);
+        console.log("collected data:", dataCollector.RecursionData);
     };
     sillyIterator.iterateThroughElements = function (rootElement) {
         var stack = new InsertableStack();
