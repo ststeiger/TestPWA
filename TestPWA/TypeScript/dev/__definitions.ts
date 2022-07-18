@@ -347,6 +347,7 @@ interface IXmlStructure
     parent_uuid?: string;
     tagName: string;
     properties: string[][];
+    customProperties?: string[][];
     innerHtml?: string;
     children: IXmlStructure[];
     sort: number;
@@ -354,20 +355,6 @@ interface IXmlStructure
     rootNode?: number;
 }
 
-
-interface IXmlStructure2
-{
-    uuid: string;
-    parent_uuid?: string;
-    tagName: string;
-    properties: string[][];
-    innerHtml?: string;
-    children: IXmlStructure2[];
-    sort: number;
-    lvl?: number;
-    rootNode?: number;
-    parent?:IXmlStructure2
-}
 
 
 

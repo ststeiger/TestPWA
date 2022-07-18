@@ -177,27 +177,23 @@ class RecursionDataCollector
 
     constructor()
     {
+        this.getAttributes = this.getAttributes.bind(this);
+        this.getAllProps = this.getAllProps.bind(this);
+        this.getCustomProps = this.getCustomProps.bind(this);
+        this.getDefaultProps = this.getDefaultProps.bind(this);
+        this.getDataSet = this.getDataSet.bind(this);
         this.getNodeData = this.getNodeData.bind(this);
-        this._getAttributes = this._getAttributes.bind(this);
     }
 
 
-    private getNodeData(currentElement: Element, isDir: boolean)
+    private getDataSet(el: Element): any 
     {
-        let checklistData: IXmlStructure = {
-            "uuid": currentElement.id
-            , "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null)
-            , "tagName": currentElement.tagName
-            , "properties": this._getAttributes(<Element>currentElement)
-            , "children": isDir ? [] : null
-            , "sort": 0
-        };
-
-        return checklistData;
+        el.setAttribute("data-foo", "hello");
+        return (<any>el).dataset;
     }
 
 
-    private _getAttributes(el: Element): string[][]
+    private getAttributes(el: Element): string[][]
     {
         let arr: string[][] = [];
 
@@ -209,6 +205,70 @@ class RecursionDataCollector
 
         return arr;
     } // End Function _getAttributes
+
+
+    private getAllProps(el: Element)
+    {
+        let props: string[][] = [];
+        for (let key in el)
+        {
+            props.push([key, (<any>el)[key]]);
+        }
+
+        return props;
+    }
+
+
+    private getCustomProps(el: Element)
+    {
+        let props: string[][] = [];
+        for (let key in el)
+        {
+            // The hasOwnProperty() method returns true
+            // if the specified property is a direct property of the object 
+            // — even if the value is null or undefined. 
+            // The method returns false if the property is inherited,
+            // or has not been declared at all. 
+
+            // Unlike the in operator, this method does not check
+            // for the specified property in the object's prototype chain.
+            if (el.hasOwnProperty(key))
+                props.push([key, (<any>el)[key]]);
+        }
+
+        return props;
+    }
+
+
+    private getDefaultProps(el: Element)
+    {
+        let props: string[][] = [];
+        for (let key in el)
+        {
+            if (!el.hasOwnProperty(key))
+                props.push([key, (<any>el)[key]]);
+        }
+
+        return props;
+    }
+
+
+
+
+    private getNodeData(currentElement: Element, isDir: boolean)
+    {
+        let checklistData: IXmlStructure = {
+            "uuid": currentElement.id
+            , "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null)
+            , "tagName": currentElement.tagName
+            , "properties": this.getAttributes(<Element>currentElement)
+            , "customProperties": this.getCustomProps(<Element>currentElement)
+            , "children": isDir ? [] : null
+            , "sort": 0
+        };
+
+        return checklistData;
+    }
 
 
     public add<T>(frameToAdd: InsertableStackFrame<T>)
@@ -245,11 +305,80 @@ class RecursionDataCollector
 }
 
 
+interface IChecklistColumn
+{
+    isEmpty: boolean;
+    Label: string;
+    widthInMM: number;
+    widthInMM2: number;
+    widthInPixel: number;
+}
+
+
+interface IChecklistRow
+{
+    Label: string;
+    widthInMM: number;
+    heightInPixel: number;
+    isEmpty: boolean;
+}
+
+
+interface IChecklistCell
+{
+    Column: number;
+    Row: number;
+
+    colSpan: number;
+    rowSpan: number;
+
+    className: string;
+
+    Style: string;
+    innerHTML: string;
+}
+
+
+interface fooxxxbar
+{
+    columns: IChecklistColumn[];
+    rows: IChecklistRow[];
+    cells: IChecklistRow[];
+
+    images: any[];
+    maxColumnIndex: number; // zero-based
+    maxRowIndex: number; // zero-based
+}
 
 
 
 class sillyIterator
 {
+
+
+
+    // https://stackoverflow.com/a/14780463
+    public absolute(base: string, relative: string)
+    {
+        let stack = base.split("/"),
+            parts = relative.split("/");
+
+        stack.pop(); // remove current file name (or empty string)
+
+        // (omit if "base" is the current folder without trailing slash)
+        for (var i = 0; i < parts.length; i++)
+        {
+            if (parts[i] == ".")
+                continue;
+            if (parts[i] == "..")
+                stack.pop();
+            else
+                stack.push(parts[i]);
+        }
+
+        return stack.join("/");
+    }
+
 
     
     public static useIterateThroughAnything<T>(rootNode: T, getChildren: (baseNode: T) => T[]): void
@@ -258,6 +387,13 @@ class sillyIterator
 
         sillyIterator.iterateThroughAnything<Element>(tbl, function (x: Element)
         {
+            // The Array.prototype.slice.call() approach has been around for a long time. 
+            // It works in all modern browsers, and back to at least IE6.
+            // The Array.from() method works in all modern browsers, but has no IE support(only Edge). 
+            // You can push support back to at least IE9 with a polyfill, though.
+            // array.map: IE10+
+            // array.filter IE9+
+
             return Array.prototype.slice.call(x.children);
         });
 
@@ -332,13 +468,33 @@ class sillyIterator
             console.log("node.data [lvl " + node.level.toString() + "]: ", node.data);
         } // Whend
 
-
     } // End Sub iterateThroughAnything
 
 
+    public static compareStrings(string1:string, string2:string, ignoreCase:boolean, useLocale?:boolean)
+    {
+        if (string1 == null && string2 == null)
+            return true;
 
+        if (string1 == null || string2 == null)
+            return false;
 
+        if (ignoreCase)
+        {
+            if (useLocale)
+            {
+                string1 = string1.toLocaleLowerCase();
+                string2 = string2.toLocaleLowerCase();
+            }
+            else
+            {
+                string1 = string1.toLowerCase();
+                string2 = string2.toLowerCase();
+            }
+        }
 
+        return string1 === string2;
+    } // End Function compareStrings 
 
 
     public static iterateThroughNodes(rootNode: Node): void

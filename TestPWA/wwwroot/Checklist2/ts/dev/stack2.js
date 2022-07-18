@@ -131,8 +131,12 @@ var InsertableStackFrame = (function () {
 exports.InsertableStackFrame = InsertableStackFrame;
 var RecursionDataCollector = (function () {
     function RecursionDataCollector() {
+        this.getAttributes = this.getAttributes.bind(this);
+        this.getAllProps = this.getAllProps.bind(this);
+        this.getCustomProps = this.getCustomProps.bind(this);
+        this.getDefaultProps = this.getDefaultProps.bind(this);
+        this.getDataSet = this.getDataSet.bind(this);
         this.getNodeData = this.getNodeData.bind(this);
-        this._getAttributes = this._getAttributes.bind(this);
     }
     Object.defineProperty(RecursionDataCollector.prototype, "RecursionData", {
         get: function () {
@@ -141,24 +145,52 @@ var RecursionDataCollector = (function () {
         enumerable: false,
         configurable: true
     });
-    RecursionDataCollector.prototype.getNodeData = function (currentElement, isDir) {
-        var checklistData = {
-            "uuid": currentElement.id,
-            "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null),
-            "tagName": currentElement.tagName,
-            "properties": this._getAttributes(currentElement),
-            "children": isDir ? [] : null,
-            "sort": 0
-        };
-        return checklistData;
+    RecursionDataCollector.prototype.getDataSet = function (el) {
+        el.setAttribute("data-foo", "hello");
+        return el.dataset;
     };
-    RecursionDataCollector.prototype._getAttributes = function (el) {
+    RecursionDataCollector.prototype.getAttributes = function (el) {
         var arr = [];
         for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
             var a = atts[i].nodeName;
             arr.push([a, el.getAttribute(a)]);
         }
         return arr;
+    };
+    RecursionDataCollector.prototype.getAllProps = function (el) {
+        var props = [];
+        for (var key in el) {
+            props.push([key, el[key]]);
+        }
+        return props;
+    };
+    RecursionDataCollector.prototype.getCustomProps = function (el) {
+        var props = [];
+        for (var key in el) {
+            if (el.hasOwnProperty(key))
+                props.push([key, el[key]]);
+        }
+        return props;
+    };
+    RecursionDataCollector.prototype.getDefaultProps = function (el) {
+        var props = [];
+        for (var key in el) {
+            if (!el.hasOwnProperty(key))
+                props.push([key, el[key]]);
+        }
+        return props;
+    };
+    RecursionDataCollector.prototype.getNodeData = function (currentElement, isDir) {
+        var checklistData = {
+            "uuid": currentElement.id,
+            "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null),
+            "tagName": currentElement.tagName,
+            "properties": this.getAttributes(currentElement),
+            "customProperties": this.getCustomProps(currentElement),
+            "children": isDir ? [] : null,
+            "sort": 0
+        };
+        return checklistData;
     };
     RecursionDataCollector.prototype.add = function (frameToAdd) {
         var bar = this.getNodeData(frameToAdd.data, frameToAdd.hasChildren);
@@ -185,6 +217,19 @@ var RecursionDataCollector = (function () {
 var sillyIterator = (function () {
     function sillyIterator() {
     }
+    sillyIterator.prototype.absolute = function (base, relative) {
+        var stack = base.split("/"), parts = relative.split("/");
+        stack.pop();
+        for (var i = 0; i < parts.length; i++) {
+            if (parts[i] == ".")
+                continue;
+            if (parts[i] == "..")
+                stack.pop();
+            else
+                stack.push(parts[i]);
+        }
+        return stack.join("/");
+    };
     sillyIterator.useIterateThroughAnything = function (rootNode, getChildren) {
         var tbl = document.querySelectorAll("table.Excel").item(0);
         sillyIterator.iterateThroughAnything(tbl, function (x) {
@@ -217,6 +262,23 @@ var sillyIterator = (function () {
             }
             console.log("node.data [lvl " + node.level.toString() + "]: ", node.data);
         }
+    };
+    sillyIterator.compareStrings = function (string1, string2, ignoreCase, useLocale) {
+        if (string1 == null && string2 == null)
+            return true;
+        if (string1 == null || string2 == null)
+            return false;
+        if (ignoreCase) {
+            if (useLocale) {
+                string1 = string1.toLocaleLowerCase();
+                string2 = string2.toLocaleLowerCase();
+            }
+            else {
+                string1 = string1.toLowerCase();
+                string2 = string2.toLowerCase();
+            }
+        }
+        return string1 === string2;
     };
     sillyIterator.iterateThroughNodes = function (rootNode) {
         var stack = new InsertableStack();
