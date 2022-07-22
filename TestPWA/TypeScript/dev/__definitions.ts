@@ -353,6 +353,8 @@ interface IXmlStructure
     sort: number;
     lvl?: number;
     rootNode?: number;
+
+    recSort?: string;
 }
 
 

@@ -154,7 +154,7 @@ function collectSaveData(p, cls_uid) {
         return null;
     var checklistData = [];
     var nodeName = p.nodeName.toLowerCase();
-    if (p.nodeType === Node.ELEMENT_NODE && ("input" === nodeName || "textarea" === nodeName)) {
+    if (p.nodeType === Node.ELEMENT_NODE && ("input" === nodeName || "textarea" === nodeName || "select" === nodeName)) {
         var uuid_1 = p.getAttribute("id") || "unknown";
         var type = p.getAttribute("type") || "";
         var value = null;
@@ -169,6 +169,11 @@ function collectSaveData(p, cls_uid) {
             value = p.value;
             value = utils.normalizeNewLines(value);
             type = "textarea";
+        }
+        else if ("select" === nodeName) {
+            value = p.value;
+            value = p.options[p.selectedIndex].value;
+            type = "select";
         }
         return [{
                 "uuid": uuid_1,

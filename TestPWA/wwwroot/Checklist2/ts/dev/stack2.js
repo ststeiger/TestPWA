@@ -120,100 +120,16 @@ var InsertableStack = (function () {
 }());
 exports.InsertableStack = InsertableStack;
 var InsertableStackFrame = (function () {
-    function InsertableStackFrame(item, hasChildren, level) {
+    function InsertableStackFrame(item, hasChildren, level, recursionData) {
         level = level || 0;
         this.data = item;
         this.level = level;
         this.hasChildren = hasChildren;
+        this.recursionData = recursionData;
     }
     return InsertableStackFrame;
 }());
 exports.InsertableStackFrame = InsertableStackFrame;
-var RecursionDataCollector = (function () {
-    function RecursionDataCollector() {
-        this.getAttributes = this.getAttributes.bind(this);
-        this.getAllProps = this.getAllProps.bind(this);
-        this.getCustomProps = this.getCustomProps.bind(this);
-        this.getDefaultProps = this.getDefaultProps.bind(this);
-        this.getDataSet = this.getDataSet.bind(this);
-        this.getNodeData = this.getNodeData.bind(this);
-    }
-    Object.defineProperty(RecursionDataCollector.prototype, "RecursionData", {
-        get: function () {
-            return this.m_obj;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    RecursionDataCollector.prototype.getDataSet = function (el) {
-        el.setAttribute("data-foo", "hello");
-        return el.dataset;
-    };
-    RecursionDataCollector.prototype.getAttributes = function (el) {
-        var arr = [];
-        for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
-            var a = atts[i].nodeName;
-            arr.push([a, el.getAttribute(a)]);
-        }
-        return arr;
-    };
-    RecursionDataCollector.prototype.getAllProps = function (el) {
-        var props = [];
-        for (var key in el) {
-            props.push([key, el[key]]);
-        }
-        return props;
-    };
-    RecursionDataCollector.prototype.getCustomProps = function (el) {
-        var props = [];
-        for (var key in el) {
-            if (el.hasOwnProperty(key))
-                props.push([key, el[key]]);
-        }
-        return props;
-    };
-    RecursionDataCollector.prototype.getDefaultProps = function (el) {
-        var props = [];
-        for (var key in el) {
-            if (!el.hasOwnProperty(key))
-                props.push([key, el[key]]);
-        }
-        return props;
-    };
-    RecursionDataCollector.prototype.getNodeData = function (currentElement, isDir) {
-        var checklistData = {
-            "uuid": currentElement.id,
-            "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null),
-            "tagName": currentElement.tagName,
-            "properties": this.getAttributes(currentElement),
-            "customProperties": this.getCustomProps(currentElement),
-            "children": isDir ? [] : null,
-            "sort": 0
-        };
-        return checklistData;
-    };
-    RecursionDataCollector.prototype.add = function (frameToAdd) {
-        var bar = this.getNodeData(frameToAdd.data, frameToAdd.hasChildren);
-        if (frameToAdd.hasChildren) {
-            if (this.m_currentNode == null) {
-                this.m_obj = bar;
-                this.m_currentNode = bar;
-                return;
-            }
-            this.m_currentNode.children.push(bar);
-            this.m_currentNode = bar;
-        }
-        else {
-            if (this.m_currentNode == null) {
-                this.m_obj = bar;
-                this.m_currentNode = bar;
-                return;
-            }
-            this.m_currentNode.children.push(bar);
-        }
-    };
-    return RecursionDataCollector;
-}());
 var sillyIterator = (function () {
     function sillyIterator() {
     }
@@ -280,44 +196,286 @@ var sillyIterator = (function () {
         }
         return string1 === string2;
     };
-    sillyIterator.iterateThroughNodes = function (rootNode) {
+    sillyIterator.objectArrayToXml = function (obj, pretty) {
+        function _xmlAttributeEscape(inputString) {
+            var output = [];
+            for (var i = 0; i < inputString.length; ++i) {
+                switch (inputString[i]) {
+                    case '&':
+                        output.push("&amp;");
+                        break;
+                    case '"':
+                        output.push("&quot;");
+                        break;
+                    case "<":
+                        output.push("&lt;");
+                        break;
+                    case ">":
+                        output.push("&gt;");
+                        break;
+                    default:
+                        output.push(inputString[i]);
+                }
+            }
+            return output.join("");
+        }
+        var xml = [];
+        if (pretty == null)
+            pretty = true;
+        xml.push("<?xml version=\"1.0\" encoding=\"utf-16\"?>");
+        if (pretty)
+            xml.push("\r\n");
+        xml.push("<table xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
+        xml.push("\r\n");
+        for (var i = 0; i < obj.length; ++i) {
+            if (pretty)
+                xml.push("  ");
+            xml.push("<row>");
+            if (pretty)
+                xml.push("\r\n");
+            for (var key in obj[i]) {
+                if (obj[i].hasOwnProperty(key)) {
+                    var value = obj[i][key];
+                    if (pretty)
+                        xml.push("    ");
+                    if (value == null)
+                        xml.push("<" + key + " xsi:nil=\"true\" />");
+                    else
+                        xml.push("<" + key + ">");
+                    xml.push(_xmlAttributeEscape(value));
+                    if (value != null) {
+                        xml.push("</" + key + ">");
+                    }
+                    if (pretty)
+                        xml.push("\r\n");
+                }
+            }
+            if (pretty)
+                xml.push("  ");
+            xml.push("</row>");
+            if (pretty)
+                xml.push("\r\n");
+        }
+        xml.push("</table>");
+        var result = xml.join("");
+        return result;
+    };
+    sillyIterator.serializeMe = function () {
+        var x = [{ "PRO_UID": "7E7BED97-6F65-4827-8829-001676E3D03B", "PRO_Name": "align", "PRO_Value": "left", "PRO_ELE_UID": "F96C3755-89CD-466D-93F7-D00E85FDF05E" }, { "PRO_UID": "B4B41211-62BC-42C4-B420-00209B8A2C8F", "PRO_Name": "class", "PRO_Value": "slimBlackBorder", "PRO_ELE_UID": "671DB8C8-927C-4720-B17E-0EDD9C01B7AD" }, { "PRO_UID": "0CAF4193-AC63-432D-9579-002AA68DAC35", "PRO_Name": "align", "PRO_Value": "left", "PRO_ELE_UID": "FED37EA5-921D-4940-9504-2BF913EA0453" }];
+        var prettifyXml = function (sourceXml) {
+            var xmlDoc = new DOMParser().parseFromString(sourceXml, 'application/xml');
+            var xsltDoc = new DOMParser().parseFromString([
+                '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform">',
+                '  <xsl:strip-space elements="*"/>',
+                '  <xsl:template match="para[content-style][not(text())]">',
+                '    <xsl:value-of select="normalize-space(.)"/>',
+                '  </xsl:template>',
+                '  <xsl:template match="node()|@*">',
+                '    <xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy>',
+                '  </xsl:template>',
+                '  <xsl:output indent="yes"/>',
+                '</xsl:stylesheet>',
+            ].join('\n'), 'application/xml');
+            var xsltProcessor = new XSLTProcessor();
+            xsltProcessor.importStylesheet(xsltDoc);
+            var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
+            var resultXml = new XMLSerializer().serializeToString(resultDoc);
+            resultXml = '<?xml version="1.0" encoding="utf-16"?>\r\n' + resultXml;
+            return resultXml;
+        };
+        var xmlNs = 'http://www.w3.org/2001/XMLSchema';
+        var xsiNs = 'http://www.w3.org/2001/XMLSchema-instance';
+        var doc = document.implementation.createDocument(null, 'table', null);
+        var tableElement = doc.documentElement;
+        tableElement.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', xsiNs);
+        for (var i = 0; i < x.length; ++i) {
+            var rowElement = doc.createElement('row');
+            for (var key in x[i]) {
+                if (x[i].hasOwnProperty(key)) {
+                    var value = x[i][key];
+                    var column = doc.createElement(key);
+                    if (value == null)
+                        column.setAttributeNS(xsiNs, 'xsi:nil', 'true');
+                    else
+                        column.textContent = value;
+                    rowElement.appendChild(column);
+                }
+            }
+            tableElement.appendChild(rowElement);
+        }
+        var pi = doc.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-16"');
+        doc.insertBefore(pi, doc.firstChild);
+        var serializer = new XMLSerializer();
+        var xmlStr = serializer.serializeToString(doc);
+        if (window.XSLTProcessor)
+            xmlStr = prettifyXml(xmlStr);
+        console.log(xmlStr);
+    };
+    sillyIterator._padStart = function (str, targetLength, padString) {
+        targetLength = Math.floor(targetLength) || 0;
+        if (targetLength < str.length)
+            return String(str);
+        padString = padString ? String(padString) : " ";
+        var pad = "";
+        var len = targetLength - str.length;
+        var i = 0;
+        while (pad.length < len) {
+            if (!padString[i]) {
+                i = 0;
+            }
+            pad += padString[i];
+            i++;
+        }
+        return pad + String(str).slice(0);
+    };
+    sillyIterator._padEnd = function (str, targetLength, padString) {
+        targetLength = Math.floor(targetLength) || 0;
+        if (targetLength < str.length)
+            return String(str);
+        padString = padString ? String(padString) : " ";
+        var pad = "";
+        var len = targetLength - str.length;
+        var i = 0;
+        while (pad.length < len) {
+            if (!padString[i]) {
+                i = 0;
+            }
+            pad += padString[i];
+            i++;
+        }
+        return String(str).slice(0) + pad;
+    };
+    sillyIterator.iterateThroughNodes = function (rootNode, recursionConditions) {
+        var T_ChecklistElements = [];
         var stack = new InsertableStack();
-        function hasChildren(someNode) {
-            return (someNode.childNodes.length > 0);
-        }
-        function getChildren(baseNode) {
-            return baseNode.childNodes;
-        }
-        function uuidv4() {
-            return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, function (b) {
-                var c = parseInt(b);
-                return (c ^ ((window.crypto || window.msCrypto)).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
-            });
-        }
-        stack.push(new InsertableStackFrame(rootNode, hasChildren(rootNode)));
-        var dataCollector = new RecursionDataCollector();
+        var rootNodeData = recursionConditions.getNodeData(rootNode, recursionConditions.hasChildren(rootNode));
+        rootNodeData.sort = 0;
+        rootNodeData.recSort = sillyIterator._padStart(rootNodeData.sort.toString(), 10, "0");
+        rootNodeData.parent_uuid = null;
+        var rootFrame = new InsertableStackFrame(rootNode, recursionConditions.hasChildren(rootNode), 0, rootNodeData);
+        rootFrame.localSort = 0;
+        stack.push(rootFrame);
+        var globalSort = 0;
+        var root = null;
         while (!stack.isEmpty) {
             var node = stack.pop();
+            node.globalSort = globalSort;
+            if (root == null) {
+                node.recursionData.parent_uuid = null;
+                root = node;
+            }
             if (node.hasChildren) {
                 stack.markCurrent();
-                var entries = getChildren(node.data);
+                var entries = recursionConditions.getChildren(node.data);
                 for (var i = 0; i < entries.length; ++i) {
                     var entry = entries.item(i);
-                    var hasChild = hasChildren(entry);
-                    stack.insertAfterCurrent(new InsertableStackFrame(entry, hasChild, hasChild ? node.level + 1 : node.level));
+                    var hasChild = recursionConditions.hasChildren(entry);
+                    var nodeData = recursionConditions.getNodeData(entry, recursionConditions.hasChildren(entry));
+                    nodeData.sort = i;
+                    nodeData.recSort = node.recursionData.recSort + "." + sillyIterator._padStart(i.toString(), 10, "0");
+                    node.recursionData.children.push(nodeData);
+                    var childFrame = new InsertableStackFrame(entry, hasChild, hasChild ? node.level + 1 : node.level, nodeData);
+                    childFrame.localSort = i;
+                    stack.insertAfterCurrent(childFrame);
                 }
                 stack.unmarkCurrent();
             }
-            console.log((node.hasChildren ? "directory: " : "") + "node.data [lvl " + node.level.toString() + "]: ", node.data);
+            var record = {
+                ELE_UID: node.recursionData.uuid,
+                ELE_Parent_UID: node.recursionData.parent_uuid,
+                ELE_TagName: node.recursionData.tagName,
+                ELE_Sort: node.recursionData.sort,
+                ELE_RecSort: node.recursionData.recSort,
+            };
             if (node.data.nodeType === Node.ELEMENT_NODE) {
-                var id = node.data.getAttribute("id");
-                if (id == null || id == "null")
-                    node.data.setAttribute("id", uuidv4());
-                id = node.data.getAttribute("id");
-                dataCollector.add(node);
+                if (sillyIterator.compareStrings(node.data.nodeName, "td", true)) {
+                    record.ELE_InnerHtml = node.data.innerHTML;
+                }
             }
+            else if (node.data.nodeType === Node.TEXT_NODE) {
+                record.ELE_InnerHtml = node.data.textContent;
+            }
+            T_ChecklistElements.push(record);
+            ++globalSort;
         }
-        console.log("collected data:", dataCollector.RecursionData);
+        console.log("T_ChecklistElements: ", JSON.stringify(T_ChecklistElements, null, 2));
+        console.log("recursionData: ", root.recursionData);
+    };
+    sillyIterator.iterateThroughNodes2 = function (rootNode) {
+        sillyIterator.iterateThroughNodes(rootNode, {
+            hasChildren: function (someNode) {
+                return (someNode.childNodes.length > 0);
+            },
+            getChildren: function (baseNode) {
+                return baseNode.childNodes;
+            },
+            getNodeData: function (currentNode, isDir) {
+                function getDataSet(el) {
+                    el.setAttribute("data-foo", "hello");
+                    return el.dataset;
+                }
+                function getAttributes(node) {
+                    var arr = [];
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        for (var i = 0, atts = node.attributes, n = atts.length; i < n; i++) {
+                            var a = atts[i].nodeName;
+                            arr.push([a, node.getAttribute(a)]);
+                        }
+                    }
+                    return arr;
+                }
+                function getAllProps(node) {
+                    var props = [];
+                    for (var key in node) {
+                        props.push([key, node[key]]);
+                    }
+                    return props;
+                }
+                function getCustomProps(node) {
+                    var props = [];
+                    for (var key in node) {
+                        if (node.hasOwnProperty(key))
+                            props.push([key, node[key]]);
+                    }
+                    return props;
+                }
+                function getDefaultProps(node) {
+                    var props = [];
+                    for (var key in node) {
+                        if (!node.hasOwnProperty(key))
+                            props.push([key, node[key]]);
+                    }
+                    return props;
+                }
+                function _newid() {
+                    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, function (b) {
+                        var c = parseInt(b);
+                        return (c ^ ((window.crypto || window.msCrypto)).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+                    });
+                }
+                function _uidToLower(text) {
+                    if (text == null || text == "null")
+                        return _newid().toLowerCase();
+                    if (text.charAt(0) == "_")
+                        text = text.substr(1);
+                    return text.toLowerCase();
+                }
+                if (currentNode.nodeType === Node.ELEMENT_NODE) {
+                    var id = currentNode.getAttribute("id");
+                    currentNode.setAttribute("id", "_" + _uidToLower(id));
+                }
+                var checklistData = {
+                    "uuid": currentNode.id,
+                    "parent_uuid": (currentNode.parentElement ? currentNode.parentElement.id : null),
+                    "tagName": currentNode.nodeName,
+                    "properties": getAttributes(currentNode),
+                    "customProperties": getCustomProps(currentNode),
+                    "children": isDir ? [] : null,
+                    "sort": 0
+                };
+                return checklistData;
+            }
+        });
     };
     sillyIterator.iterateThroughElements = function (rootElement) {
         var stack = new InsertableStack();
@@ -336,6 +494,7 @@ var sillyIterator = (function () {
                 for (var i = 0; i < entries.length; ++i) {
                     var entry = entries.item(i);
                     var hasChild = hasChildren(entry);
+                    node.recursionData.sort;
                     stack.insertAfterCurrent(new InsertableStackFrame(entry, hasChild, hasChild ? node.level + 1 : node.level));
                 }
                 stack.unmarkCurrent();

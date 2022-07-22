@@ -146,163 +146,25 @@ export class InsertableStackFrame<T>
 {
     public data: T ; // The custom data 
     public level:number; // = answers question "What is the recursion level" 
-    public hasChildren: boolean; // = answers question "Is directory or not" ? 
+    public hasChildren: boolean; // = answers question "Is directory or not" ?
+    public localSort: number; // = answers question "What is the recursion level" 
+    public globalSort: number; // = answers question "What is the recursion level" 
+
+    public recursionData: IXmlStructure;
 
 
-    public constructor(item: T, hasChildren: boolean , level?:number)
+    public constructor(item: T, hasChildren: boolean, level?: number, recursionData?: IXmlStructure)
     {
         level = level || 0;
 
         this.data = item;
         this.level = level;
         this.hasChildren = hasChildren;
+        this.recursionData = recursionData;
     }
 
 }
 
-
-
-
-class RecursionDataCollector
-{
-
-    protected m_obj: IXmlStructure;
-    protected m_currentNode: IXmlStructure;
-
-    get RecursionData(): IXmlStructure
-    {
-        return this.m_obj;
-    }
-
-
-    constructor()
-    {
-        this.getAttributes = this.getAttributes.bind(this);
-        this.getAllProps = this.getAllProps.bind(this);
-        this.getCustomProps = this.getCustomProps.bind(this);
-        this.getDefaultProps = this.getDefaultProps.bind(this);
-        this.getDataSet = this.getDataSet.bind(this);
-        this.getNodeData = this.getNodeData.bind(this);
-    }
-
-
-    private getDataSet(el: Element): any 
-    {
-        el.setAttribute("data-foo", "hello");
-        return (<any>el).dataset;
-    }
-
-
-    private getAttributes(el: Element): string[][]
-    {
-        let arr: string[][] = [];
-
-        for (let i = 0, atts = el.attributes, n = atts.length; i < n; i++)
-        {
-            let a = atts[i].nodeName;
-            arr.push([a, el.getAttribute(a)]);
-        } // Next i 
-
-        return arr;
-    } // End Function _getAttributes
-
-
-    private getAllProps(el: Element)
-    {
-        let props: string[][] = [];
-        for (let key in el)
-        {
-            props.push([key, (<any>el)[key]]);
-        }
-
-        return props;
-    }
-
-
-    private getCustomProps(el: Element)
-    {
-        let props: string[][] = [];
-        for (let key in el)
-        {
-            // The hasOwnProperty() method returns true
-            // if the specified property is a direct property of the object 
-            // — even if the value is null or undefined. 
-            // The method returns false if the property is inherited,
-            // or has not been declared at all. 
-
-            // Unlike the in operator, this method does not check
-            // for the specified property in the object's prototype chain.
-            if (el.hasOwnProperty(key))
-                props.push([key, (<any>el)[key]]);
-        }
-
-        return props;
-    }
-
-
-    private getDefaultProps(el: Element)
-    {
-        let props: string[][] = [];
-        for (let key in el)
-        {
-            if (!el.hasOwnProperty(key))
-                props.push([key, (<any>el)[key]]);
-        }
-
-        return props;
-    }
-
-
-
-
-    private getNodeData(currentElement: Element, isDir: boolean)
-    {
-        let checklistData: IXmlStructure = {
-            "uuid": currentElement.id
-            , "parent_uuid": (currentElement.parentElement ? currentElement.parentElement.id : null)
-            , "tagName": currentElement.tagName
-            , "properties": this.getAttributes(<Element>currentElement)
-            , "customProperties": this.getCustomProps(<Element>currentElement)
-            , "children": isDir ? [] : null
-            , "sort": 0
-        };
-
-        return checklistData;
-    }
-
-
-    public add<T>(frameToAdd: InsertableStackFrame<T>)
-    {
-        let bar = this.getNodeData(<Element><any>frameToAdd.data, frameToAdd.hasChildren);
-
-        if (frameToAdd.hasChildren)
-        {
-            if (this.m_currentNode == null)
-            {
-                this.m_obj = bar;
-                this.m_currentNode = bar;
-                return;
-            }
-            
-            this.m_currentNode.children.push(bar);
-            this.m_currentNode = bar;
-        }
-        else
-        {
-            if (this.m_currentNode == null)
-            {
-                this.m_obj = bar;
-                this.m_currentNode = bar;
-                return;
-            }
-
-            this.m_currentNode.children.push(bar);
-        }
-
-    }
-
-
-}
 
 
 interface IChecklistColumn
@@ -339,17 +201,38 @@ interface IChecklistCell
 }
 
 
-interface fooxxxbar
+interface ModuleChecklist
 {
     columns: IChecklistColumn[];
     rows: IChecklistRow[];
-    cells: IChecklistRow[];
+    cells: IChecklistCell[];
 
     images: any[];
     maxColumnIndex: number; // zero-based
     maxRowIndex: number; // zero-based
 }
 
+
+interface IRecursionConditions
+{
+    hasChildren: (someNode: Node) => boolean;
+    getChildren: (baseNode: Node) => NodeListOf<ChildNode>;
+    getNodeData: (currentNode: Node, isDir: boolean) => IXmlStructure;
+}
+
+
+
+interface ISaveData
+{
+    ELE_UID: string;
+    ELE_Parent_UID: string;
+    ELE_CLV_UID?: string;
+    ELE_TagName: string;
+    ELE_Level?: number;
+    ELE_Sort?: number;
+    ELE_RecSort?: string;
+    ELE_InnerHtml?: string;
+}
 
 
 class sillyIterator
@@ -494,37 +377,245 @@ class sillyIterator
         }
 
         return string1 === string2;
-    } // End Function compareStrings 
+    } // End Function compareStrings
 
-
-    public static iterateThroughNodes(rootNode: Node): void
+    // var obj = [{ "PRO_UID": "7E7BED97-6F65-4827-8829-001676E3D03B", "PRO_Name": "align", "PRO_Value": "left", "PRO_ELE_UID": "F96C3755-89CD-466D-93F7-D00E85FDF05E" }, { "PRO_UID": "B4B41211-62BC-42C4-B420-00209B8A2C8F", "PRO_Name": "class", "PRO_Value": "slimBlackBorder", "PRO_ELE_UID": "671DB8C8-927C-4720-B17E-0EDD9C01B7AD" }, { "PRO_UID": "0CAF4193-AC63-432D-9579-002AA68DAC35", "PRO_Name": "align", "PRO_Value": "left", "PRO_ELE_UID": "FED37EA5-921D-4940-9504-2BF913EA0453" }];
+    public static objectArrayToXml(obj:any, pretty?:boolean)
     {
-        let stack = new InsertableStack<InsertableStackFrame<Node>>();
         
-        function hasChildren(someNode: Node): boolean
-        {
-            return (someNode.childNodes.length > 0);
-        }
 
-
-        function getChildren(baseNode: Node): NodeListOf<ChildNode>
+        function _xmlAttributeEscape(inputString:string)
         {
-            return baseNode.childNodes;
-        }
+            var output = [];
 
-        function uuidv4(): string
-        {
-            return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, function (b: string)
+            for (var i = 0; i < inputString.length; ++i)
             {
-                let c = parseInt(b);
-                return (c ^ ((window.crypto || window.msCrypto)).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-            });
+                switch (inputString[i])
+                {
+                    case '&':
+                        output.push("&amp;");
+                        break;
+                    case '"':
+                        output.push("&quot;");
+                        break;
+                    case "<":
+                        output.push("&lt;");
+                        break;
+                    case ">":
+                        output.push("&gt;");
+                        break;
+                    default:
+                        output.push(inputString[i]);
+                }
+
+
+            }
+
+            return output.join("");
         }
 
 
-        // let count = 0;
-        stack.push(new InsertableStackFrame<Node>(rootNode, hasChildren(rootNode)));
+        let xml = [];
 
+        if (pretty == null)
+            pretty = true;
+
+        xml.push("<?xml version=\"1.0\" encoding=\"utf-16\"?>");
+
+        if (pretty) xml.push("\r\n");
+
+        xml.push("<table xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
+        xml.push("\r\n");
+
+        for (let i = 0; i < obj.length; ++i)
+        {
+            if (pretty) xml.push("  ");
+
+            xml.push("<row>");
+            if (pretty) xml.push("\r\n");
+
+
+            for (let key in obj[i])
+            {
+                if (obj[i].hasOwnProperty(key))
+                {
+                    let value = obj[i][key];
+
+                    if (pretty) xml.push("    ");
+
+                    if (value == null)
+                        xml.push("<" + key +" xsi:nil=\"true\" />");
+                    else
+                        xml.push("<" + key + ">");
+
+                    xml.push(_xmlAttributeEscape(value));
+
+                    if (value != null)
+                    {
+                        xml.push("</" + key + ">");
+                    }
+                    
+                    if (pretty) xml.push("\r\n");
+                }
+            } 
+
+            if (pretty) xml.push("  ");
+            xml.push("</row>");
+            if (pretty) xml.push("\r\n");
+        }
+
+        xml.push("</table>");
+
+        let result = xml.join("");
+        return result;
+    }
+
+
+    public static serializeMe()
+    {
+        var x = [{ "PRO_UID": "7E7BED97-6F65-4827-8829-001676E3D03B", "PRO_Name": "align", "PRO_Value": "left", "PRO_ELE_UID": "F96C3755-89CD-466D-93F7-D00E85FDF05E" }, { "PRO_UID": "B4B41211-62BC-42C4-B420-00209B8A2C8F", "PRO_Name": "class", "PRO_Value": "slimBlackBorder", "PRO_ELE_UID": "671DB8C8-927C-4720-B17E-0EDD9C01B7AD" }, { "PRO_UID": "0CAF4193-AC63-432D-9579-002AA68DAC35", "PRO_Name": "align", "PRO_Value": "left", "PRO_ELE_UID": "FED37EA5-921D-4940-9504-2BF913EA0453" }];
+
+        let prettifyXml = function (sourceXml:string)
+        {
+            var xmlDoc = new DOMParser().parseFromString(sourceXml, 'application/xml');
+            var xsltDoc = new DOMParser().parseFromString([
+                // describes how we want to modify the XML - indent everything
+                '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform">',
+                '  <xsl:strip-space elements="*"/>',
+                '  <xsl:template match="para[content-style][not(text())]">', // change to just text() to strip space in text nodes
+                '    <xsl:value-of select="normalize-space(.)"/>',
+                '  </xsl:template>',
+                '  <xsl:template match="node()|@*">',
+                '    <xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy>',
+                '  </xsl:template>',
+                '  <xsl:output indent="yes"/>',
+                '</xsl:stylesheet>',
+            ].join('\n'), 'application/xml');
+
+            var xsltProcessor = new XSLTProcessor();
+            xsltProcessor.importStylesheet(xsltDoc);
+            var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
+
+            var resultXml = new XMLSerializer().serializeToString(resultDoc);
+            resultXml = '<?xml version="1.0" encoding="utf-16"?>\r\n' + resultXml;
+            return resultXml;
+        };
+
+
+        // https://blogs.msmvps.com/martin-honnen/2009/04/13/creating-xml-with-namespaces-with-javascript-and-the-w3c-dom/
+        let xmlNs = 'http://www.w3.org/2001/XMLSchema';
+        let xsiNs = 'http://www.w3.org/2001/XMLSchema-instance';
+
+        // let doc = document.implementation.createDocument(xmlNs, 'table', null);
+        let doc = document.implementation.createDocument(null, 'table', null);
+        //doc.documentElement.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', xsiNs);
+        let tableElement = doc.documentElement;
+        tableElement.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', xsiNs);
+
+
+        for (let i = 0; i < x.length; ++i)
+        {
+            // let rowElement = doc.createElementNS(xmlNs, 'row');
+            let rowElement = doc.createElement('row');
+
+            for (let key in x[i])
+            {
+                if (x[i].hasOwnProperty(key))
+                {
+                    let value = (<any>x[i])[key];
+                    // let column = doc.createElementNS(xmlNs, key);
+                    let column = doc.createElement(key);
+
+                    if(value == null)
+                        column.setAttributeNS(xsiNs, 'xsi:nil', 'true');
+                    else
+                        column.textContent = value;
+
+                    rowElement.appendChild(column);
+                }
+            } // numeric descending
+
+            tableElement.appendChild(rowElement);
+        }
+
+        // doc.appendChild(tableElement);
+
+
+        const pi = doc.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-16"');
+        doc.insertBefore(pi, doc.firstChild);
+
+        const serializer = new XMLSerializer();
+        let xmlStr = serializer.serializeToString(doc);
+        if (window.XSLTProcessor) xmlStr = prettifyXml(xmlStr);
+        console.log(xmlStr);
+    }
+
+
+    public static _padStart(str:string, targetLength:number, padString:string)
+    {
+        targetLength = Math.floor(targetLength) || 0;
+        if (targetLength < str.length) return String(str);
+
+        padString = padString ? String(padString) : " ";
+
+        var pad = "";
+        var len = targetLength - str.length;
+        var i = 0;
+        while (pad.length < len)
+        {
+            if (!padString[i])
+            {
+                i = 0;
+            }
+            pad += padString[i];
+            i++;
+        }
+
+        return pad + String(str).slice(0);
+    }
+    
+
+    public static _padEnd(str:string, targetLength:number, padString:string)
+    {
+        targetLength = Math.floor(targetLength) || 0;
+        if (targetLength < str.length) return String(str);
+
+        padString = padString ? String(padString) : " ";
+
+        var pad = "";
+        var len = targetLength - str.length;
+        var i = 0;
+        while (pad.length < len)
+        {
+            if (!padString[i])
+            {
+                i = 0;
+            }
+            pad += padString[i];
+            i++;
+        }
+
+        return String(str).slice(0) + pad;
+    }
+
+
+    public static iterateThroughNodes(rootNode: Node, recursionConditions: IRecursionConditions): void
+    {
+        let T_ChecklistElements: ISaveData[] = [];
+
+        let stack = new InsertableStack<InsertableStackFrame<Node>>();
+        // let count = 0;
+
+        let rootNodeData = recursionConditions.getNodeData(rootNode, recursionConditions.hasChildren(rootNode));
+        rootNodeData.sort = 0;
+        rootNodeData.recSort = sillyIterator._padStart(rootNodeData.sort.toString(), 10, "0");
+        
+        rootNodeData.parent_uuid = null;
+
+        let rootFrame = new InsertableStackFrame<Node>(rootNode, recursionConditions.hasChildren(rootNode), 0, rootNodeData);
+        rootFrame.localSort = 0;
+        stack.push(rootFrame);
+        
         // count++;
         //if (count != stack.actual())
         //{
@@ -532,13 +623,14 @@ class sillyIterator
         //    console.log("foo");
         //}
 
-
-        let dataCollector: RecursionDataCollector = new RecursionDataCollector();
-
+        let globalSort = 0;
+        let root: InsertableStackFrame<Node> = null;
 
         while (!stack.isEmpty)
         {
             let node: InsertableStackFrame<Node> = stack.pop();
+            node.globalSort = globalSort;
+
             //count--;
             //if (count != stack.actual())
             //{
@@ -546,51 +638,233 @@ class sillyIterator
             //    console.log("foo");
             //}
 
-            // if (node.level > 5) continue;
+            if (root == null)
+            {
+                node.recursionData.parent_uuid = null;
+                root = node;
+            }
 
+            // if (node.level > 5) continue;
 
             if (node.hasChildren)
             {
                 stack.markCurrent();
 
-                let entries: NodeListOf<ChildNode> = getChildren(node.data);
+                let entries: NodeListOf<ChildNode> = recursionConditions.getChildren(node.data);
                 
                 for (let i: number = 0; i < entries.length; ++i)
                 {
                     let entry = entries.item(i);
-                    let hasChild: boolean = hasChildren(entry);
-                    stack.insertAfterCurrent(new InsertableStackFrame<Node>(entry, hasChild, hasChild ? node.level + 1 : node.level));
+                    let hasChild: boolean = recursionConditions.hasChildren(entry);
+
+                    let nodeData = recursionConditions.getNodeData(entry, recursionConditions.hasChildren(entry));
+                    nodeData.sort = i;
+                    nodeData.recSort = node.recursionData.recSort + "." + sillyIterator._padStart(i.toString(), 10, "0");
+                    node.recursionData.children.push(nodeData);
+
+                    let childFrame = new InsertableStackFrame<Node>(entry, hasChild, hasChild ? node.level + 1 : node.level, nodeData);
+                    childFrame.localSort = i;
+                    stack.insertAfterCurrent(childFrame);
+
                     //count++;
                     //if (count != stack.actual())
                     //{
                     //    debugger;
                     //    console.log("foo");
                     //}
-                }
+
+                } // Next i 
 
                 stack.unmarkCurrent();
             } // Whend
 
-            console.log((node.hasChildren ? "directory: " : "") + "node.data [lvl " + node.level.toString() + "]: ", node.data);
+            // console.log((node.hasChildren ? "directory: " : "") + "node.data [lvl " + node.level.toString() + "]: ", node.data);
+
+
+            let record:ISaveData = 
+            {
+                ELE_UID: node.recursionData.uuid,
+                ELE_Parent_UID: node.recursionData.parent_uuid,
+                // ELE_CLV_UID?: string,
+                ELE_TagName: node.recursionData.tagName,
+                // ELE_Level: node.level,
+                ELE_Sort: node.recursionData.sort,
+                // ELE_Sort: node.globalSort, 
+                ELE_RecSort: node.recursionData.recSort,
+                
+                // ELE_InnerHtml?: string;
+            };
 
 
             if (node.data.nodeType === Node.ELEMENT_NODE)
             {
-                let id = (<Element>node.data).getAttribute("id");
-                // let guid = uuid.newGuid();
-                if (id == null || id == "null")
-                    (<Element>node.data).setAttribute("id", uuidv4());
 
-                id = (<Element>node.data).getAttribute("id");
+                if (sillyIterator.compareStrings(node.data.nodeName, "td", true))
+                {
+                    record.ELE_InnerHtml = (<Element>node.data).innerHTML;
+                }
 
 
-                dataCollector.add(node);
             }
-            
+            else if (node.data.nodeType === Node.TEXT_NODE)
+            {
+                record.ELE_InnerHtml = node.data.textContent;
+            }
+
+            T_ChecklistElements.push(record);
+
+
+            ++globalSort; 
         } // Whend
+
+        // console.log("collected data:", dataCollector.RecursionData);
         
-        console.log("collected data:", dataCollector.RecursionData);
-    } // End Sub iterateThroughNodes 
+        // console.log("T_ChecklistElements: ", T_ChecklistElements);
+        console.log("T_ChecklistElements: ", JSON.stringify(T_ChecklistElements, null, 2));
+        console.log("recursionData: ", root.recursionData);
+    } // End Sub iterateThroughNodes
+
+
+
+    public static iterateThroughNodes2(rootNode: Node): void
+    {
+        sillyIterator.iterateThroughNodes(rootNode, {
+            hasChildren: function (someNode: Node): boolean
+            {
+                return (someNode.childNodes.length > 0);
+            }
+            , getChildren: function (baseNode: Node): NodeListOf<ChildNode>
+            {
+                return baseNode.childNodes;
+            }
+            , getNodeData: function (currentNode: Node, isDir: boolean): IXmlStructure
+            {
+                function getDataSet(el: Element): any 
+                {
+                    el.setAttribute("data-foo", "hello");
+                    return (<any>el).dataset;
+                }
+
+
+                function getAttributes(node: Node): string[][]
+                {
+                    let arr: string[][] = [];
+
+
+
+                    // The following constants have been deprecated and are not in use anymore:
+                    // Node.ENTITY_REFERENCE_NODE(5), Node.ENTITY_NODE(6), and Node.NOTATION_NODE(12).
+                    // Warning: ProcessingInstruction nodes are only supported in XML documents, not in HTML documents
+                    // <?xml version="1.0"?>
+                    // if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE) document.createProcessingInstruction("target", "data");
+                    // if (node.nodeType === Node.CDATA_SECTION_NODE) document.createCDATASection;
+                    // if (node.nodeType === Node.COMMENT_NODE) document.createComment("test");
+                    // if (node.nodeType === Node.TEXT_NODE) document.createTextNode("some text");
+                    // if (node.nodeType === Node.DOCUMENT_TYPE_NODE) document.doctype;
+
+                    if (node.nodeType === Node.ELEMENT_NODE)
+                    {
+
+                        for (let i = 0, atts = (<Element>node).attributes, n = atts.length; i < n; i++)
+                        {
+                            let a = atts[i].nodeName;
+                            arr.push([a, (<Element>node).getAttribute(a)]);
+                        } // Next i
+
+                    } // End if (node.nodeType === Node.ELEMENT_NODE) 
+
+                    return arr;
+                } // End Function _getAttributes
+
+
+                function getAllProps(node: Node)
+                {
+                    let props: string[][] = [];
+                    for (let key in node)
+                    {
+                        props.push([key, (<any>node)[key]]);
+                    }
+
+                    return props;
+                }
+
+
+                function getCustomProps(node: Node)
+                {
+                    let props: string[][] = [];
+                    for (let key in node)
+                    {
+                        // The hasOwnProperty() method returns true
+                        // if the specified property is a direct property of the object 
+                        // — even if the value is null or undefined. 
+                        // The method returns false if the property is inherited,
+                        // or has not been declared at all. 
+
+                        // Unlike the in operator, this method does not check
+                        // for the specified property in the object's prototype chain.
+                        if (node.hasOwnProperty(key))
+                            props.push([key, (<any>node)[key]]);
+                    }
+
+                    return props;
+                }
+
+
+                function getDefaultProps(node: Node)
+                {
+                    let props: string[][] = [];
+                    for (let key in node)
+                    {
+                        if (!node.hasOwnProperty(key))
+                            props.push([key, (<any>node)[key]]);
+                    }
+
+                    return props;
+                }
+
+                function _newid()
+                {
+                    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, function (b)
+                    {
+                        let c = parseInt(b);
+                        return (c ^ ((window.crypto || window.msCrypto)).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+                    });
+                }
+
+                function _uidToLower(text:string)
+                {
+                    if (text == null || text == "null")
+                        return _newid().toLowerCase();
+
+                    if (text.charAt(0) == "_")
+                        text = text.substr(1)
+
+                    return text.toLowerCase();
+                }
+
+
+                if (currentNode.nodeType === Node.ELEMENT_NODE)
+                {
+                    var id = (<Element>currentNode).getAttribute("id");
+                    (<Element>currentNode).setAttribute("id", "_" + _uidToLower(id));
+                }
+
+
+                // GetNodeData
+                let checklistData: IXmlStructure = {
+                    "uuid": (<any>currentNode).id
+                    , "parent_uuid": (currentNode.parentElement ? currentNode.parentElement.id : null)
+                    , "tagName": currentNode.nodeName
+                    , "properties": getAttributes(currentNode)
+                    , "customProperties": getCustomProps(currentNode)
+                    , "children": isDir ? [] : null
+                    , "sort": 0
+                };
+
+                return checklistData;
+            }
+        });
+    }
 
 
     public static iterateThroughElements(rootElement: Element): void
@@ -641,6 +915,11 @@ class sillyIterator
                 {
                     let entry = entries.item(i);
                     let hasChild: boolean = hasChildren(entry);
+
+                    node.recursionData.sort
+
+
+
                     stack.insertAfterCurrent(new InsertableStackFrame<Element>(entry, hasChild, hasChild ? node.level + 1 : node.level));
                     //count++;
                     //if (count != stack.actual())

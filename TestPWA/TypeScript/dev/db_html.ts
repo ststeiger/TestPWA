@@ -274,7 +274,7 @@ export function collectSaveData(p: Element, cls_uid?:string): ISaveValues[]
 
     let nodeName = p.nodeName.toLowerCase();
     
-    if (p.nodeType === Node.ELEMENT_NODE && ("input" === nodeName || "textarea" === nodeName))
+    if (p.nodeType === Node.ELEMENT_NODE && ("input" === nodeName || "textarea" === nodeName || "select" === nodeName))
     {
         let uuid: string = (<Element>p).getAttribute("id") || "unknown";
         let type: string = (<Element>p).getAttribute("type") || "";
@@ -294,6 +294,13 @@ export function collectSaveData(p: Element, cls_uid?:string): ISaveValues[]
             value = (<HTMLTextAreaElement>(<Element>p)).value;
             value = utils.normalizeNewLines(value);
             type = "textarea";
+        }
+        else if ("select" === nodeName)
+        {
+            value = (<HTMLSelectElement>(<Element>p)).value;
+            // (<HTMLSelectElement>(<Element>p)).options[(<HTMLSelectElement>(<Element>p)).selectedIndex].text;
+            value = (<HTMLSelectElement>(<Element>p)).options[(<HTMLSelectElement>(<Element>p)).selectedIndex].value;
+            type = "select";
         }
 
         // console.log("value", p, "type:", type, "value", value, "uuid", uuid);
